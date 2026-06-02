@@ -1,0 +1,90 @@
+// Mobilya vitrin — MySQL veritabanı şeması
+// Koleksiyon → Ürün → Varyant / Görsel (bire-çok)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// Üst düzey koleksiyon (ör. Oturma Odası, Yatak Odası)
+model Collection {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  description String?   @db.Text
+  coverImage  String?
+  sortOrder   Int       @default(0)
+  isPublished Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  products Product[]
+
+  @@index([isPublished, sortOrder])
+  @@map("collections")
+}
+
+/// Katalog ürünü
+model Product {
+  id           String   @id @default(cuid())
+  slug         String   @unique
+  name         String
+  description  String?  @db.Text
+  /// Serbest metin ölçü özeti (ör. "240 x 90 x 75 cm")
+  dimensions   String?
+  widthCm      Decimal? @db.Decimal(8, 2)
+  heightCm     Decimal? @db.Decimal(8, 2)
+  depthCm      Decimal? @db.Decimal(8, 2)
+  sortOrder    Int      @default(0)
+  isPublished  Boolean  @default(true)
+  collectionId String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  collection Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  variants   Variant[]
+  images     Image[]
+
+  @@index([collectionId])
+  @@index([isPublished, sortOrder])
+  @@map("products")
+}
+
+/// Renk / malzeme varyantı
+model Variant {
+  id        String   @id @default(cuid())
+  productId String
+  name      String
+  color     String?
+  material  String?
+  sku       String?  @unique
+  sortOrder Int      @default(0)
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@map("variants")
+}
+
+/// Ürün görseli (galeri)
+model Image {
+  id        String   @id @default(cuid())
+  productId String
+  url       String   @db.VarChar(2048)
+  alt       String?
+  sortOrder Int      @default(0)
+  isPrimary Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId, sortOrder])
+  @@map("images")
+}
