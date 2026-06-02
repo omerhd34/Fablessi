@@ -18,7 +18,7 @@ export function Header() {
  const isDesktopNav = useIsDesktopNav();
 
  const isHome = pathname === "/";
- /** Scroll sonrası: taupe bar; menü satırları yalnızca sayfa tepesinde */
+ const isHeroOverlayPage = isHome;
  const compact = scrolled;
 
  const toggleSearch = () => {
@@ -50,7 +50,7 @@ export function Header() {
   if (isDesktopNav && compact) {
    root.style.setProperty("--header-height-desktop", "3.5rem");
   } else {
-   root.style.setProperty("--header-height-desktop", "9.25rem");
+   root.style.setProperty("--header-height-desktop", "8.875rem");
   }
  }, [compact, isDesktopNav]);
 
@@ -80,7 +80,7 @@ export function Header() {
     "site-header fixed inset-x-0 top-0 z-50 text-white transition-[background-color,box-shadow] duration-300 ease-out",
     compact
      ? "bg-(--header-compact-bg) shadow-sm shadow-black/10"
-     : isHome
+     : isHeroOverlayPage
       ? "bg-transparent shadow-none"
       : "bg-black shadow-md shadow-black/25"
    )}
