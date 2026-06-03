@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ChevronRight, X } from "lucide-react";
+import { ChevronRight, X } from "@/lib/icons";
 import { SocialIcon } from "@/components/layout/social-icon";
 import { cn } from "@/lib/utils";
 import {
@@ -37,7 +37,7 @@ export function MobileMenuDrawer({ pathname, onClose }) {
       className="flex size-9 items-center justify-center text-charcoal/80 transition-colors hover:text-charcoal"
       aria-label="Menüyü kapat"
      >
-      <X className="size-5 stroke-[1.25]" />
+      <X className="size-5 shrink-0" />
      </button>
     </SheetClose>
    </div>
@@ -145,7 +145,7 @@ function MobileDrawerNavItem({ item, pathname, onClose, variant }) {
      >
       <ChevronRight
        className={cn(
-        "size-4 stroke-[1.25] transition-transform duration-200",
+        "size-4 shrink-0 transition-transform duration-200",
         submenuOpen && "rotate-90",
         isDark ? "text-white/30" : "text-charcoal/25"
        )}

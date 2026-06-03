@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { Mail, Phone } from "lucide-react";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaWhatsapp, Mail, Phone } from "@/lib/icons";
 import {
  getWhatsAppHref,
  siteEmail,
@@ -18,7 +17,7 @@ export function FaqContactBar() {
      href={sitePhoneHref}
      className="inline-flex items-center gap-2 transition-colors hover:text-charcoal"
     >
-     <Phone className="size-4 shrink-0 stroke-[1.25] text-charcoal/45" />
+     <Phone className="size-4 shrink-0 text-charcoal/45" />
      <span>{sitePhone}</span>
     </Link>
    ) : null}
@@ -40,7 +39,7 @@ export function FaqContactBar() {
      href={`mailto:${siteEmail}`}
      className="inline-flex items-center gap-2 transition-colors hover:text-charcoal"
     >
-     <Mail className="size-4 shrink-0 stroke-[1.25] text-charcoal/45" />
+     <Mail className="size-4 shrink-0 text-charcoal/45" />
      <span>{siteEmail}</span>
     </Link>
    ) : null}

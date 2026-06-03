@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Menu, Search } from "lucide-react";
+import { Menu, Search } from "@/lib/icons";
 import { useState } from "react";
 import { BrandLogoLink } from "@/components/layout/brand-logo";
 import { MobileMenuDrawer } from "@/components/layout/mobile-menu-drawer";
@@ -34,7 +34,7 @@ export function MobileNavbar({ searchOpen, onSearchToggle }) {
         className="size-8 text-white hover:bg-white/10 hover:text-white sm:size-9"
         aria-label="Menüyü aç"
        >
-        <Menu className="size-4 stroke-[1.25] sm:size-4.5" />
+        <Menu className="size-4 sm:size-4.5" />
        </Button>
       </SheetTrigger>
       <MobileMenuDrawer
@@ -53,7 +53,7 @@ export function MobileNavbar({ searchOpen, onSearchToggle }) {
       aria-label="Ara"
       aria-expanded={searchOpen}
      >
-      <Search className="size-4 stroke-[1.25] sm:size-4.5" />
+      <Search className="size-4 sm:size-4.5" />
      </button>
     </div>
 

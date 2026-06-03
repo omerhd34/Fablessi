@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
 import {
  Accordion,
  AccordionContent,
@@ -8,6 +7,7 @@ import {
  AccordionTrigger,
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
+import { FaChevronRight } from "react-icons/fa";
 
 export function FaqAccordionList({ items, idPrefix }) {
  return (
@@ -24,8 +24,7 @@ export function FaqAccordionList({ items, idPrefix }) {
        "**:data-[slot=accordion-trigger-icon]:hidden"
       )}
      >
-      <ChevronRight
-       className="size-3.5 shrink-0 text-charcoal/35 transition-transform duration-200 group-aria-expanded/accordion-trigger:rotate-90"
+      <FaChevronRight className="size-3.5 shrink-0 text-charcoal/35 transition-transform duration-200 group-aria-expanded/accordion-trigger:rotate-90"
        aria-hidden
       />
       <span className="flex-1 text-left">{item.question}</span>

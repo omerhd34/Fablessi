@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaWhatsapp } from "react-icons/fa";
+import { FaWhatsapp } from "@/lib/icons";
 import { getWhatsAppHref } from "@/lib/site-contact";
 
 export function WhatsAppFloat() {

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, Phone } from "lucide-react";
+import { FaLocationArrow, Mail, Phone } from "@/lib/icons";
 import {
  Carousel,
  CarouselContent,
@@ -40,7 +40,7 @@ export function StoreShowcase() {
 
       <div className="space-y-2 pt-1">
        <p className="flex items-center gap-2.5">
-        <Phone className="size-4 shrink-0 stroke-[1.25] text-charcoal/50" />
+        <Phone className="size-4 shrink-0 text-charcoal/50" />
         <span>
          Randevu için:{" "}
          <a
@@ -52,7 +52,7 @@ export function StoreShowcase() {
         </span>
        </p>
        <p className="flex items-center gap-2.5">
-        <Mail className="size-4 shrink-0 stroke-[1.25] text-charcoal/50" />
+        <Mail className="size-4 shrink-0 text-charcoal/50" />
         <a
          href={`mailto:${store.email}`}
          className="transition-colors hover:text-charcoal"
@@ -68,9 +68,10 @@ export function StoreShowcase() {
        href={store.mapUrl}
        target="_blank"
        rel="noopener noreferrer"
-       className="font-display text-[0.65rem] tracking-[0.22em] text-charcoal/70 uppercase transition-colors hover:text-charcoal"
+       className="inline-flex items-center gap-1.5 font-display text-[0.65rem] tracking-[0.22em] text-charcoal/70 uppercase transition-colors hover:text-charcoal"
       >
-       ➤ Haritada göster
+       <FaLocationArrow className="size-3.5 shrink-0" aria-hidden />
+       Haritada göster
       </Link>
      </div>
 
