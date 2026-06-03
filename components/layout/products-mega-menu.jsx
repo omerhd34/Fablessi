@@ -5,17 +5,16 @@ import Link from "next/link";
 import { productsMegaMenu } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
-export function ProductsMegaMenu({ open, onMouseEnter }) {
+export function ProductsMegaMenu({ open }) {
  const { categories, featured } = productsMegaMenu;
 
  return (
   <div
-   onMouseEnter={onMouseEnter}
    className={cn(
-    "absolute inset-x-0 top-full z-50 border-t border-white/10 bg-black transition-all duration-300 ease-out",
+    "absolute inset-x-0 top-full z-50 border-t border-white/10 bg-black transition-[opacity,visibility] ease-out",
     open
-     ? "visible translate-y-0 opacity-100"
-     : "invisible -translate-y-1 pointer-events-none opacity-0"
+     ? "visible opacity-100 duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+     : "pointer-events-none invisible opacity-0 duration-300 ease-in"
    )}
    aria-hidden={!open}
   >

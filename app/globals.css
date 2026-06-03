@@ -225,6 +225,28 @@
     }
   }
 
+  .nav-menu-link {
+    position: relative;
+    text-decoration: none;
+  }
+
+  .nav-menu-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.12em;
+    height: 1px;
+    background-color: currentColor;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .nav-menu-link:hover::after,
+  .nav-menu-link[data-active="true"]::after {
+    opacity: 1;
+  }
+
   .site-header [data-slot="navigation-menu-trigger"] {
     color: inherit;
   }

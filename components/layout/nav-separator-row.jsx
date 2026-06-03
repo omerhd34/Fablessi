@@ -20,8 +20,13 @@ export function NavSeparatorRow({ items, variant = "secondary", pathname }) {
      )}
      <Link
       href={item.href}
+      data-active={
+       pathname === item.href || pathname.startsWith(`${item.href}/`)
+        ? "true"
+        : undefined
+      }
       className={cn(
-       "font-display transition-colors hover:text-white",
+       "nav-menu-link font-display transition-colors hover:text-white",
        variant === "secondary" &&
        "text-[0.6rem] font-normal tracking-[0.22em] uppercase md:text-[0.65rem]",
        variant === "primary" &&

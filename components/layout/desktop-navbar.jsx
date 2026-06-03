@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { HelpCircle, MapPin, Search } from "lucide-react";
+import { MapPin, Search, SupportAgent } from "@/lib/icons";
 import { BrandLogoLink } from "@/components/layout/brand-logo";
 import {
  headerUtilityLeft,
@@ -19,21 +18,28 @@ import { ProductsMegaMenu } from "@/components/layout/products-mega-menu";
 const utilityIcons = {
  search: Search,
  map: MapPin,
- help: HelpCircle,
+ support: SupportAgent,
 };
+
+function leaveHoverZone(event, onLeave) {
+ const related = event.relatedTarget;
+ if (related instanceof Node && event.currentTarget.contains(related)) {
+  return;
+ }
+ onLeave();
+}
 
 export function DesktopNavbar({
  compact = false,
+ productsMenuOpen = false,
  onProductsMenuOpenChange,
  onSearchToggle,
  onSearchClose,
  searchOpen,
 }) {
  const pathname = usePathname();
- const [productsOpen, setProductsOpen] = useState(false);
 
  const setProductsOpenState = (open) => {
-  setProductsOpen(open);
   onProductsMenuOpenChange?.(open);
   if (open) {
    onSearchClose?.();
@@ -45,7 +51,7 @@ export function DesktopNavbar({
  const productsActive =
   pathname === "/urunler" ||
   pathname.startsWith("/urunler/") ||
-  productsOpen;
+  productsMenuOpen;
 
  if (!isDesktopNav) {
   return null;
@@ -55,13 +61,13 @@ export function DesktopNavbar({
   <div
    className="nav-desktop relative bg-transparent"
    aria-label="Masaüstü menü"
-   onMouseLeave={() => setProductsOpenState(false)}
   >
    <div
     className={cn(
      "border-b border-white/10",
      compact && "border-transparent"
     )}
+    onMouseEnter={() => setProductsOpenState(false)}
    >
     <div className="mx-auto grid h-14 max-w-[1920px] grid-cols-[1fr_auto_1fr] items-center px-8 xl:px-12">
      <div className="flex items-center gap-5">
@@ -89,8 +95,8 @@ export function DesktopNavbar({
          className="flex items-center gap-2 text-white/80 transition-colors hover:text-white"
          aria-label={item.label}
         >
-         <Icon className="size-4 stroke-[1.25] xl:size-5" />
-         {item.icon === "help" ? (
+         <Icon className="size-4 shrink-0 xl:size-5" />
+         {item.icon === "support" ? (
           <span className="text-[0.65rem] tracking-wide">Destek</span>
          ) : null}
         </Link>
@@ -101,7 +107,10 @@ export function DesktopNavbar({
    </div>
 
    <div className="header-nav-expanded">
-    <div className="border-b border-white/10 py-2.5">
+    <div
+     className="border-b border-white/10 py-2.5"
+     onMouseEnter={() => setProductsOpenState(false)}
+    >
      <NavSeparatorRow
       items={secondaryNavItems}
       variant="secondary"
@@ -109,31 +118,36 @@ export function DesktopNavbar({
      />
     </div>
 
-    <div className="border-b border-white/10 py-3.5">
-     <nav className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2 xl:gap-x-9">
-      {primaryNavItems.map((item) =>
-       item.megaMenu === "products" ? (
-        <ProductsNavTrigger
-         key={item.href}
-         item={item}
-         active={productsActive}
-         onOpen={() => setProductsOpenState(true)}
-        />
-       ) : (
-        <PrimaryNavLink
-         key={item.href}
-         item={item}
-         pathname={pathname}
-        />
-       )
-      )}
-     </nav>
-    </div>
+    <div
+     className="relative"
+     onMouseLeave={(event) =>
+      leaveHoverZone(event, () => setProductsOpenState(false))
+     }
+    >
+     <div className="border-b border-white/10 py-3.5">
+      <nav className="flex flex-wrap items-center justify-center gap-x-7 gap-y-2 xl:gap-x-9">
+       {primaryNavItems.map((item) =>
+        item.megaMenu === "products" ? (
+         <ProductsNavTrigger
+          key={item.href}
+          item={item}
+          active={productsActive}
+          onOpen={() => setProductsOpenState(true)}
+         />
+        ) : (
+         <PrimaryNavLink
+          key={item.href}
+          item={item}
+          pathname={pathname}
+          onHover={() => setProductsOpenState(false)}
+         />
+        )
+       )}
+      </nav>
+     </div>
 
-    <ProductsMegaMenu
-     open={productsOpen}
-     onMouseEnter={() => setProductsOpenState(true)}
-    />
+     <ProductsMegaMenu open={productsMenuOpen} />
+    </div>
    </div>
   </div>
  );
@@ -145,31 +159,29 @@ function ProductsNavTrigger({ item, active, onOpen }) {
    href={item.href}
    onMouseEnter={onOpen}
    onFocus={onOpen}
+   data-active={active ? "true" : undefined}
    className={cn(
-    "font-display relative text-[13px] font-normal tracking-[0.18em] uppercase transition-colors",
+    "nav-menu-link font-display text-[13px] font-normal tracking-[0.18em] uppercase transition-colors",
     active ? "text-white" : "text-white/85 hover:text-white"
    )}
   >
    {item.label}
-   <span
-    className={cn(
-     "absolute right-0 -bottom-3.5 left-0 h-px bg-white transition-opacity",
-     active ? "opacity-100" : "opacity-0"
-    )}
-   />
   </Link>
  );
 }
 
-function PrimaryNavLink({ item, pathname }) {
+function PrimaryNavLink({ item, pathname, onHover }) {
  const isActive =
   pathname === item.href || pathname.startsWith(`${item.href}/`);
 
  return (
   <Link
    href={item.href}
+   onMouseEnter={onHover}
+   onFocus={onHover}
+   data-active={isActive ? "true" : undefined}
    className={cn(
-    "font-display text-[13px] font-normal tracking-[0.18em] uppercase transition-colors",
+    "nav-menu-link font-display text-[13px] font-normal tracking-[0.18em] uppercase transition-colors",
     isActive ? "text-white" : "text-white/85 hover:text-white"
    )}
   >
@@ -194,7 +206,7 @@ function UtilityNavAction({ item, searchOpen, onSearchToggle }) {
     aria-label={item.label}
     aria-expanded={searchOpen}
    >
-    <Icon className="size-4 stroke-[1.25] xl:size-5" />
+    <Icon className="size-4 shrink-0 xl:size-5" />
    </button>
   );
  }
@@ -205,7 +217,7 @@ function UtilityNavAction({ item, searchOpen, onSearchToggle }) {
    className="text-white/80 transition-colors hover:text-white"
    aria-label={item.label}
   >
-   <Icon className="size-4 stroke-[1.25] xl:size-5" />
+   <Icon className="size-4 shrink-0 xl:size-5" />
   </Link>
  );
 }

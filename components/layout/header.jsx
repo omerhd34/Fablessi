@@ -84,11 +84,18 @@ export function Header() {
       ? "bg-transparent shadow-none"
       : "bg-black shadow-md shadow-black/25"
    )}
-   onMouseLeave={() => setProductsMenuOpen(false)}
+   onMouseLeave={(event) => {
+    const related = event.relatedTarget;
+    if (related instanceof Node && event.currentTarget.contains(related)) {
+     return;
+    }
+    setProductsMenuOpen(false);
+   }}
   >
    <Navbar
     compact={compact}
     searchOpen={searchOpen}
+    productsMenuOpen={productsMenuOpen}
     onProductsMenuOpenChange={setProductsMenuOpen}
     onSearchToggle={toggleSearch}
     onSearchClose={() => setSearchOpen(false)}
