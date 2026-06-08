@@ -28,11 +28,11 @@ export function MobileMenuDrawer({ pathname, onClose }) {
     </SheetTitle>
    </SheetHeader>
 
-   <div className="shrink-0 px-5 pt-5 pb-2">
+   <div className="flex shrink-0 justify-end px-5 pt-5 pb-2">
     <SheetClose asChild>
      <button
       type="button"
-      className="-ml-1.5 flex size-10 cursor-pointer items-center justify-center rounded-full text-charcoal/70 transition-colors hover:bg-charcoal/6 hover:text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-charcoal/15"
+      className="-mr-1.5 flex size-10 cursor-pointer items-center justify-center rounded-full text-charcoal/70 transition-colors hover:bg-charcoal/6 hover:text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-charcoal/15"
       aria-label="Menüyü kapat"
      >
       <CloseIcon className="size-5 shrink-0 stroke-[1.75]" aria-hidden />

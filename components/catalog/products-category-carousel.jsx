@@ -14,7 +14,7 @@ const carouselCategories = productsMegaMenu.groups.map((group) => ({
  image: group.items[0]?.image,
 }));
 
-export function ProductsCategoryCarousel({ activeSlug }) {
+export function ProductsCategoryCarousel({ activeSlug, className }) {
  const [emblaRef, emblaApi] = useEmblaCarousel({
   align: "start",
   dragFree: true,
@@ -22,7 +22,7 @@ export function ProductsCategoryCarousel({ activeSlug }) {
  });
 
  return (
-  <div className="relative">
+  <div className={cn("relative", className)}>
    <div className="overflow-hidden" ref={emblaRef}>
     <div className="flex gap-3 md:gap-4">
      {carouselCategories.map((category) => {
@@ -37,7 +37,7 @@ export function ProductsCategoryCarousel({ activeSlug }) {
          active && "ring-2 ring-charcoal/20 ring-offset-2 rounded-2xl"
         )}
        >
-        <div className="relative aspect-4/3 overflow-hidden rounded-2xl bg-cream/60">
+        <div className="relative aspect-4/3 overflow-hidden rounded-2xl border border-charcoal/12 bg-cream/60 shadow-[0_2px_10px_rgb(0_0_0/4%)] transition-[border-color,box-shadow] duration-200 group-hover:border-charcoal/20 group-hover:shadow-[0_6px_20px_rgb(0_0_0/7%)]">
          {category.image ? (
           <Image
            src={category.image}

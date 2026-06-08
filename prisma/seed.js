@@ -47,6 +47,8 @@ const COLLECTIONS = [
     folder: "acelya-oturma",
     imagePrefixes: ["antrasit", "cappuccino"],
     sortOrder: 1,
+    isFeatured: true,
+    featuredOrder: 5,
     variants: [
      { name: "Antrasit", color: "Antrasit", material: "Outdoor kumaş", isDefault: true },
      { name: "Cappuccino", color: "Cappuccino", material: "Outdoor kumaş" },
@@ -70,6 +72,8 @@ const COLLECTIONS = [
     folder: "aston-oturma",
     imagePrefixes: ["antrasit", "cappuccino"],
     sortOrder: 1,
+    isFeatured: true,
+    featuredOrder: 6,
     variants: [
      { name: "Antrasit", color: "Antrasit", material: "Outdoor kumaş", isDefault: true },
      { name: "Cappuccino", color: "Cappuccino", material: "Outdoor kumaş" },
@@ -104,6 +108,8 @@ const COLLECTIONS = [
     folder: "begonia-oturma",
     imagePrefixes: ["antrasit", "gri"],
     sortOrder: 2,
+    isFeatured: true,
+    featuredOrder: 7,
     variants: [
      { name: "Antrasit", color: "Antrasit", material: "Outdoor kumaş", isDefault: true },
      { name: "Gri", color: "Gri", material: "Outdoor kumaş" },
@@ -127,6 +133,8 @@ const COLLECTIONS = [
     folder: "tesla-kose",
     imagePrefix: "antrasit",
     sortOrder: 1,
+    isFeatured: true,
+    featuredOrder: 8,
     variants: [{ name: "Antrasit", color: "Antrasit", material: "Outdoor kumaş", isDefault: true }],
    },
    {
@@ -147,6 +155,8 @@ const COLLECTIONS = [
      "Tesla oturma grubu; geniş teras ve bahçe alanları için konforlu dış mekân mobilyası.",
     folder: "tesla-oturma",
     sortOrder: 3,
+    isFeatured: true,
+    featuredOrder: 9,
     variants: [{ name: "Standart", material: "Outdoor kumaş", isDefault: true }],
    },
    {
@@ -177,6 +187,8 @@ const COLLECTIONS = [
     folder: "velar-kose",
     imagePrefix: "cappuccino",
     sortOrder: 1,
+    isFeatured: true,
+    featuredOrder: 10,
     variants: [{ name: "Cappuccino", color: "Cappuccino", material: "Outdoor kumaş", isDefault: true }],
    },
    {
@@ -197,6 +209,8 @@ const COLLECTIONS = [
      "Velar oturma grubu; premium bahçe mobilyası serisinin en çok tercih edilen modellerinden.",
     folder: "velar-oturma",
     sortOrder: 3,
+    isFeatured: true,
+    featuredOrder: 4,
     variants: [{ name: "Standart", material: "Outdoor kumaş", isDefault: true }],
    },
    {
@@ -207,6 +221,8 @@ const COLLECTIONS = [
      "Velar salıncak; havuz kenarı ve teras dinlenme köşeleri için.",
     folder: "velar-salincak",
     sortOrder: 4,
+    isFeatured: true,
+    featuredOrder: 3,
     variants: [{ name: "Standart", material: "Alüminyum & örgü", isDefault: true }],
    },
    {
@@ -217,6 +233,8 @@ const COLLECTIONS = [
      "Velar şezlong; ayarlanabilir sırtlı yapısıyla havuz ve güneş terası kullanımına uygun.",
     folder: "velar-sezlong",
     sortOrder: 5,
+    isFeatured: true,
+    featuredOrder: 2,
     variants: [{ name: "Standart", material: "Alüminyum", isDefault: true }],
    },
   ],
@@ -235,6 +253,8 @@ const COLLECTIONS = [
      "Trend sallanır sandalye; rahat oturum ve salınım hareketiyle teras ve bahçe keyfi.",
     folder: "trend-sandalye",
     sortOrder: 1,
+    isFeatured: true,
+    featuredOrder: 1,
     variants: [{ name: "Standart", material: "Alüminyum & örgü", isDefault: true }],
    },
   ],
@@ -277,6 +297,8 @@ async function createProduct(collectionId, data) {
    depthCm: data.depthCm ?? null,
    heightCm: data.heightCm ?? null,
    sortOrder: data.sortOrder,
+   isFeatured: data.isFeatured ?? false,
+   featuredOrder: data.featuredOrder ?? 0,
    collectionId,
    images: {
     create: imageUrls.map((url, index) => ({

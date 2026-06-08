@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import { ProductCard } from "@/components/catalog/product-card";
 import { ProductsCatalogToolbar } from "@/components/catalog/products-catalog-toolbar";
@@ -37,7 +38,13 @@ function getAvailableColors(products) {
  return [...colors];
 }
 
-export function ProductsCatalogShell({ products, activeGroup, categorySlug }) {
+export function ProductsCatalogShell({
+ products,
+ activeGroup,
+ activeCollection,
+ categorySlug,
+ collectionSlug,
+}) {
  const [search, setSearch] = useState("");
  const [sort, setSort] = useState("featured");
  const [selectedColor, setSelectedColor] = useState(null);
@@ -63,6 +70,8 @@ export function ProductsCatalogShell({ products, activeGroup, categorySlug }) {
   return sortProducts(list, sort);
  }, [products, search, selectedColor, sort]);
 
+ const categoryHeroImage = activeGroup?.items?.[0]?.image ?? null;
+
  return (
   <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-12">
    <ProductsFiltersSidebar
@@ -74,17 +83,38 @@ export function ProductsCatalogShell({ products, activeGroup, categorySlug }) {
    />
 
    <div className="min-w-0 flex-1 space-y-6 md:space-y-8">
+    {categoryHeroImage ? (
+     <div className="page-header-bleed relative -mx-4 h-44 overflow-hidden sm:-mx-5 sm:h-52 md:-mx-6 lg:-mx-8 lg:h-56 xl:-mx-10">
+      <Image
+       src={categoryHeroImage}
+       alt={activeGroup.label}
+       fill
+       priority
+       sizes="100vw"
+       className="object-cover"
+      />
+      <div className="absolute inset-0 bg-linear-to-b from-black/25 via-black/5 to-transparent" />
+     </div>
+    ) : null}
+
     <div>
      <h1 className="heading-display text-charcoal">
-      {activeGroup ? activeGroup.label : "Tüm Ürünler"}
+      {activeCollection
+       ? activeCollection.name
+       : activeGroup
+         ? activeGroup.label
+         : "Tüm Ürünler"}
      </h1>
      <p className="text-muted-foreground mt-2 text-sm">
       {filteredProducts.length} ürün listeleniyor.
      </p>
     </div>
 
-    {!categorySlug ? (
-     <ProductsCategoryCarousel activeSlug={categorySlug} />
+    {!categorySlug && !collectionSlug ? (
+     <ProductsCategoryCarousel
+      activeSlug={categorySlug}
+      className="page-header-bleed"
+     />
     ) : null}
 
     <ProductsFiltersSidebar

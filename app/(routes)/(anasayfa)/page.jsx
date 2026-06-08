@@ -1,23 +1,23 @@
-import { ArchitectPicksCarousel } from "@/components/home/architect-picks-carousel";
 import { BrandExperienceBanner } from "@/components/home/brand-experience-banner";
-import { CollectionsShowcase } from "@/components/home/collections-showcase";
+import { CategoriesShowcase } from "@/components/home/categories-showcase";
+import { VarietiesShowcase } from "@/components/home/varieties-showcase";
 import { HeroSection } from "@/components/home/hero-section";
-import { LatestProductsGrid } from "@/components/home/latest-products-grid";
+import { FeaturedProductsGrid } from "@/components/home/featured-products-grid";
 import { getHomePageData } from "@/lib/queries/home";
 
 export const revalidate = 60;
 
 export default async function Anasayfa() {
- const { collections, latestProducts, architectPicks } =
+ const { collections, featuredProducts, architectPicks } =
   await getHomePageData();
 
  return (
   <>
    <HeroSection />
-   <LatestProductsGrid products={latestProducts} />
-   <CollectionsShowcase collections={collections} />
+   <FeaturedProductsGrid products={featuredProducts} />
+   <CategoriesShowcase />
+   <VarietiesShowcase collections={collections} />
    <BrandExperienceBanner />
-   <ArchitectPicksCarousel products={architectPicks} />
   </>
  );
 }

@@ -17,7 +17,6 @@ export function Header() {
  const [menuOpen, setMenuOpen] = useState(false);
 
  const isHome = pathname === "/";
- const compact = !isHome;
  const headerHidden = isHome && scrolled && !searchOpen && !menuOpen;
 
  const toggleSearch = () => {
@@ -66,14 +65,10 @@ export function Header() {
  return (
   <header
    data-search-open={searchOpen ? "true" : "false"}
-   data-compact={compact ? "true" : "false"}
    data-hidden={headerHidden ? "true" : "false"}
    className={cn(
-    "site-header fixed inset-x-0 top-0 z-50 transition-[transform,background-color,box-shadow,opacity] duration-300 ease-out",
-    headerHidden && "-translate-y-full opacity-0 pointer-events-none",
-    compact && !headerHidden
-     ? "bg-white/95 shadow-[0_1px_0_rgb(0_0_0/6%)] backdrop-blur-md"
-     : "bg-transparent shadow-none"
+    "site-header fixed inset-x-0 top-0 bg-transparent shadow-none transition-[transform,opacity] duration-300 ease-out",
+    headerHidden && "-translate-y-full opacity-0 pointer-events-none"
    )}
   >
    <Navbar

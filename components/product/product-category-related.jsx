@@ -3,21 +3,18 @@ import Link from "next/link";
 import { getPrimaryImageUrl } from "@/lib/queries/home";
 import { getProductCardLabel } from "@/lib/product-utils";
 
-const PLACEHOLDER =
- "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80";
-
 export function ProductCategoryRelated({ products, categoryLabel }) {
  if (products.length === 0) return null;
 
  return (
-  <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-3xl border border-charcoal/10 bg-white shadow-[0_8px_30px_rgb(0_0_0/5%)]">
-   <div className="shrink-0 border-b border-charcoal/8 px-4 py-3.5">
+  <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-3xl border border-charcoal/12 bg-cream/30 shadow-[0_8px_30px_rgb(0_0_0/5%)]">
+   <div className="shrink-0 border-b border-charcoal/10 bg-white/80 px-4 py-3.5">
     <h2 className="text-sm font-semibold text-charcoal">{categoryLabel}</h2>
    </div>
    <div className="min-h-0 flex-1 overflow-y-auto p-3 product-similar-scroll">
     <div className="space-y-3">
      {products.map((product) => {
-      const imageUrl = getPrimaryImageUrl(product) ?? PLACEHOLDER;
+      const imageUrl = getPrimaryImageUrl(product);
       const defaultVariant =
        product.variants?.find((variant) => variant.isDefault) ??
        product.variants?.[0];
@@ -26,16 +23,18 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
        <Link
         key={product.id}
         href={`/urunler/${product.slug}`}
-        className="group flex cursor-pointer gap-3 rounded-2xl border border-charcoal/8 bg-white p-2.5 transition hover:border-charcoal/15 hover:shadow-[0_4px_16px_rgb(0_0_0/6%)]"
+        className="group flex cursor-pointer gap-3 rounded-2xl border border-charcoal/12 bg-white p-2.5 shadow-[0_1px_4px_rgb(0_0_0/4%)] transition hover:border-charcoal/22 hover:bg-cream/40 hover:shadow-[0_4px_16px_rgb(0_0_0/8%)]"
        >
-        <div className="relative size-16 shrink-0 overflow-hidden rounded-xl bg-cream/60">
-         <Image
-          src={imageUrl}
-          alt={product.images?.[0]?.alt ?? product.name}
-          fill
-          sizes="64px"
-          className="object-cover transition-transform duration-300 group-hover:scale-105"
-         />
+        <div className="relative size-16 shrink-0 overflow-hidden rounded-xl border border-charcoal/10 bg-cream/60">
+         {imageUrl ? (
+          <Image
+           src={imageUrl}
+           alt={product.images?.[0]?.alt ?? product.name}
+           fill
+           sizes="64px"
+           className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+         ) : null}
         </div>
         <div className="min-w-0 flex-1 py-0.5">
          <p className="truncate text-sm font-semibold text-charcoal">

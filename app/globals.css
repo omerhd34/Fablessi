@@ -102,13 +102,13 @@
   --sidebar-border: oklch(0.91 0.008 90);
   --sidebar-ring: oklch(0.72 0.02 260);
 
-  --header-height-mobile: 5rem;
-  --header-height-desktop: 5.5rem;
-  --header-height-desktop-full: 5.5rem;
+  --header-height-mobile: 5.5rem;
+  --header-height-desktop: 6rem;
+  --header-height-desktop-full: 6rem;
   --search-bar-height: 0rem;
-  --header-compact-bg: oklch(1 0 0);
-  --pill-bg: rgb(255 255 255 / 78%);
-  --pill-bg-solid: oklch(1 0 0);
+  --pill-bg: rgb(255 255 255 / 48%);
+  --pill-border: rgb(255 255 255 / 42%);
+  --pill-shadow: none;
   --product-card-bg: oklch(0.935 0.006 90);
 }
 
@@ -192,6 +192,7 @@
   border-radius: 2rem !important;
   background: rgb(255 255 255 / 54%) !important;
   backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
   box-shadow: 0 12px 48px rgb(0 0 0 / 14%) !important;
   gap: 0 !important;
   transition: none !important;
@@ -221,42 +222,57 @@
   animation: mobile-nav-drawer-out 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
 }
 
+.site-header {
+  z-index: 50;
+  background: transparent;
+  pointer-events: none;
+}
+
+.site-header a,
+.site-header button,
+.site-header input,
+.site-header form,
+.site-header [role="search"] {
+  pointer-events: auto;
+}
+
 @layer utilities {
   .site-header[data-search-open="true"] {
     --search-bar-height: 4.75rem;
   }
 
   .page-content-offset {
+    position: relative;
+    z-index: 0;
+    margin-top: calc(-1 * (var(--header-height-mobile) + var(--search-bar-height)));
     padding-top: calc(
-      var(--header-height-mobile) + var(--search-bar-height) + 1.5rem
+      2 * (var(--header-height-mobile) + var(--search-bar-height)) + 1.5rem
     );
   }
 
   @media (min-width: 1024px) {
     .page-content-offset {
+      margin-top: calc(
+        -1 * (var(--header-height-desktop) + var(--search-bar-height))
+      );
       padding-top: calc(
-        var(--header-height-desktop) + var(--search-bar-height) + 2rem
+        2 * (var(--header-height-desktop) + var(--search-bar-height)) + 2rem
       );
     }
   }
 
-  .site-header[data-compact="true"] .header-pill,
-  .site-header[data-compact="true"] .header-pill-circle {
-    background: var(--pill-bg-solid);
-    box-shadow: 0 2px 12px rgb(0 0 0 / 8%);
+  .page-header-bleed {
+    margin-top: calc(
+      -1 * (var(--header-height-mobile) + var(--search-bar-height) + 1.5rem)
+    );
   }
 
-  .site-header[data-compact="true"] .header-pill-link,
-  .site-header[data-compact="true"] .header-icon-btn {
-    color: var(--charcoal);
-  }
-
-  .site-header[data-compact="true"] .header-pill-divider {
-    background: oklch(0.22 0.01 260 / 15%);
-  }
-
-  .site-header[data-compact="true"] .brand-logo-pill span {
-    color: var(--charcoal);
+  @media (min-width: 1024px) {
+    .page-header-bleed {
+      margin-top: calc(
+        -1 * (var(--header-height-desktop) + var(--search-bar-height) + 2rem)
+      );
+    }
   }
 
   .header-pill {
@@ -264,9 +280,11 @@
     align-items: center;
     gap: 0;
     border-radius: 9999px;
+    border: 1px solid var(--pill-border);
     background: var(--pill-bg);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 2px 16px rgb(0 0 0 / 10%);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    box-shadow: var(--pill-shadow);
   }
 
   .header-pill-circle {
@@ -274,13 +292,15 @@
     align-items: center;
     justify-content: center;
     border-radius: 9999px;
+    border: 1px solid var(--pill-border);
     background: var(--pill-bg);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 2px 16px rgb(0 0 0 / 10%);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    box-shadow: var(--pill-shadow);
   }
 
   .header-pill-link {
-    font-size: 0.9375rem;
+    font-size: 1rem;
     font-weight: 500;
     color: oklch(0.22 0.01 260);
     transition: opacity 0.2s ease;
@@ -314,9 +334,12 @@
     align-items: center;
     justify-content: center;
     border-radius: 9999px;
-    background: rgb(255 255 255 / 92%);
+    border: 1px solid var(--pill-border);
+    background: var(--pill-bg);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
     padding: 0.8rem 2.5rem;
-    box-shadow: 0 4px 20px rgb(0 0 0 / 12%);
+    box-shadow: var(--pill-shadow);
     transition: opacity 0.2s ease;
   }
 
@@ -327,12 +350,11 @@
   .header-search-pill {
     height: 3.375rem;
     border-radius: 9999px;
-    background: rgb(255 255 255 / 72%);
-    backdrop-filter: blur(14px);
-    border: 1px solid rgb(255 255 255 / 58%);
-    box-shadow:
-      0 2px 20px rgb(0 0 0 / 8%),
-      inset 0 1px 0 rgb(255 255 255 / 55%);
+    background: var(--pill-bg);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid var(--pill-border);
+    box-shadow: var(--pill-shadow);
     padding-inline: 1.25rem;
   }
 
@@ -341,14 +363,6 @@
       height: 3.5rem;
       padding-inline: 1.625rem;
     }
-  }
-
-  .site-header[data-compact="true"] .header-search-pill {
-    background: rgb(255 255 255 / 96%);
-    border-color: oklch(0.91 0.008 90);
-    box-shadow:
-      0 2px 16px rgb(0 0 0 / 6%),
-      inset 0 1px 0 rgb(255 255 255 / 80%);
   }
 
   .section-padding {
@@ -387,12 +401,11 @@
 
   .products-mega-menu-panel {
     border-radius: 2rem;
-    border: 1px solid rgb(255 255 255 / 52%);
+    border: 1px solid var(--pill-border);
     background: rgb(255 255 255 / 42%);
     backdrop-filter: blur(24px) saturate(140%);
-    box-shadow:
-      0 12px 48px rgb(0 0 0 / 14%),
-      inset 0 1px 0 rgb(255 255 255 / 55%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    box-shadow: 0 12px 48px rgb(0 0 0 / 14%);
   }
 
   .products-mega-menu-scroll {
@@ -435,13 +448,5 @@
 
   .products-mega-menu-scroll:hover::-webkit-scrollbar-thumb {
     background: oklch(0.5 0.01 260 / 0.48);
-  }
-
-  .site-header[data-compact="true"] .products-mega-menu-panel {
-    background: rgb(255 255 255 / 78%);
-    border-color: oklch(0.91 0.008 90);
-    box-shadow:
-      0 12px 40px rgb(0 0 0 / 10%),
-      inset 0 1px 0 rgb(255 255 255 / 80%);
   }
 }

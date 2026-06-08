@@ -3,14 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const BRAND_BANNER_IMAGE =
- "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=2400&q=85";
-
 export function BrandExperienceBanner() {
  return (
   <section className="relative min-h-[420px] overflow-hidden md:min-h-[520px]">
    <Image
-    src={BRAND_BANNER_IMAGE}
+    src="/velar-oturma/01.jpg"
     alt="Fablessi üretim deneyimi — bahçe mobilyası atölyesi"
     fill
     sizes="100vw"

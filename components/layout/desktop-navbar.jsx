@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -52,18 +53,18 @@ export function DesktopNavbar({
 
  return (
   <div ref={navRef} className="nav-desktop relative" aria-label="Masaüstü menü">
-   <div className="container-premium flex h-22 items-center justify-between gap-4">
+   <div className="container-premium flex h-24 items-center justify-between gap-4">
     <div className="flex min-w-0 items-center gap-3">
      <button
       type="button"
       onClick={onMenuOpen}
-      className="header-pill-circle header-icon-btn size-11 shrink-0 cursor-pointer xl:size-12"
+      className="header-pill-circle header-icon-btn size-12 shrink-0 cursor-pointer xl:size-[3.35rem]"
       aria-label="Menüyü aç"
      >
-      <Menu className="size-[1.35rem]" />
+      <Menu className="size-[1.45rem]" />
      </button>
 
-     <div className="header-pill hidden h-11 items-center px-1.5 sm:flex xl:h-12">
+     <div className="header-pill hidden h-12 items-center px-2 sm:flex xl:h-[3.35rem]">
       {headerQuickLinks.map((item, index) => (
        <span key={item.href} className="flex items-center">
         {index > 0 ? <span className="header-pill-divider" aria-hidden /> : null}
@@ -74,7 +75,7 @@ export function DesktopNavbar({
           aria-expanded={productsMenuOpen}
           aria-haspopup="true"
           className={cn(
-           "header-pill-link cursor-pointer px-3.5 py-2.5 xl:px-5",
+           "header-pill-link cursor-pointer px-4 py-2.5 xl:px-5 xl:py-3",
            productsActive && "font-semibold"
           )}
          >
@@ -84,7 +85,7 @@ export function DesktopNavbar({
          <Link
           href={item.href}
           onClick={() => setProductsOpenState(false)}
-          className="header-pill-link px-3.5 py-2.5 xl:px-5"
+          className="header-pill-link px-4 py-2.5 xl:px-5 xl:py-3"
          >
           {item.label}
          </Link>
@@ -97,24 +98,24 @@ export function DesktopNavbar({
     <BrandLogoLink size="md" />
 
     <div className="flex items-center justify-end gap-3">
-     <div className="header-pill flex h-11 items-center px-1.5 xl:h-12">
+     <div className="header-pill flex h-12 items-center px-2 xl:h-[3.35rem]">
       <button
        type="button"
        onClick={onSearchToggle}
        className={cn(
-        "header-icon-btn size-10 cursor-pointer rounded-full xl:size-11",
+        "header-icon-btn size-11 cursor-pointer rounded-full xl:size-12",
         searchOpen && "opacity-70"
        )}
        aria-label="Ara"
        aria-expanded={searchOpen}
       >
-       <Search className="size-[1.35rem]" />
+       <Search className="size-[1.45rem]" />
       </button>
      </div>
 
      <button
       type="button"
-      className="header-pill-circle header-pill-link size-11 shrink-0 cursor-pointer text-sm font-semibold xl:size-12"
+      className="header-pill-circle header-pill-link size-12 shrink-0 cursor-pointer text-[0.9375rem] font-semibold xl:size-[3.35rem]"
       aria-label="Dil: Türkçe"
      >
       TR

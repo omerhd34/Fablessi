@@ -3,8 +3,8 @@ import { brandSlug } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
 const sizeClasses = {
- sm: "px-7 py-3 text-[1.35rem]",
- md: "px-10 py-3.5 text-[1.55rem] xl:text-[1.8rem]",
+ sm: "px-8 py-3.5 text-[1.45rem]",
+ md: "px-11 py-4 text-[1.65rem] xl:px-12 xl:text-[1.95rem]",
 };
 
 export function BrandLogoLink({ href = "/", size = "md", className }) {

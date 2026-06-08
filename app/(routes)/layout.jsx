@@ -34,8 +34,8 @@ export default function RootLayout({ children }) {
   <html lang="tr" className={`${inter.variable} h-full antialiased`}>
    <body className="min-h-full flex flex-col font-sans">
     <TooltipProvider>
+     <main className="relative z-0 flex-1">{children}</main>
      <Header />
-     <main className="flex-1">{children}</main>
      <Footer />
      <ContactFloat />
     </TooltipProvider>

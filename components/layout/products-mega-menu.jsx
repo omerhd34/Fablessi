@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 function ProductMenuCard({ item }) {
  return (
   <Link href={item.href} className="group block">
-   <div className="relative aspect-square overflow-hidden rounded-2xl bg-white/35 shadow-[0_4px_20px_rgb(0_0_0/8%)]">
+   <div className="relative aspect-square overflow-hidden rounded-2xl shadow-[0_4px_20px_rgb(0_0_0/8%)]">
     <Image
      src={item.image}
      alt={item.label}

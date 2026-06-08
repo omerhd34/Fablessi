@@ -13,7 +13,7 @@ export function MobileNavbar({ searchOpen, onSearchToggle, onMenuOpen }) {
 
  return (
   <div
-   className="nav-compact container-premium flex h-20 items-center justify-between gap-3"
+   className="nav-compact container-premium flex h-22 items-center justify-between gap-3"
    aria-label="Mobil menü"
   >
    <div className="flex items-center gap-2.5">
@@ -22,23 +22,23 @@ export function MobileNavbar({ searchOpen, onSearchToggle, onMenuOpen }) {
      size="icon"
      type="button"
      onClick={onMenuOpen}
-     className="header-pill-circle size-11 shrink-0 hover:bg-transparent"
+     className="header-pill-circle size-12 shrink-0 hover:bg-transparent"
      aria-label="Menüyü aç"
     >
-     <Menu className="size-[1.35rem] text-charcoal" />
+     <Menu className="size-[1.45rem] text-charcoal" />
     </Button>
 
     <button
      type="button"
      onClick={onSearchToggle}
      className={cn(
-      "header-pill-circle header-icon-btn size-11 cursor-pointer",
+      "header-pill-circle header-icon-btn size-12 cursor-pointer",
       searchOpen && "opacity-70"
      )}
      aria-label="Ara"
      aria-expanded={searchOpen}
     >
-     <Search className="size-[1.35rem]" />
+     <Search className="size-[1.45rem]" />
     </button>
    </div>
 
@@ -46,7 +46,7 @@ export function MobileNavbar({ searchOpen, onSearchToggle, onMenuOpen }) {
 
    <button
     type="button"
-    className="header-pill-circle header-pill-link size-11 shrink-0 cursor-pointer text-sm font-semibold"
+    className="header-pill-circle header-pill-link size-12 shrink-0 cursor-pointer text-[0.9375rem] font-semibold"
     aria-label="Dil: Türkçe"
    >
     TR
