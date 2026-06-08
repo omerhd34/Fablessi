@@ -180,17 +180,17 @@ export function HeaderSearchBar({ open, onClose }) {
   <>
    {mounted && open && !showResultsPanel
     ? createPortal(
-       <button
-        type="button"
-        className={cn(
-         "search-backdrop-layer",
-         isHome && "search-backdrop-layer--hero"
-        )}
-        onClick={onClose}
-        aria-label="Aramayı kapat"
-       />,
-       document.body
-      )
+     <button
+      type="button"
+      className={cn(
+       "search-backdrop-layer",
+       isHome && "search-backdrop-layer--hero"
+      )}
+      onClick={onClose}
+      aria-label="Aramayı kapat"
+     />,
+     document.body
+    )
     : null}
 
    <div
@@ -207,12 +207,12 @@ export function HeaderSearchBar({ open, onClose }) {
 
    {mounted && open && showResultsPanel
     ? createPortal(
-       <div
-        className={cn("search-overlay", isHome && "search-overlay--hero")}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Arama sonuçları"
-       >
+     <div
+      className={cn("search-overlay", isHome && "search-overlay--hero")}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Arama sonuçları"
+     >
       <button
        type="button"
        className="search-overlay-backdrop"
@@ -231,12 +231,16 @@ export function HeaderSearchBar({ open, onClose }) {
         )}
        >
         {loading ? (
-         <p className="search-overlay-status">Aranıyor...</p>
+         <div className="search-overlay-status flex justify-center">
+          <div className="search-overlay-loader" role="status" aria-label="Aranıyor">
+           <Search className="search-overlay-loader__icon" aria-hidden />
+          </div>
+         </div>
         ) : null}
 
         {!loading && results.collections.length > 0 ? (
          <section className="search-overlay-section">
-          <h3 className="search-overlay-section-title">Koleksiyonlar</h3>
+          <h3 className="search-overlay-sectisafon-title">Koleksiyonlar</h3>
           <ul className="flex flex-wrap gap-2">
            {results.collections.map((collection) => (
             <li key={collection.id}>
