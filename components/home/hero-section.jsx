@@ -203,7 +203,7 @@ export function HeroSection() {
         />
         <div className="absolute inset-0 bg-linear-to-b from-black/20 via-transparent to-black/30" />
 
-        <div className="hero-slide-copy-wrap absolute inset-x-0 flex -translate-y-1/2 flex-col items-center px-3 sm:px-6">
+        <div className="hero-slide-copy-wrap absolute inset-0 flex items-center justify-center px-3 sm:px-6">
          <div className="hero-slide-copy">
           <div className="hero-slide-copy__panel">
            <h1 className="hero-slide-copy__headline">{slide.headline}</h1>
