@@ -1,3 +1,5 @@
+import "./urunler.css";
+
 export const metadata = {
  title: "Ürünler",
  description:

@@ -1,3 +1,4 @@
+import "./page.css";
 import { FaqHero } from "@/components/faq/faq-hero";
 import { FaqPageContent } from "@/components/faq/faq-page-content";
 

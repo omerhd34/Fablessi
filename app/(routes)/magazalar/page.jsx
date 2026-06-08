@@ -1,3 +1,4 @@
+import "./page.css";
 import { StoreShowcase } from "@/components/stores/store-showcase";
 
 export const metadata = {

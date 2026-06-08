@@ -1,3 +1,4 @@
+import "./page.css";
 import { BrandExperienceBanner } from "@/components/home/brand-experience-banner";
 import { CategoriesShowcase } from "@/components/home/categories-showcase";
 import { VarietiesShowcase } from "@/components/home/varieties-showcase";

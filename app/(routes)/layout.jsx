@@ -1,5 +1,7 @@
 import { Inter } from "next/font/google";
-import "@/app/globals.css";
+import "@/app/styles/base.css";
+import "@/app/styles/layout.css";
+import "@/app/styles/shared.css";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { MainShell } from "@/components/layout/main-shell";

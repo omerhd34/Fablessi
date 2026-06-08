@@ -1,0 +1,73 @@
+@reference "./base.css";
+
+@layer utilities {
+  .page-content-offset {
+    position: relative;
+    z-index: 0;
+    margin-top: calc(
+      -1 * (var(--header-height-mobile) + var(--search-bar-height))
+    );
+    padding-top: calc(
+      2 * (var(--header-height-mobile) + var(--search-bar-height)) + 1.5rem
+    );
+  }
+
+  @media (min-width: 1024px) {
+    .page-content-offset {
+      margin-top: calc(
+        -1 * (var(--header-height-desktop) + var(--search-bar-height))
+      );
+      padding-top: calc(
+        2 * (var(--header-height-desktop) + var(--search-bar-height)) + 2rem
+      );
+    }
+  }
+
+  .page-header-bleed {
+    margin-top: calc(
+      -1 * (var(--header-height-mobile) + var(--search-bar-height) + 1.5rem)
+    );
+  }
+
+  @media (min-width: 1024px) {
+    .page-header-bleed {
+      margin-top: calc(
+        -1 * (var(--header-height-desktop) + var(--search-bar-height) + 2rem)
+      );
+    }
+  }
+
+  .section-padding {
+    @apply py-16 md:py-20 lg:py-24;
+  }
+
+  .section-padding-sm {
+    @apply py-12 md:py-16;
+  }
+
+  .container-premium {
+    @apply mx-auto w-full max-w-site px-4 sm:px-5 md:px-6 lg:px-8 xl:px-10;
+  }
+
+  .container-shell {
+    @apply mx-auto w-full max-w-site-shell px-4 sm:px-5 md:px-6 lg:px-10 xl:px-12;
+  }
+
+  .heading-eyebrow {
+    @apply font-body text-muted-foreground text-sm font-medium md:text-base;
+  }
+
+  .heading-display {
+    @apply font-heading text-2xl font-semibold tracking-tight md:text-3xl lg:text-4xl;
+  }
+
+  .font-body {
+    font-family: var(--font-body);
+  }
+
+  .product-card-kalif {
+    border-radius: 1.25rem;
+    background: var(--product-card-bg);
+    overflow: hidden;
+  }
+}
