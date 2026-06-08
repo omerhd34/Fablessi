@@ -1,0 +1,47 @@
+.production-intro {
+  border-bottom: 1px solid oklch(0.22 0.01 260 / 8%);
+}
+
+.production-supplier {
+  background: linear-gradient(
+    180deg,
+    oklch(0.985 0.004 90) 0%,
+    oklch(0.97 0.005 90) 100%
+  );
+}
+
+.production-supplier__image {
+  box-shadow: 0 18px 48px oklch(0.22 0.01 260 / 10%);
+}
+
+.production-supplier__brand {
+  letter-spacing: 0.14em;
+}
+
+.production-features__icon {
+  display: grid;
+  place-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 9999px;
+  border: 1px solid oklch(0.22 0.01 260 / 10%);
+  background: oklch(1 0 0 / 88%);
+}
+
+.production-partnership {
+  border-top: 1px solid oklch(0.22 0.01 260 / 8%);
+}
+
+.production-partnership__card {
+  background: oklch(1 0 0 / 72%);
+  border: 1px solid oklch(0.22 0.01 260 / 8%);
+}
+
+.production-cta {
+  background: linear-gradient(
+    135deg,
+    oklch(0.24 0.02 260) 0%,
+    oklch(0.2 0.015 255) 100%
+  );
+  box-shadow: 0 20px 50px oklch(0.22 0.01 260 / 18%);
+}

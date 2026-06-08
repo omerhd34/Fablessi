@@ -53,7 +53,7 @@ function handleMegaMenuWheel(event) {
  event.stopPropagation();
 }
 
-export function ProductsMegaMenu({ open }) {
+export function ProductsMegaMenu({ open, panelRef }) {
  const { navigation, t } = useTranslations();
  const { groups } = navigation.productsMegaMenu;
  const scrollRef = useRef(null);
@@ -81,16 +81,20 @@ export function ProductsMegaMenu({ open }) {
 
  return (
   <div
+   data-open={open ? "true" : undefined}
    className={cn(
-    "absolute inset-x-0 top-full z-50 pt-3 transition-[opacity,visibility,transform] ease-out",
+    "products-mega-menu-root pointer-events-none absolute inset-x-0 top-full z-50 pt-3 transition-[opacity,visibility,transform] ease-out",
     open
      ? "visible translate-y-0 opacity-100 duration-400 ease-[cubic-bezier(0.22,1,0.36,1)]"
-     : "pointer-events-none invisible -translate-y-2 opacity-0 duration-250 ease-in"
+     : "invisible -translate-y-2 opacity-0 duration-250 ease-in"
    )}
    aria-hidden={!open}
   >
    <div className="container-premium">
-    <div className="products-mega-menu-panel overflow-hidden p-3 pr-4 md:p-5 md:pr-6">
+    <div
+     ref={panelRef}
+     className="products-mega-menu-panel overflow-hidden p-3 pr-4 md:p-5 md:pr-6"
+    >
      <div
       ref={scrollRef}
       className="products-mega-menu-scroll max-h-[min(72vh,44rem)] overflow-x-hidden overflow-y-auto overscroll-contain"

@@ -26,6 +26,7 @@ function DesktopNavItem({
  productsMenuOpen,
  onProductsToggle,
  onProductsClose,
+ productsButtonRef,
  showDivider,
 }) {
  const isProducts = item.megaMenu === "products";
@@ -62,6 +63,7 @@ function DesktopNavItem({
    {showDivider ? <span className="header-pill-divider" aria-hidden /> : null}
    {isProducts ? (
     <button
+     ref={productsButtonRef}
      type="button"
      onClick={onProductsToggle}
      aria-expanded={productsMenuOpen}
@@ -94,7 +96,8 @@ export function DesktopNavbar({
 }) {
  const pathname = usePathname();
  const isDesktopNav = useIsDesktopNav();
- const navRef = useRef(null);
+ const megaMenuPanelRef = useRef(null);
+ const productsButtonRef = useRef(null);
  const { navigation, t } = useTranslations();
  const { primaryNavItems } = navigation;
 
@@ -113,7 +116,8 @@ export function DesktopNavbar({
   if (!productsMenuOpen) return;
 
   const onPointerDown = (event) => {
-   if (navRef.current?.contains(event.target)) return;
+   if (megaMenuPanelRef.current?.contains(event.target)) return;
+   if (productsButtonRef.current?.contains(event.target)) return;
    setProductsOpenState(false);
   };
 
@@ -124,7 +128,7 @@ export function DesktopNavbar({
  if (!isDesktopNav) return null;
 
  return (
-  <div ref={navRef} className="nav-desktop relative" aria-label={t("nav.desktopMenu")}>
+  <div className="nav-desktop relative" aria-label={t("nav.desktopMenu")}>
    <div className="container-premium nav-desktop-bar">
     <BrandLogoLink size="xl" className="nav-desktop-bar__logo min-w-0 shrink" />
 
@@ -140,6 +144,7 @@ export function DesktopNavbar({
        productsMenuOpen={productsMenuOpen}
        onProductsToggle={toggleProductsMenu}
        onProductsClose={closeProductsMenu}
+       productsButtonRef={item.megaMenu === "products" ? productsButtonRef : undefined}
        showDivider={index > 0}
       />
      ))}
@@ -165,7 +170,7 @@ export function DesktopNavbar({
     </nav>
    </div>
 
-   <ProductsMegaMenu open={productsMenuOpen} />
+   <ProductsMegaMenu open={productsMenuOpen} panelRef={megaMenuPanelRef} />
   </div>
  );
 }

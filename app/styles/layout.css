@@ -92,10 +92,6 @@
   pointer-events: none;
 }
 
-.site-header:not([data-home="true"]) {
-  border-bottom: 1px solid oklch(0.22 0.01 260 / 9%);
-}
-
 .site-header[data-menu-open="true"]:not([data-home="true"]) {
   background: linear-gradient(
     to bottom,
@@ -111,7 +107,10 @@
 .site-header button,
 .site-header input,
 .site-header form,
-.site-header [role="search"] {
+.site-header [role="search"],
+.site-header
+  .products-mega-menu-root[data-open="true"]
+  .products-mega-menu-panel {
   pointer-events: auto;
 }
 
