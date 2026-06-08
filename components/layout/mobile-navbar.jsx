@@ -41,7 +41,7 @@ export function MobileNavbar({ searchOpen, onSearchToggle, onMenuOpen }) {
       size="icon"
       type="button"
       onClick={onMenuOpen}
-      className="header-pill-circle nav-compact-menu-btn shrink-0 hover:bg-transparent"
+      className="header-pill-circle nav-compact-menu-btn shrink-0 cursor-pointer hover:bg-transparent"
       aria-label={t("nav.openMenu")}
      >
       <Menu className="nav-compact-menu-btn__icon" aria-hidden />

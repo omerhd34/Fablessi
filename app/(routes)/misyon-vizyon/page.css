@@ -1,0 +1,45 @@
+.mission-intro {
+  border-bottom: 1px solid oklch(0.22 0.01 260 / 8%);
+}
+
+.mission-statements {
+  background: linear-gradient(
+    180deg,
+    oklch(0.985 0.004 90) 0%,
+    oklch(0.975 0.005 90) 100%
+  );
+}
+
+.mission-statement {
+  background: oklch(1 0 0 / 80%);
+  border: 1px solid oklch(0.22 0.01 260 / 8%);
+  box-shadow: 0 12px 36px oklch(0.22 0.01 260 / 6%);
+}
+
+.mission-visual__image {
+  box-shadow: 0 18px 48px oklch(0.22 0.01 260 / 10%);
+}
+
+.mission-value {
+  background: oklch(1 0 0 / 72%);
+  border: 1px solid oklch(0.22 0.01 260 / 8%);
+}
+
+.mission-value__icon {
+  display: grid;
+  place-items: center;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 9999px;
+  border: 1px solid oklch(0.22 0.01 260 / 10%);
+  background: oklch(0.985 0.004 90);
+}
+
+.mission-cta {
+  background: linear-gradient(
+    135deg,
+    oklch(0.24 0.02 260) 0%,
+    oklch(0.2 0.015 255) 100%
+  );
+  box-shadow: 0 20px 50px oklch(0.22 0.01 260 / 18%);
+}

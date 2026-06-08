@@ -1,14 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { useMemo, useState } from "react";
 import {
  ChevronLeft,
  ChevronRight,
  CloseIcon,
  Collections,
  Explore,
+ Factory,
+ HelpOutline,
  MapPin,
+ MissionVision,
  SupportAgent,
  ViewModule,
  Work,
@@ -31,13 +34,19 @@ const mobileNavIconMap = {
  collections: Collections,
  projects: Work,
  stores: MapPin,
+ production: Factory,
+ mission: MissionVision,
+ faq: HelpOutline,
  contact: SupportAgent,
 };
 
 export function MobileMenuDrawer({ pathname, onClose }) {
  const [productsViewOpen, setProductsViewOpen] = useState(false);
  const { navigation, t } = useTranslations();
- const { mobileNavSections } = navigation;
+ const mobileNavItems = useMemo(
+  () => navigation.mobileNavSections.flatMap((section) => section.items),
+  [navigation.mobileNavSections]
+ );
 
  return (
   <SheetContent
@@ -87,25 +96,18 @@ export function MobileMenuDrawer({ pathname, onClose }) {
       className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-5"
       aria-label={t("nav.mainNav")}
      >
-      {mobileNavSections.map((section, sectionIndex) => (
-       <Fragment key={sectionIndex}>
-        {section.divider ? (
-         <div className="mobile-nav-divider my-1.5" aria-hidden />
-        ) : null}
-        <ul className="flex flex-col">
-         {section.items.map((item) => (
-          <MobileDrawerNavItem
-           key={item.href}
-           item={item}
-           pathname={pathname}
-           onClose={onClose}
-           onOpenProductsMenu={() => setProductsViewOpen(true)}
-           t={t}
-          />
-         ))}
-        </ul>
-       </Fragment>
-      ))}
+      <ul className="flex flex-col">
+       {mobileNavItems.map((item) => (
+        <MobileDrawerNavItem
+         key={item.href}
+         item={item}
+         pathname={pathname}
+         onClose={onClose}
+         onOpenProductsMenu={() => setProductsViewOpen(true)}
+         t={t}
+        />
+       ))}
+      </ul>
      </nav>
 
      <div className="shrink-0 border-t border-charcoal/8 px-5 py-4">
@@ -136,7 +138,7 @@ function MobileDrawerNavItem({
      type="button"
      onClick={onOpenProductsMenu}
      className={cn(
-      "flex min-h-13 w-full cursor-pointer items-center gap-3 py-3.5 text-left text-[0.9375rem] font-medium transition-colors hover:text-charcoal",
+      "flex min-h-14 w-full cursor-pointer items-center gap-3 px-0 py-4 text-left text-[0.9375rem] font-medium transition-colors hover:text-charcoal",
       active ? "text-charcoal" : "text-charcoal/90"
      )}
      aria-label={t("nav.openProductCategories")}
@@ -160,7 +162,7 @@ function MobileDrawerNavItem({
     href={item.href}
     onClick={onClose}
     className={cn(
-     "flex min-h-13 cursor-pointer items-center gap-3 py-3.5 text-[0.9375rem] font-medium transition-colors hover:text-charcoal",
+     "flex min-h-14 cursor-pointer items-center gap-3 px-0 py-4 text-[0.9375rem] font-medium transition-colors hover:text-charcoal",
      active ? "text-charcoal" : "text-charcoal/90"
     )}
    >
