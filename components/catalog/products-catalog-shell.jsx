@@ -105,7 +105,7 @@ export function ProductsCatalogShell({
          ? activeGroup.label
          : "Tüm Ürünler"}
      </h1>
-     <p className="text-muted-foreground mt-2 text-sm">
+     <p className="text-muted-foreground mt-2 hidden text-sm lg:block">
       {filteredProducts.length} ürün listeleniyor.
      </p>
     </div>
@@ -114,20 +114,16 @@ export function ProductsCatalogShell({
      <ProductsCategoryCarousel activeSlug={categorySlug} />
     ) : null}
 
-    <ProductsFiltersSidebar
-     categorySlug={categorySlug}
-     selectedColor={selectedColor}
-     onColorChange={setSelectedColor}
-     availableColors={availableColors}
-     className="lg:hidden"
-    />
-
     <ProductsCatalogToolbar
      search={search}
      onSearchChange={setSearch}
      sort={sort}
      onSortChange={setSort}
      resultCount={filteredProducts.length}
+     selectedColor={selectedColor}
+     onColorChange={setSelectedColor}
+     availableColors={availableColors}
+     categorySlug={categorySlug}
     />
 
     {filteredProducts.length > 0 ? (

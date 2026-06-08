@@ -15,7 +15,7 @@ import {
 const slideClassName = "basis-full sm:basis-1/3 sm:pl-5";
 
 const navButtonClassName =
- "size-11 rounded-full border-charcoal/12 bg-white text-charcoal shadow-[0_4px_24px_rgb(0_0_0/6%)] transition-all duration-200 hover:border-charcoal/20 hover:bg-cream/60 hover:shadow-[0_8px_32px_rgb(0_0_0/8%)] active:scale-95 disabled:pointer-events-none disabled:opacity-25 sm:size-12";
+ "size-11 rounded-full border-charcoal/12 bg-white text-charcoal shadow-[0_4px_24px_rgb(0_0_0/6%)] transition-all duration-200 hover:border-charcoal/20 hover:bg-cream/60 hover:shadow-[0_8px_32px_rgb(0_0_0/8%)] active:scale-95 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12";
 
 export function HomeShowcaseSlider({
  title,
@@ -54,7 +54,7 @@ export function HomeShowcaseSlider({
    <Carousel
     opts={{
      align: "start",
-     loop: itemCount > 3,
+     loop: false,
      duration: 28,
      containScroll: "trimSnaps",
      dragFree: false,

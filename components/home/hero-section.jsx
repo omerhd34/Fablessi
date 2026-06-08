@@ -8,8 +8,14 @@ import { HeroChevronLeft, HeroChevronRight } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
 const HERO_AUTOPLAY_MS = 15_000;
+const HERO_DESKTOP_MQ = "(min-width: 1024px)";
 
 const heroNavButtonClass = "hero-nav-btn";
+
+function getHeroDragEnabled() {
+ if (typeof window === "undefined") return true;
+ return !window.matchMedia(HERO_DESKTOP_MQ).matches;
+}
 
 const HERO_SLIDES = [
  {
@@ -135,14 +141,30 @@ const HERO_SLIDES = [
 ];
 
 export function HeroSection() {
+ const [dragEnabled, setDragEnabled] = useState(getHeroDragEnabled);
  const [emblaRef, emblaApi] = useEmblaCarousel({
   loop: true,
   duration: 30,
-  watchDrag: true,
+  watchDrag: dragEnabled,
   dragFree: false,
  });
  const [selectedIndex, setSelectedIndex] = useState(0);
  const autoplayTimerRef = useRef(null);
+
+ useEffect(() => {
+  const mediaQuery = window.matchMedia(HERO_DESKTOP_MQ);
+  const updateDragEnabled = () => setDragEnabled(!mediaQuery.matches);
+
+  updateDragEnabled();
+  mediaQuery.addEventListener("change", updateDragEnabled);
+
+  return () => mediaQuery.removeEventListener("change", updateDragEnabled);
+ }, []);
+
+ useEffect(() => {
+  if (!emblaApi) return;
+  emblaApi.reInit({ watchDrag: dragEnabled });
+ }, [dragEnabled, emblaApi]);
 
  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
@@ -188,7 +210,15 @@ export function HeroSection() {
 
  return (
   <section className="hero-carousel relative w-full touch-pan-y">
-   <div className="hero-carousel__viewport overflow-hidden" ref={emblaRef}>
+   <div
+    className={cn(
+     "hero-carousel__viewport overflow-hidden",
+     dragEnabled
+      ? "hero-carousel__viewport--draggable"
+      : "hero-carousel__viewport--static"
+    )}
+    ref={emblaRef}
+   >
     <div className="flex">
      {HERO_SLIDES.map((slide, index) => (
       <div key={slide.cta.href} className="relative min-w-0 flex-[0_0_100%]">

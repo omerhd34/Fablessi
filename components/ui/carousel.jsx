@@ -159,7 +159,7 @@ function CarouselPrevious({
    variant={variant}
    size={size}
    className={cn(
-    "touch-manipulation rounded-full cursor-pointer",
+    "touch-manipulation rounded-full cursor-pointer disabled:cursor-not-allowed",
     placement === "inline"
      ? "relative shrink-0"
      : cn(
@@ -194,7 +194,7 @@ function CarouselNext({
    variant={variant}
    size={size}
    className={cn(
-    "touch-manipulation rounded-full cursor-pointer",
+    "touch-manipulation rounded-full cursor-pointer disabled:cursor-not-allowed",
     placement === "inline"
      ? "relative shrink-0"
      : cn(

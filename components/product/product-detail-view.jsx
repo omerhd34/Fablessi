@@ -36,7 +36,7 @@ export function ProductDetailView({
 
  return (
   <>
-   <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)_minmax(0,19rem)] lg:items-start lg:gap-8 xl:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_minmax(0,21rem)] xl:gap-10">
+   <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)_minmax(0,19rem)] lg:items-start lg:gap-8 xl:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_minmax(0,21rem)] xl:gap-10">
     <ProductDetailLeft
      product={product}
      categoryLabel={categoryLabel}
@@ -53,7 +53,7 @@ export function ProductDetailView({
       product={product}
       images={visibleImages}
       onImageClick={(index) => openLightbox(visibleImages, index)}
-      className="pb-10 lg:pb-6"
+      className="pb-0 lg:pb-6"
      />
     </section>
 

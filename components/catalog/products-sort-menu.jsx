@@ -17,13 +17,13 @@ export const sortOptions = [
  { value: "name-desc", label: "Adı (Z'den > A'ya)" },
 ];
 
-export function ProductsSortMenu({ sort, onSortChange }) {
+export function ProductsSortMenu({ sort, onSortChange, compact = false }) {
  const [open, setOpen] = useState(false);
  const activeOption =
   sortOptions.find((option) => option.value === sort) ?? sortOptions[0];
 
  return (
-  <div className="shrink-0 self-end lg:self-auto">
+  <div className="shrink-0 lg:self-auto">
    <DropdownMenu open={open} onOpenChange={setOpen}>
     <DropdownMenuTrigger asChild>
      <button
@@ -31,10 +31,10 @@ export function ProductsSortMenu({ sort, onSortChange }) {
       aria-label="Sıralama seçenekleri"
       aria-expanded={open}
       className={cn(
-       "flex h-13.5 min-w-38 cursor-pointer items-center justify-between gap-3 rounded-full border border-charcoal/12 bg-white py-0 pr-3.5 pl-4 text-sm font-medium text-charcoal shadow-[0_1px_2px_rgb(0_0_0/4%)] outline-none transition hover:border-charcoal/20 hover:shadow-[0_2px_8px_rgb(0_0_0/6%)] focus-visible:border-charcoal/25 focus-visible:ring-2 focus-visible:ring-charcoal/10 data-[state=open]:border-charcoal/20 data-[state=open]:shadow-[0_4px_16px_rgb(0_0_0/8%)] sm:h-14"
+       "flex h-11 min-w-0 cursor-pointer items-center justify-between gap-2 rounded-full border border-charcoal/12 bg-white py-0 pr-3 pl-3.5 text-sm font-medium text-charcoal shadow-[0_1px_2px_rgb(0_0_0/4%)] outline-none transition hover:border-charcoal/20 hover:shadow-[0_2px_8px_rgb(0_0_0/6%)] focus-visible:border-charcoal/25 focus-visible:ring-2 focus-visible:ring-charcoal/10 data-[state=open]:border-charcoal/20 data-[state=open]:shadow-[0_4px_16px_rgb(0_0_0/8%)] lg:h-14 lg:min-w-38 lg:gap-3 lg:pr-3.5 lg:pl-4"
       )}
      >
-      <span className="truncate">{activeOption.label}</span>
+      <span>{compact ? "Sırala" : activeOption.label}</span>
       <ChevronDownIcon
        className={cn(
         "size-4 shrink-0 text-charcoal/65 transition-transform duration-200",

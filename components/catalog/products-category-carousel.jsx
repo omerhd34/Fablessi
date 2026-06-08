@@ -61,18 +61,18 @@ export function ProductsCategoryCarousel({ activeSlug, className }) {
    <button
     type="button"
     onClick={() => emblaApi?.scrollPrev()}
-    className="absolute top-1/2 -left-1 z-10 flex size-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-charcoal/10 bg-white/90 text-charcoal shadow-sm backdrop-blur-sm transition hover:bg-white md:-left-3 md:size-10"
+    className="absolute top-1/2 -left-3 z-10 hidden size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-charcoal/10 bg-white/90 text-charcoal shadow-sm backdrop-blur-sm transition hover:bg-white md:flex"
     aria-label="Önceki kategoriler"
    >
-    <HeroChevronLeft className="size-4 md:size-5" />
+    <HeroChevronLeft className="size-5" />
    </button>
    <button
     type="button"
     onClick={() => emblaApi?.scrollNext()}
-    className="absolute top-1/2 -right-1 z-10 flex size-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-charcoal/10 bg-white/90 text-charcoal shadow-sm backdrop-blur-sm transition hover:bg-white md:-right-3 md:size-10"
+    className="absolute top-1/2 -right-3 z-10 hidden size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-charcoal/10 bg-white/90 text-charcoal shadow-sm backdrop-blur-sm transition hover:bg-white md:flex"
     aria-label="Sonraki kategoriler"
    >
-    <HeroChevronRight className="size-4 md:size-5" />
+    <HeroChevronRight className="size-5" />
    </button>
   </div>
  );

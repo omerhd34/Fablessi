@@ -1,53 +1,17 @@
 "use client";
 
-import { CompareArrows, Copyright, Heart, Ruler } from "@/lib/icons";
-import {
- getColorSwatch,
- getDimensionLabels,
- getProductShortName,
-} from "@/lib/product-utils";
+import { CompareArrows, Heart } from "@/lib/icons";
+import { getColorSwatch, getProductShortName } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
-function getServiceItems(product) {
- const dimensionLabels = getDimensionLabels(product);
- const items = [];
+function getSegmentTextClass(hex) {
+ const normalized = hex.replace("#", "");
+ const r = Number.parseInt(normalized.slice(0, 2), 16);
+ const g = Number.parseInt(normalized.slice(2, 4), 16);
+ const b = Number.parseInt(normalized.slice(4, 6), 16);
+ const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 
- if (dimensionLabels.length > 0) {
-  items.push({
-   icon: Ruler,
-   key: "dimensions",
-   content: (
-    <span className="flex flex-col gap-1">
-     {dimensionLabels.map((item) => (
-      <span key={item.key}>
-       {item.label ? (
-        <>
-         <span className="font-semibold text-charcoal">{item.label}:</span>{" "}
-         {item.value}
-        </>
-       ) : (
-        item.value
-       )}
-      </span>
-     ))}
-    </span>
-   ),
-  });
- }
-
- items.push({
-  icon: Copyright,
-  key: "copyright",
-  content: (
-   <>
-    Ürün görselleri ve tasarımlar{" "}
-    <span className="font-semibold text-charcoal">Fablessi</span>&apos;ye aittir;
-    izinsiz kullanılamaz.
-   </>
-  ),
- });
-
- return items;
+ return luminance > 0.62 ? "text-charcoal" : "text-white";
 }
 
 function ActionButton({ icon: Icon, children, onClick, className }) {
@@ -73,7 +37,6 @@ export function ProductDetailLeft({
  onVariantChange,
  className,
 }) {
- const serviceItems = getServiceItems(product);
  const variants = product.variants ?? [];
 
  return (
@@ -95,55 +58,49 @@ export function ProductDetailLeft({
    </div>
 
    {variants.length > 0 ? (
-    <div className="rounded-3xl border border-charcoal/10 bg-white p-4 shadow-[0_8px_30px_rgb(0_0_0/5%)]">
-     <div className="mb-4 flex items-center justify-between gap-3">
-      <h2 className="text-sm font-semibold text-charcoal">Renk</h2>
-      <span className="text-sm text-charcoal/60">
-       {selectedVariant?.color ?? selectedVariant?.name}
-      </span>
-     </div>
-     <div className="flex flex-wrap gap-2.5">
-      {variants.map((variant) => {
+    <div className="product-color-picker">
+     <p className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
+      Renk
+     </p>
+     <div
+      className="product-color-picker__tray mt-3 flex h-12 w-full"
+      role="listbox"
+      aria-label="Renk seçenekleri"
+     >
+      {variants.map((variant, index) => {
        const active = selectedVariant?.id === variant.id;
+       const label = variant.color ?? variant.name;
+       const swatch = variant.color ? getColorSwatch(variant.color) : "#d1d5db";
 
        return (
         <button
          key={variant.id}
          type="button"
-         title={variant.color ?? variant.name}
+         title={label}
+         role="option"
+         aria-selected={active}
          onClick={() => onVariantChange(variant)}
          className={cn(
-          "flex size-10 cursor-pointer items-center justify-center rounded-full border-2 transition-transform hover:scale-105",
-          active ? "border-charcoal" : "border-transparent"
+          "product-color-segment flex min-w-0 flex-1 items-center justify-center px-2",
+          index > 0 && "product-color-segment--divider"
          )}
-         aria-label={variant.color ?? variant.name}
-         aria-pressed={active}
+         style={{ backgroundColor: swatch }}
+         aria-label={label}
         >
          <span
-          className="block size-8 rounded-full border border-charcoal/10"
-          style={{
-           backgroundColor: variant.color
-            ? getColorSwatch(variant.color)
-            : "#d1d5db",
-          }}
-         />
+          className={cn(
+           "product-color-segment__label truncate text-xs font-semibold tracking-wide",
+           getSegmentTextClass(swatch)
+          )}
+         >
+          {label}
+         </span>
         </button>
        );
       })}
      </div>
     </div>
    ) : null}
-
-   <div className="rounded-3xl border border-charcoal/8 bg-white p-5 shadow-[0_8px_30px_rgb(0_0_0/5%)]">
-    <ul className="space-y-4">
-     {serviceItems.map((item) => (
-      <li key={item.key} className="flex gap-3">
-       <item.icon className="mt-0.5 size-5 shrink-0 text-charcoal/45" aria-hidden />
-       <p className="text-sm leading-relaxed text-charcoal/70">{item.content}</p>
-      </li>
-     ))}
-    </ul>
-   </div>
   </aside>
  );
 }

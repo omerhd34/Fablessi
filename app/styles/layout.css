@@ -213,7 +213,8 @@
   }
 
   .brand-logo-wordmark {
-    font-family: var(--font-poppins), "Poppins", ui-sans-serif, system-ui, sans-serif;
+    font-family:
+      var(--font-poppins), "Poppins", ui-sans-serif, system-ui, sans-serif;
     font-weight: 800;
     font-synthesis: none;
     text-transform: lowercase;
@@ -468,7 +469,6 @@
       width: 1.125rem;
       height: 1.125rem;
     }
-
   }
 
   .brand-logo-lockup:hover {
@@ -750,20 +750,26 @@
   }
 
   .hero-carousel__viewport {
-    touch-action: pan-y pinch-zoom;
     -webkit-user-select: none;
     user-select: none;
+  }
+
+  .hero-carousel__viewport--draggable {
+    touch-action: pan-y pinch-zoom;
     cursor: grab;
   }
 
-  .hero-carousel__viewport:active {
+  .hero-carousel__viewport--draggable:active {
     cursor: grabbing;
   }
 
-  @media (min-width: 1024px) {
-    .hero-carousel__viewport {
-      cursor: default;
-    }
+  .hero-carousel__viewport--static {
+    touch-action: auto;
+    cursor: default;
+  }
+
+  .hero-carousel__viewport--static:active {
+    cursor: default;
   }
 
   .hero-carousel__dots {
@@ -938,7 +944,7 @@
   }
 
   .hero-slide-copy__line {
-    font-size: clamp(0.8125rem, 3.5vw, 1.125rem);
+    font-size: clamp(0.9375rem, 4vw, 1.3125rem);
     font-weight: 500;
     line-height: 1.55;
     color: oklch(0.46 0.01 260);
