@@ -9,8 +9,7 @@ import { cn } from "@/lib/utils";
 
 const HERO_AUTOPLAY_MS = 15_000;
 
-const heroNavButtonClass =
- "absolute top-1/2 z-10 flex size-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/35 bg-transparent text-white transition-all duration-300 hover:scale-[1.04] hover:border-white/55 active:scale-100 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none md:size-14";
+const heroNavButtonClass = "hero-nav-btn";
 
 const HERO_SLIDES = [
  {
@@ -19,7 +18,7 @@ const HERO_SLIDES = [
   headline: "Yaz Fablessi ile başlar.",
   lines: [
    "Bahçeniz ve açık alanlarınız yaza hazır mı?",
-   "Açelya koleksiyonumuz şimdi fablessi.com'da.",
+   "Açelya koleksiyonumuz şimdi Fablessi'de.",
   ],
   cta: { label: "Açelya Oturma Grubu", href: "/urunler/acelya-oturma" },
  },
@@ -193,28 +192,27 @@ export function HeroSection() {
          sizes="100vw"
          className={cn("object-cover", slide.imagePosition ?? "object-center")}
         />
-        <div className="absolute inset-0 bg-linear-to-b from-black/15 via-transparent to-black/25" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/20 via-transparent to-black/30" />
 
-        <div className="absolute inset-x-0 top-[38%] flex -translate-y-1/2 flex-col items-center px-6 text-center">
-         <h1 className="text-kalif-blue max-w-4xl text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
-          {slide.headline}
-         </h1>
-         <div className="mt-5 max-w-2xl space-y-1.5">
-          {slide.lines.map((line) => (
-           <p
-            key={line}
-            className="text-base font-medium text-white/95 drop-shadow-sm sm:text-lg md:text-xl"
-           >
-            {line}
-           </p>
-          ))}
+        <div className="absolute inset-x-0 top-[38%] flex -translate-y-1/2 flex-col items-center px-4 sm:px-6">
+         <div className="hero-slide-copy">
+          <div className="hero-slide-copy__panel">
+           <h1 className="hero-slide-copy__headline">{slide.headline}</h1>
+           <div className="hero-slide-copy__lines">
+            {slide.lines.map((line) => (
+             <p key={line} className="hero-slide-copy__line">
+              {line}
+             </p>
+            ))}
+           </div>
+          </div>
+          <Link
+           href={slide.cta.href}
+           className="hero-slide-copy__cta"
+          >
+           {slide.cta.label}
+          </Link>
          </div>
-         <Link
-          href={slide.cta.href}
-          className="mt-9 inline-flex h-12 items-center justify-center rounded-full bg-white px-10 text-base font-semibold text-charcoal shadow-lg transition hover:bg-white/95 md:h-13 md:px-12 md:text-lg"
-         >
-          {slide.cta.label}
-         </Link>
         </div>
        </div>
       </div>
@@ -225,18 +223,18 @@ export function HeroSection() {
    <button
     type="button"
     onClick={scrollPrev}
-    className={cn(heroNavButtonClass, "left-4 sm:left-6")}
+    className={cn(heroNavButtonClass, "hero-nav-btn--prev")}
     aria-label="Önceki slayt"
    >
-    <HeroChevronLeft className="size-6 stroke-[1.75] md:size-7" />
+    <HeroChevronLeft className="hero-nav-btn__icon" aria-hidden />
    </button>
    <button
     type="button"
     onClick={scrollNext}
-    className={cn(heroNavButtonClass, "right-4 sm:right-6")}
+    className={cn(heroNavButtonClass, "hero-nav-btn--next")}
     aria-label="Sonraki slayt"
    >
-    <HeroChevronRight className="size-6 stroke-[1.75] md:size-7" />
+    <HeroChevronRight className="hero-nav-btn__icon" aria-hidden />
    </button>
 
    <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-2">
