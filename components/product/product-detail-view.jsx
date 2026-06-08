@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { ProductDetailCenter } from "@/components/product/product-detail-center";
 import { ProductDetailLeft } from "@/components/product/product-detail-left";
 import { ProductDetailRight } from "@/components/product/product-detail-right";
@@ -14,12 +14,14 @@ function getDefaultVariant(variants) {
 export function ProductDetailView({
  product,
  categoryLabel,
+ categoryHref,
  categoryProducts = [],
 }) {
  const [selectedVariant, setSelectedVariant] = useState(() =>
   getDefaultVariant(product.variants)
  );
  const [lightbox, setLightbox] = useState({ images: [], index: null });
+ const [openDimensions, setOpenDimensions] = useState(false);
  const centerScrollRef = useRef(null);
 
  const visibleImages = useMemo(
@@ -34,14 +36,43 @@ export function ProductDetailView({
 
  const closeLightbox = () => setLightbox({ images: [], index: null });
 
+ const handleViewDimensions = useCallback(() => {
+  const isContainedScroll = window.matchMedia("(min-width: 1024px)").matches;
+
+  setOpenDimensions(true);
+
+  window.setTimeout(() => {
+   const container = centerScrollRef.current;
+   const target = container?.querySelector("[data-product-dimensions]");
+
+   if (!target) return;
+
+   if (isContainedScroll && container) {
+    const offset =
+     target.getBoundingClientRect().top -
+     container.getBoundingClientRect().top +
+     container.scrollTop;
+
+    container.scrollTo({
+     top: Math.max(0, offset - 24),
+     behavior: "smooth",
+    });
+   } else {
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+   }
+  }, 350);
+ }, []);
+
  return (
   <>
    <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)_minmax(0,19rem)] lg:items-start lg:gap-8 xl:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_minmax(0,21rem)] xl:gap-10">
     <ProductDetailLeft
      product={product}
      categoryLabel={categoryLabel}
+     categoryHref={categoryHref}
      selectedVariant={selectedVariant}
      onVariantChange={setSelectedVariant}
+     onViewDimensions={handleViewDimensions}
      className="lg:shrink-0 lg:overflow-hidden"
     />
 
@@ -53,6 +84,7 @@ export function ProductDetailView({
       product={product}
       images={visibleImages}
       onImageClick={(index) => openLightbox(visibleImages, index)}
+      openDimensions={openDimensions}
       className="pb-0 lg:pb-6"
      />
     </section>

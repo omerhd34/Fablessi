@@ -51,6 +51,7 @@ export default async function UrunDetayPage({ params }) {
     <ProductDetailView
      product={product}
      categoryLabel={categoryGroup?.label ?? null}
+     categoryHref={categoryGroup?.href ?? null}
      categoryProducts={categoryProducts}
     />
    </div>

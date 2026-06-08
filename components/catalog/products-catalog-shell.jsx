@@ -12,14 +12,15 @@ function sortProducts(products, sort) {
  const list = [...products];
 
  switch (sort) {
-  case "name-asc":
-   return list.sort((a, b) => a.name.localeCompare(b.name, "tr"));
-  case "name-desc":
-   return list.sort((a, b) => b.name.localeCompare(a.name, "tr"));
   case "newest":
    return list.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
    );
+  case "name-asc":
+   return list.sort((a, b) => a.name.localeCompare(b.name, "tr"));
+  case "name-desc":
+   return list.sort((a, b) => b.name.localeCompare(a.name, "tr"));
+  case "featured":
   default:
    return list.sort(
     (a, b) => a.sortOrder - b.sortOrder || a.name.localeCompare(b.name, "tr")

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -33,9 +34,50 @@ function ProductMenuCard({ item }) {
  );
 }
 
+function handleMegaMenuWheel(event) {
+ const element = event.currentTarget;
+ const { scrollTop, scrollHeight, clientHeight } = element;
+ const maxScroll = scrollHeight - clientHeight;
+ const scrollingUp = event.deltaY < 0;
+ const scrollingDown = event.deltaY > 0;
+
+ if (
+  (scrollingUp && scrollTop > 0) ||
+  (scrollingDown && scrollTop < maxScroll - 1)
+ ) {
+  event.stopPropagation();
+  return;
+ }
+
+ event.preventDefault();
+ event.stopPropagation();
+}
+
 export function ProductsMegaMenu({ open }) {
  const { navigation, t } = useTranslations();
  const { groups } = navigation.productsMegaMenu;
+ const scrollRef = useRef(null);
+
+ useEffect(() => {
+  if (!open) return;
+
+  const scrollElement = scrollRef.current;
+  if (!scrollElement) return;
+
+  const onWheel = (event) => handleMegaMenuWheel(event);
+  const onTouchMove = (event) => {
+   if (scrollRef.current?.contains(event.target)) return;
+   event.preventDefault();
+  };
+
+  scrollElement.addEventListener("wheel", onWheel, { passive: false });
+  document.addEventListener("touchmove", onTouchMove, { passive: false });
+
+  return () => {
+   scrollElement.removeEventListener("wheel", onWheel);
+   document.removeEventListener("touchmove", onTouchMove);
+  };
+ }, [open]);
 
  return (
   <div
@@ -48,60 +90,62 @@ export function ProductsMegaMenu({ open }) {
    aria-hidden={!open}
   >
    <div className="container-premium">
-    <div
-     className="products-mega-menu-panel products-mega-menu-scroll relative max-h-[min(72vh,44rem)] overflow-x-hidden overflow-y-auto px-3 py-4 md:px-5 md:py-5"
-     onWheel={(event) => event.stopPropagation()}
-    >
-     <div className="space-y-6">
-      {groups.map((group) => (
-       <section key={group.slug} aria-label={group.label}>
-        <div className="mb-3 flex items-baseline justify-between gap-3 px-1">
-         <h3 className="text-sm font-semibold tracking-tight text-charcoal md:text-[0.9375rem]">
-          {group.label}
-         </h3>
-         <Link
-          href={group.href}
-          className="inline-flex shrink-0 items-center gap-0.5 text-xs font-medium text-charcoal/60 transition-colors hover:text-charcoal"
+    <div className="products-mega-menu-panel overflow-hidden p-3 pr-4 md:p-5 md:pr-6">
+     <div
+      ref={scrollRef}
+      className="products-mega-menu-scroll max-h-[min(72vh,44rem)] overflow-x-hidden overflow-y-auto overscroll-contain"
+     >
+      <div className="space-y-6">
+       {groups.map((group) => (
+        <section key={group.slug} aria-label={group.label}>
+         <div className="mb-3 flex items-baseline justify-between gap-3 px-1">
+          <h3 className="text-sm font-semibold tracking-tight text-charcoal md:text-[0.9375rem]">
+           {group.label}
+          </h3>
+          <Link
+           href={group.href}
+           className="inline-flex shrink-0 items-center gap-0.5 text-xs font-medium text-charcoal/60 transition-colors hover:text-charcoal"
+          >
+           {t("categories.viewAll")}
+           <ChevronRight className="size-3.5 shrink-0" aria-hidden />
+          </Link>
+         </div>
+
+         <Carousel
+          opts={{
+           align: "start",
+           dragFree: true,
+           loop: group.items.length > 5,
+          }}
+          className="w-full"
          >
-          {t("categories.viewAll")}
-          <ChevronRight className="size-3.5 shrink-0" aria-hidden />
-         </Link>
-        </div>
+          <CarouselContent className="-ml-2.5 md:-ml-3">
+           {group.items.map((item) => (
+            <CarouselItem
+             key={item.href}
+             className="basis-[42%] pl-2.5 sm:basis-[30%] md:basis-[22%] md:pl-3 lg:basis-[15%] xl:basis-[13.5%]"
+            >
+             <ProductMenuCard item={item} />
+            </CarouselItem>
+           ))}
+          </CarouselContent>
 
-        <Carousel
-         opts={{
-          align: "start",
-          dragFree: true,
-          loop: group.items.length > 5,
-         }}
-         className="w-full"
-        >
-         <CarouselContent className="-ml-2.5 md:-ml-3">
-          {group.items.map((item) => (
-           <CarouselItem
-            key={item.href}
-            className="basis-[42%] pl-2.5 sm:basis-[30%] md:basis-[22%] md:pl-3 lg:basis-[15%] xl:basis-[13.5%]"
-           >
-            <ProductMenuCard item={item} />
-           </CarouselItem>
-          ))}
-         </CarouselContent>
-
-         {group.items.length > 4 ? (
-          <>
-           <CarouselPrevious
-            variant="ghost"
-            className="header-glass-btn left-1 size-9 cursor-pointer disabled:opacity-0 md:left-2 md:size-10"
-           />
-           <CarouselNext
-            variant="ghost"
-            className="header-glass-btn right-1 size-9 cursor-pointer disabled:opacity-0 md:right-2 md:size-10"
-           />
-          </>
-         ) : null}
-        </Carousel>
-       </section>
-      ))}
+          {group.items.length > 4 ? (
+           <>
+            <CarouselPrevious
+             variant="ghost"
+             className="header-glass-btn left-1 size-9 cursor-pointer disabled:opacity-0 md:left-2 md:size-10"
+            />
+            <CarouselNext
+             variant="ghost"
+             className="header-glass-btn right-1 size-9 cursor-pointer disabled:opacity-0 md:right-2 md:size-10"
+            />
+           </>
+          ) : null}
+         </Carousel>
+        </section>
+       ))}
+      </div>
      </div>
     </div>
    </div>

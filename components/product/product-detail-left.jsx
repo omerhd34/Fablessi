@@ -1,7 +1,10 @@
 "use client";
 
+import Link from "next/link";
+import { ProductDimensionsScrollButton } from "@/components/product/product-dimensions-scroll-button";
 import { useLocale } from "@/contexts/locale-provider";
 import { CompareArrows, Heart } from "@/lib/icons";
+import { getColorLabel } from "@/lib/catalog-colors";
 import { getColorSwatch, getProductShortName } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
@@ -34,8 +37,10 @@ function ActionButton({ icon: Icon, children, onClick, className }) {
 export function ProductDetailLeft({
  product,
  categoryLabel,
+ categoryHref,
  selectedVariant,
  onVariantChange,
+ onViewDimensions,
  className,
 }) {
  const { t } = useLocale();
@@ -44,11 +49,37 @@ export function ProductDetailLeft({
  return (
   <aside className={cn("flex flex-col gap-8", className)}>
    <div className="space-y-3">
-    {categoryLabel ? (
-     <p className="text-muted-foreground text-xs font-medium tracking-[0.14em] uppercase">
-      {categoryLabel}
-     </p>
-    ) : null}
+    <nav aria-label={t("catalog.products")}>
+     <ol className="text-muted-foreground flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs font-medium tracking-[0.14em] uppercase">
+      <li>
+       <Link
+        href="/urunler"
+        className="transition-colors hover:text-charcoal"
+       >
+        {t("catalog.products")}
+       </Link>
+      </li>
+      {categoryLabel ? (
+       <>
+        <li aria-hidden className="text-charcoal/25">
+         /
+        </li>
+        <li>
+         {categoryHref ? (
+          <Link
+           href={categoryHref}
+           className="transition-colors hover:text-charcoal"
+          >
+           {categoryLabel}
+          </Link>
+         ) : (
+          categoryLabel
+         )}
+        </li>
+       </>
+      ) : null}
+     </ol>
+    </nav>
     <h1 className="font-heading text-3xl font-semibold tracking-tight text-charcoal md:text-4xl">
      {getProductShortName(product)}
     </h1>
@@ -57,6 +88,11 @@ export function ProductDetailLeft({
    <div className="space-y-2.5">
     <ActionButton icon={Heart}>{t("product.addToFavorites")}</ActionButton>
     <ActionButton icon={CompareArrows}>{t("product.compareProduct")}</ActionButton>
+    <ProductDimensionsScrollButton
+     product={product}
+     t={t}
+     onClick={onViewDimensions}
+    />
    </div>
 
    {variants.length > 0 ? (
@@ -71,7 +107,9 @@ export function ProductDetailLeft({
      >
       {variants.map((variant, index) => {
        const active = selectedVariant?.id === variant.id;
-       const label = variant.color ?? variant.name;
+       const label = variant.color
+        ? getColorLabel(variant.color, t)
+        : variant.name;
        const swatch = variant.color ? getColorSwatch(variant.color) : "#d1d5db";
 
        return (

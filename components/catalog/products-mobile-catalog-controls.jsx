@@ -7,6 +7,7 @@ import {
 } from "@/components/catalog/products-filter-content";
 import { ProductsSortMenu } from "@/components/catalog/products-sort-menu";
 import { useTranslations } from "@/contexts/locale-provider";
+import { getColorLabel } from "@/lib/catalog-colors";
 import { getSortOptions } from "@/lib/i18n/catalog";
 import {
  Sheet,
@@ -52,9 +53,9 @@ export function ProductsMobileCatalogControls({
   return count;
  }, [selectedColor]);
 
+ const activeSortOption = sortOptions.find((option) => option.value === sort);
  const activeSortLabel =
-  sortOptions.find((option) => option.value === sort)?.label ??
-  t("catalog.sortFeatured");
+  activeSortOption?.triggerLabel ?? t("catalog.sortFeatured");
 
  return (
   <div className="space-y-3 lg:hidden">
@@ -107,7 +108,7 @@ export function ProductsMobileCatalogControls({
     <div className="flex flex-wrap items-center gap-2">
      {selectedColor ? (
       <ActiveFilterChip
-       label={selectedColor}
+       label={getColorLabel(selectedColor, t)}
        onRemove={() => onColorChange(null)}
        removeLabel={t("catalog.removeFilter")}
       />

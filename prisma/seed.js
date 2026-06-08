@@ -27,6 +27,13 @@ function dims(widthCm, depthCm, heightCm) {
   widthCm,
   depthCm,
   heightCm,
+  dimensionItems: [{ widthCm, depthCm, heightCm }],
+ };
+}
+
+function dimItems(items) {
+ return {
+  dimensionItems: items,
  };
 }
 
@@ -45,7 +52,36 @@ const COLLECTIONS = [
     slug: "acelya-oturma",
     name: "Açelya Oturma Grubu",
     nameEn: "Açelya Seating Set",
-    ...dims(260, 102, 72),
+    ...dimItems([
+     {
+      name: "3'lü Koltuk",
+      nameEn: "3-Seater Sofa",
+      widthCm: 185,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "Tekli Koltuk",
+      nameEn: "Armchair",
+      widthCm: 75,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 80,
+      depthCm: 140,
+      heightCm: 70,
+     },
+     {
+      name: "Benç",
+      nameEn: "Bench",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 43,
+     },
+    ]),
     description:
      "Geniş oturum alanı ve hava koşullarına dayanıklı örgü detaylarıyla Açelya oturma grubu; Antrasit ve Cappuccino renk seçenekleri.",
     descriptionEn:
@@ -89,7 +125,36 @@ const COLLECTIONS = [
     slug: "aston-oturma",
     name: "Aston Oturma Grubu",
     nameEn: "Aston Seating Set",
-    ...dims(255, 100, 74),
+    ...dimItems([
+     {
+      name: "3'lü Koltuk",
+      nameEn: "3-Seater Sofa",
+      widthCm: 185,
+      depthCm: 85,
+      heightCm: 80,
+     },
+     {
+      name: "Tekli Koltuk",
+      nameEn: "Armchair",
+      widthCm: 70,
+      depthCm: 85,
+      heightCm: 80,
+     },
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 80,
+      depthCm: 140,
+      heightCm: 70,
+     },
+     {
+      name: "Puf",
+      nameEn: "Pouf",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 43,
+     },
+    ]),
     description:
      "Alüminyum iskelet ve UV dayanımlı kumaş kaplamalı Aston oturma grubu; Antrasit ve Cappuccino renk seçenekleri.",
     descriptionEn:
@@ -133,7 +198,36 @@ const COLLECTIONS = [
     slug: "begonia-2li",
     name: "Begonia 2'li Oturma Grubu",
     nameEn: "Begonia 2-Seater Set",
-    ...dims(180, 85, 72),
+    ...dimItems([
+     {
+      name: "2'li Koltuk",
+      nameEn: "2-Seater Sofa",
+      widthCm: 125,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "Tekli Koltuk",
+      nameEn: "Armchair",
+      widthCm: 70,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 80,
+      depthCm: 140,
+      heightCm: 70,
+     },
+     {
+      name: "Puf",
+      nameEn: "Pouf",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 43,
+     },
+    ]),
     description: "Kompakt alanlar için tasarlanmış Begonia 2'li oturma grubu.",
     descriptionEn: "Begonia 2-seater set designed for compact spaces.",
     folder: "begonia-2li",
@@ -154,7 +248,36 @@ const COLLECTIONS = [
     slug: "begonia-oturma",
     name: "Begonia Oturma Grubu",
     nameEn: "Begonia Seating Set",
-    ...dims(245, 95, 72),
+    ...dimItems([
+     {
+      name: "3'lü Koltuk",
+      nameEn: "3-Seater Sofa",
+      widthCm: 185,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "Tekli Koltuk",
+      nameEn: "Armchair",
+      widthCm: 70,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 80,
+      depthCm: 140,
+      heightCm: 70,
+     },
+     {
+      name: "Puf",
+      nameEn: "Pouf",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 43,
+     },
+    ]),
     description:
      "Geniş oturum kapasitesi ve dayanıklı dış mekân malzemeleriyle Begonia oturma grubu; Antrasit ve Gri renk seçenekleri.",
     descriptionEn:
@@ -198,7 +321,49 @@ const COLLECTIONS = [
     slug: "tesla-kose",
     name: "Tesla Köşe Grubu",
     nameEn: "Tesla Corner Set",
-    ...dims(290, 185, 75),
+    ...dimItems([
+     {
+      name: "Köşe",
+      nameEn: "Corner",
+      widthCm: 220,
+      depthCm: 245,
+     },
+     {
+      name: "4'lü Koltuk",
+      nameEn: "4-Seater Sofa",
+      widthCm: 245,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "2'li Koltuk",
+      nameEn: "2-Seater Sofa",
+      widthCm: 120,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 80,
+      depthCm: 140,
+      heightCm: 70,
+     },
+     {
+      name: "Puf",
+      nameEn: "Pouf",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 43,
+     },
+     {
+      name: "Sehpa",
+      nameEn: "Coffee Table",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 43,
+     },
+    ]),
     description:
      "Modüler Tesla köşe grubu; L form oturma düzeni ve Antrasit renk seçeneği.",
     descriptionEn:
@@ -223,17 +388,33 @@ const COLLECTIONS = [
     slug: "tesla-masa",
     name: "Tesla Masa Grubu",
     nameEn: "Tesla Table Set",
-    ...dims(220, 100, 75),
+    ...dimItems([
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 160,
+      depthCm: 90,
+      heightCm: 75,
+     },
+     {
+      name: "Sandalye",
+      nameEn: "Chair",
+      widthCm: 57,
+      depthCm: 60,
+      heightCm: 85,
+     },
+    ]),
     description:
-     "Tesla masa grubu; dış mekân yemek ve oturma alanları için masa ve sandalye kombinasyonu.",
+     "Tesla masa grubu; dış mekân yemek ve oturma alanları için masa ve sandalye kombinasyonu; Gri renk seçeneği.",
     descriptionEn:
-     "Tesla table set; table and chair combination for outdoor dining and seating areas.",
+     "Tesla table set; table and chair combination for outdoor dining and seating areas; available in Grey.",
     folder: "tesla-masa",
     sortOrder: 2,
     variants: [
      {
-      name: "Standart",
-      nameEn: "Standard",
+      name: "Gri",
+      nameEn: "Grey",
+      color: "Gri",
       material: "Alüminyum & cam",
       materialEn: "Aluminum & glass",
       isDefault: true,
@@ -244,40 +425,72 @@ const COLLECTIONS = [
     slug: "tesla-oturma",
     name: "Tesla Oturma Grubu",
     nameEn: "Tesla Seating Set",
-    ...dims(250, 100, 75),
+    ...dimItems([
+     {
+      name: "3'lü Koltuk",
+      nameEn: "3-Seater Sofa",
+      widthCm: 185,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "Tekli Koltuk",
+      nameEn: "Armchair",
+      widthCm: 75,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 80,
+      depthCm: 140,
+      heightCm: 70,
+     },
+     {
+      name: "Puf",
+      nameEn: "Pouf",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 43,
+     },
+    ]),
     description:
-     "Tesla oturma grubu; geniş teras ve bahçe alanları için konforlu dış mekân mobilyası.",
+     "Tesla oturma grubu; geniş teras ve bahçe alanları için konforlu dış mekân mobilyası; Gri renk seçeneği.",
     descriptionEn:
-     "Tesla seating set; comfortable outdoor furniture for spacious terrace and garden areas.",
+     "Tesla seating set; comfortable outdoor furniture for spacious terrace and garden areas; available in Grey.",
     folder: "tesla-oturma",
     sortOrder: 3,
     isFeatured: true,
     featuredOrder: 9,
     variants: [
      {
-      name: "Standart",
-      nameEn: "Standard",
+      name: "Gri",
+      nameEn: "Grey",
+      color: "Gri",
       material: "Outdoor kumaş",
       materialEn: "Outdoor fabric",
       isDefault: true,
      },
     ],
    },
+   //! ÖLÇÜLER YANLIŞ
    {
     slug: "tesla-salincak",
     name: "Tesla Salıncak",
     nameEn: "Tesla Swing",
     ...dims(220, 125, 205),
     description:
-     "Tesla salıncak; bahçe ve terasta dinlenme için tasarlanmış dayanıklı salıncak modeli.",
+     "Tesla salıncak; bahçe ve terasta dinlenme için tasarlanmış dayanıklı salıncak modeli; Gri renk seçeneği.",
     descriptionEn:
-     "Tesla swing; a durable swing model designed for relaxation in the garden and on the terrace.",
+     "Tesla swing; a durable swing model designed for relaxation in the garden and on the terrace; available in Grey.",
     folder: "tesla-salincak",
     sortOrder: 4,
     variants: [
      {
-      name: "Standart",
-      nameEn: "Standard",
+      name: "Gri",
+      nameEn: "Grey",
+      color: "Gri",
       material: "Alüminyum ve örgü",
       materialEn: "Aluminum and weave",
       isDefault: true,
@@ -300,7 +513,35 @@ const COLLECTIONS = [
     slug: "velar-kose",
     name: "Velar Köşe Grubu",
     nameEn: "Velar Corner Set",
-    ...dims(285, 180, 74),
+    ...dimItems([
+     {
+      name: "Köşe",
+      nameEn: "Corner",
+      widthCm: 220,
+      depthCm: 245,
+     },
+     {
+      name: "4'lü Koltuk",
+      nameEn: "4-Seater Sofa",
+      widthCm: 245,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "2'li Koltuk",
+      nameEn: "2-Seater Sofa",
+      widthCm: 120,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 80,
+      depthCm: 140,
+      heightCm: 70,
+     },
+    ]),
     description:
      "Geniş oturum alanı ve modüler yapıya sahip Velar köşe grubu; Cappuccino renk seçeneği.",
     descriptionEn:
@@ -325,17 +566,33 @@ const COLLECTIONS = [
     slug: "velar-masa",
     name: "Velar Masa Grubu",
     nameEn: "Velar Table Set",
-    ...dims(210, 95, 74),
+    ...dimItems([
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 190,
+      depthCm: 90,
+      heightCm: 75,
+     },
+     {
+      name: "Sandalye",
+      nameEn: "Chair",
+      widthCm: 57,
+      depthCm: 60,
+      heightCm: 85,
+     },
+    ]),
     description:
-     "Velar masa grubu; teras ve bahçe yemek alanları için şık masa takımı.",
+     "Velar masa grubu; teras ve bahçe yemek alanları için şık masa takımı; Kahverengi renk seçeneği.",
     descriptionEn:
-     "Velar table set; an elegant dining set for terrace and garden dining areas.",
+     "Velar table set; an elegant dining set for terrace and garden dining areas; available in Brown.",
     folder: "velar-masa",
     sortOrder: 2,
     variants: [
      {
-      name: "Standart",
-      nameEn: "Standard",
+      name: "Kahverengi",
+      nameEn: "Brown",
+      color: "Kahverengi",
       material: "Alüminyum & cam",
       materialEn: "Aluminum & glass",
       isDefault: true,
@@ -346,41 +603,74 @@ const COLLECTIONS = [
     slug: "velar-oturma",
     name: "Velar Oturma Grubu",
     nameEn: "Velar Seating Set",
-    ...dims(265, 105, 73),
+    ...dimItems([
+     {
+      name: "3'lü Koltuk",
+      nameEn: "3-Seater Sofa",
+      widthCm: 185,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "Tekli Koltuk",
+      nameEn: "Armchair",
+      widthCm: 75,
+      depthCm: 75,
+      heightCm: 80,
+     },
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 80,
+      depthCm: 140,
+      heightCm: 70,
+     },
+     {
+      name: "Puf",
+      nameEn: "Pouf",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 43,
+     },
+    ]),
     description:
-     "Velar oturma grubu; premium bahçe mobilyası serisinin en çok tercih edilen modellerinden.",
+     "Velar oturma grubu; premium bahçe mobilyası serisinin en çok tercih edilen modellerinden; Mavi renk seçeneği.",
     descriptionEn:
-     "Velar seating set; one of the most popular models in the premium garden furniture series.",
+     "Velar seating set; one of the most popular models in the premium garden furniture series; available in Blue.",
     folder: "velar-oturma",
     sortOrder: 3,
     isFeatured: true,
     featuredOrder: 4,
     variants: [
      {
-      name: "Standart",
-      nameEn: "Standard",
+      name: "Mavi",
+      nameEn: "Blue",
+      color: "Mavi",
       material: "Outdoor kumaş",
       materialEn: "Outdoor fabric",
       isDefault: true,
      },
     ],
    },
+   //! ÖLÇÜLER YANLIŞ
    {
     slug: "velar-salincak",
     name: "Velar Salıncak",
     nameEn: "Velar Swing",
     ...dims(215, 120, 200),
-    description: "Velar salıncak; havuz kenarı ve teras dinlenme köşeleri için.",
+    description:
+     "Velar salıncak; havuz kenarı ve teras dinlenme köşeleri için; Gri renk seçeneği.",
     descriptionEn:
-     "Velar swing; for poolside and terrace relaxation corners.",
+     "Velar swing; for poolside and terrace relaxation corners; available in Grey.",
     folder: "velar-salincak",
     sortOrder: 4,
     isFeatured: true,
     featuredOrder: 3,
     variants: [
      {
-      name: "Standart",
-      nameEn: "Standard",
+      name: "Gri",
+      nameEn: "Grey",
+      color: "Gri",
       material: "Alüminyum ve örgü",
       materialEn: "Aluminum and weave",
       isDefault: true,
@@ -391,19 +681,35 @@ const COLLECTIONS = [
     slug: "velar-sezlong",
     name: "Velar Şezlong",
     nameEn: "Velar Sun Lounger",
-    ...dims(70, 200, 38),
+    ...dimItems([
+     {
+      name: "Şezlong",
+      nameEn: "Sunbed",
+      widthCm: 75,
+      depthCm: 195,
+      heightCm: 85,
+     },
+     {
+      name: "Sehpa",
+      nameEn: "Coffee Table",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 40,
+     },
+    ]),
     description:
-     "Velar şezlong; ayarlanabilir sırtlı yapısıyla havuz ve güneş terası kullanımına uygun.",
+     "Velar şezlong; ayarlanabilir sırtlı yapısıyla havuz ve güneş terası kullanımına uygun; Kahverengi renk seçeneği.",
     descriptionEn:
-     "Velar sun lounger with adjustable backrest; suitable for pool and sun terrace use.",
+     "Velar sun lounger with adjustable backrest; suitable for pool and sun terrace use; available in Brown.",
     folder: "velar-sezlong",
     sortOrder: 5,
     isFeatured: true,
     featuredOrder: 2,
     variants: [
      {
-      name: "Standart",
-      nameEn: "Standard",
+      name: "Kahverengi",
+      nameEn: "Brown",
+      color: "Kahverengi",
       material: "Alüminyum",
       materialEn: "Aluminum",
       isDefault: true,
@@ -426,19 +732,35 @@ const COLLECTIONS = [
     slug: "trend-sandalye",
     name: "Trend Sallanır Sandalye",
     nameEn: "Trend Rocking Chair",
-    ...dims(68, 75, 88),
+    ...dimItems([
+     {
+      name: "Sandalye",
+      nameEn: "Chair",
+      widthCm: 65,
+      depthCm: 100,
+      heightCm: 90,
+     },
+     {
+      name: "Sehpa",
+      nameEn: "Coffee Table",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 55,
+     },
+    ]),
     description:
-     "Trend sallanır sandalye; rahat oturum ve salınım hareketiyle teras ve bahçe keyfi.",
+     "Trend sallanır sandalye; rahat oturum ve salınım hareketiyle teras ve bahçe keyfi; Mavi renk seçeneği.",
     descriptionEn:
-     "Trend rocking chair; terrace and garden enjoyment with comfortable seating and gentle rocking motion.",
+     "Trend rocking chair; terrace and garden enjoyment with comfortable seating and gentle rocking motion; available in Blue.",
     folder: "trend-sandalye",
     sortOrder: 1,
     isFeatured: true,
     featuredOrder: 1,
     variants: [
      {
-      name: "Standart",
-      nameEn: "Standard",
+      name: "Mavi",
+      nameEn: "Blue",
+      color: "Mavi",
       material: "Alüminyum ve örgü",
       materialEn: "Aluminum and weave",
       isDefault: true,
@@ -483,6 +805,7 @@ async function createProduct(collectionId, data) {
    description: data.description,
    descriptionEn: data.descriptionEn,
    dimensions: data.dimensions ?? null,
+   dimensionItems: data.dimensionItems ?? null,
    widthCm: data.widthCm ?? null,
    depthCm: data.depthCm ?? null,
    heightCm: data.heightCm ?? null,

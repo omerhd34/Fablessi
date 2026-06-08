@@ -1,7 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { catalogColorOrder, catalogColorSwatches } from "@/lib/catalog-colors";
+import {
+ catalogColorOrder,
+ catalogColorSwatches,
+ getColorLabel,
+} from "@/lib/catalog-colors";
 import { useTranslations } from "@/contexts/locale-provider";
 import { cn } from "@/lib/utils";
 
@@ -69,6 +73,8 @@ export function ProductsColorFilter({
  availableColors,
  variant = "grid",
 }) {
+ const { t } = useTranslations();
+
  if (availableColors.length === 0) return null;
 
  const isCompact = variant === "compact";
@@ -83,12 +89,13 @@ export function ProductsColorFilter({
     .filter((color) => availableColors.includes(color))
     .map((color) => {
      const active = selectedColor === color;
+     const label = getColorLabel(color, t);
 
      return (
       <button
        key={color}
        type="button"
-       title={color}
+       title={label}
        onClick={() => onColorChange(active ? null : color)}
        className={cn(
         "cursor-pointer transition-transform hover:scale-105",
@@ -103,7 +110,7 @@ export function ProductsColorFilter({
            ? "border-charcoal"
            : "border-transparent"
        )}
-       aria-label={color}
+       aria-label={label}
        aria-pressed={active}
       >
        <span
@@ -114,7 +121,7 @@ export function ProductsColorFilter({
         style={{ backgroundColor: catalogColorSwatches[color] ?? "#ccc" }}
        />
        {isCompact ? (
-        <span className="text-xs font-medium text-charcoal">{color}</span>
+        <span className="text-xs font-medium text-charcoal">{label}</span>
        ) : null}
       </button>
      );

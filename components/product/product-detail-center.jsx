@@ -15,9 +15,9 @@ import {
  CarouselDots,
  CarouselItem,
 } from "@/components/ui/carousel";
-import { ProductDetailServiceInfo } from "@/components/product/product-detail-service-info";
+import { ProductDimensionsTable } from "@/components/product/product-dimensions-table";
 import { useLocale } from "@/contexts/locale-provider";
-import { getProductMoreInfo } from "@/lib/product-utils";
+import { getDimensionItems } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
 function ProductGalleryImage({
@@ -118,9 +118,10 @@ export function ProductDetailCenter({
  images,
  onImageClick,
  className,
+ openDimensions = false,
 }) {
  const { t } = useLocale();
- const moreInfo = getProductMoreInfo(product, t);
+ const dimensionItems = getDimensionItems(product);
  const [accordionValue, setAccordionValue] = useState([]);
 
  useEffect(() => {
@@ -129,63 +130,59 @@ export function ProductDetailCenter({
   }
  }, []);
 
+ useEffect(() => {
+  if (!openDimensions) return;
+
+  setAccordionValue((current) =>
+   current.includes("dimensions") ? current : [...current, "dimensions"]
+  );
+ }, [openDimensions]);
+
  return (
   <div className={cn("space-y-8 md:space-y-10", className)}>
    <ProductGallery images={images} onImageClick={onImageClick} t={t} />
 
-   <Accordion
-    type="multiple"
-    value={accordionValue}
-    onValueChange={setAccordionValue}
-    className="space-y-4"
-   >
-    <AccordionItem
-     value="product-info"
-     className="overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)]"
+   <div className="space-y-3">
+    <Accordion
+     type="multiple"
+     value={accordionValue}
+     onValueChange={setAccordionValue}
+     className="space-y-4"
     >
-     <AccordionTrigger className="cursor-pointer py-4 text-base font-semibold text-charcoal hover:no-underline">
-      {t("product.productInfo")}
-     </AccordionTrigger>
-     <AccordionContent className="pb-5 text-sm leading-relaxed text-charcoal/75">
-      {product.description ? <p>{product.description}</p> : null}
-      {product.collection?.description ? (
-       <p className="mt-4">{product.collection.description}</p>
-      ) : null}
-     </AccordionContent>
-    </AccordionItem>
+     <AccordionItem
+      value="product-info"
+      className="overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)]"
+     >
+      <AccordionTrigger className="cursor-pointer py-4 text-base font-semibold text-charcoal hover:no-underline">
+       {t("product.productInfo")}
+      </AccordionTrigger>
+      <AccordionContent className="pb-5 text-sm leading-relaxed text-charcoal/75">
+       {product.description ? <p>{product.description}</p> : null}
+       {product.collection?.description ? (
+        <p className="mt-4">{product.collection.description}</p>
+       ) : null}
+      </AccordionContent>
+     </AccordionItem>
 
-    <AccordionItem
-     value="more-info"
-     className="overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)]"
-    >
-     <AccordionTrigger className="cursor-pointer py-4 text-base font-semibold text-charcoal hover:no-underline">
-      {t("product.moreInfo")}
-     </AccordionTrigger>
-     <AccordionContent className="space-y-4 pb-5 text-sm leading-relaxed text-charcoal/75">
-      {moreInfo.map((paragraph) => (
-       <p key={paragraph}>{paragraph}</p>
-      ))}
-     </AccordionContent>
-    </AccordionItem>
-
-    <AccordionItem
-     value="service-info"
-     className="overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)] md:hidden"
-    >
-     <AccordionTrigger className="cursor-pointer py-4 text-base font-semibold text-charcoal hover:no-underline">
-      {t("product.technicalInfo")}
-     </AccordionTrigger>
-     <AccordionContent className="pb-5">
-      <ProductDetailServiceInfo product={product} variant="plain" t={t} />
-     </AccordionContent>
-    </AccordionItem>
-   </Accordion>
-
-   <ProductDetailServiceInfo
-    product={product}
-    className="mt-4! hidden md:block"
-    t={t}
-   />
+     {dimensionItems.length > 0 ? (
+      <AccordionItem
+       value="dimensions"
+       data-product-dimensions=""
+       className="scroll-mt-6 overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)]"
+      >
+       <AccordionTrigger className="cursor-pointer py-4 text-base font-semibold text-charcoal hover:no-underline">
+        {t("product.dimensionsTableTitle")}{" "}
+        <span className="font-normal text-charcoal/55">
+         ({t("product.dimensionUnit")})
+        </span>
+       </AccordionTrigger>
+       <AccordionContent className="pb-5">
+        <ProductDimensionsTable product={product} t={t} />
+       </AccordionContent>
+      </AccordionItem>
+     ) : null}
+    </Accordion>
+   </div>
   </div>
  );
 }
