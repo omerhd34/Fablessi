@@ -11,7 +11,6 @@
 ## Proje Özeti
 
 | | |
-|---|---|
 | **Marka** | Fablessi |
 | **Sektör** | Bahçe & dış mekan mobilyası |
 | **Konum** | İnegöl / Bursa |
@@ -57,13 +56,10 @@ Sitede yer alan başlıca ürün grupları:
 | Mağazalar | `/magazalar` | Hazır |
 | SSS | `/sss` | Hazır |
 | Ürünler | `/urunler` | Planlandı |
-| Katalog | `/katalog` | Planlandı |
 | Koleksiyonlar | `/koleksiyonlar` | Planlandı |
 | Hakkımızda | `/hakkimizda` | Planlandı |
 | Projeler | `/projeler` | Planlandı |
 | İletişim | `/iletisim` | Planlandı |
-
-> Navigasyon ve footer linkleri tam site haritasına göre yapılandırılmıştır; kalan sayfalar sıradaki geliştirme adımlarıdır.
 
 ---
 
