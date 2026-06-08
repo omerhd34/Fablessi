@@ -15,9 +15,9 @@ module.exports = {
   },
   extend: {
    fontFamily: {
-    sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
-    display: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
-    heading: ["var(--font-inter)", "ui-sans-serif", "system-ui", "sans-serif"],
+    sans: ["var(--font-montserrat)", "ui-sans-serif", "system-ui", "sans-serif"],
+    display: ["var(--font-montserrat)", "ui-sans-serif", "system-ui", "sans-serif"],
+    heading: ["var(--font-montserrat)", "ui-sans-serif", "system-ui", "sans-serif"],
    },
    borderRadius: {
     sm: "var(--radius-sm)",

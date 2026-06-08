@@ -1,4 +1,4 @@
-import { Inter, Poppins } from "next/font/google";
+import { Montserrat, Poppins } from "next/font/google";
 import "@/app/styles/base.css";
 import "@/app/styles/layout.css";
 import "@/app/styles/shared.css";
@@ -9,8 +9,8 @@ import { ContactFloat } from "@/components/layout/contact-float";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { brandName } from "@/lib/navigation";
 
-const inter = Inter({
- variable: "--font-inter",
+const montserrat = Montserrat({
+ variable: "--font-montserrat",
  subsets: ["latin", "latin-ext"],
  weight: ["400", "500", "600", "700"],
  display: "swap",
@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
  return (
   <html
    lang="tr"
-   className={`${inter.variable} ${poppins.variable} h-full antialiased`}
+   className={`${montserrat.variable} ${poppins.variable} h-full antialiased`}
   >
    <body className="min-h-full flex flex-col font-sans">
     <TooltipProvider>
