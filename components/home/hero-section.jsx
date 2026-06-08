@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 const HERO_AUTOPLAY_MS = 15_000;
 
 const heroNavButtonClass =
- "absolute top-1/2 z-10 flex size-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-white/18 text-white shadow-[0_8px_28px_rgb(0_0_0/22%)] backdrop-blur-md transition-all duration-300 hover:scale-[1.04] hover:border-white/50 hover:bg-white/30 hover:shadow-[0_10px_36px_rgb(0_0_0/28%)] active:scale-100 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none md:size-14";
+ "absolute top-1/2 z-10 flex size-12 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-white/35 bg-transparent text-white transition-all duration-300 hover:scale-[1.04] hover:border-white/55 active:scale-100 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none md:size-14";
 
 const HERO_SLIDES = [
  {
@@ -211,7 +211,7 @@ export function HeroSection() {
          </div>
          <Link
           href={slide.cta.href}
-          className="mt-9 inline-flex h-12 items-center justify-center rounded-full bg-white/90 px-10 text-base font-semibold text-charcoal shadow-lg transition hover:bg-white md:h-13 md:px-12 md:text-lg"
+          className="mt-9 inline-flex h-12 items-center justify-center rounded-full bg-white px-10 text-base font-semibold text-charcoal shadow-lg transition hover:bg-white/95 md:h-13 md:px-12 md:text-lg"
          >
           {slide.cta.label}
          </Link>

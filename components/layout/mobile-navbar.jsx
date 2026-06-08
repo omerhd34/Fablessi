@@ -25,7 +25,7 @@ export function MobileNavbar({ searchOpen, onSearchToggle, onMenuOpen }) {
      className="header-pill-circle size-12 shrink-0 hover:bg-transparent"
      aria-label="Menüyü aç"
     >
-     <Menu className="size-[1.45rem] text-charcoal" />
+     <Menu className="size-[1.45rem]" />
     </Button>
 
     <button

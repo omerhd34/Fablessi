@@ -236,7 +236,7 @@
   border-bottom: 1px solid oklch(0.22 0.01 260 / 9%);
 }
 
-.site-header[data-menu-open="true"] {
+.site-header[data-menu-open="true"]:not([data-home="true"]) {
   background: linear-gradient(
     to bottom,
     oklch(0.99 0.006 88 / 72%) 0%,
@@ -462,6 +462,154 @@
     }
   }
 
+  .search-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: calc(var(--header-height-mobile) + var(--search-bar-height)) 0
+      1.5rem;
+    pointer-events: none;
+  }
+
+  @media (min-width: 1024px) {
+    .search-overlay {
+      padding-top: calc(
+        var(--header-height-desktop) + var(--search-bar-height)
+      );
+    }
+  }
+
+  .search-overlay-backdrop {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: oklch(0.99 0.006 88 / 55%);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  .search-overlay--hero .search-overlay-backdrop {
+    background: rgb(0 0 0 / 45%);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .search-backdrop-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    border: 0;
+    background: rgb(0 0 0 / 38%);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    cursor: pointer;
+    animation: search-backdrop-in 0.28s ease-out;
+  }
+
+  .search-backdrop-layer--hero {
+    background: rgb(0 0 0 / 45%);
+  }
+
+  @keyframes search-backdrop-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .search-overlay-panel {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    pointer-events: auto;
+  }
+
+  .search-overlay-results {
+    margin-top: 0.75rem;
+    max-height: min(70vh, 36rem);
+    overflow-y: auto;
+    border-radius: 1.75rem;
+    border: 1px solid var(--pill-border);
+    background: oklch(0.995 0.004 90 / 96%);
+    box-shadow: 0 12px 48px rgb(0 0 0 / 12%);
+    padding: 1.25rem;
+    opacity: 0;
+    transform: translateY(-0.35rem);
+    transition:
+      opacity 0.22s ease,
+      transform 0.22s ease;
+  }
+
+  .search-overlay-results--visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .search-overlay-section + .search-overlay-section {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid oklch(0.22 0.01 260 / 8%);
+  }
+
+  .search-overlay-section-title {
+    margin-bottom: 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: oklch(0.48 0.01 260);
+  }
+
+  .search-collection-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 9999px;
+    border: 1px solid oklch(0.22 0.01 260 / 12%);
+    background: rgb(255 255 255 / 90%);
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: oklch(0.22 0.01 260);
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .search-collection-chip:hover {
+    border-color: oklch(0.22 0.01 260 / 22%);
+    background: oklch(0.955 0.006 90 / 80%);
+  }
+
+  .search-product-card {
+    border: 1px solid oklch(0.22 0.01 260 / 10%);
+    background: oklch(0.955 0.006 90 / 50%);
+    box-shadow: 0 2px 10px rgb(0 0 0 / 5%);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .search-product-card:hover {
+    border-color: oklch(0.22 0.01 260 / 20%);
+    box-shadow: 0 6px 20px rgb(0 0 0 / 8%);
+  }
+
+  .search-overlay-status {
+    padding: 1.5rem 0.5rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: oklch(0.48 0.01 260);
+  }
+
   .section-padding {
     @apply py-16 md:py-20 lg:py-24;
   }
@@ -552,4 +700,71 @@
   .products-mega-menu-scroll:hover::-webkit-scrollbar-thumb {
     background: oklch(0.5 0.01 260 / 0.48);
   }
+}
+
+/* Anasayfa: normalde şeffaf header, arama açıkken Kalif tarzı cam pill */
+.site-header[data-home="true"] .header-pill,
+.site-header[data-home="true"] .header-pill-circle,
+.site-header[data-home="true"] .brand-logo-pill {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.site-header[data-home="true"] .header-pill-link,
+.site-header[data-home="true"] .header-icon-btn,
+.site-header[data-home="true"] .brand-logo-pill span,
+.site-header[data-home="true"] .header-pill-circle svg,
+.site-header[data-home="true"] .header-icon-btn svg,
+.site-header[data-home="true"] .nav-compact .text-charcoal {
+  color: #fff !important;
+}
+
+.site-header[data-home="true"] .header-pill-divider {
+  background: rgb(255 255 255 / 28%) !important;
+}
+
+.site-header[data-home="true"] .header-search-pill {
+  background: var(--pill-bg) !important;
+  backdrop-filter: blur(16px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+  border: 1px solid var(--pill-border) !important;
+  box-shadow: var(--pill-shadow) !important;
+}
+
+.site-header[data-home="true"][data-search-open="true"] .header-pill,
+.site-header[data-home="true"][data-search-open="true"] .header-pill-circle,
+.site-header[data-home="true"][data-search-open="true"] .brand-logo-pill {
+  background: var(--pill-bg) !important;
+  backdrop-filter: blur(16px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(140%) !important;
+  border: 1px solid var(--pill-border) !important;
+  box-shadow: var(--pill-shadow) !important;
+}
+
+.site-header[data-home="true"][data-search-open="true"] .header-pill-link,
+.site-header[data-home="true"][data-search-open="true"] .header-icon-btn,
+.site-header[data-home="true"][data-search-open="true"] .brand-logo-pill span,
+.site-header[data-home="true"][data-search-open="true"] .header-pill-circle svg,
+.site-header[data-home="true"][data-search-open="true"] .header-icon-btn svg,
+.site-header[data-home="true"][data-search-open="true"] .nav-compact .text-charcoal {
+  color: oklch(0.22 0.01 260) !important;
+}
+
+.site-header[data-home="true"][data-search-open="true"] .header-pill-divider {
+  background: oklch(0.22 0.01 260 / 18%) !important;
+}
+
+.site-header[data-home="true"][data-search-open="true"]
+  .nav-desktop
+  > .container-premium
+  > div:last-child
+  > .header-pill,
+.site-header[data-home="true"][data-search-open="true"]
+  .nav-compact
+  button[aria-label="Ara"] {
+  visibility: hidden;
+  pointer-events: none;
 }
