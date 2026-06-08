@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getPrimaryImageUrl } from "@/lib/queries/home";
-import { getProductCardLabel } from "@/lib/product-utils";
+import { getPrimaryImageUrl, getProductCardLabel } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
 export function ProductCard({

@@ -2,6 +2,7 @@
 
 import { ProductsMobileCatalogControls } from "@/components/catalog/products-mobile-catalog-controls";
 import { ProductsSortMenu } from "@/components/catalog/products-sort-menu";
+import { useTranslations } from "@/contexts/locale-provider";
 import { Search } from "@/lib/icons";
 
 export function ProductsCatalogToolbar({
@@ -15,6 +16,8 @@ export function ProductsCatalogToolbar({
  availableColors,
  categorySlug,
 }) {
+ const { t } = useTranslations();
+
  return (
   <>
    <ProductsMobileCatalogControls
@@ -39,9 +42,9 @@ export function ProductsCatalogToolbar({
       type="search"
       value={search}
       onChange={(event) => onSearchChange(event.target.value)}
-      placeholder="Ara..."
+      placeholder={t("catalog.searchProductsPlaceholder")}
       className="min-w-0 flex-1 bg-transparent text-base text-charcoal outline-none placeholder:text-charcoal/45"
-      aria-label="Ürün ara"
+      aria-label={t("catalog.searchProducts")}
      />
      <Search className="size-5 shrink-0 text-charcoal/55" aria-hidden />
     </form>
@@ -49,7 +52,7 @@ export function ProductsCatalogToolbar({
     <ProductsSortMenu sort={sort} onSortChange={onSortChange} />
 
     <p className="text-muted-foreground text-sm lg:sr-only">
-     {resultCount} ürün
+     {t("catalog.productsCount", { count: resultCount })}
     </p>
    </div>
   </>

@@ -10,7 +10,7 @@ import {
  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { ChevronRight } from "@/lib/icons";
-import { productsMegaMenu } from "@/lib/navigation";
+import { useTranslations } from "@/contexts/locale-provider";
 import { cn } from "@/lib/utils";
 
 function ProductMenuCard({ item }) {
@@ -34,7 +34,8 @@ function ProductMenuCard({ item }) {
 }
 
 export function ProductsMegaMenu({ open }) {
- const { groups } = productsMegaMenu;
+ const { navigation, t } = useTranslations();
+ const { groups } = navigation.productsMegaMenu;
 
  return (
   <div
@@ -47,7 +48,10 @@ export function ProductsMegaMenu({ open }) {
    aria-hidden={!open}
   >
    <div className="container-premium">
-    <div className="products-mega-menu-panel products-mega-menu-scroll relative max-h-[min(72vh,44rem)] overflow-x-hidden overflow-y-auto px-3 py-4 md:px-5 md:py-5">
+    <div
+     className="products-mega-menu-panel products-mega-menu-scroll relative max-h-[min(72vh,44rem)] overflow-x-hidden overflow-y-auto px-3 py-4 md:px-5 md:py-5"
+     onWheel={(event) => event.stopPropagation()}
+    >
      <div className="space-y-6">
       {groups.map((group) => (
        <section key={group.slug} aria-label={group.label}>
@@ -59,7 +63,7 @@ export function ProductsMegaMenu({ open }) {
           href={group.href}
           className="inline-flex shrink-0 items-center gap-0.5 text-xs font-medium text-charcoal/60 transition-colors hover:text-charcoal"
          >
-          Tümünü gör
+          {t("categories.viewAll")}
           <ChevronRight className="size-3.5 shrink-0" aria-hidden />
          </Link>
         </div>

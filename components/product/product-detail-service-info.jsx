@@ -1,9 +1,13 @@
+"use client";
+
 import { Copyright, Ruler } from "@/lib/icons";
+import { brandName } from "@/lib/navigation";
 import { getDimensionLabels } from "@/lib/product-utils";
+import { useLocale } from "@/contexts/locale-provider";
 import { cn } from "@/lib/utils";
 
-function getServiceItems(product) {
- const dimensionLabels = getDimensionLabels(product);
+function getServiceItems(product, t) {
+ const dimensionLabels = getDimensionLabels(product, t);
  const items = [];
 
  if (dimensionLabels.length > 0) {
@@ -32,13 +36,7 @@ function getServiceItems(product) {
  items.push({
   icon: Copyright,
   key: "copyright",
-  content: (
-   <>
-    Ürün görselleri ve tasarımlar{" "}
-    <span className="font-semibold text-charcoal">Fablessi</span>&apos;ye aittir;
-    izinsiz kullanılamaz.
-   </>
-  ),
+  content: t("product.copyrightNotice", { brand: brandName }),
  });
 
  return items;
@@ -48,8 +46,11 @@ export function ProductDetailServiceInfo({
  product,
  className,
  variant = "card",
+ t: tProp,
 }) {
- const serviceItems = getServiceItems(product);
+ const { t: localeT } = useLocale();
+ const t = tProp ?? localeT;
+ const serviceItems = getServiceItems(product, t);
  const isPlain = variant === "plain";
 
  const content = (

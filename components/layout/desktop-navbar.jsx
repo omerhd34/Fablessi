@@ -4,10 +4,11 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Collections, Mail, MapPin, Search, ViewModule, Work } from "@/lib/icons";
+import { Collections, MapPin, Search, SupportAgent, ViewModule, Work } from "@/lib/icons";
 import { BrandLogoLink } from "@/components/layout/brand-logo";
+import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 import { ProductsMegaMenu } from "@/components/layout/products-mega-menu";
-import { primaryNavItems } from "@/lib/navigation";
+import { useTranslations } from "@/contexts/locale-provider";
 import { useIsDesktopNav } from "@/hooks/use-is-desktop-nav";
 import { cn } from "@/lib/utils";
 
@@ -16,7 +17,7 @@ const desktopNavIconMap = {
  collections: Collections,
  projects: Work,
  stores: MapPin,
- contact: Mail,
+ contact: SupportAgent,
 };
 
 function DesktopNavItem({
@@ -94,6 +95,8 @@ export function DesktopNavbar({
  const pathname = usePathname();
  const isDesktopNav = useIsDesktopNav();
  const navRef = useRef(null);
+ const { navigation, t } = useTranslations();
+ const { primaryNavItems } = navigation;
 
  const setProductsOpenState = (open) => {
   onProductsMenuOpenChange?.(open);
@@ -121,13 +124,13 @@ export function DesktopNavbar({
  if (!isDesktopNav) return null;
 
  return (
-  <div ref={navRef} className="nav-desktop relative" aria-label="Masaüstü menü">
+  <div ref={navRef} className="nav-desktop relative" aria-label={t("nav.desktopMenu")}>
    <div className="container-premium nav-desktop-bar">
     <BrandLogoLink size="xl" className="nav-desktop-bar__logo min-w-0 shrink" />
 
     <nav
      className="header-pill nav-desktop-pill"
-     aria-label="Ana navigasyon"
+     aria-label={t("nav.mainNav")}
     >
      {primaryNavItems.map((item, index) => (
       <DesktopNavItem
@@ -150,7 +153,7 @@ export function DesktopNavbar({
        "header-icon-btn size-10 cursor-pointer rounded-full lg:size-11 xl:size-12",
        searchOpen && "header-icon-btn--active"
       )}
-      aria-label="Ara"
+      aria-label={t("common.search")}
       aria-expanded={searchOpen}
      >
       <Search className="size-[1.45rem]" />
@@ -158,13 +161,7 @@ export function DesktopNavbar({
 
      <span className="header-pill-divider" aria-hidden />
 
-     <button
-      type="button"
-      className="header-pill-link flex size-10 cursor-pointer items-center justify-center rounded-full text-sm font-semibold lg:size-11 lg:text-[0.9375rem] xl:size-12"
-      aria-label="Dil: Türkçe"
-     >
-      TR
-     </button>
+     <LocaleSwitcher />
     </nav>
    </div>
 

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getPrimaryImageUrl } from "@/lib/queries/home";
-import { getProductCardLabel } from "@/lib/product-utils";
+import { getPrimaryImageUrl, getProductCardLabel } from "@/lib/product-utils";
 
 export function ProductCategoryRelated({ products, categoryLabel }) {
  if (products.length === 0) return null;

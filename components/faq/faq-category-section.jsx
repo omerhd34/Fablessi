@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { FaqAccordionList } from "@/components/faq/faq-accordion-list";
+import { useLocale } from "@/contexts/locale-provider";
 
 export function FaqCategorySection({ category }) {
+ const { t } = useLocale();
  const { id, title, items, initialVisible = items.length } = category;
  const [visibleCount, setVisibleCount] = useState(initialVisible);
 
@@ -33,7 +35,7 @@ export function FaqCategorySection({ category }) {
        onClick={() => setVisibleCount(items.length)}
        className="cursor-pointer font-display text-[0.8rem] tracking-[0.12em] text-charcoal/55 uppercase transition-colors hover:text-charcoal"
       >
-       Daha Fazla
+       {t("faq.showMore")}
       </button>
      </div>
     ) : null}

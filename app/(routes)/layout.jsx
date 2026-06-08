@@ -7,6 +7,8 @@ import { Header } from "@/components/layout/header";
 import { MainShell } from "@/components/layout/main-shell";
 import { ContactFloat } from "@/components/layout/contact-float";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { LocaleProvider } from "@/contexts/locale-provider";
+import { getServerDictionary } from "@/lib/i18n/server";
 import { brandName } from "@/lib/navigation";
 
 const montserrat = Montserrat({
@@ -23,39 +25,48 @@ const poppins = Poppins({
  display: "swap",
 });
 
-export const metadata = {
- icons: {
-  icon: "/brand/fablessi-logo.png",
-  apple: "/brand/fablessi-logo.png",
- },
- title: {
-  default: `${brandName} | Premium Bahçe Mobilyaları`,
-  template: `%s | ${brandName}`,
- },
- description:
-  "İnegöl merkezli Fablessi — bahçe mobilyalarında kurumsal katalog ve koleksiyon vitrini. Premium, minimalist ve zamansız dış mekan tasarımları.",
- keywords: [
-  "bahçe mobilyası",
-  "dış mekan mobilya",
-  "Fablessi",
-  "İnegöl",
-  "premium bahçe mobilyaları",
- ],
-};
+export async function generateMetadata() {
+ const { dictionary } = await getServerDictionary();
 
-export default function RootLayout({ children }) {
+ return {
+  icons: {
+   icon: "/brand/fablessi-logo.png",
+   apple: "/brand/fablessi-logo.png",
+  },
+  title: {
+   default: `${brandName} | ${dictionary.metadata.title}`,
+   template: `%s | ${brandName}`,
+  },
+  description: dictionary.metadata.description,
+  keywords: [
+   "bahçe mobilyası",
+   "garden furniture",
+   "dış mekan mobilya",
+   "outdoor furniture",
+   "Fablessi",
+   "İnegöl",
+   "premium bahçe mobilyaları",
+  ],
+ };
+}
+
+export default async function RootLayout({ children }) {
+ const { locale, dictionary } = await getServerDictionary();
+
  return (
   <html
-   lang="tr"
+   lang={locale}
    className={`${montserrat.variable} ${poppins.variable} h-full antialiased`}
   >
    <body className="min-h-full flex flex-col font-sans">
-    <TooltipProvider>
-     <MainShell>{children}</MainShell>
-     <Header />
-     <Footer />
-     <ContactFloat />
-    </TooltipProvider>
+    <LocaleProvider locale={locale} dictionary={dictionary}>
+     <TooltipProvider>
+      <MainShell>{children}</MainShell>
+      <Header />
+      <Footer />
+      <ContactFloat />
+     </TooltipProvider>
+    </LocaleProvider>
    </body>
   </html>
  );

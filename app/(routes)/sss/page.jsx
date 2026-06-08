@@ -1,12 +1,16 @@
 import "./page.css";
 import { FaqHero } from "@/components/faq/faq-hero";
 import { FaqPageContent } from "@/components/faq/faq-page-content";
+import { getServerDictionary } from "@/lib/i18n/server";
 
-export const metadata = {
- title: "Sıkça Sorulan Sorular",
- description:
-  "Alışveriş, teslimat, iade ve ödeme hakkında sıkça sorulan sorular ve yanıtları.",
-};
+export async function generateMetadata() {
+ const { dictionary } = await getServerDictionary();
+
+ return {
+  title: dictionary.pages.faq.title,
+  description: dictionary.pages.faq.description,
+ };
+}
 
 export default function SssPage() {
  return (

@@ -16,6 +16,7 @@ import {
  CarouselItem,
 } from "@/components/ui/carousel";
 import { ProductDetailServiceInfo } from "@/components/product/product-detail-service-info";
+import { useLocale } from "@/contexts/locale-provider";
 import { getProductMoreInfo } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +26,7 @@ function ProductGalleryImage({
  onImageClick,
  variant = "stack",
  className,
+ t,
 }) {
  const isSlide = variant === "slide";
 
@@ -39,11 +41,13 @@ function ProductGalleryImage({
      : "product-gallery-frame aspect-4/3 rounded-3xl bg-white",
     className
    )}
-   aria-label={`${image.alt ?? "Ürün görseli"} — büyüt`}
+   aria-label={t("product.enlargeImage", {
+    alt: image.alt ?? t("product.productImage"),
+   })}
   >
    <Image
     src={image.url}
-    alt={image.alt ?? "Ürün görseli"}
+    alt={image.alt ?? t("product.productImage")}
     fill
     sizes="(max-width: 768px) 100vw, 60vw"
     className={cn(
@@ -56,11 +60,11 @@ function ProductGalleryImage({
  );
 }
 
-function ProductGallery({ images, onImageClick }) {
+function ProductGallery({ images, onImageClick, t }) {
  if (images.length === 0) {
   return (
    <div className="flex aspect-4/3 items-center justify-center rounded-3xl bg-cream/60 text-sm text-charcoal/50">
-    Görsel bulunamadı
+    {t("product.noImage")}
    </div>
   );
  }
@@ -75,7 +79,7 @@ function ProductGallery({ images, onImageClick }) {
       containScroll: "trimSnaps",
      }}
      className="w-full"
-     aria-label="Ürün görselleri"
+     aria-label={t("product.productImages")}
     >
      <CarouselContent className="ml-0">
       {images.map((image, index) => (
@@ -85,6 +89,7 @@ function ProductGallery({ images, onImageClick }) {
          index={index}
          onImageClick={onImageClick}
          variant="slide"
+         t={t}
         />
        </CarouselItem>
       ))}
@@ -100,6 +105,7 @@ function ProductGallery({ images, onImageClick }) {
       image={image}
       index={index}
       onImageClick={onImageClick}
+      t={t}
      />
     ))}
    </div>
@@ -113,7 +119,8 @@ export function ProductDetailCenter({
  onImageClick,
  className,
 }) {
- const moreInfo = getProductMoreInfo(product);
+ const { t } = useLocale();
+ const moreInfo = getProductMoreInfo(product, t);
  const [accordionValue, setAccordionValue] = useState([]);
 
  useEffect(() => {
@@ -124,7 +131,7 @@ export function ProductDetailCenter({
 
  return (
   <div className={cn("space-y-8 md:space-y-10", className)}>
-   <ProductGallery images={images} onImageClick={onImageClick} />
+   <ProductGallery images={images} onImageClick={onImageClick} t={t} />
 
    <Accordion
     type="multiple"
@@ -137,7 +144,7 @@ export function ProductDetailCenter({
      className="overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)]"
     >
      <AccordionTrigger className="cursor-pointer py-4 text-base font-semibold text-charcoal hover:no-underline">
-      Ürün Bilgisi
+      {t("product.productInfo")}
      </AccordionTrigger>
      <AccordionContent className="pb-5 text-sm leading-relaxed text-charcoal/75">
       {product.description ? <p>{product.description}</p> : null}
@@ -152,7 +159,7 @@ export function ProductDetailCenter({
      className="overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)]"
     >
      <AccordionTrigger className="cursor-pointer py-4 text-base font-semibold text-charcoal hover:no-underline">
-      Daha Fazla Bilgi
+      {t("product.moreInfo")}
      </AccordionTrigger>
      <AccordionContent className="space-y-4 pb-5 text-sm leading-relaxed text-charcoal/75">
       {moreInfo.map((paragraph) => (
@@ -166,10 +173,10 @@ export function ProductDetailCenter({
      className="overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)] md:hidden"
     >
      <AccordionTrigger className="cursor-pointer py-4 text-base font-semibold text-charcoal hover:no-underline">
-      Teknik Bilgiler
+      {t("product.technicalInfo")}
      </AccordionTrigger>
      <AccordionContent className="pb-5">
-      <ProductDetailServiceInfo product={product} variant="plain" />
+      <ProductDetailServiceInfo product={product} variant="plain" t={t} />
      </AccordionContent>
     </AccordionItem>
    </Accordion>
@@ -177,6 +184,7 @@ export function ProductDetailCenter({
    <ProductDetailServiceInfo
     product={product}
     className="mt-4! hidden md:block"
+    t={t}
    />
   </div>
  );

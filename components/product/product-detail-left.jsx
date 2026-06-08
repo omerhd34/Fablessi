@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale } from "@/contexts/locale-provider";
 import { CompareArrows, Heart } from "@/lib/icons";
 import { getColorSwatch, getProductShortName } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
@@ -37,6 +38,7 @@ export function ProductDetailLeft({
  onVariantChange,
  className,
 }) {
+ const { t } = useLocale();
  const variants = product.variants ?? [];
 
  return (
@@ -53,19 +55,19 @@ export function ProductDetailLeft({
    </div>
 
    <div className="space-y-2.5">
-    <ActionButton icon={Heart}>Favorilere Ekle</ActionButton>
-    <ActionButton icon={CompareArrows}>Ürünü Karşılaştır</ActionButton>
+    <ActionButton icon={Heart}>{t("product.addToFavorites")}</ActionButton>
+    <ActionButton icon={CompareArrows}>{t("product.compareProduct")}</ActionButton>
    </div>
 
    {variants.length > 0 ? (
     <div className="product-color-picker">
      <p className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
-      Renk
+      {t("product.color")}
      </p>
      <div
       className="product-color-picker__tray mt-3 flex h-12 w-full"
       role="listbox"
-      aria-label="Renk seçenekleri"
+      aria-label={t("product.colorOptions")}
      >
       {variants.map((variant, index) => {
        const active = selectedVariant?.id === variant.id;

@@ -5,6 +5,7 @@ import {
  ProductsCategoryFilter,
  ProductsColorFilter,
 } from "@/components/catalog/products-filter-content";
+import { useLocale } from "@/contexts/locale-provider";
 import { ChevronDownIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
@@ -38,14 +39,16 @@ export function ProductsFiltersSidebar({
  availableColors,
  className,
 }) {
+ const { t } = useLocale();
+
  return (
   <aside className={cn("shrink-0 lg:w-56 xl:w-60", className)}>
-   <FilterSection title="Kategori" defaultOpen>
+   <FilterSection title={t("catalog.category")} defaultOpen>
     <ProductsCategoryFilter categorySlug={categorySlug} />
    </FilterSection>
 
    {availableColors.length > 0 ? (
-    <FilterSection title="Renk" defaultOpen>
+    <FilterSection title={t("catalog.color")} defaultOpen>
      <ProductsColorFilter
       selectedColor={selectedColor}
       onColorChange={onColorChange}

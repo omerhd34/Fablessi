@@ -6,6 +6,7 @@ import { ProductCard } from "@/components/catalog/product-card";
 import { ProductsCatalogToolbar } from "@/components/catalog/products-catalog-toolbar";
 import { ProductsCategoryCarousel } from "@/components/catalog/products-category-carousel";
 import { ProductsFiltersSidebar } from "@/components/catalog/products-filters-sidebar";
+import { useLocale } from "@/contexts/locale-provider";
 
 function sortProducts(products, sort) {
  const list = [...products];
@@ -45,6 +46,7 @@ export function ProductsCatalogShell({
  categorySlug,
  collectionSlug,
 }) {
+ const { t } = useLocale();
  const [search, setSearch] = useState("");
  const [sort, setSort] = useState("featured");
  const [selectedColor, setSelectedColor] = useState(null);
@@ -102,11 +104,11 @@ export function ProductsCatalogShell({
       {activeCollection
        ? activeCollection.name
        : activeGroup
-         ? activeGroup.label
-         : "Tüm Ürünler"}
+        ? activeGroup.label
+        : t("catalog.allProductsTitle")}
      </h1>
      <p className="text-muted-foreground mt-2 hidden text-sm lg:block">
-      {filteredProducts.length} ürün listeleniyor.
+      {t("catalog.listing", { count: filteredProducts.length })}
      </p>
     </div>
 
@@ -140,10 +142,10 @@ export function ProductsCatalogShell({
     ) : (
      <div className="rounded-3xl border border-dashed border-charcoal/12 bg-cream/40 px-6 py-20 text-center">
       <p className="text-sm font-medium text-charcoal">
-       Aramanızla eşleşen ürün bulunamadı.
+       {t("catalog.noProducts")}
       </p>
       <p className="text-muted-foreground mt-2 text-sm">
-       Filtreleri temizleyerek tekrar deneyin.
+       {t("catalog.tryAgain")}
       </p>
      </div>
     )}

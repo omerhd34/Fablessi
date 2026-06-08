@@ -6,16 +6,8 @@ import {
  HomeShowcaseSlide,
  HomeShowcaseSlider,
 } from "@/components/home/home-showcase-slider";
-import { productsMegaMenu } from "@/lib/navigation";
-
-const categories = productsMegaMenu.groups
- .map((group) => ({
-  slug: group.slug,
-  label: group.label,
-  href: group.href,
-  image: group.items[0]?.image,
- }))
- .filter((category) => category.image);
+import { useMemo } from "react";
+import { useTranslations } from "@/contexts/locale-provider";
 
 function CategoryCard({ category, variant = "desktop" }) {
  const isMobile = variant === "mobile";
@@ -54,15 +46,34 @@ function CategoryCard({ category, variant = "desktop" }) {
 }
 
 export function CategoriesShowcase() {
+ const { navigation, t } = useTranslations();
+ const categories = useMemo(
+  () =>
+   navigation.productsMegaMenu.groups
+    .map((group) => ({
+     slug: group.slug,
+     label: group.label,
+     href: group.href,
+     image: group.items[0]?.image,
+    }))
+    .filter((category) => category.image),
+  [navigation]
+ );
+
  if (!categories.length) {
   return null;
  }
 
  return (
   <>
-   <section className="section-padding bg-white sm:hidden" aria-label="Kategoriler">
+   <section
+    className="section-padding bg-white sm:hidden"
+    aria-label={t("categories.categoriesAria")}
+   >
     <div className="container-premium">
-     <h2 className="heading-display text-charcoal mb-6 text-left">Kategoriler</h2>
+     <h2 className="heading-display text-charcoal mb-6 text-left">
+      {t("home.categoriesTitle")}
+     </h2>
      <div className="grid grid-cols-2 gap-3">
       {categories.map((category) => (
        <CategoryCard key={category.slug} category={category} variant="mobile" />
@@ -73,9 +84,9 @@ export function CategoriesShowcase() {
 
    <HomeShowcaseSlider
     className="hidden sm:block"
-    title="Kategoriler"
-    description="Oturma gruplarından şezlonglara; dış mekân mobilyası kategorilerini keşfedin."
-    action={{ href: "/urunler", label: "Tüm Kategoriler" }}
+    title={t("home.categoriesTitle")}
+    description={t("home.categoriesDescription")}
+    action={{ href: "/urunler", label: t("categories.allCategories") }}
     itemCount={categories.length}
    >
     {categories.map((category) => (

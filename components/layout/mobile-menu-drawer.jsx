@@ -8,14 +8,16 @@ import {
  CloseIcon,
  Collections,
  Explore,
- Mail,
  MapPin,
+ SupportAgent,
  ViewModule,
  Work,
 } from "@/lib/icons";
+import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 import { MobileProductsCategoryGrid } from "@/components/layout/mobile-products-category-grid";
 import { cn } from "@/lib/utils";
-import { brandName, mobileNavSections } from "@/lib/navigation";
+import { useTranslations } from "@/contexts/locale-provider";
+import { brandName } from "@/lib/navigation";
 import {
  SheetClose,
  SheetContent,
@@ -29,11 +31,13 @@ const mobileNavIconMap = {
  collections: Collections,
  projects: Work,
  stores: MapPin,
- contact: Mail,
+ contact: SupportAgent,
 };
 
 export function MobileMenuDrawer({ pathname, onClose }) {
  const [productsViewOpen, setProductsViewOpen] = useState(false);
+ const { navigation, t } = useTranslations();
+ const { mobileNavSections } = navigation;
 
  return (
   <SheetContent
@@ -43,7 +47,9 @@ export function MobileMenuDrawer({ pathname, onClose }) {
   >
    <SheetHeader className="sr-only">
     <SheetTitle>
-     {productsViewOpen ? "Ürün kategorileri" : `Ana menü — ${brandName}`}
+     {productsViewOpen
+      ? t("nav.productCategories")
+      : t("nav.mainMenuTitle", { brand: brandName })}
     </SheetTitle>
    </SheetHeader>
 
@@ -52,7 +58,7 @@ export function MobileMenuDrawer({ pathname, onClose }) {
      <button
       type="button"
       className="-mr-1.5 flex size-10 cursor-pointer items-center justify-center rounded-full text-charcoal/70 transition-colors hover:bg-charcoal/6 hover:text-charcoal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-charcoal/15"
-      aria-label="Menüyü kapat"
+      aria-label={t("nav.closeMenu")}
      >
       <CloseIcon className="size-5 shrink-0 stroke-[1.75]" aria-hidden />
      </button>
@@ -68,7 +74,7 @@ export function MobileMenuDrawer({ pathname, onClose }) {
      >
       <ChevronLeft className="size-5 shrink-0 text-charcoal/50" aria-hidden />
       <ViewModule className="size-5 shrink-0 text-charcoal/45" aria-hidden />
-      Ürünler
+      {t("nav.products")}
      </button>
 
      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
@@ -79,7 +85,7 @@ export function MobileMenuDrawer({ pathname, onClose }) {
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
      <nav
       className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-5"
-      aria-label="Ana menü"
+      aria-label={t("nav.mainNav")}
      >
       {mobileNavSections.map((section, sectionIndex) => (
        <Fragment key={sectionIndex}>
@@ -94,6 +100,7 @@ export function MobileMenuDrawer({ pathname, onClose }) {
            pathname={pathname}
            onClose={onClose}
            onOpenProductsMenu={() => setProductsViewOpen(true)}
+           t={t}
           />
          ))}
         </ul>
@@ -101,14 +108,8 @@ export function MobileMenuDrawer({ pathname, onClose }) {
       ))}
      </nav>
 
-     <div className="flex shrink-0 justify-start border-t border-charcoal/8 px-5 py-3">
-      <button
-       type="button"
-       className="header-pill-circle header-pill-link inline-flex size-10 cursor-pointer items-center justify-center text-sm font-semibold"
-       aria-label="Dil: Türkçe"
-      >
-       TR
-      </button>
+     <div className="shrink-0 border-t border-charcoal/8 px-5 py-4">
+      <LocaleSwitcher variant="mobile" />
      </div>
     </div>
    )}
@@ -121,6 +122,7 @@ function MobileDrawerNavItem({
  pathname,
  onClose,
  onOpenProductsMenu,
+ t,
 }) {
  const active =
   pathname === item.href || pathname.startsWith(`${item.href}/`);
@@ -150,7 +152,7 @@ function MobileDrawerNavItem({
       type="button"
       onClick={onOpenProductsMenu}
       className="flex size-11 shrink-0 cursor-pointer items-center justify-end transition-colors hover:text-charcoal"
-      aria-label="Ürün kategorilerini aç"
+      aria-label={t("nav.openProductCategories")}
      >
       <ChevronRight
        className="size-4 shrink-0 text-charcoal/35"

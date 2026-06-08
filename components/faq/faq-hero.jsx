@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { faqCategoryTabs, faqHeroImage } from "@/lib/faq";
+import { useTranslations } from "@/contexts/locale-provider";
+import { faqHeroImage } from "@/lib/faq";
 import { cn } from "@/lib/utils";
 
 function getSiteHeaderHeight() {
@@ -12,6 +13,10 @@ function getSiteHeaderHeight() {
 }
 
 export function FaqHero() {
+ const { dictionary, t } = useTranslations();
+ const faqCategoryTabs = Object.entries(dictionary.faq.tabs).map(
+  ([id, label]) => ({ id, label })
+ );
  const [headerOffset, setHeaderOffset] = useState(0);
 
  useEffect(() => {
@@ -55,12 +60,12 @@ export function FaqHero() {
 
     <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 pb-10 text-center text-white">
      <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">
-      Sıkça Sorulan Sorular
+      {t("faq.pageTitle")}
      </h1>
 
      <nav
       className="mt-8 flex max-w-3xl flex-wrap items-center justify-center gap-2 md:gap-3"
-      aria-label="SSS kategorileri"
+      aria-label={t("faq.categoriesAria")}
      >
       {faqCategoryTabs.map((tab) => (
        <button

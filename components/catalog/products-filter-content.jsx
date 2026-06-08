@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { catalogColorOrder, catalogColorSwatches } from "@/lib/catalog-colors";
-import { productsMegaMenu } from "@/lib/navigation";
+import { useTranslations } from "@/contexts/locale-provider";
 import { cn } from "@/lib/utils";
 
 export function ProductsCategoryFilter({
@@ -10,7 +10,8 @@ export function ProductsCategoryFilter({
  variant = "list",
  onNavigate,
 }) {
- const { groups } = productsMegaMenu;
+ const { navigation, t } = useTranslations();
+ const { groups } = navigation.productsMegaMenu;
  const isGrid = variant === "grid";
 
  return (
@@ -36,7 +37,7 @@ export function ProductsCategoryFilter({
         : "text-charcoal/65 hover:text-charcoal"
     )}
    >
-    Tüm ürünler
+    {t("categories.allProducts")}
    </Link>
    {groups.map((group) => (
     <Link

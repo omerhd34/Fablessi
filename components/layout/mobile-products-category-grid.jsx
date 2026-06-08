@@ -1,15 +1,23 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { productsMegaMenu } from "@/lib/navigation";
-
-const menuCategories = productsMegaMenu.groups.map((group) => ({
- slug: group.slug,
- label: group.label,
- href: group.href,
- image: group.items[0]?.image,
-}));
+import { useMemo } from "react";
+import { useTranslations } from "@/contexts/locale-provider";
 
 export function MobileProductsCategoryGrid({ onClose }) {
+ const { navigation } = useTranslations();
+ const menuCategories = useMemo(
+  () =>
+   navigation.productsMegaMenu.groups.map((group) => ({
+    slug: group.slug,
+    label: group.label,
+    href: group.href,
+    image: group.items[0]?.image,
+   })),
+  [navigation]
+ );
+
  return (
   <div className="grid grid-cols-2 gap-3 pb-2">
    {menuCategories.map((category) => (

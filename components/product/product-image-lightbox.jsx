@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
+import { useLocale } from "@/contexts/locale-provider";
 import { ChevronLeft, ChevronRight, X } from "@/lib/icons";
 export function ProductImageLightbox({
  images,
@@ -10,6 +11,7 @@ export function ProductImageLightbox({
  onIndexChange,
  onClose,
 }) {
+ const { t } = useLocale();
  const open = index !== null && images.length > 0;
  const current = open ? images[index] : null;
  const hasPrev = open && index > 0;
@@ -43,13 +45,13 @@ export function ProductImageLightbox({
    onClick={onClose}
    role="dialog"
    aria-modal="true"
-   aria-label={current.alt ?? "Ürün görseli"}
+   aria-label={current.alt ?? t("product.productImage")}
   >
    <button
     type="button"
     onClick={onClose}
     className="absolute top-4 right-4 z-10 flex size-11 cursor-pointer items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-white/20"
-    aria-label="Kapat"
+    aria-label={t("common.close")}
    >
     <X className="size-6" />
    </button>
@@ -69,7 +71,7 @@ export function ProductImageLightbox({
       type="button"
       onClick={() => onIndexChange(index - 1)}
       className="absolute left-0 z-10 flex size-11 -translate-x-2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 md:-translate-x-14 md:size-12"
-      aria-label="Önceki görsel"
+      aria-label={t("product.previousImage")}
      >
       <ChevronLeft className="size-6" />
      </button>
@@ -78,7 +80,7 @@ export function ProductImageLightbox({
     <div className="relative h-[min(85vh,52rem)] w-full">
      <Image
       src={current.url}
-      alt={current.alt ?? "Ürün görseli"}
+      alt={current.alt ?? t("product.productImage")}
       fill
       sizes="96vw"
       className="object-contain"
@@ -91,7 +93,7 @@ export function ProductImageLightbox({
       type="button"
       onClick={() => onIndexChange(index + 1)}
       className="absolute right-0 z-10 flex size-11 translate-x-2 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 md:translate-x-14 md:size-12"
-      aria-label="Sonraki görsel"
+      aria-label={t("product.nextImage")}
      >
       <ChevronRight className="size-6" />
      </button>

@@ -17,7 +17,8 @@ export function Header() {
  const [menuOpen, setMenuOpen] = useState(false);
 
  const isHome = pathname === "/";
- const headerHidden = isHome && scrolled && !searchOpen && !menuOpen;
+ const headerHidden =
+  isHome && scrolled && !searchOpen && !menuOpen && !productsMenuOpen;
 
  const toggleSearch = () => {
   setSearchOpen((prev) => {
@@ -32,7 +33,6 @@ export function Header() {
    const next = window.scrollY > SCROLL_THRESHOLD;
    setScrolled(next);
    if (next) {
-    setProductsMenuOpen(false);
     setSearchOpen(false);
     setMenuOpen(false);
    }
@@ -42,6 +42,17 @@ export function Header() {
   window.addEventListener("scroll", onScroll, { passive: true });
   return () => window.removeEventListener("scroll", onScroll);
  }, []);
+
+ useEffect(() => {
+  if (!productsMenuOpen) return;
+
+  const previousOverflow = document.body.style.overflow;
+  document.body.style.overflow = "hidden";
+
+  return () => {
+   document.body.style.overflow = previousOverflow;
+  };
+ }, [productsMenuOpen]);
 
  useEffect(() => {
   setProductsMenuOpen(false);

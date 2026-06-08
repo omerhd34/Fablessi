@@ -144,6 +144,219 @@
     box-shadow: var(--pill-shadow);
   }
 
+  .locale-switcher-btn {
+    position: relative;
+    display: inline-flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 9999px;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .locale-switcher-btn__flag {
+    width: 1.375rem;
+    height: 1.375rem;
+    border-radius: 9999px;
+    object-fit: cover;
+  }
+
+  .locale-switcher-btn:hover {
+    opacity: 0.82;
+  }
+
+  .locale-switcher-btn:focus-visible {
+    outline: 2px solid oklch(0.35 0.03 250 / 35%);
+    outline-offset: 2px;
+  }
+
+  .locale-switcher-btn[data-state="open"] {
+    opacity: 1;
+  }
+
+  @media (min-width: 1024px) {
+    .locale-switcher-btn {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+
+    .locale-switcher-btn__flag {
+      width: 1.45rem;
+      height: 1.45rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .locale-switcher-btn {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+
+  .locale-switcher-menu {
+    z-index: 60;
+    min-width: 17rem;
+    overflow: visible;
+    border: 0;
+    border-radius: 1.75rem;
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    --tw-ring-shadow: 0 0 #0000;
+  }
+
+  .locale-switcher-panel {
+    border: 1px solid var(--glass-border);
+    border-radius: 1.75rem;
+    background: var(--glass-surface-strong);
+    padding: 1.125rem 1.25rem 1rem;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(28px) saturate(150%);
+    -webkit-backdrop-filter: blur(28px) saturate(150%);
+  }
+
+  .locale-switcher-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.875rem;
+  }
+
+  .locale-switcher-panel__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: oklch(0.22 0.01 260);
+  }
+
+  .locale-switcher-panel__close {
+    display: inline-flex;
+    width: 1.75rem;
+    height: 1.75rem;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 9999px;
+    background: transparent;
+    color: oklch(0.52 0.01 260);
+    transition: color 0.2s ease;
+  }
+
+  .locale-switcher-panel__close:hover {
+    color: oklch(0.22 0.01 260);
+  }
+
+  .locale-switcher-panel__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .locale-switcher-option {
+    display: flex;
+    width: 100%;
+    cursor: pointer;
+    align-items: center;
+    gap: 0.75rem;
+    border: 0;
+    border-radius: 9999px;
+    background: transparent;
+    padding: 0.625rem 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: oklch(0.32 0.01 260);
+    text-align: left;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .locale-switcher-option:hover {
+    background: oklch(0.22 0.01 260 / 6%);
+  }
+
+  .locale-switcher-option--active {
+    font-weight: 600;
+    color: oklch(0.18 0.01 260);
+  }
+
+  .locale-flag-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    object-fit: cover;
+  }
+
+  .locale-switcher--mobile {
+    width: 100%;
+  }
+
+  .locale-switcher-mobile__label {
+    margin: 0 0 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: oklch(0.48 0.01 260);
+  }
+
+  .locale-switcher-mobile__options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.625rem;
+  }
+
+  .locale-switcher-mobile__option {
+    display: inline-flex;
+    min-height: 3rem;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border: 1px solid oklch(0.22 0.01 260 / 10%);
+    border-radius: 9999px;
+    background: oklch(0.99 0.006 88 / 72%);
+    padding: 0.625rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: oklch(0.32 0.01 260);
+    transition:
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .locale-switcher-mobile__option:hover {
+    border-color: oklch(0.22 0.01 260 / 16%);
+    background: oklch(0.99 0.006 88 / 92%);
+  }
+
+  .locale-switcher-mobile__option--active {
+    border-color: oklch(0.22 0.01 260 / 20%);
+    background: oklch(0.22 0.01 260 / 7%);
+    box-shadow: inset 0 0 0 1px oklch(0.22 0.01 260 / 4%);
+    font-weight: 600;
+    color: oklch(0.18 0.01 260);
+  }
+
+  .locale-switcher-mobile__option .locale-flag-icon {
+    width: 1.375rem;
+    height: 1.375rem;
+  }
+
   .header-pill-link {
     font-size: 1rem;
     font-weight: 500;
@@ -727,6 +940,8 @@
   }
 
   .products-mega-menu-scroll {
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: oklch(0.62 0.01 260 / 0.38) transparent;
   }

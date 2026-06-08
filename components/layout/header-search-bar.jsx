@@ -7,9 +7,10 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
 import { Folder, Search, X } from "@/lib/icons";
-import { getPrimaryImageUrl } from "@/lib/queries/home";
+import { useTranslations } from "@/contexts/locale-provider";
 import {
  getCollectionProductsHref,
+ getPrimaryImageUrl,
  getProductCardLabel,
 } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
@@ -54,6 +55,7 @@ function SearchProductCard({ product, onNavigate }) {
 }
 
 export function HeaderSearchBar({ open, onClose }) {
+ const { t } = useTranslations();
  const pathname = usePathname();
  const isHome = pathname === "/";
  const inputRef = useRef(null);
@@ -152,16 +154,16 @@ export function HeaderSearchBar({ open, onClose }) {
     type="search"
     value={query}
     onChange={(event) => setQuery(event.target.value)}
-    placeholder="Ara..."
+    placeholder={t("common.searchPlaceholder")}
     className="min-w-0 flex-1 bg-transparent text-base text-charcoal outline-none placeholder:text-charcoal/45"
-    aria-label="Arama"
+    aria-label={t("common.searchLabel")}
    />
    {query ? (
     <button
      type="button"
      onClick={() => setQuery("")}
      className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-charcoal/55 transition-opacity hover:opacity-65"
-     aria-label="Aramayı temizle"
+     aria-label={t("common.clearSearch")}
     >
      <X className="size-5" aria-hidden />
     </button>
@@ -169,7 +171,7 @@ export function HeaderSearchBar({ open, onClose }) {
    <button
     type="submit"
     className="header-search-submit flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full transition-opacity hover:opacity-65"
-    aria-label="Ara"
+    aria-label={t("common.search")}
    >
     <Search className="size-5 text-charcoal/70" aria-hidden />
    </button>
@@ -187,7 +189,7 @@ export function HeaderSearchBar({ open, onClose }) {
        isHome && "search-backdrop-layer--hero"
       )}
       onClick={onClose}
-      aria-label="Aramayı kapat"
+      aria-label={t("common.closeSearch")}
      />,
      document.body
     )
@@ -203,13 +205,13 @@ export function HeaderSearchBar({ open, onClose }) {
       className={cn("search-overlay", isHome && "search-overlay--hero")}
       role="dialog"
       aria-modal="true"
-      aria-label="Arama sonuçları"
+      aria-label={t("common.searchResults")}
      >
       <button
        type="button"
        className="search-overlay-backdrop"
        onClick={onClose}
-       aria-label="Aramayı kapat"
+       aria-label={t("common.closeSearch")}
       />
 
       <div className="search-overlay-panel container-premium">
@@ -224,7 +226,7 @@ export function HeaderSearchBar({ open, onClose }) {
        >
         {loading ? (
          <div className="search-overlay-status flex justify-center">
-          <div className="search-overlay-loader" role="status" aria-label="Aranıyor">
+          <div className="search-overlay-loader" role="status" aria-label={t("common.searching")}>
            <Search className="search-overlay-loader__icon" aria-hidden />
           </div>
          </div>
@@ -232,7 +234,7 @@ export function HeaderSearchBar({ open, onClose }) {
 
         {!loading && results.collections.length > 0 ? (
          <section className="search-overlay-section">
-          <h3 className="search-overlay-section-title">Koleksiyonlar</h3>
+          <h3 className="search-overlay-section-title">{t("catalog.collections")}</h3>
           <ul className="flex flex-wrap gap-2">
            {results.collections.map((collection) => (
             <li key={collection.id}>
@@ -255,7 +257,7 @@ export function HeaderSearchBar({ open, onClose }) {
 
         {!loading && results.products.length > 0 ? (
          <section className="search-overlay-section">
-          <h3 className="search-overlay-section-title">Ürünler</h3>
+          <h3 className="search-overlay-section-title">{t("catalog.products")}</h3>
           <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
            {results.products.map((product) => (
             <SearchProductCard
@@ -270,7 +272,7 @@ export function HeaderSearchBar({ open, onClose }) {
 
         {showEmpty ? (
          <p className="search-overlay-status">
-          Aramanızla eşleşen sonuç bulunamadı.
+          {t("catalog.noSearchResults")}
          </p>
         ) : null}
        </div>

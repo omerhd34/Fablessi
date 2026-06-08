@@ -3,18 +3,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
+import { useMemo } from "react";
+import { useTranslations } from "@/contexts/locale-provider";
 import { HeroChevronLeft, HeroChevronRight } from "@/lib/icons";
-import { productsMegaMenu } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
-const carouselCategories = productsMegaMenu.groups.map((group) => ({
- slug: group.slug,
- label: group.label,
- href: group.href,
- image: group.items[0]?.image,
-}));
-
 export function ProductsCategoryCarousel({ activeSlug, className }) {
+ const { navigation, t } = useTranslations();
+ const carouselCategories = useMemo(
+  () =>
+   navigation.productsMegaMenu.groups.map((group) => ({
+    slug: group.slug,
+    label: group.label,
+    href: group.href,
+    image: group.items[0]?.image,
+   })),
+  [navigation]
+ );
  const [emblaRef, emblaApi] = useEmblaCarousel({
   align: "start",
   dragFree: true,
@@ -62,7 +67,7 @@ export function ProductsCategoryCarousel({ activeSlug, className }) {
     type="button"
     onClick={() => emblaApi?.scrollPrev()}
     className="absolute top-1/2 -left-3 z-10 hidden size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-charcoal/10 bg-white/90 text-charcoal shadow-sm backdrop-blur-sm transition hover:bg-white md:flex"
-    aria-label="Önceki kategoriler"
+    aria-label={t("product.previousCategories")}
    >
     <HeroChevronLeft className="size-5" />
    </button>
@@ -70,7 +75,7 @@ export function ProductsCategoryCarousel({ activeSlug, className }) {
     type="button"
     onClick={() => emblaApi?.scrollNext()}
     className="absolute top-1/2 -right-3 z-10 hidden size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-charcoal/10 bg-white/90 text-charcoal shadow-sm backdrop-blur-sm transition hover:bg-white md:flex"
-    aria-label="Sonraki kategoriler"
+    aria-label={t("product.nextCategories")}
    >
     <HeroChevronRight className="size-5" />
    </button>

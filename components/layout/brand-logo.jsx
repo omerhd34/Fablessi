@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useTranslations } from "@/contexts/locale-provider";
 import { brandSlug } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 
@@ -11,11 +14,13 @@ const sizeClasses = {
 };
 
 export function BrandLogoLink({ href = "/", size = "md", className }) {
+ const { t } = useTranslations();
+
  return (
   <Link
    href={href}
    className={cn("group inline-flex shrink-0", className)}
-   aria-label={`${brandSlug} — ana sayfa`}
+   aria-label={`${brandSlug} — ${t("common.home")}`}
   >
    <span
     className={cn(

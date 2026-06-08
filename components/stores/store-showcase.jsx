@@ -4,7 +4,9 @@ import Link from "next/link";
 import { SocialIcon } from "@/components/layout/social-icon";
 import { FaLocationArrow, FaWhatsapp, Mail, Phone } from "@/lib/icons";
 import { getWhatsAppHref, socialLinks } from "@/lib/site-contact";
-import { flagshipStore } from "@/lib/stores";
+import { useMemo } from "react";
+import { useTranslations } from "@/contexts/locale-provider";
+import { getFlagshipStore } from "@/lib/stores";
 
 function getInstagramLabel(href) {
  if (!href) return "Instagram";
@@ -23,13 +25,14 @@ const contactLinkClassName =
  "inline-flex items-center gap-2.5 text-charcoal/85 transition-colors hover:text-charcoal";
 
 export function StoreShowcase() {
- const store = flagshipStore;
+ const { t, locale } = useTranslations();
+ const store = useMemo(() => getFlagshipStore(locale), [locale]);
  const whatsAppHref = getWhatsAppHref();
 
  return (
   <div className="space-y-10 md:space-y-12">
    <h1 className="text-center text-2xl font-semibold tracking-tight text-charcoal md:text-3xl">
-    İletişim
+    {t("contact.title")}
    </h1>
 
    <div className="store-showcase-grid grid gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12">
@@ -43,9 +46,9 @@ export function StoreShowcase() {
       <p>{store.address}</p>
 
       <div className="space-y-1">
-       {store.hours.map((slot) => (
-        <p key={slot.label}>
-         {slot.label}: {slot.hours}
+       {store.hours.map((row) => (
+        <p key={row.label}>
+         {row.label}: {row.hours}
         </p>
        ))}
       </div>
@@ -105,7 +108,7 @@ export function StoreShowcase() {
        className="inline-flex items-center gap-1.5 font-display text-[0.65rem] tracking-[0.22em] text-charcoal/70 uppercase transition-colors hover:text-charcoal"
       >
        <FaLocationArrow className="size-3.5 shrink-0" aria-hidden />
-       Haritada göster
+       {t("contact.viewOnMap")}
       </Link>
       </div>
      </div>
@@ -113,7 +116,7 @@ export function StoreShowcase() {
 
     <div className="store-map">
      <iframe
-      title={`${store.name} konumu`}
+      title={t("contact.mapLocation", { name: store.name })}
       src={store.mapEmbedUrl}
       className="store-map__embed"
       loading="lazy"

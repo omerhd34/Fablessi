@@ -1,5 +1,6 @@
 "use client";
 
+import { useLocale } from "@/contexts/locale-provider";
 import { getProductCardLabel } from "@/lib/product-utils";
 import { ProductCategoryRelated } from "@/components/product/product-category-related";
 import { cn } from "@/lib/utils";
@@ -11,6 +12,7 @@ export function ProductDetailRight({
  categoryProducts,
  className,
 }) {
+ const { t } = useLocale();
  const variants = product.variants ?? [];
 
  return (
@@ -21,7 +23,7 @@ export function ProductDetailRight({
       {getProductCardLabel(product)}
      </h2>
      <p className="text-muted-foreground mt-1 text-xs">
-      {selectedVariant?.material ?? "Standart konfigürasyon"}
+      {selectedVariant?.material ?? t("product.standardConfig")}
      </p>
     </div>
    ) : null}

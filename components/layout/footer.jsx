@@ -1,19 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import { FaWhatsapp, Mail, MapPin, Phone } from "@/lib/icons";
 import { flagshipStore } from "@/lib/stores";
 import { SocialIcon } from "@/components/layout/social-icon";
+import { useTranslations } from "@/contexts/locale-provider";
+import { brandName } from "@/lib/navigation";
 import {
- brandName,
- footerCategoryLinks,
- footerCustomerServiceLinks,
- footerExploreLinks
-} from "@/lib/navigation";
-import {
+ getSiteWorkingHours,
  getWhatsAppHref,
  siteEmail,
  sitePhone,
  sitePhoneHref,
- siteWorkingHours,
  socialLinks,
 } from "@/lib/site-contact";
 import { cn } from "@/lib/utils";
@@ -54,33 +52,40 @@ function FooterLinkList({ links }) {
 }
 
 export function Footer() {
+ const { navigation, t, locale } = useTranslations();
+ const {
+  footerExploreLinks,
+  footerCategoryLinks,
+  footerCustomerServiceLinks,
+ } = navigation;
  const whatsAppHref = getWhatsAppHref();
  const year = new Date().getFullYear();
+ const workingHours = getSiteWorkingHours(locale);
 
  return (
   <footer className="mt-4 rounded-t-[2rem] bg-white pb-28 pt-14 shadow-[0_-4px_32px_rgb(0_0_0/4%)] sm:pb-24 lg:pb-16 lg:pt-16">
    <div className="container-premium">
     <div className="grid gap-y-12 gap-x-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-12 xl:gap-x-16">
-     <FooterColumn title="Keşfet">
+     <FooterColumn title={t("footer.explore")}>
       <FooterLinkList links={footerExploreLinks} />
      </FooterColumn>
 
-     <FooterColumn title="Kategoriler">
+     <FooterColumn title={t("footer.categories")}>
       <FooterLinkList links={footerCategoryLinks} />
      </FooterColumn>
 
-     <FooterColumn title="Yardım & Politikalar">
+     <FooterColumn title={t("footer.helpPolicies")}>
       <FooterLinkList links={footerCustomerServiceLinks} />
      </FooterColumn>
 
      <FooterColumn
-      title="İletişime Geçin"
+      title={t("footer.getInTouch")}
       titleHref="/iletisim"
       className="sm:col-span-2 lg:col-span-1"
      >
       <div className="flex flex-col gap-5">
        <div className="space-y-1.5 font-body text-[13px] leading-relaxed text-charcoal/70">
-        {siteWorkingHours.map((row) => (
+        {workingHours.map((row) => (
          <p key={row.label}>
           {row.label}: {row.hours}
          </p>
@@ -92,7 +97,7 @@ export function Footer() {
          <Link
           href={sitePhoneHref}
           className="text-charcoal/70 transition-colors hover:text-charcoal"
-          aria-label={`Telefon: ${sitePhone}`}
+          aria-label={t("footer.phone", { phone: sitePhone })}
          >
           <Phone className="size-4 shrink-0" aria-hidden />
          </Link>
@@ -103,7 +108,7 @@ export function Footer() {
           target="_blank"
           rel="noopener noreferrer"
           className="text-charcoal/70 transition-colors hover:text-charcoal"
-          aria-label="WhatsApp"
+          aria-label={t("contact.whatsapp")}
          >
           <FaWhatsapp className="size-4" aria-hidden />
          </Link>
@@ -112,7 +117,7 @@ export function Footer() {
          <Link
           href={`mailto:${siteEmail}`}
           className="text-charcoal/70 transition-colors hover:text-charcoal"
-          aria-label={`E-posta: ${siteEmail}`}
+          aria-label={t("footer.email", { email: siteEmail })}
          >
           <Mail className="size-4 shrink-0" aria-hidden />
          </Link>
@@ -123,7 +128,7 @@ export function Footer() {
           target="_blank"
           rel="noopener noreferrer"
           className="text-charcoal/70 transition-colors hover:text-charcoal"
-          aria-label="Konum"
+          aria-label={t("footer.location")}
          >
           <MapPin className="size-4 shrink-0" aria-hidden />
          </Link>
@@ -150,7 +155,7 @@ export function Footer() {
       {year} © {brandName}
      </p>
      <p className="font-body text-[12px] text-charcoal/55 sm:text-right">
-      Site geliştirici:{" "}
+      {t("footer.siteDeveloper")}{" "}
       <Link
        href="https://www.omerhalisdemir.com.tr/"
        target="_blank"

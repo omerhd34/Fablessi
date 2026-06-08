@@ -5,10 +5,9 @@ import {
  ProductsCategoryFilter,
  ProductsColorFilter,
 } from "@/components/catalog/products-filter-content";
-import {
- ProductsSortMenu,
- sortOptions,
-} from "@/components/catalog/products-sort-menu";
+import { ProductsSortMenu } from "@/components/catalog/products-sort-menu";
+import { useTranslations } from "@/contexts/locale-provider";
+import { getSortOptions } from "@/lib/i18n/catalog";
 import {
  Sheet,
  SheetContent,
@@ -18,7 +17,7 @@ import {
 import { CloseIcon, FilterIcon, Search, X } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
-function ActiveFilterChip({ label, onRemove }) {
+function ActiveFilterChip({ label, onRemove, removeLabel }) {
  return (
   <button
    type="button"
@@ -27,7 +26,7 @@ function ActiveFilterChip({ label, onRemove }) {
   >
    <span>{label}</span>
    <X className="size-3 text-charcoal/50" aria-hidden />
-   <span className="sr-only">Filtreyi kaldır</span>
+   <span className="sr-only">{removeLabel}</span>
   </button>
  );
 }
@@ -43,7 +42,9 @@ export function ProductsMobileCatalogControls({
  categorySlug,
  resultCount,
 }) {
+ const { t, dictionary } = useTranslations();
  const [filterOpen, setFilterOpen] = useState(false);
+ const sortOptions = useMemo(() => getSortOptions(dictionary), [dictionary]);
 
  const activeFilterCount = useMemo(() => {
   let count = 0;
@@ -52,7 +53,8 @@ export function ProductsMobileCatalogControls({
  }, [selectedColor]);
 
  const activeSortLabel =
-  sortOptions.find((option) => option.value === sort)?.label ?? "Öne Çıkan";
+  sortOptions.find((option) => option.value === sort)?.label ??
+  t("catalog.sortFeatured");
 
  return (
   <div className="space-y-3 lg:hidden">
@@ -64,7 +66,7 @@ export function ProductsMobileCatalogControls({
      aria-expanded={filterOpen}
     >
      <FilterIcon className="size-4 text-charcoal/65" aria-hidden />
-     <span>Filtrele</span>
+     <span>{t("catalog.filter")}</span>
      {activeFilterCount > 0 ? (
       <span className="flex size-5 items-center justify-center rounded-full bg-charcoal text-[0.65rem] font-semibold text-white">
        {activeFilterCount}
@@ -85,16 +87,16 @@ export function ProductsMobileCatalogControls({
      type="search"
      value={search}
      onChange={(event) => onSearchChange(event.target.value)}
-     placeholder="Ürün ara..."
+     placeholder={t("catalog.searchProductsPlaceholder")}
      className="min-w-0 flex-1 bg-transparent text-sm text-charcoal outline-none placeholder:text-charcoal/45"
-     aria-label="Ürün ara"
+     aria-label={t("catalog.searchProducts")}
     />
     {search ? (
      <button
       type="button"
       onClick={() => onSearchChange("")}
       className="flex size-6 cursor-pointer items-center justify-center rounded-full text-charcoal/40 transition hover:bg-charcoal/5 hover:text-charcoal"
-      aria-label="Aramayı temizle"
+      aria-label={t("common.clearSearch")}
      >
       <X className="size-3.5" />
      </button>
@@ -107,12 +109,14 @@ export function ProductsMobileCatalogControls({
       <ActiveFilterChip
        label={selectedColor}
        onRemove={() => onColorChange(null)}
+       removeLabel={t("catalog.removeFilter")}
       />
      ) : null}
      {search.trim() ? (
       <ActiveFilterChip
        label={`"${search.trim()}"`}
        onRemove={() => onSearchChange("")}
+       removeLabel={t("catalog.removeFilter")}
       />
      ) : null}
      <button
@@ -123,14 +127,14 @@ export function ProductsMobileCatalogControls({
       }}
       className="cursor-pointer text-xs font-medium text-charcoal/50 transition hover:text-charcoal"
      >
-      Tümünü temizle
+      {t("catalog.clearAll")}
      </button>
     </div>
    )}
 
    <p className="text-muted-foreground text-sm">
-    {resultCount} ürün
-    {activeSortLabel !== "Öne Çıkan" ? (
+    {t("catalog.productsCount", { count: resultCount })}
+    {sort !== "featured" ? (
      <span className="text-charcoal/40"> · {activeSortLabel}</span>
     ) : null}
    </p>
@@ -142,21 +146,21 @@ export function ProductsMobileCatalogControls({
      className="catalog-filter-sheet flex max-h-[min(88dvh,40rem)] flex-col rounded-t-[1.75rem] border-charcoal/10 bg-cream/95 p-0 text-charcoal backdrop-blur-xl"
     >
      <SheetHeader className="sr-only">
-      <SheetTitle>Ürün filtreleri</SheetTitle>
+      <SheetTitle>{t("catalog.productFilters")}</SheetTitle>
      </SheetHeader>
 
      <div className="flex shrink-0 items-center justify-between border-b border-charcoal/8 px-5 py-4">
       <div>
-       <p className="text-base font-semibold text-charcoal">Filtrele</p>
+       <p className="text-base font-semibold text-charcoal">{t("catalog.filter")}</p>
        <p className="mt-0.5 text-xs text-charcoal/50">
-        Kategori ve renk seçin
+        {t("catalog.selectCategoryColor")}
        </p>
       </div>
       <button
        type="button"
        onClick={() => setFilterOpen(false)}
        className="flex size-9 cursor-pointer items-center justify-center rounded-full text-charcoal/60 transition hover:bg-charcoal/6 hover:text-charcoal"
-       aria-label="Filtreleri kapat"
+       aria-label={t("catalog.closeFilters")}
       >
        <CloseIcon className="size-5 stroke-[1.75]" aria-hidden />
       </button>
@@ -165,7 +169,7 @@ export function ProductsMobileCatalogControls({
      <div className="min-h-0 flex-1 overflow-y-auto px-5 py-5">
       <section>
        <h3 className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
-        Kategori
+        {t("catalog.category")}
        </h3>
        <div className="mt-3">
         <ProductsCategoryFilter
@@ -179,7 +183,7 @@ export function ProductsMobileCatalogControls({
       {availableColors.length > 0 ? (
        <section className="mt-6 border-t border-charcoal/8 pt-6">
         <h3 className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
-         Renk
+         {t("catalog.color")}
         </h3>
         <div className="mt-3">
          <ProductsColorFilter
@@ -204,14 +208,14 @@ export function ProductsMobileCatalogControls({
         "h-11 flex-1 cursor-pointer rounded-full border border-charcoal/12 bg-white text-sm font-medium text-charcoal transition hover:border-charcoal/20 disabled:cursor-not-allowed disabled:opacity-40"
        )}
       >
-       Temizle
+       {t("catalog.clear")}
       </button>
       <button
        type="button"
        onClick={() => setFilterOpen(false)}
        className="h-11 flex-1 cursor-pointer rounded-full bg-charcoal text-sm font-medium text-white transition hover:bg-charcoal/90"
       >
-       {resultCount} ürünü göster
+       {t("catalog.showProducts", { count: resultCount })}
       </button>
      </div>
     </SheetContent>
