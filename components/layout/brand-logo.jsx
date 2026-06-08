@@ -7,6 +7,7 @@ const sizeClasses = {
  sm: "brand-logo-lockup--sm",
  md: "brand-logo-lockup--md",
  lg: "brand-logo-lockup--lg",
+ xl: "brand-logo-lockup--xl",
 };
 
 export function BrandLogoLink({ href = "/", size = "md", className }) {

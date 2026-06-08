@@ -9,7 +9,7 @@ export const metadata = {
 export default function MagazalarPage() {
  return (
   <div className="bg-background">
-   <section className="section-padding-sm">
+   <section className="store-page">
     <div className="container-premium">
      <StoreShowcase />
     </div>

@@ -56,9 +56,7 @@ Sitede yer alan başlıca ürün grupları:
 | Mağazalar | `/magazalar` | Hazır |
 | SSS | `/sss` | Hazır |
 | Ürünler | `/urunler` | Planlandı |
-| Koleksiyonlar | `/koleksiyonlar` | Planlandı |
 | Hakkımızda | `/hakkimizda` | Planlandı |
-| Projeler | `/projeler` | Planlandı |
 | İletişim | `/iletisim` | Planlandı |
 
 ---

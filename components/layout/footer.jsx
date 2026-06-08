@@ -6,8 +6,7 @@ import {
  brandName,
  footerCategoryLinks,
  footerCustomerServiceLinks,
- footerExploreLinks,
- footerSpecialLinks,
+ footerExploreLinks
 } from "@/lib/navigation";
 import {
  getWhatsAppHref,
@@ -65,10 +64,6 @@ export function Footer() {
 
      <FooterColumn title="Popüler Kategoriler">
       <FooterLinkList links={footerCategoryLinks} />
-     </FooterColumn>
-
-     <FooterColumn title="Özel Sayfalar">
-      <FooterLinkList links={footerSpecialLinks} />
      </FooterColumn>
 
      <FooterColumn title="İletişime Geçin">

@@ -4,12 +4,19 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search } from "@/lib/icons";
+import { Collections, MapPin, Search, ViewModule, Work } from "@/lib/icons";
 import { BrandLogoLink } from "@/components/layout/brand-logo";
 import { ProductsMegaMenu } from "@/components/layout/products-mega-menu";
 import { primaryNavItems } from "@/lib/navigation";
 import { useIsDesktopNav } from "@/hooks/use-is-desktop-nav";
 import { cn } from "@/lib/utils";
+
+const desktopNavIconMap = {
+ products: ViewModule,
+ collections: Collections,
+ projects: Work,
+ stores: MapPin,
+};
 
 function DesktopNavItem({
  item,
@@ -22,13 +29,30 @@ function DesktopNavItem({
  const isProducts = item.megaMenu === "products";
  const active = isProducts
   ? pathname === "/urunler" ||
-    pathname.startsWith("/urunler/") ||
-    productsMenuOpen
+  pathname.startsWith("/urunler/") ||
+  productsMenuOpen
   : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
  const className = cn(
   "nav-desktop-link header-pill-link",
   active && "nav-desktop-link--active"
+ );
+
+ const Icon = item.icon ? desktopNavIconMap[item.icon] : null;
+ const iconOnly = Boolean(item.iconOnly);
+ const content = (
+  <>
+   {Icon ? (
+    <Icon
+     className={cn(
+      "nav-desktop-link__icon",
+      iconOnly && "nav-desktop-link__icon--solo"
+     )}
+     aria-hidden
+    />
+   ) : null}
+   {iconOnly ? null : item.label}
+  </>
  );
 
  return (
@@ -40,13 +64,19 @@ function DesktopNavItem({
      onClick={onProductsToggle}
      aria-expanded={productsMenuOpen}
      aria-haspopup="true"
-     className={cn(className, "cursor-pointer")}
+     aria-label={iconOnly ? item.label : undefined}
+     className={cn(className, iconOnly && "nav-desktop-link--icon-only", "cursor-pointer")}
     >
-     {item.label}
+     {content}
     </button>
    ) : (
-    <Link href={item.href} onClick={onProductsClose} className={className}>
-     {item.label}
+    <Link
+     href={item.href}
+     onClick={onProductsClose}
+     aria-label={iconOnly ? item.label : undefined}
+     className={cn(className, iconOnly && "nav-desktop-link--icon-only")}
+    >
+     {content}
     </Link>
    )}
   </>
@@ -92,10 +122,10 @@ export function DesktopNavbar({
  return (
   <div ref={navRef} className="nav-desktop relative" aria-label="Masaüstü menü">
    <div className="container-premium nav-desktop-bar">
-    <BrandLogoLink size="lg" className="min-w-0 shrink justify-self-start" />
+    <BrandLogoLink size="xl" className="nav-desktop-bar__logo min-w-0 shrink" />
 
     <nav
-     className="header-pill nav-desktop-links"
+     className="header-pill nav-desktop-pill"
      aria-label="Ana navigasyon"
     >
      {primaryNavItems.map((item, index) => (
@@ -109,32 +139,32 @@ export function DesktopNavbar({
        showDivider={index > 0}
       />
      ))}
-    </nav>
 
-    <div className="nav-desktop-bar__actions justify-self-end">
-     <div className="header-pill flex h-11 items-center px-1.5 lg:h-12 lg:px-2 xl:h-[3.35rem]">
-      <button
-       type="button"
-       onClick={onSearchToggle}
-       className={cn(
-        "header-icon-btn size-10 cursor-pointer rounded-full lg:size-11 xl:size-12",
-        searchOpen && "header-icon-btn--active"
-       )}
-       aria-label="Ara"
-       aria-expanded={searchOpen}
-      >
-       <Search className="size-[1.45rem]" />
-      </button>
-     </div>
+     <span className="header-pill-divider" aria-hidden />
 
      <button
       type="button"
-      className="header-pill-circle header-pill-link size-11 shrink-0 cursor-pointer text-sm font-semibold lg:size-12 lg:text-[0.9375rem] xl:size-[3.35rem]"
+      onClick={onSearchToggle}
+      className={cn(
+       "header-icon-btn size-10 cursor-pointer rounded-full lg:size-11 xl:size-12",
+       searchOpen && "header-icon-btn--active"
+      )}
+      aria-label="Ara"
+      aria-expanded={searchOpen}
+     >
+      <Search className="size-[1.45rem]" />
+     </button>
+
+     <span className="header-pill-divider" aria-hidden />
+
+     <button
+      type="button"
+      className="header-pill-link flex size-10 cursor-pointer items-center justify-center rounded-full text-sm font-semibold lg:size-11 lg:text-[0.9375rem] xl:size-12"
       aria-label="Dil: Türkçe"
      >
       TR
      </button>
-    </div>
+    </nav>
    </div>
 
    <ProductsMegaMenu open={productsMenuOpen} />
