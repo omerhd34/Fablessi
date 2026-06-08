@@ -1,6 +1,9 @@
 import Link from "next/link";
-import { FaWhatsapp, Phone } from "@/lib/icons";
+import { LuPhone } from "react-icons/lu";
+import { TbBrandWhatsapp } from "react-icons/tb";
 import { getWhatsAppHref, sitePhoneHref } from "@/lib/site-contact";
+
+const FLOAT_ICON_STROKE = 2.5;
 
 export function ContactFloat() {
  const whatsAppHref = getWhatsAppHref();
@@ -16,7 +19,11 @@ export function ContactFloat() {
      className="flex size-12 items-center justify-center rounded-full bg-white shadow-[0_4px_20px_rgb(0_0_0/15%)] transition-transform hover:scale-105 active:scale-95 sm:size-13"
      aria-label="Telefon ile ara"
     >
-     <Phone className="size-5 text-charcoal" aria-hidden />
+     <LuPhone
+      className="size-5 text-charcoal"
+      strokeWidth={FLOAT_ICON_STROKE}
+      aria-hidden
+     />
     </Link>
    ) : null}
    {whatsAppHref ? (
@@ -27,7 +34,11 @@ export function ContactFloat() {
      className="flex size-12 items-center justify-center rounded-full bg-white shadow-[0_4px_20px_rgb(0_0_0/15%)] transition-transform hover:scale-105 active:scale-95 sm:size-13"
      aria-label="WhatsApp ile iletişime geç"
     >
-     <FaWhatsapp className="size-6 text-charcoal" aria-hidden />
+     <TbBrandWhatsapp
+      className="size-6 text-charcoal"
+      strokeWidth={FLOAT_ICON_STROKE}
+      aria-hidden
+     />
     </Link>
    ) : null}
   </div>
