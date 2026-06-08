@@ -2,7 +2,17 @@
 
 import Link from "next/link";
 import { Fragment, useState } from "react";
-import { ChevronLeft, ChevronRight, CloseIcon } from "@/lib/icons";
+import {
+ ChevronLeft,
+ ChevronRight,
+ CloseIcon,
+ Collections,
+ Explore,
+ Mail,
+ MapPin,
+ ViewModule,
+ Work,
+} from "@/lib/icons";
 import { MobileProductsCategoryGrid } from "@/components/layout/mobile-products-category-grid";
 import { cn } from "@/lib/utils";
 import { brandName, mobileNavSections } from "@/lib/navigation";
@@ -12,6 +22,15 @@ import {
  SheetHeader,
  SheetTitle,
 } from "@/components/ui/sheet";
+
+const mobileNavIconMap = {
+ products: ViewModule,
+ explore: Explore,
+ collections: Collections,
+ projects: Work,
+ stores: MapPin,
+ contact: Mail,
+};
 
 export function MobileMenuDrawer({ pathname, onClose }) {
  const [productsViewOpen, setProductsViewOpen] = useState(false);
@@ -48,6 +67,7 @@ export function MobileMenuDrawer({ pathname, onClose }) {
       className="mb-4 flex cursor-pointer items-center gap-2 border-b border-charcoal/8 pb-4 text-left text-[0.9375rem] font-semibold text-charcoal"
      >
       <ChevronLeft className="size-5 shrink-0 text-charcoal/50" aria-hidden />
+      <ViewModule className="size-5 shrink-0 text-charcoal/45" aria-hidden />
       Ürünler
      </button>
 
@@ -93,6 +113,7 @@ function MobileDrawerNavItem({
  const active =
   pathname === item.href || pathname.startsWith(`${item.href}/`);
  const isProductsMenu = item.megaMenu === "products";
+ const Icon = item.icon ? mobileNavIconMap[item.icon] : null;
 
  return (
   <li className="mobile-nav-item border-b border-charcoal/8 last:border-b-0">
@@ -105,8 +126,11 @@ function MobileDrawerNavItem({
     <Link
      href={item.href}
      onClick={onClose}
-     className="flex flex-1 cursor-pointer items-center py-3.5 text-[0.9375rem] font-medium transition-colors hover:text-charcoal"
+     className="flex flex-1 cursor-pointer items-center gap-3 py-3.5 text-[0.9375rem] font-medium transition-colors hover:text-charcoal"
     >
+     {Icon ? (
+      <Icon className="size-5 shrink-0 text-charcoal/45" aria-hidden />
+     ) : null}
      {item.label}
     </Link>
     {isProductsMenu ? (
