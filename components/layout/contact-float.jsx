@@ -27,7 +27,7 @@ export function ContactFloat() {
      className="flex size-12 items-center justify-center rounded-full bg-white shadow-[0_4px_20px_rgb(0_0_0/15%)] transition-transform hover:scale-105 active:scale-95 sm:size-13"
      aria-label="WhatsApp ile iletişime geç"
     >
-     <FaWhatsapp className="size-6 text-[#25D366]" aria-hidden />
+     <FaWhatsapp className="size-6 text-charcoal" aria-hidden />
     </Link>
    ) : null}
   </div>
