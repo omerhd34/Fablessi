@@ -67,6 +67,8 @@
   --stone: oklch(0.91 0.008 90);
   --charcoal: oklch(0.22 0.01 260);
   --kalif-blue: oklch(0.52 0.14 250);
+  --brand-logo-bg: #3b4d32;
+  --brand-logo-border: oklch(0.34 0.04 125 / 72%);
 
   --background: oklch(1 0 0);
   --foreground: oklch(0.22 0.01 260);
@@ -101,7 +103,8 @@
   --sidebar-border: oklch(0.91 0.008 90);
   --sidebar-ring: oklch(0.72 0.02 260);
 
-  --header-height-mobile: 5.5rem;
+  --header-height-mobile: 4rem;
+  --header-height-mobile-sm: 5.5rem;
   --header-height-desktop: 6rem;
   --header-height-desktop-full: 6rem;
   --search-bar-height: 0rem;

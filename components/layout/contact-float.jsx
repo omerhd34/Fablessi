@@ -12,11 +12,11 @@ export function ContactFloat() {
  if (!whatsAppHref && !phoneHref) return null;
 
  return (
-  <div className="fixed right-4 bottom-5 z-50 flex flex-col gap-3 sm:right-6 sm:bottom-6">
+  <div className="fixed right-3 bottom-[max(1rem,env(safe-area-inset-bottom))] z-50 flex flex-col gap-2.5 sm:right-6 sm:bottom-6 sm:gap-3">
    {phoneHref ? (
     <Link
      href={phoneHref}
-     className="flex size-12 items-center justify-center rounded-full bg-white shadow-[0_4px_20px_rgb(0_0_0/15%)] transition-transform hover:scale-105 active:scale-95 sm:size-13"
+     className="flex size-11 items-center justify-center rounded-full bg-white shadow-[0_4px_20px_rgb(0_0_0/15%)] transition-transform hover:scale-105 active:scale-95 sm:size-13"
      aria-label="Telefon ile ara"
     >
      <LuPhone
@@ -31,7 +31,7 @@ export function ContactFloat() {
      href={whatsAppHref}
      target="_blank"
      rel="noopener noreferrer"
-     className="flex size-12 items-center justify-center rounded-full bg-white shadow-[0_4px_20px_rgb(0_0_0/15%)] transition-transform hover:scale-105 active:scale-95 sm:size-13"
+     className="flex size-11 items-center justify-center rounded-full bg-white shadow-[0_4px_20px_rgb(0_0_0/15%)] transition-transform hover:scale-105 active:scale-95 sm:size-13"
      aria-label="WhatsApp ile iletişime geç"
     >
      <TbBrandWhatsapp

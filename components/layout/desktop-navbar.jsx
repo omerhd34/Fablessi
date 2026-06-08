@@ -53,58 +53,46 @@ export function DesktopNavbar({
 
  return (
   <div ref={navRef} className="nav-desktop relative" aria-label="Masaüstü menü">
-   <div className="container-premium flex h-24 items-center justify-between gap-4">
-    <div className="flex min-w-0 items-center gap-3">
-     <button
-      type="button"
-      onClick={onMenuOpen}
-      className="header-pill-circle header-icon-btn size-12 shrink-0 cursor-pointer xl:size-[3.35rem]"
-      aria-label="Menüyü aç"
-     >
-      <Menu className="size-[1.45rem]" />
-     </button>
+   <div className="container-premium nav-desktop-bar">
+    <BrandLogoLink size="lg" className="min-w-0 shrink" />
 
-     <div className="header-pill hidden h-12 items-center px-2 sm:flex xl:h-[3.35rem]">
-      {headerQuickLinks.map((item, index) => (
-       <span key={item.href} className="flex items-center">
-        {index > 0 ? <span className="header-pill-divider" aria-hidden /> : null}
-        {item.megaMenu === "products" ? (
-         <button
-          type="button"
-          onClick={toggleProductsMenu}
-          aria-expanded={productsMenuOpen}
-          aria-haspopup="true"
-          className={cn(
-           "header-pill-link cursor-pointer px-4 py-2.5 xl:px-5 xl:py-3",
-           productsActive && "font-semibold"
-          )}
-         >
-          {item.label}
-         </button>
-        ) : (
-         <Link
-          href={item.href}
-          onClick={() => setProductsOpenState(false)}
-          className="header-pill-link px-4 py-2.5 xl:px-5 xl:py-3"
-         >
-          {item.label}
-         </Link>
-        )}
-       </span>
-      ))}
+    <div className="nav-desktop-bar__actions">
+     <div className="header-pill flex h-11 items-center px-1.5 lg:h-12 lg:px-2 xl:h-[3.35rem]">
+      {headerQuickLinks.map((item) =>
+       item.megaMenu === "products" ? (
+        <button
+         key={item.href}
+         type="button"
+         onClick={toggleProductsMenu}
+         aria-expanded={productsMenuOpen}
+         aria-haspopup="true"
+         className={cn(
+          "header-pill-link cursor-pointer px-3 py-2 text-[0.9375rem] lg:px-4 lg:py-2.5 lg:text-base xl:px-5 xl:py-3",
+          productsActive && "font-semibold"
+         )}
+        >
+         {item.label}
+        </button>
+       ) : (
+        <Link
+         key={item.href}
+         href={item.href}
+         onClick={() => setProductsOpenState(false)}
+         className="header-pill-link px-4 py-2.5 xl:px-5 xl:py-3"
+        >
+         {item.label}
+        </Link>
+       )
+      )}
      </div>
-    </div>
 
-    <BrandLogoLink size="md" />
-
-    <div className="flex items-center justify-end gap-3">
-     <div className="header-pill flex h-12 items-center px-2 xl:h-[3.35rem]">
+     <div className="header-pill flex h-11 items-center px-1.5 lg:h-12 lg:px-2 xl:h-[3.35rem]">
       <button
        type="button"
        onClick={onSearchToggle}
        className={cn(
-        "header-icon-btn size-11 cursor-pointer rounded-full xl:size-12",
-        searchOpen && "opacity-70"
+        "header-icon-btn size-10 cursor-pointer rounded-full lg:size-11 xl:size-12",
+        searchOpen && "header-icon-btn--active"
        )}
        aria-label="Ara"
        aria-expanded={searchOpen}
@@ -115,10 +103,19 @@ export function DesktopNavbar({
 
      <button
       type="button"
-      className="header-pill-circle header-pill-link size-12 shrink-0 cursor-pointer text-[0.9375rem] font-semibold xl:size-[3.35rem]"
+      className="header-pill-circle header-pill-link size-11 shrink-0 cursor-pointer text-sm font-semibold lg:size-12 lg:text-[0.9375rem] xl:size-[3.35rem]"
       aria-label="Dil: Türkçe"
      >
       TR
+     </button>
+
+     <button
+      type="button"
+      onClick={onMenuOpen}
+      className="header-pill-circle header-icon-btn size-11 shrink-0 cursor-pointer lg:size-12 xl:size-[3.35rem]"
+      aria-label="Menüyü aç"
+     >
+      <Menu className="size-[1.45rem]" />
      </button>
     </div>
    </div>

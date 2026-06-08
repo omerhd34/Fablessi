@@ -4,10 +4,6 @@
   -webkit-font-smoothing: antialiased;
 }
 
-.nav-compact {
-  display: grid;
-}
-
 .nav-desktop {
   display: none;
 }
@@ -178,6 +174,14 @@
     opacity: 0.65;
   }
 
+  .header-pill-circle.header-icon-btn--active,
+  .header-icon-btn.header-icon-btn--active {
+    border-color: oklch(0.22 0.01 260 / 24%);
+    background: var(--glass-surface-strong);
+    box-shadow: var(--glass-shadow);
+    opacity: 1;
+  }
+
   .header-glass-btn {
     border: 1px solid var(--glass-border);
     background: var(--pill-bg);
@@ -195,22 +199,174 @@
     border-color: oklch(0.22 0.01 260 / 20%);
   }
 
-  .brand-logo-pill {
+  .brand-logo-lockup {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 9999px;
-    border: 1px solid var(--pill-border);
-    background: var(--pill-bg);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
-    padding: 0.8rem 2.5rem;
-    box-shadow: var(--pill-shadow);
+    border: 1px solid var(--brand-logo-border);
+    border-radius: 0.5rem;
+    background: var(--brand-logo-bg);
+    box-shadow: 0 2px 14px rgb(0 0 0 / 14%);
+    color: #fff;
+    line-height: 1;
     transition: opacity 0.2s ease;
   }
 
-  .brand-logo-pill:hover {
-    opacity: 0.85;
+  .brand-logo-wordmark {
+    font-family: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 800;
+    text-transform: lowercase;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+  }
+
+  .brand-logo-lockup--xs {
+    padding: 0.32rem 0.55rem;
+    font-size: 0.95rem;
+  }
+
+  .brand-logo-lockup--sm {
+    padding: 0.38rem 0.65rem;
+    font-size: 1.1rem;
+  }
+
+  .brand-logo-lockup--md {
+    padding: 0.45rem 0.75rem;
+    font-size: 1.28rem;
+  }
+
+  .brand-logo-lockup--lg {
+    padding: 0.55rem 0.95rem;
+    font-size: 1.55rem;
+  }
+
+  @media (min-width: 1280px) {
+    .brand-logo-lockup--lg {
+      padding: 0.62rem 1.05rem;
+      font-size: 1.75rem;
+    }
+  }
+
+  .nav-compact-bar {
+    display: flex;
+    min-height: 4rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .nav-compact-bar__logo {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  .nav-compact-bar__logo-brand .brand-logo-lockup {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 1.25rem;
+  }
+
+  .nav-compact-bar__actions {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.375rem;
+  }
+
+  @media (min-width: 640px) {
+    .nav-compact-bar {
+      min-height: 5.5rem;
+      gap: 0.875rem;
+    }
+
+    .nav-compact-bar__actions {
+      gap: 0.75rem;
+    }
+
+    .nav-compact-bar__logo-brand .brand-logo-lockup {
+      padding: 0.65rem 1.5rem;
+      font-size: 1.65rem;
+    }
+
+    .nav-compact-search {
+      display: flex;
+      height: 3.5rem;
+      align-items: center;
+      padding-inline: 0.625rem;
+      border-radius: 9999px;
+      border: 1px solid var(--pill-border);
+      background: var(--pill-bg);
+      backdrop-filter: blur(16px) saturate(140%);
+      -webkit-backdrop-filter: blur(16px) saturate(140%);
+      box-shadow: var(--pill-shadow);
+    }
+
+    .nav-compact-search .header-pill-circle {
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .nav-compact-menu-btn {
+      width: 3.5rem;
+      height: 3.5rem;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .nav-compact-bar {
+      min-height: 5.75rem;
+      gap: 1rem;
+    }
+
+    .nav-compact-bar__logo-brand .brand-logo-lockup {
+      padding: 0.72rem 1.65rem;
+      font-size: 1.8rem;
+    }
+
+    .nav-compact-search {
+      height: 3.75rem;
+      padding-inline: 0.75rem;
+    }
+
+    .nav-compact-search .header-icon-btn {
+      width: 3.25rem;
+      height: 3.25rem;
+    }
+
+    .nav-compact-menu-btn {
+      width: 3.75rem;
+      height: 3.75rem;
+    }
+  }
+
+  .nav-desktop-bar {
+    display: flex;
+    min-height: 6rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .nav-desktop-bar__actions {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 1280px) {
+    .nav-desktop-bar__actions {
+      gap: 0.75rem;
+    }
+  }
+
+  .brand-logo-lockup:hover {
+    opacity: 0.88;
   }
 
   .header-search-pill {
@@ -487,13 +643,60 @@
     background: oklch(0.5 0.01 260 / 0.48);
   }
 
+  .hero-carousel__viewport {
+    touch-action: pan-y pinch-zoom;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: grab;
+  }
+
+  .hero-carousel__viewport:active {
+    cursor: grabbing;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-carousel__viewport {
+      cursor: default;
+    }
+  }
+
+  .hero-slide-copy-wrap {
+    top: 45%;
+  }
+
+  @media (min-width: 640px) {
+    .hero-slide-copy-wrap {
+      top: 41%;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-slide-copy-wrap {
+      top: 38%;
+    }
+  }
+
+  .hero-carousel__dots {
+    bottom: 2rem;
+  }
+
+  .hero-nav-btn.hero-nav-btn--desktop {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-nav-btn.hero-nav-btn--desktop {
+      display: flex;
+    }
+  }
+
   .hero-nav-btn {
     position: absolute;
     top: 50%;
     z-index: 10;
     display: flex;
-    width: 3.25rem;
-    height: 3.25rem;
+    width: 2.75rem;
+    height: 2.75rem;
     cursor: pointer;
     align-items: center;
     justify-content: center;
@@ -529,14 +732,29 @@
   }
 
   .hero-nav-btn--prev {
-    left: 1rem;
+    left: 0.5rem;
   }
 
   .hero-nav-btn--next {
-    right: 1rem;
+    right: 0.5rem;
   }
 
   @media (min-width: 640px) {
+    .hero-nav-btn {
+      width: 3.25rem;
+      height: 3.25rem;
+    }
+
+    .hero-nav-btn--prev {
+      left: 1rem;
+    }
+
+    .hero-nav-btn--next {
+      right: 1rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
     .hero-nav-btn {
       width: 3.75rem;
       height: 3.75rem;
@@ -552,8 +770,8 @@
   }
 
   .hero-nav-btn__icon {
-    width: 1.625rem;
-    height: 1.625rem;
+    width: 1.375rem;
+    height: 1.375rem;
     stroke-width: 2.25;
   }
 
@@ -569,14 +787,20 @@
     width: min(100%, 52rem);
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     text-align: center;
+  }
+
+  @media (min-width: 640px) {
+    .hero-slide-copy {
+      gap: 1.5rem;
+    }
   }
 
   .hero-slide-copy__panel {
     width: 100%;
-    padding: 1.75rem 1.5rem;
-    border-radius: 1.75rem;
+    padding: 1rem 0.875rem;
+    border-radius: 1rem;
     border: 1px solid oklch(0.22 0.01 260 / 10%);
     background: oklch(0.99 0.006 88 / 58%);
     backdrop-filter: blur(14px) saturate(140%);
@@ -598,7 +822,7 @@
   }
 
   .hero-slide-copy__headline {
-    font-size: clamp(1.75rem, 4.5vw, 3.25rem);
+    font-size: clamp(1.2rem, 5.5vw, 3.25rem);
     font-weight: 700;
     line-height: 1.12;
     letter-spacing: -0.025em;
@@ -609,12 +833,19 @@
   .hero-slide-copy__lines {
     display: flex;
     flex-direction: column;
-    gap: 0.375rem;
-    margin-top: 1rem;
+    gap: 0.25rem;
+    margin-top: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .hero-slide-copy__lines {
+      gap: 0.375rem;
+      margin-top: 1rem;
+    }
   }
 
   .hero-slide-copy__line {
-    font-size: clamp(0.9375rem, 2vw, 1.125rem);
+    font-size: clamp(0.8125rem, 3.5vw, 1.125rem);
     font-weight: 500;
     line-height: 1.55;
     color: oklch(0.46 0.01 260);
@@ -623,14 +854,17 @@
 
   .hero-slide-copy__cta {
     display: inline-flex;
-    height: 3rem;
+    max-width: min(100%, 20rem);
+    height: 2.625rem;
     align-items: center;
     justify-content: center;
     border-radius: 9999px;
     border: 1px solid var(--pill-border);
     background: var(--pill-bg);
-    padding-inline: 2.5rem;
-    font-size: 1rem;
+    padding-inline: 1.25rem;
+    font-size: 0.875rem;
+    text-align: center;
+    line-height: 1.2;
     font-weight: 600;
     color: var(--charcoal);
     box-shadow: var(--pill-shadow);

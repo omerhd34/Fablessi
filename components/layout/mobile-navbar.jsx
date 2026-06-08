@@ -12,45 +12,40 @@ export function MobileNavbar({ searchOpen, onSearchToggle, onMenuOpen }) {
  if (isDesktopNav) return null;
 
  return (
-  <div
-   className="nav-compact container-premium flex h-22 items-center justify-between gap-3"
-   aria-label="Mobil menü"
-  >
-   <div className="flex items-center gap-2.5">
-    <Button
-     variant="ghost"
-     size="icon"
-     type="button"
-     onClick={onMenuOpen}
-     className="header-pill-circle size-12 shrink-0 hover:bg-transparent"
-     aria-label="Menüyü aç"
-    >
-     <Menu className="size-[1.45rem]" />
-    </Button>
+  <div className="nav-compact container-premium" aria-label="Mobil menü">
+   <div className="nav-compact-bar">
+    <div className="nav-compact-bar__logo">
+     <BrandLogoLink size="xs" className="nav-compact-bar__logo-brand max-w-full" />
+    </div>
 
-    <button
-     type="button"
-     onClick={onSearchToggle}
-     className={cn(
-      "header-pill-circle header-icon-btn size-12 cursor-pointer",
-      searchOpen && "opacity-70"
-     )}
-     aria-label="Ara"
-     aria-expanded={searchOpen}
-    >
-     <Search className="size-[1.45rem]" />
-    </button>
+    <div className="nav-compact-bar__actions">
+     <div className="nav-compact-search">
+      <button
+       type="button"
+       onClick={onSearchToggle}
+       className={cn(
+        "header-pill-circle header-icon-btn size-10 cursor-pointer sm:size-12",
+        searchOpen && "header-icon-btn--active"
+       )}
+       aria-label="Ara"
+       aria-expanded={searchOpen}
+      >
+       <Search className="size-5 sm:size-[1.45rem]" aria-hidden />
+      </button>
+     </div>
+
+     <Button
+      variant="ghost"
+      size="icon"
+      type="button"
+      onClick={onMenuOpen}
+      className="header-pill-circle nav-compact-menu-btn size-10 shrink-0 hover:bg-transparent sm:size-14"
+      aria-label="Menüyü aç"
+     >
+      <Menu className="size-5 sm:size-6" aria-hidden />
+     </Button>
+    </div>
    </div>
-
-   <BrandLogoLink size="sm" />
-
-   <button
-    type="button"
-    className="header-pill-circle header-pill-link size-12 shrink-0 cursor-pointer text-[0.9375rem] font-semibold"
-    aria-label="Dil: Türkçe"
-   >
-    TR
-   </button>
   </div>
  );
 }

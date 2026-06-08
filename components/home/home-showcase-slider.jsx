@@ -12,7 +12,7 @@ import {
  CarouselPrevious,
 } from "@/components/ui/carousel";
 
-const slideClassName = "basis-[88%] pl-4 sm:basis-1/3 sm:pl-5";
+const slideClassName = "basis-full sm:basis-1/3 sm:pl-5";
 
 const navButtonClassName =
  "size-11 rounded-full border-charcoal/12 bg-white text-charcoal shadow-[0_4px_24px_rgb(0_0_0/6%)] transition-all duration-200 hover:border-charcoal/20 hover:bg-cream/60 hover:shadow-[0_8px_32px_rgb(0_0_0/8%)] active:scale-95 disabled:pointer-events-none disabled:opacity-25 sm:size-12";
@@ -71,7 +71,7 @@ export function HomeShowcaseSlider({
       className={navButtonClassName}
      />
      <div className="min-w-0">
-      <CarouselContent className="-ml-4 sm:-ml-5">
+      <CarouselContent className="sm:-ml-5">
        {children}
       </CarouselContent>
      </div>

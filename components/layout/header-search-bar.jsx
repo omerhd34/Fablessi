@@ -193,17 +193,9 @@ export function HeaderSearchBar({ open, onClose }) {
     )
     : null}
 
-   <div
-    className={cn(
-     "container-premium overflow-hidden transition-[max-height,opacity] duration-300 ease-out",
-     open && !showResultsPanel
-      ? "max-h-24 pb-4 opacity-100"
-      : "pointer-events-none max-h-0 opacity-0"
-    )}
-    aria-hidden={!open || showResultsPanel}
-   >
-    {searchForm}
-   </div>
+   {open && !showResultsPanel ? (
+    <div className="container-premium pb-4">{searchForm}</div>
+   ) : null}
 
    {mounted && open && showResultsPanel
     ? createPortal(
@@ -240,7 +232,7 @@ export function HeaderSearchBar({ open, onClose }) {
 
         {!loading && results.collections.length > 0 ? (
          <section className="search-overlay-section">
-          <h3 className="search-overlay-sectisafon-title">Koleksiyonlar</h3>
+          <h3 className="search-overlay-section-title">Koleksiyonlar</h3>
           <ul className="flex flex-wrap gap-2">
            {results.collections.map((collection) => (
             <li key={collection.id}>

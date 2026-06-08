@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "@/app/styles/base.css";
 import "@/app/styles/layout.css";
 import "@/app/styles/shared.css";
@@ -16,7 +16,18 @@ const inter = Inter({
  display: "swap",
 });
 
+const poppins = Poppins({
+ variable: "--font-poppins",
+ subsets: ["latin", "latin-ext"],
+ weight: ["800"],
+ display: "swap",
+});
+
 export const metadata = {
+ icons: {
+  icon: "/brand/fablessi-logo.png",
+  apple: "/brand/fablessi-logo.png",
+ },
  title: {
   default: `${brandName} | Premium Bahçe Mobilyaları`,
   template: `%s | ${brandName}`,
@@ -34,7 +45,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
  return (
-  <html lang="tr" className={`${inter.variable} h-full antialiased`}>
+  <html
+   lang="tr"
+   className={`${inter.variable} ${poppins.variable} h-full antialiased`}
+  >
    <body className="min-h-full flex flex-col font-sans">
     <TooltipProvider>
      <MainShell>{children}</MainShell>

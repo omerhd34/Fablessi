@@ -76,29 +76,41 @@ export function MobileMenuDrawer({ pathname, onClose }) {
      </div>
     </div>
    ) : (
-    <nav
-     className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-5 pb-6"
-     aria-label="Ana menü"
-    >
-     {mobileNavSections.map((section, sectionIndex) => (
-      <Fragment key={sectionIndex}>
-       {section.divider ? (
-        <div className="mobile-nav-divider my-1.5" aria-hidden />
-       ) : null}
-       <ul className="flex flex-col">
-        {section.items.map((item) => (
-         <MobileDrawerNavItem
-          key={item.href}
-          item={item}
-          pathname={pathname}
-          onClose={onClose}
-          onOpenProductsMenu={() => setProductsViewOpen(true)}
-         />
-        ))}
-       </ul>
-      </Fragment>
-     ))}
-    </nav>
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+     <nav
+      className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-5"
+      aria-label="Ana menü"
+     >
+      {mobileNavSections.map((section, sectionIndex) => (
+       <Fragment key={sectionIndex}>
+        {section.divider ? (
+         <div className="mobile-nav-divider my-1.5" aria-hidden />
+        ) : null}
+        <ul className="flex flex-col">
+         {section.items.map((item) => (
+          <MobileDrawerNavItem
+           key={item.href}
+           item={item}
+           pathname={pathname}
+           onClose={onClose}
+           onOpenProductsMenu={() => setProductsViewOpen(true)}
+          />
+         ))}
+        </ul>
+       </Fragment>
+      ))}
+     </nav>
+
+     <div className="flex shrink-0 justify-start border-t border-charcoal/8 px-5 py-3">
+      <button
+       type="button"
+       className="header-pill-circle header-pill-link inline-flex size-10 cursor-pointer items-center justify-center text-sm font-semibold"
+       aria-label="Dil: Türkçe"
+      >
+       TR
+      </button>
+     </div>
+    </div>
    )}
   </SheetContent>
  );

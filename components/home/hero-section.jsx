@@ -135,7 +135,12 @@ const HERO_SLIDES = [
 ];
 
 export function HeroSection() {
- const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30 });
+ const [emblaRef, emblaApi] = useEmblaCarousel({
+  loop: true,
+  duration: 30,
+  watchDrag: true,
+  dragFree: false,
+ });
  const [selectedIndex, setSelectedIndex] = useState(0);
  const autoplayTimerRef = useRef(null);
 
@@ -167,23 +172,27 @@ export function HeroSection() {
   };
 
   onSelect();
+  const onPointerDown = () => clearAutoplayTimer();
+
   emblaApi.on("select", onSelect);
   emblaApi.on("reInit", onSelect);
+  emblaApi.on("pointerDown", onPointerDown);
 
   return () => {
    emblaApi.off("select", onSelect);
    emblaApi.off("reInit", onSelect);
+   emblaApi.off("pointerDown", onPointerDown);
    clearAutoplayTimer();
   };
  }, [clearAutoplayTimer, emblaApi, scheduleAutoplay]);
 
  return (
-  <section className="relative w-full">
-   <div className="overflow-hidden" ref={emblaRef}>
+  <section className="hero-carousel relative w-full touch-pan-y">
+   <div className="hero-carousel__viewport overflow-hidden" ref={emblaRef}>
     <div className="flex">
      {HERO_SLIDES.map((slide, index) => (
       <div key={slide.cta.href} className="relative min-w-0 flex-[0_0_100%]">
-       <div className="relative min-h-svh w-full">
+       <div className="relative min-h-dvh w-full sm:min-h-svh">
         <Image
          src={slide.image}
          alt={slide.alt}
@@ -194,7 +203,7 @@ export function HeroSection() {
         />
         <div className="absolute inset-0 bg-linear-to-b from-black/20 via-transparent to-black/30" />
 
-        <div className="absolute inset-x-0 top-[38%] flex -translate-y-1/2 flex-col items-center px-4 sm:px-6">
+        <div className="hero-slide-copy-wrap absolute inset-x-0 flex -translate-y-1/2 flex-col items-center px-3 sm:px-6">
          <div className="hero-slide-copy">
           <div className="hero-slide-copy__panel">
            <h1 className="hero-slide-copy__headline">{slide.headline}</h1>
@@ -223,7 +232,7 @@ export function HeroSection() {
    <button
     type="button"
     onClick={scrollPrev}
-    className={cn(heroNavButtonClass, "hero-nav-btn--prev")}
+    className={cn(heroNavButtonClass, "hero-nav-btn--prev hero-nav-btn--desktop")}
     aria-label="Önceki slayt"
    >
     <HeroChevronLeft className="hero-nav-btn__icon" aria-hidden />
@@ -231,13 +240,13 @@ export function HeroSection() {
    <button
     type="button"
     onClick={scrollNext}
-    className={cn(heroNavButtonClass, "hero-nav-btn--next")}
+    className={cn(heroNavButtonClass, "hero-nav-btn--next hero-nav-btn--desktop")}
     aria-label="Sonraki slayt"
    >
     <HeroChevronRight className="hero-nav-btn__icon" aria-hidden />
    </button>
 
-   <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 gap-2">
+   <div className="hero-carousel__dots absolute left-1/2 z-10 hidden -translate-x-1/2 gap-2 lg:flex">
     {HERO_SLIDES.map((slide, index) => (
      <button
       key={slide.cta.href}
