@@ -47,9 +47,9 @@ function LightboxControlButton({
      ? "lightbox-nav-btn--waiting scale-95 opacity-80"
      : "cursor-pointer opacity-100 active:scale-95",
     variant === "glass" &&
-     "border border-white/15 bg-white/10 text-white shadow-[0_8px_32px_rgb(0_0_0/24%)] hover:border-white/25 hover:bg-white/18 focus-visible:ring-white/40",
+    "border border-white/15 bg-white/10 text-white shadow-[0_8px_32px_rgb(0_0_0/24%)] hover:border-white/25 hover:bg-white/18 focus-visible:ring-white/40",
     variant === "dark" &&
-     "border border-black/25 bg-black/72 text-white shadow-[0_8px_32px_rgb(0_0_0/45%)] hover:border-black/35 hover:bg-black/88 focus-visible:ring-white/40",
+    "border border-black/25 bg-black/72 text-white shadow-[0_8px_32px_rgb(0_0_0/45%)] hover:border-black/35 hover:bg-black/88 focus-visible:ring-white/40",
     className
    )}
    {...props}

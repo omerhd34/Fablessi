@@ -28,6 +28,8 @@ export function HeroSection() {
  });
  const [selectedIndex, setSelectedIndex] = useState(0);
  const autoplayTimerRef = useRef(null);
+ const autoplayRemainingRef = useRef(HERO_AUTOPLAY_MS);
+ const autoplayStartedAtRef = useRef(0);
 
  useEffect(() => {
   const mediaQuery = window.matchMedia(HERO_DESKTOP_MQ);
@@ -54,14 +56,38 @@ export function HeroSection() {
   }
  }, []);
 
- const scheduleAutoplay = useCallback(() => {
-  if (!emblaApi) return;
+ const scheduleAutoplay = useCallback(
+  (delay = HERO_AUTOPLAY_MS) => {
+   if (!emblaApi) return;
 
+   clearAutoplayTimer();
+   autoplayRemainingRef.current = delay;
+   autoplayStartedAtRef.current = Date.now();
+
+   if (document.hidden) return;
+
+   autoplayTimerRef.current = window.setTimeout(() => {
+    emblaApi.scrollNext();
+   }, delay);
+  },
+  [clearAutoplayTimer, emblaApi]
+ );
+
+ const pauseAutoplay = useCallback(() => {
+  if (autoplayTimerRef.current === null) return;
+
+  const elapsed = Date.now() - autoplayStartedAtRef.current;
+  autoplayRemainingRef.current = Math.max(
+   0,
+   autoplayRemainingRef.current - elapsed
+  );
   clearAutoplayTimer();
-  autoplayTimerRef.current = window.setTimeout(() => {
-   emblaApi.scrollNext();
-  }, HERO_AUTOPLAY_MS);
- }, [clearAutoplayTimer, emblaApi]);
+ }, [clearAutoplayTimer]);
+
+ const resumeAutoplay = useCallback(() => {
+  if (!emblaApi || autoplayTimerRef.current !== null) return;
+  scheduleAutoplay(autoplayRemainingRef.current);
+ }, [emblaApi, scheduleAutoplay]);
 
  useEffect(() => {
   if (!emblaApi) return;
@@ -85,6 +111,20 @@ export function HeroSection() {
    clearAutoplayTimer();
   };
  }, [clearAutoplayTimer, emblaApi, scheduleAutoplay]);
+
+ useEffect(() => {
+  const onVisibilityChange = () => {
+   if (document.hidden) {
+    pauseAutoplay();
+   } else {
+    resumeAutoplay();
+   }
+  };
+
+  document.addEventListener("visibilitychange", onVisibilityChange);
+  return () =>
+   document.removeEventListener("visibilitychange", onVisibilityChange);
+ }, [pauseAutoplay, resumeAutoplay]);
 
  return (
   <section className="hero-carousel relative w-full touch-pan-y">
