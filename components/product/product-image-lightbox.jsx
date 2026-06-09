@@ -5,17 +5,51 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { useLocale } from "@/contexts/locale-provider";
-import { ChevronLeft, ChevronRight, X } from "@/lib/icons";
+import { ChevronLeft, ChevronRight, Loader2Icon, X } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
 const SWIPE_THRESHOLD = 48;
+const SLIDE_DURATION_MS = 750;
 
-function LightboxControlButton({ className, children, ...props }) {
+function LightboxImage({ image, alt }) {
+ return (
+  <div className="lightbox-image-frame relative h-full w-full overflow-hidden">
+   <Image
+    src={image.url}
+    alt={alt}
+    fill
+    sizes="(max-width: 1024px) 100vw, 90vw"
+    className="object-cover object-center"
+    priority
+   />
+  </div>
+ );
+}
+
+function LightboxControlButton({
+ className,
+ variant = "glass",
+ isInactive = false,
+ children,
+ onClick,
+ ...props
+}) {
  return (
   <button
    type="button"
+   onClick={(event) => {
+    if (isInactive) return;
+    onClick?.(event);
+   }}
    className={cn(
-    "flex cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/10 text-white shadow-[0_8px_32px_rgb(0_0_0/24%)] backdrop-blur-md transition duration-200 hover:border-white/25 hover:bg-white/18 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 active:scale-95",
+    "flex items-center justify-center rounded-full backdrop-blur-md transition duration-200 focus-visible:outline-none focus-visible:ring-2",
+    isInactive
+     ? "lightbox-nav-btn--waiting scale-95 opacity-80"
+     : "cursor-pointer opacity-100 active:scale-95",
+    variant === "glass" &&
+     "border border-white/15 bg-white/10 text-white shadow-[0_8px_32px_rgb(0_0_0/24%)] hover:border-white/25 hover:bg-white/18 focus-visible:ring-white/40",
+    variant === "dark" &&
+     "border border-black/25 bg-black/72 text-white shadow-[0_8px_32px_rgb(0_0_0/45%)] hover:border-black/35 hover:bg-black/88 focus-visible:ring-white/40",
     className
    )}
    {...props}
@@ -23,6 +57,14 @@ function LightboxControlButton({ className, children, ...props }) {
    {children}
   </button>
  );
+}
+
+function getEnterClass(direction) {
+ return direction === 1 ? "lightbox-flip-enter-next" : "lightbox-flip-enter-prev";
+}
+
+function getExitClass(direction) {
+ return direction === 1 ? "lightbox-flip-exit-next" : "lightbox-flip-exit-prev";
 }
 
 export function ProductImageLightbox({
@@ -36,40 +78,93 @@ export function ProductImageLightbox({
  const current = open ? images[index] : null;
  const hasPrev = open && index > 0;
  const hasNext = open && index < images.length - 1;
- const [slideDirection, setSlideDirection] = useState(0);
- const [isOpening, setIsOpening] = useState(false);
+ const [visibleIndex, setVisibleIndex] = useState(index ?? 0);
+ const [transition, setTransition] = useState(null);
+ const [showOpenAnimation, setShowOpenAnimation] = useState(false);
  const touchStartX = useRef(null);
- const thumbnailStripRef = useRef(null);
+ const isTransitioningRef = useRef(false);
+ const skipTransitionRef = useRef(true);
+ const transitionTimerRef = useRef(null);
+
+ const clearTransitionTimer = useCallback(() => {
+  if (transitionTimerRef.current !== null) {
+   window.clearTimeout(transitionTimerRef.current);
+   transitionTimerRef.current = null;
+  }
+ }, []);
+
+ const finishTransition = useCallback(() => {
+  clearTransitionTimer();
+  isTransitioningRef.current = false;
+  setTransition(null);
+ }, [clearTransitionTimer]);
 
  useEffect(() => {
   if (!open) {
-   setIsOpening(false);
+   setShowOpenAnimation(false);
    return;
   }
 
-  setIsOpening(true);
-  const timer = window.setTimeout(() => setIsOpening(false), 0);
+  setShowOpenAnimation(true);
+  const timer = window.setTimeout(() => setShowOpenAnimation(false), 420);
   return () => window.clearTimeout(timer);
  }, [open]);
 
- const animationDirection = isOpening ? 0 : slideDirection;
+ useEffect(() => {
+  if (!open || index === null) {
+   skipTransitionRef.current = true;
+   finishTransition();
+   setVisibleIndex(index ?? 0);
+   return;
+  }
 
- const goTo = useCallback(
+  if (skipTransitionRef.current) {
+   skipTransitionRef.current = false;
+   setVisibleIndex(index);
+   return;
+  }
+
+  if (index === visibleIndex) return;
+  if (isTransitioningRef.current) return;
+
+  const direction = index > visibleIndex ? 1 : -1;
+  isTransitioningRef.current = true;
+  setTransition({ from: visibleIndex, direction });
+  setVisibleIndex(index);
+
+  clearTransitionTimer();
+  transitionTimerRef.current = window.setTimeout(
+   finishTransition,
+   SLIDE_DURATION_MS
+  );
+ }, [
+  clearTransitionTimer,
+  finishTransition,
+  index,
+  open,
+  visibleIndex,
+ ]);
+
+ useEffect(() => () => clearTransitionTimer(), [clearTransitionTimer]);
+
+ const startSlide = useCallback(
   (nextIndex) => {
    if (nextIndex < 0 || nextIndex >= images.length) return;
-   setSlideDirection(nextIndex > index ? 1 : nextIndex < index ? -1 : 0);
+   if (nextIndex === index) return;
+   if (isTransitioningRef.current) return;
+
    onIndexChange(nextIndex);
   },
   [images.length, index, onIndexChange]
  );
 
  const goPrev = useCallback(() => {
-  if (hasPrev) goTo(index - 1);
- }, [goTo, hasPrev, index]);
+  if (hasPrev) startSlide(index - 1);
+ }, [hasPrev, index, startSlide]);
 
  const goNext = useCallback(() => {
-  if (hasNext) goTo(index + 1);
- }, [goTo, hasNext, index]);
+  if (hasNext) startSlide(index + 1);
+ }, [hasNext, index, startSlide]);
 
  useEffect(() => {
   if (!open) return undefined;
@@ -91,20 +186,6 @@ export function ProductImageLightbox({
   };
  }, [open, goPrev, goNext, onClose]);
 
- useEffect(() => {
-  if (!open || !thumbnailStripRef.current) return;
-
-  const activeThumb = thumbnailStripRef.current.querySelector(
-   '[data-active="true"]'
-  );
-
-  activeThumb?.scrollIntoView({
-   behavior: "smooth",
-   inline: "center",
-   block: "nearest",
-  });
- }, [open, index]);
-
  const handleTouchStart = (event) => {
   touchStartX.current = event.touches[0]?.clientX ?? null;
  };
@@ -123,31 +204,80 @@ export function ProductImageLightbox({
   else goNext();
  };
 
- if (!open || !current || typeof document === "undefined") return null;
+ const isTransitioning = transition !== null;
+ const activeImage = images[visibleIndex] ?? current;
+
+ if (!open || !current || !activeImage || typeof document === "undefined") {
+  return null;
+ }
 
  return createPortal(
   <div
-   className="fixed inset-0 z-100 flex animate-in flex-col bg-black/78 duration-300 fade-in-0 supports-backdrop-filter:backdrop-blur-md"
+   className="fixed inset-0 z-100 h-dvh min-h-dvh w-full animate-in bg-black/78 duration-300 fade-in-0 supports-backdrop-filter:backdrop-blur-md"
    onClick={onClose}
    role="dialog"
    aria-modal="true"
    aria-label={current.alt ?? t("product.productImage")}
   >
+   <div className="absolute inset-0 flex h-full w-full items-center justify-center px-14 pt-14 pb-4 md:px-20 md:pt-16 lg:px-24 lg:pt-20 lg:pb-8">
+    <div
+     className="lightbox-stage relative h-full w-full max-w-7xl overflow-hidden"
+     onClick={(event) => event.stopPropagation()}
+     onTouchStart={handleTouchStart}
+     onTouchEnd={handleTouchEnd}
+    >
+     {transition && images[transition.from] ? (
+      <div
+       key={`exit-${transition.from}-${visibleIndex}`}
+       className={cn(
+        "lightbox-slide-layer pointer-events-none",
+        getExitClass(transition.direction)
+       )}
+      >
+       <LightboxImage
+        image={images[transition.from]}
+        alt={
+         images[transition.from].alt ?? t("product.productImage")
+        }
+       />
+      </div>
+     ) : null}
+
+     <div
+      key={`active-${visibleIndex}`}
+      className={cn(
+       "lightbox-slide-layer",
+       transition
+        ? getEnterClass(transition.direction)
+        : showOpenAnimation
+         ? "lightbox-slide-open"
+         : null
+      )}
+     >
+      <LightboxImage
+       image={activeImage}
+       alt={activeImage.alt ?? t("product.productImage")}
+      />
+     </div>
+    </div>
+   </div>
+
    <header
-    className="relative z-20 flex shrink-0 items-center justify-between gap-4 px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-2 md:px-8 md:pt-6"
+    className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-4 px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-2 md:px-8 md:pt-6"
     onClick={(event) => event.stopPropagation()}
    >
     {images.length > 1 ? (
-     <p className="rounded-full border border-white/12 bg-white/10 px-3.5 py-1.5 text-sm font-medium tracking-wide text-white/90 backdrop-blur-md tabular-nums">
-      <span className="text-white">{index + 1}</span>
-      <span className="mx-1.5 text-white/45">/</span>
-      <span className="text-white/70">{images.length}</span>
+     <p className="rounded-full border border-black/25 bg-black/72 px-3.5 py-1.5 text-sm font-medium tracking-wide text-white shadow-[0_8px_32px_rgb(0_0_0/45%)] backdrop-blur-md tabular-nums">
+      <span>{index + 1}</span>
+      <span className="mx-1.5 text-white/50">/</span>
+      <span className="text-white/80">{images.length}</span>
      </p>
     ) : (
      <span aria-hidden="true" />
     )}
 
     <LightboxControlButton
+     variant="dark"
      onClick={onClose}
      className="size-11"
      aria-label={t("common.close")}
@@ -156,103 +286,42 @@ export function ProductImageLightbox({
     </LightboxControlButton>
    </header>
 
-   <div className="relative flex min-h-0 flex-1 items-center justify-center px-14 md:px-20">
-    {hasPrev ? (
-     <LightboxControlButton
-      onClick={(event) => {
-       event.stopPropagation();
-       goPrev();
-      }}
-      className="absolute top-1/2 left-3 z-20 size-11 -translate-y-1/2 md:left-6 md:size-12"
-      aria-label={t("product.previousImage")}
-     >
-      <ChevronLeft className="size-6" />
-     </LightboxControlButton>
-    ) : null}
-
-    <div
-     className="relative flex h-full w-full max-w-6xl items-center justify-center"
-     onClick={(event) => event.stopPropagation()}
-     onTouchStart={handleTouchStart}
-     onTouchEnd={handleTouchEnd}
+   {hasPrev ? (
+    <LightboxControlButton
+     variant="dark"
+     isInactive={isTransitioning}
+     onClick={(event) => {
+      event.stopPropagation();
+      goPrev();
+     }}
+     className="absolute top-1/2 left-3 z-20 size-11 -translate-y-1/2 md:left-6 md:size-12"
+     aria-label={t("product.previousImage")}
     >
-     <div
-      key={index}
-      className={cn(
-       "relative h-[min(72dvh,48rem)] w-full animate-in duration-300 fade-in-0",
-       animationDirection === 1 && "slide-in-from-right-6",
-       animationDirection === -1 && "slide-in-from-left-6",
-       animationDirection === 0 && "zoom-in-95"
-      )}
-     >
-      <Image
-       src={current.url}
-       alt={current.alt ?? t("product.productImage")}
-       fill
-       sizes="(max-width: 768px) 96vw, 80vw"
-       className="object-contain drop-shadow-[0_24px_48px_rgb(0_0_0/35%)]"
-       priority
-      />
-     </div>
-    </div>
+     {isTransitioning ? (
+      <Loader2Icon className="size-5 animate-spin" aria-hidden="true" />
+     ) : (
+      <ChevronLeft className="size-6" aria-hidden="true" />
+     )}
+    </LightboxControlButton>
+   ) : null}
 
-    {hasNext ? (
-     <LightboxControlButton
-      onClick={(event) => {
-       event.stopPropagation();
-       goNext();
-      }}
-      className="absolute top-1/2 right-3 z-20 size-11 -translate-y-1/2 md:right-6 md:size-12"
-      aria-label={t("product.nextImage")}
-     >
-      <ChevronRight className="size-6" />
-     </LightboxControlButton>
-    ) : null}
-   </div>
-
-   {images.length > 1 ? (
-    <footer
-     className="relative z-20 shrink-0 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:px-8 md:pb-6"
-     onClick={(event) => event.stopPropagation()}
+   {hasNext ? (
+    <LightboxControlButton
+     variant="dark"
+     isInactive={isTransitioning}
+     onClick={(event) => {
+      event.stopPropagation();
+      goNext();
+     }}
+     className="absolute top-1/2 right-3 z-20 size-11 -translate-y-1/2 md:right-6 md:size-12"
+     aria-label={t("product.nextImage")}
     >
-     <div
-      ref={thumbnailStripRef}
-      className="mx-auto flex max-w-3xl gap-2 overflow-x-auto rounded-2xl border border-white/10 bg-white/8 p-2 backdrop-blur-md [-ms-overflow-style:none] scrollbar-none [&::-webkit-scrollbar]:hidden"
-      aria-label={t("product.productImages")}
-     >
-      {images.map((image, imageIndex) => {
-       const isActive = imageIndex === index;
-
-       return (
-        <button
-         key={image.id ?? image.url}
-         type="button"
-         data-active={isActive ? "true" : undefined}
-         onClick={() => goTo(imageIndex)}
-         className={cn(
-          "relative size-14 shrink-0 cursor-pointer overflow-hidden rounded-xl border transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 md:size-16",
-          isActive
-           ? "border-white/70 opacity-100 shadow-[0_0_0_1px_rgb(255_255_255/20%)]"
-           : "border-transparent opacity-55 hover:opacity-90"
-         )}
-         aria-label={t("product.enlargeImage", {
-          alt: image.alt ?? t("product.productImage"),
-         })}
-         aria-current={isActive ? "true" : undefined}
-        >
-         <Image
-          src={image.url}
-          alt=""
-          fill
-          sizes="64px"
-          className="object-cover"
-          aria-hidden="true"
-         />
-        </button>
-       );
-      })}
-     </div>
-    </footer>
+     {isTransitioning ? (
+      <Loader2Icon className="size-5 animate-spin" aria-hidden="true" />
+     ) : (
+      <ChevronRight className="size-6" aria-hidden="true" />
+     )}
+    </LightboxControlButton>
    ) : null}
   </div>,
   document.body

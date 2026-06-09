@@ -105,7 +105,7 @@ export function ProductDetailView({
         onVariantChange={setSelectedVariant}
         onViewDimensions={handleViewDimensions}
         section="controls"
-        className="gap-6 lg:hidden"
+        className="lg:hidden"
        />
       }
      />

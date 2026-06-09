@@ -29,33 +29,42 @@ function ProductGalleryImage({
  t,
 }) {
  const isSlide = variant === "slide";
+ const wrapperClassName = cn(
+  "relative block w-full overflow-hidden",
+  isSlide
+   ? "aspect-4/3 bg-white min-[48rem]:aspect-16/10"
+   : "product-gallery-frame aspect-4/3 min-[1152px]:aspect-16/10 cursor-pointer rounded-3xl bg-white",
+  className
+ );
+
+ const imageElement = (
+  <Image
+   src={image.url}
+   alt={image.alt ?? t("product.productImage")}
+   fill
+   sizes="(max-width: 1151px) 100vw, 60vw"
+   className={cn(
+    "object-cover transition-transform duration-300",
+    !isSlide && "hover:scale-[1.02]"
+   )}
+   priority={index === 0}
+  />
+ );
+
+ if (isSlide) {
+  return <div className={wrapperClassName}>{imageElement}</div>;
+ }
 
  return (
   <button
    type="button"
    onClick={() => onImageClick?.(index)}
-   className={cn(
-    "relative block w-full cursor-pointer overflow-hidden md:aspect-16/10",
-    isSlide
-     ? "aspect-4/3 bg-cream/40"
-     : "product-gallery-frame aspect-4/3 rounded-3xl bg-white",
-    className
-   )}
+   className={wrapperClassName}
    aria-label={t("product.enlargeImage", {
     alt: image.alt ?? t("product.productImage"),
    })}
   >
-   <Image
-    src={image.url}
-    alt={image.alt ?? t("product.productImage")}
-    fill
-    sizes="(max-width: 768px) 100vw, 60vw"
-    className={cn(
-     "object-cover transition-transform duration-300",
-     !isSlide && "hover:scale-[1.02]"
-    )}
-    priority={index === 0}
-   />
+   {imageElement}
   </button>
  );
 }
@@ -71,7 +80,7 @@ function ProductGallery({ images, onImageClick, t }) {
 
  return (
   <>
-   <div className="product-gallery-mobile md:hidden">
+   <div className="product-gallery-mobile min-[1152px]:hidden">
     <Carousel
      opts={{
       align: "start",
@@ -98,7 +107,7 @@ function ProductGallery({ images, onImageClick, t }) {
     </Carousel>
    </div>
 
-   <div className="hidden space-y-3 md:block md:space-y-4">
+   <div className="hidden min-[1152px]:block min-[1152px]:space-y-4">
     {images.map((image, index) => (
      <ProductGalleryImage
       key={image.id}
@@ -140,18 +149,17 @@ export function ProductDetailCenter({
  }, [openDimensions]);
 
  return (
-  <div className={cn("space-y-8 md:space-y-10", className)}>
+  <div className={cn("flex flex-col gap-4 md:gap-10", className)}>
    <ProductGallery images={images} onImageClick={onImageClick} t={t} />
 
    {belowGallery}
 
-   <div className="space-y-3">
-    <Accordion
-     type="multiple"
-     value={accordionValue}
-     onValueChange={setAccordionValue}
-     className="space-y-4"
-    >
+   <Accordion
+    type="multiple"
+    value={accordionValue}
+    onValueChange={setAccordionValue}
+    className="flex flex-col gap-4"
+   >
      <AccordionItem
       value="product-info"
       className="overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)]"
@@ -184,8 +192,7 @@ export function ProductDetailCenter({
        </AccordionContent>
       </AccordionItem>
      ) : null}
-    </Accordion>
-   </div>
+   </Accordion>
   </div>
  );
 }

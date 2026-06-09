@@ -37,11 +37,11 @@ function ActionButton({
    onClick={onClick}
    aria-pressed={ariaPressed}
    className={cn(
-    "flex w-full cursor-pointer items-center gap-3 rounded-2xl border border-charcoal/10 bg-white px-4 py-3.5 text-left text-sm font-medium text-charcoal shadow-[0_1px_3px_rgb(0_0_0/4%)] transition hover:border-charcoal/18 hover:shadow-[0_4px_16px_rgb(0_0_0/6%)]",
+    "flex w-full cursor-pointer items-center gap-3 rounded-3xl border border-charcoal/12 bg-white px-5 py-4 text-left text-sm font-medium text-charcoal shadow-[0_1px_3px_rgb(0_0_0/4%)] transition hover:border-charcoal/18 hover:shadow-[0_4px_16px_rgb(0_0_0/6%)]",
     className
    )}
   >
-   <Icon className="size-5 shrink-0 text-charcoal/55" aria-hidden />
+   <Icon className="size-5 shrink-0 text-black" aria-hidden />
    <span>{children}</span>
   </button>
  );
@@ -113,32 +113,14 @@ export function ProductDetailLeft({
  ) : null;
 
  const controls = showControls ? (
-  <>
-   <div className="space-y-2.5">
-    <ActionButton
-     icon={favorited ? HeartFilled : Heart}
-     onClick={handleToggleFavorite}
-     className={favorited ? "border-charcoal/20 bg-cream/60" : undefined}
-     aria-pressed={favorited}
-    >
-     {favorited ? t("product.removeFromFavorites") : t("product.addToFavorites")}
-    </ActionButton>
-    {section === "all" ? (
-     <ProductDimensionsScrollButton
-      product={product}
-      t={t}
-      onClick={onViewDimensions}
-     />
-    ) : null}
-   </div>
-
+  <div className="flex flex-col gap-4">
    {variants.length > 0 ? (
-    <div className="product-color-picker">
+    <div className="product-color-picker flex flex-col gap-4">
      <p className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
       {t("product.color")}
      </p>
      <div
-      className="product-color-picker__tray mt-3 flex h-12 w-full"
+      className="product-color-picker__tray flex h-12 w-full"
       role="listbox"
       aria-label={t("product.colorOptions")}
      >
@@ -178,7 +160,24 @@ export function ProductDetailLeft({
      </div>
     </div>
    ) : null}
-  </>
+
+   <ActionButton
+    icon={favorited ? HeartFilled : Heart}
+    onClick={handleToggleFavorite}
+    className={favorited ? "border-charcoal/20 bg-cream/60" : undefined}
+    aria-pressed={favorited}
+   >
+    {favorited ? t("product.removeFromFavorites") : t("product.addToFavorites")}
+   </ActionButton>
+   {section === "all" ? (
+    <ProductDimensionsScrollButton
+     product={product}
+     t={t}
+     onClick={onViewDimensions}
+     className="rounded-3xl border-charcoal/12 px-5 py-4"
+    />
+   ) : null}
+  </div>
  ) : null;
 
  return (
