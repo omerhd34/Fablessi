@@ -1,4 +1,5 @@
 import { ProductsCatalogShell } from "@/components/catalog/products-catalog-shell";
+import { createPageMetadata } from "@/lib/i18n/page-metadata";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { buildProductsMegaMenu } from "@/lib/i18n/build-navigation";
 import { getLocale } from "@/lib/i18n/server";
@@ -9,15 +10,7 @@ import {
 
 export const revalidate = 60;
 
-export async function generateMetadata() {
- const locale = await getLocale();
- const dictionary = getDictionary(locale);
-
- return {
-  title: dictionary.pages.products.title,
-  description: dictionary.pages.products.description,
- };
-}
+export const generateMetadata = createPageMetadata("products");
 
 export default async function UrunlerPage({ searchParams }) {
  const params = await searchParams;

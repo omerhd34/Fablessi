@@ -2,16 +2,10 @@ import {
  StatusActionLink,
  StatusPage,
 } from "@/components/status/status-page";
+import { createStatusMetadata } from "@/lib/i18n/page-metadata";
 import { getServerDictionary } from "@/lib/i18n/server";
 
-export async function generateMetadata() {
- const { dictionary } = await getServerDictionary();
-
- return {
-  title: dictionary.status.notFound.metadata.title,
-  description: dictionary.status.notFound.metadata.description,
- };
-}
+export const generateMetadata = createStatusMetadata("notFound");
 
 export default async function NotFoundPage() {
  const { dictionary } = await getServerDictionary();

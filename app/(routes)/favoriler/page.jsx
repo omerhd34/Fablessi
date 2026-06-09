@@ -1,14 +1,7 @@
 import { FavoritesView } from "@/components/favorites/favorites-view";
-import { getServerDictionary } from "@/lib/i18n/server";
+import { createPageMetadata } from "@/lib/i18n/page-metadata";
 
-export async function generateMetadata() {
- const { dictionary } = await getServerDictionary();
-
- return {
-  title: dictionary.pages.favorites.title,
-  description: dictionary.pages.favorites.description,
- };
-}
+export const generateMetadata = createPageMetadata("favorites");
 
 export default function FavorilerPage() {
  return (

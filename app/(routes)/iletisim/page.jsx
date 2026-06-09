@@ -1,15 +1,8 @@
 import "./page.css";
 import { StoreShowcase } from "@/components/stores/store-showcase";
-import { getServerDictionary } from "@/lib/i18n/server";
+import { createPageMetadata } from "@/lib/i18n/page-metadata";
 
-export async function generateMetadata() {
- const { dictionary } = await getServerDictionary();
-
- return {
-  title: dictionary.pages.contact.title,
-  description: dictionary.pages.contact.description,
- };
-}
+export const generateMetadata = createPageMetadata("contact");
 
 export default function IletisimPage() {
  return (

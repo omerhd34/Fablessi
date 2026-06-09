@@ -1,16 +1,9 @@
 import "./page.css";
 import { AboutHero } from "@/components/about/about-hero";
 import { AboutPageContent } from "@/components/about/about-page-content";
-import { getServerDictionary } from "@/lib/i18n/server";
+import { createPageMetadata } from "@/lib/i18n/page-metadata";
 
-export async function generateMetadata() {
- const { dictionary } = await getServerDictionary();
-
- return {
-  title: dictionary.pages.about.title,
-  description: dictionary.pages.about.description,
- };
-}
+export const generateMetadata = createPageMetadata("about");
 
 export default function HakkimizdaPage() {
  return (
