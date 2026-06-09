@@ -1,7 +1,6 @@
 "use client";
 
 import { Menu, Search } from "@/lib/icons";
-import { FavoritesLink } from "@/components/favorites/favorites-link";
 import { BrandLogoLink } from "@/components/layout/brand-logo";
 import { useTranslations } from "@/contexts/locale-provider";
 import { useIsDesktopNav } from "@/hooks/use-is-desktop-nav";
@@ -22,8 +21,6 @@ export function MobileNavbar({ searchOpen, onSearchToggle, onMenuOpen }) {
     </div>
 
     <div className="nav-compact-bar__actions">
-     <FavoritesLink className="header-pill-circle nav-compact-favorites-btn shrink-0" />
-
      <div className="nav-compact-search">
       <button
        type="button"

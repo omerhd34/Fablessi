@@ -1,13 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import {
  ChevronLeft,
  ChevronRight,
  CloseIcon,
  Collections,
  Explore,
+ Heart,
+ HeartFilled,
  HelpOutline,
  MapPin,
  MissionVision,
@@ -15,6 +17,7 @@ import {
  ViewModule,
  Work,
 } from "@/lib/icons";
+import { useFavorites } from "@/contexts/favorites-provider";
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 import { MobileProductsCategoryGrid } from "@/components/layout/mobile-products-category-grid";
 import { cn } from "@/lib/utils";
@@ -96,14 +99,18 @@ export function MobileMenuDrawer({ pathname, onClose }) {
      >
       <ul className="flex flex-col">
        {mobileNavItems.map((item) => (
-        <MobileDrawerNavItem
-         key={item.href}
-         item={item}
-         pathname={pathname}
-         onClose={onClose}
-         onOpenProductsMenu={() => setProductsViewOpen(true)}
-         t={t}
-        />
+        <Fragment key={item.href}>
+         <MobileDrawerNavItem
+          item={item}
+          pathname={pathname}
+          onClose={onClose}
+          onOpenProductsMenu={() => setProductsViewOpen(true)}
+          t={t}
+         />
+         {item.megaMenu === "products" ? (
+          <MobileDrawerFavoritesItem pathname={pathname} onClose={onClose} t={t} />
+         ) : null}
+        </Fragment>
        ))}
       </ul>
      </nav>
@@ -114,6 +121,40 @@ export function MobileMenuDrawer({ pathname, onClose }) {
     </div>
    )}
   </SheetContent>
+ );
+}
+
+function MobileDrawerFavoritesItem({ pathname, onClose, t }) {
+ const { count, hydrated } = useFavorites();
+ const active =
+  pathname === "/favoriler" || pathname.startsWith("/favoriler/");
+ const visibleCount = hydrated ? count : 0;
+
+ return (
+  <li className="mobile-nav-item border-b border-charcoal/8 last:border-b-0">
+   <Link
+    href="/favoriler"
+    onClick={onClose}
+    className={cn(
+     "flex min-h-14 cursor-pointer items-center gap-3 px-0 py-4 text-[0.9375rem] font-medium transition-colors hover:text-charcoal",
+     active ? "text-charcoal" : "text-charcoal/90"
+    )}
+    aria-label={t("favorites.navLabel", { count: visibleCount })}
+    aria-current={active ? "page" : undefined}
+   >
+    {visibleCount > 0 ? (
+     <HeartFilled className="size-5 shrink-0 text-charcoal/45" aria-hidden />
+    ) : (
+     <Heart className="size-5 shrink-0 text-charcoal/45" aria-hidden />
+    )}
+    <span className="flex-1">{t("favorites.title")}</span>
+    {visibleCount > 0 ? (
+     <span className="text-[0.8125rem] font-semibold text-red-500">
+      +{visibleCount > 99 ? "99+" : visibleCount}
+     </span>
+    ) : null}
+   </Link>
+  </li>
  );
 }
 
