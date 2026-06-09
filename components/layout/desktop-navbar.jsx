@@ -129,8 +129,10 @@ export function DesktopNavbar({
 
  return (
   <div className="nav-desktop relative" aria-label={t("nav.desktopMenu")}>
-   <div className="container-premium nav-desktop-bar">
-    <BrandLogoLink size="xl" className="nav-desktop-bar__logo min-w-0 shrink" />
+   <div className="container-premium nav-desktop-bar ">
+    <div className="nav-desktop-bar__logo">
+     <BrandLogoLink size="xl" />
+    </div>
 
     <nav
      className="header-pill nav-desktop-pill"

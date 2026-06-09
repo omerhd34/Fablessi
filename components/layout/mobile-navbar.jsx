@@ -17,7 +17,7 @@ export function MobileNavbar({ searchOpen, onSearchToggle, onMenuOpen }) {
   <div className="nav-compact container-premium" aria-label={t("nav.mobileMenu")}>
    <div className="nav-compact-bar">
     <div className="nav-compact-bar__logo">
-     <BrandLogoLink size="xs" className="nav-compact-bar__logo-brand max-w-full" />
+     <BrandLogoLink size="md" />
     </div>
 
     <div className="nav-compact-bar__actions">

@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "@/contexts/locale-provider";
@@ -100,7 +99,7 @@ export function HeroSection() {
    >
     <div className="flex">
      {heroSlides.map((slide, index) => (
-      <div key={slide.cta.href} className="relative min-w-0 flex-[0_0_100%]">
+      <div key={slide.href} className="relative min-w-0 flex-[0_0_100%]">
        <div className="relative min-h-dvh w-full sm:min-h-svh">
         <Image
          src={slide.image}
@@ -110,28 +109,6 @@ export function HeroSection() {
          sizes="100vw"
          className={cn("object-cover", slide.imagePosition ?? "object-center")}
         />
-        <div className="absolute inset-0 bg-linear-to-b from-black/20 via-transparent to-black/30" />
-
-        <div className="hero-slide-copy-wrap absolute inset-0 flex items-center justify-center px-3 sm:px-6">
-         <div className="hero-slide-copy">
-          <div className="hero-slide-copy__panel">
-           <h1 className="hero-slide-copy__headline">{slide.headline}</h1>
-           <div className="hero-slide-copy__lines">
-            {slide.lines.map((line) => (
-             <p key={line} className="hero-slide-copy__line">
-              {line}
-             </p>
-            ))}
-           </div>
-          </div>
-          <Link
-           href={slide.cta.href}
-           className="hero-slide-copy__cta"
-          >
-           {slide.cta.label}
-          </Link>
-         </div>
-        </div>
        </div>
       </div>
      ))}
@@ -158,7 +135,7 @@ export function HeroSection() {
    <div className="hero-carousel__dots absolute left-1/2 z-10 flex -translate-x-1/2 gap-2">
     {heroSlides.map((slide, index) => (
      <button
-      key={slide.cta.href}
+      key={slide.href}
       type="button"
       onClick={() => emblaApi?.scrollTo(index)}
       className={cn(

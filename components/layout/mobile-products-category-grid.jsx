@@ -36,10 +36,6 @@ export function MobileProductsCategoryGrid({ onClose }) {
        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
       />
      ) : null}
-     <div className="absolute inset-0 bg-linear-to-t from-black/55 via-black/10 to-transparent" />
-     <span className="absolute right-3 bottom-3 left-3 text-sm font-semibold text-white drop-shadow-sm">
-      {category.label}
-     </span>
     </Link>
    ))}
   </div>
