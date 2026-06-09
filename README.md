@@ -205,7 +205,6 @@ Proje [Vercel](https://vercel.com), [Railway](https://railway.app) veya herhangi
 Ürün fotoğrafları `public/` altında kategorilere göre düzenlenmiştir:
 
 - `public/acelya-oturma/`, `public/aston-oturma/`, `public/begonia-oturma/` …
-- Tanıtım videoları: `public/Botanica Garden_s Ürün Videoları 25_/`
 
 Yeni ürün eklerken görselleri ilgili klasöre koyup `lib/navigation.js` içindeki mega menüye referans verilmesi yeterlidir.
 
