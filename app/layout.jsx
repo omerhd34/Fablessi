@@ -12,6 +12,7 @@ import { FavoritesProvider } from "@/contexts/favorites-provider";
 import { LocaleProvider } from "@/contexts/locale-provider";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { brandName } from "@/lib/navigation";
+import { siteMetadata } from "@/lib/site-metadata";
 
 const montserrat = Montserrat({
  variable: "--font-montserrat",
@@ -28,27 +29,29 @@ const poppins = Poppins({
 });
 
 export async function generateMetadata() {
- const { dictionary } = await getServerDictionary();
+ const { dictionary, locale } = await getServerDictionary();
+ const title = `${brandName} | ${dictionary.metadata.title}`;
+ const description = dictionary.metadata.description;
+ const openGraphLocale = locale === "en" ? "en_US" : "tr_TR";
 
  return {
-  icons: {
-   icon: "/brand/fablessi-logo.png",
-   apple: "/brand/fablessi-logo.png",
-  },
+  ...siteMetadata,
   title: {
-   default: `${brandName} | ${dictionary.metadata.title}`,
-   template: `%s | ${brandName}`,
+   default: title,
+   template: siteMetadata.title.template,
   },
-  description: dictionary.metadata.description,
-  keywords: [
-   "bahçe mobilyası",
-   "garden furniture",
-   "dış mekan mobilya",
-   "outdoor furniture",
-   "Fablessi",
-   "İnegöl",
-   "premium bahçe mobilyaları",
-  ],
+  description,
+  openGraph: {
+   ...siteMetadata.openGraph,
+   title,
+   description,
+   locale: openGraphLocale,
+  },
+  twitter: {
+   ...siteMetadata.twitter,
+   title,
+   description,
+  },
  };
 }
 
