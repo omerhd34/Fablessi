@@ -214,41 +214,43 @@ export function HeaderSearchBar({ open, onClose }) {
  const searchForm = (
   <form
    onSubmit={handleSubmit}
-   className="header-search-pill flex w-full items-center gap-2 sm:gap-3"
+   className="header-search-pill"
    role="search"
   >
-   <input
-    ref={inputRef}
-    type="text"
-    inputMode="search"
-    enterKeyHint="search"
-    autoComplete="off"
-    autoCorrect="off"
-    spellCheck={false}
-    value={query}
-    onChange={(event) => setQuery(event.target.value)}
-    placeholder={t("common.searchPlaceholder")}
-    className="header-search-pill__input min-w-0 flex-1 bg-transparent text-base text-charcoal outline-none placeholder:text-charcoal/45"
-    aria-label={t("common.searchLabel")}
-   />
-   <div className="header-search-pill__actions flex shrink-0 items-center gap-0.5 sm:gap-1">
-    {query ? (
+   <div className="header-search-pill__field">
+    <input
+     ref={inputRef}
+     type="text"
+     inputMode="search"
+     enterKeyHint="search"
+     autoComplete="off"
+     autoCorrect="off"
+     spellCheck={false}
+     value={query}
+     onChange={(event) => setQuery(event.target.value)}
+     placeholder={t("common.searchPlaceholder")}
+     className="header-search-pill__input"
+     aria-label={t("common.searchLabel")}
+    />
+    <div className="header-search-pill__actions">
+     {query ? (
+      <button
+       type="button"
+       onClick={handleClear}
+       className="header-search-clear"
+       aria-label={t("common.clearSearch")}
+      >
+       <X className="size-4" aria-hidden />
+      </button>
+     ) : null}
      <button
-      type="button"
-      onClick={handleClear}
-      className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-charcoal/55 transition-opacity hover:opacity-65"
-      aria-label={t("common.clearSearch")}
+      type="submit"
+      className="header-search-submit"
+      aria-label={t("common.search")}
      >
-      <X className="size-5" aria-hidden />
+      <Search className="size-[1.125rem]" aria-hidden />
      </button>
-    ) : null}
-    <button
-     type="submit"
-     className="header-search-submit flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full transition-opacity hover:opacity-65"
-     aria-label={t("common.search")}
-    >
-     <Search className="size-5 text-charcoal/70" aria-hidden />
-    </button>
+    </div>
    </div>
   </form>
  );

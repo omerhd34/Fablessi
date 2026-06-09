@@ -43,17 +43,19 @@ export function FavoritesToolbar({
     <form
      role="search"
      onSubmit={(event) => event.preventDefault()}
-     className="header-search-pill flex flex-1 items-center gap-3"
+     className="header-search-pill flex-1"
     >
-     <input
-      type="search"
-      value={search}
-      onChange={(event) => onSearchChange(event.target.value)}
-      placeholder={t("favorites.searchPlaceholder")}
-      className="min-w-0 flex-1 bg-transparent text-base text-charcoal outline-none placeholder:text-charcoal/45"
-      aria-label={t("favorites.search")}
-     />
-     <Search className="size-5 shrink-0 text-charcoal/55" aria-hidden />
+     <div className="header-search-pill__field">
+      <input
+       type="search"
+       value={search}
+       onChange={(event) => onSearchChange(event.target.value)}
+       placeholder={t("favorites.searchPlaceholder")}
+       className="header-search-pill__input"
+       aria-label={t("favorites.search")}
+      />
+      <Search className="header-search-pill__icon" aria-hidden />
+     </div>
     </form>
 
     <ProductsSortMenu
