@@ -5,7 +5,6 @@ import { BrandLogoLink } from "@/components/layout/brand-logo";
 import { useTranslations } from "@/contexts/locale-provider";
 import { useIsDesktopNav } from "@/hooks/use-is-desktop-nav";
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
 
 export function MobileNavbar({ searchOpen, onSearchToggle, onMenuOpen }) {
  const isDesktopNav = useIsDesktopNav();
@@ -21,31 +20,27 @@ export function MobileNavbar({ searchOpen, onSearchToggle, onMenuOpen }) {
     </div>
 
     <div className="nav-compact-bar__actions">
-     <div className="nav-compact-search">
-      <button
-       type="button"
-       onClick={onSearchToggle}
-       className={cn(
-        "header-pill-circle header-icon-btn nav-compact-search-btn cursor-pointer",
-        searchOpen && "header-icon-btn--active"
-       )}
-       aria-label={t("common.search")}
-       aria-expanded={searchOpen}
-      >
-       <Search className="nav-compact-search-btn__icon" aria-hidden />
-      </button>
-     </div>
+     <button
+      type="button"
+      onClick={onSearchToggle}
+      className={cn(
+       "header-pill-circle header-icon-btn nav-compact-search-btn shrink-0 cursor-pointer",
+       searchOpen && "header-icon-btn--active"
+      )}
+      aria-label={t("common.search")}
+      aria-expanded={searchOpen}
+     >
+      <Search className="nav-compact-search-btn__icon" aria-hidden />
+     </button>
 
-     <Button
-      variant="ghost"
-      size="icon"
+     <button
       type="button"
       onClick={onMenuOpen}
-      className="header-pill-circle nav-compact-menu-btn shrink-0 cursor-pointer hover:bg-transparent"
+      className="header-pill-circle header-icon-btn nav-compact-menu-btn shrink-0 cursor-pointer"
       aria-label={t("nav.openMenu")}
      >
       <Menu className="nav-compact-menu-btn__icon" aria-hidden />
-     </Button>
+     </button>
     </div>
    </div>
   </div>
