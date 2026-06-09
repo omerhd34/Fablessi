@@ -81,7 +81,6 @@ export function Footer() {
      <FooterColumn
       title={t("footer.getInTouch")}
       titleHref="/iletisim"
-      className="sm:col-span-2 lg:col-span-1"
      >
       <div className="flex flex-col gap-5">
        <div className="space-y-1.5 font-body text-[13px] leading-relaxed text-charcoal/70">
