@@ -88,7 +88,7 @@ export function ProductsCatalogShell({
 
    <div className="min-w-0 flex-1 space-y-6 md:space-y-8">
     {categoryHeroImage ? (
-     <div className="relative -mx-4 h-44 overflow-hidden sm:-mx-5 sm:h-52 md:-mx-6 lg:-mx-8 lg:h-56 xl:-mx-10">
+     <div className="relative -mx-4 hidden h-44 overflow-hidden sm:-mx-5 sm:h-52 md:-mx-6 lg:-mx-8 lg:block lg:h-56 xl:-mx-10">
       <Image
        src={categoryHeroImage}
        alt={activeGroup.label}
@@ -116,7 +116,10 @@ export function ProductsCatalogShell({
     </div>
 
     {!categorySlug && !collectionSlug ? (
-     <ProductsCategoryCarousel activeSlug={categorySlug} />
+     <ProductsCategoryCarousel
+      activeSlug={categorySlug}
+      className="hidden md:block"
+     />
     ) : null}
 
     <ProductsCatalogToolbar

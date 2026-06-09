@@ -8,7 +8,6 @@ import {
 import { ProductsSortMenu } from "@/components/catalog/products-sort-menu";
 import { useTranslations } from "@/contexts/locale-provider";
 import { getColorLabel } from "@/lib/catalog-colors";
-import { getSortOptions } from "@/lib/i18n/catalog";
 import {
  Sheet,
  SheetContent,
@@ -43,19 +42,14 @@ export function ProductsMobileCatalogControls({
  categorySlug,
  resultCount,
 }) {
- const { t, dictionary } = useTranslations();
+ const { t } = useTranslations();
  const [filterOpen, setFilterOpen] = useState(false);
- const sortOptions = useMemo(() => getSortOptions(dictionary), [dictionary]);
 
  const activeFilterCount = useMemo(() => {
   let count = 0;
   if (selectedColor) count += 1;
   return count;
  }, [selectedColor]);
-
- const activeSortOption = sortOptions.find((option) => option.value === sort);
- const activeSortLabel =
-  activeSortOption?.triggerLabel ?? t("catalog.sortFeatured");
 
  return (
   <div className="space-y-3 lg:hidden">
@@ -132,13 +126,6 @@ export function ProductsMobileCatalogControls({
      </button>
     </div>
    )}
-
-   <p className="text-muted-foreground text-sm">
-    {t("catalog.productsCount", { count: resultCount })}
-    {sort !== "featured" ? (
-     <span className="text-charcoal/40"> · {activeSortLabel}</span>
-    ) : null}
-   </p>
 
    <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
     <SheetContent
