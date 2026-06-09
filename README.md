@@ -64,7 +64,7 @@ Sitede yer alan başlıca ürün grupları:
 | Misyon & Vizyon | `/misyon-vizyon` | Hazır |
 | SSS | `/sss` | Hazır |
 | İletişim | `/iletisim` | Hazır |
-| Hakkımızda | `/hakkimizda` | Planlandı |
+| Hakkımızda | `/hakkimizda` | Hazır |
 | Projeler | `/projeler` | Planlandı |
 | KVKK / Gizlilik / Çerez | `/kvkk`, `/gizlilik-politikasi`, `/cerez-politikasi` | Planlandı |
 
