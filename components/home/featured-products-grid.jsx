@@ -18,7 +18,11 @@ export function FeaturedProductsGrid({ products }) {
   >
    {products.map((product, index) => (
     <HomeShowcaseSlide key={product.id}>
-     <ProductCard product={product} priority={index < 3} />
+     <ProductCard
+      product={product}
+      priority={index < 3}
+      showFavoriteButton
+     />
     </HomeShowcaseSlide>
    ))}
   </HomeShowcaseSlider>

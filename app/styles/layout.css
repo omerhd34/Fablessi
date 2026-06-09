@@ -1149,3 +1149,16 @@
     }
   }
 }
+
+[data-sonner-toaster][data-y-position="bottom"] {
+  --offset-bottom: 1.5rem !important;
+  --mobile-offset-bottom: 1.25rem !important;
+  z-index: 60;
+}
+
+@media (min-width: 640px) {
+  [data-sonner-toaster][data-y-position="bottom"] {
+    --offset-bottom: 1.75rem !important;
+    --mobile-offset-bottom: 1.5rem !important;
+  }
+}

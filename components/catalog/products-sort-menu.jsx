@@ -12,12 +12,17 @@ import { useTranslations } from "@/contexts/locale-provider";
 import { getSortOptions } from "@/lib/i18n/catalog";
 import { cn } from "@/lib/utils";
 
-export function ProductsSortMenu({ sort, onSortChange, compact = false }) {
+export function ProductsSortMenu({
+ sort,
+ onSortChange,
+ compact = false,
+ sortOptions: sortOptionsProp,
+}) {
  const { t, dictionary } = useTranslations();
  const [open, setOpen] = useState(false);
  const sortOptions = useMemo(
-  () => getSortOptions(dictionary),
-  [dictionary]
+  () => sortOptionsProp ?? getSortOptions(dictionary),
+  [dictionary, sortOptionsProp]
  );
  const activeOption =
   sortOptions.find((option) => option.value === sort) ?? sortOptions[0];

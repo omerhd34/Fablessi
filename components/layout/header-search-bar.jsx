@@ -8,17 +8,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { Folder, Search, X } from "@/lib/icons";
 import { useTranslations } from "@/contexts/locale-provider";
-import {
- getCollectionProductsHref,
- getPrimaryImageUrl,
- getProductCardLabel,
-} from "@/lib/product-utils";
+import { getCategoryLabelForProduct } from "@/lib/product-category";
+import { getCollectionProductsHref, getPrimaryImageUrl } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
 const DEBOUNCE_MS = 280;
 
-function SearchProductCard({ product, onNavigate }) {
+function SearchProductCard({ product, onNavigate, dictionary }) {
  const imageUrl = getPrimaryImageUrl(product);
+ const categoryLabel = getCategoryLabelForProduct(product.slug, dictionary);
+ const bottomLabel = product.collection?.name ?? product.name;
 
  return (
   <Link
@@ -39,15 +38,15 @@ function SearchProductCard({ product, onNavigate }) {
      <div className="absolute inset-0 bg-cream/70" aria-hidden />
     )}
     <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/35 via-transparent to-transparent" />
-    <div className="absolute right-2 bottom-2 left-2 flex items-end justify-between gap-2">
-     <span className="inline-flex max-w-[70%] rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-charcoal shadow-sm backdrop-blur-sm">
-      {getProductCardLabel(product)}
+    {categoryLabel ? (
+     <span className="absolute top-2 right-2 z-10 inline-flex rounded-2xl bg-white/92 px-2.5 py-1 text-[0.65rem] font-semibold text-charcoal shadow-sm backdrop-blur-sm">
+      {categoryLabel}
      </span>
-     {product.collection?.name ? (
-      <span className="shrink-0 rounded-full bg-white/90 px-2 py-1 text-[0.65rem] font-medium text-charcoal/70 backdrop-blur-sm">
-       {product.collection.name}
-      </span>
-     ) : null}
+    ) : null}
+    <div className="absolute right-2 bottom-2 left-2">
+     <span className="inline-flex max-w-[85%] rounded-full bg-white/95 px-3 py-1.5 text-xs font-semibold text-charcoal shadow-sm backdrop-blur-sm">
+      {bottomLabel}
+     </span>
     </div>
    </div>
   </Link>
@@ -55,7 +54,7 @@ function SearchProductCard({ product, onNavigate }) {
 }
 
 export function HeaderSearchBar({ open, onClose }) {
- const { t } = useTranslations();
+ const { t, dictionary } = useTranslations();
  const pathname = usePathname();
  const isHome = pathname === "/";
  const inputRef = useRef(null);
@@ -263,6 +262,7 @@ export function HeaderSearchBar({ open, onClose }) {
             <SearchProductCard
              key={product.id}
              product={product}
+             dictionary={dictionary}
              onNavigate={handleNavigate}
             />
            ))}

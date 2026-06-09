@@ -1,0 +1,126 @@
+"use client";
+
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import { ProductCard } from "@/components/catalog/product-card";
+import { FavoritesFiltersSidebar } from "@/components/favorites/favorites-filters-sidebar";
+import { FavoritesToolbar } from "@/components/favorites/favorites-toolbar";
+import { useFavorites } from "@/contexts/favorites-provider";
+import { useLocale } from "@/contexts/locale-provider";
+import { favoriteToProductCard } from "@/lib/favorites";
+import {
+ filterFavorites,
+ getAvailableFavoriteCategories,
+ getAvailableFavoriteCollections,
+ sortFavorites,
+} from "@/lib/favorites-filters";
+
+export function FavoritesView() {
+ const { favorites, hydrated } = useFavorites();
+ const { t, dictionary } = useLocale();
+ const [search, setSearch] = useState("");
+ const [sort, setSort] = useState("recent");
+ const [selectedCategory, setSelectedCategory] = useState(null);
+ const [selectedCollection, setSelectedCollection] = useState(null);
+
+ const categories = useMemo(
+  () => getAvailableFavoriteCategories(favorites, dictionary),
+  [favorites, dictionary]
+ );
+ const collections = useMemo(
+  () => getAvailableFavoriteCollections(favorites),
+  [favorites]
+ );
+
+ const filteredFavorites = useMemo(() => {
+  const filtered = filterFavorites(favorites, {
+   search,
+   categorySlug: selectedCategory,
+   collectionName: selectedCollection,
+   dictionary,
+  });
+
+  return sortFavorites(filtered, sort);
+ }, [favorites, search, selectedCategory, selectedCollection, sort, dictionary]);
+
+ if (!hydrated) {
+  return (
+   <p className="text-muted-foreground text-sm">{t("common.loading")}…</p>
+  );
+ }
+
+ if (favorites.length === 0) {
+  return (
+   <div className="rounded-3xl border border-dashed border-charcoal/12 bg-cream/40 px-6 py-20 text-center">
+    <h1 className="heading-display text-charcoal">{t("favorites.title")}</h1>
+    <p className="text-muted-foreground mx-auto mt-3 max-w-md text-sm">
+     {t("favorites.emptyDescription")}
+    </p>
+    <Link
+     href="/urunler"
+     className="mt-8 inline-flex rounded-full bg-charcoal px-6 py-3 text-sm font-medium text-white transition hover:bg-charcoal/90"
+    >
+     {t("favorites.browseProducts")}
+    </Link>
+   </div>
+  );
+ }
+
+ return (
+  <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-12">
+   <FavoritesFiltersSidebar
+    categories={categories}
+    collections={collections}
+    selectedCategory={selectedCategory}
+    onCategoryChange={setSelectedCategory}
+    selectedCollection={selectedCollection}
+    onCollectionChange={setSelectedCollection}
+    className="hidden lg:block"
+   />
+
+   <div className="min-w-0 flex-1 space-y-6 md:space-y-8">
+    <div>
+     <h1 className="heading-display text-charcoal">{t("favorites.title")}</h1>
+     <p className="text-muted-foreground mt-2 hidden text-sm lg:block">
+      {t("catalog.listing", { count: filteredFavorites.length })}
+     </p>
+    </div>
+
+    <FavoritesToolbar
+     search={search}
+     onSearchChange={setSearch}
+     sort={sort}
+     onSortChange={setSort}
+     resultCount={filteredFavorites.length}
+     categories={categories}
+     collections={collections}
+     selectedCategory={selectedCategory}
+     onCategoryChange={setSelectedCategory}
+     selectedCollection={selectedCollection}
+     onCollectionChange={setSelectedCollection}
+    />
+
+    {filteredFavorites.length > 0 ? (
+     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:gap-6">
+      {filteredFavorites.map((favorite, index) => (
+       <ProductCard
+        key={favorite.slug}
+        product={favoriteToProductCard(favorite)}
+        priority={index < 2}
+        variant="catalog"
+        showFavoriteButton
+       />
+      ))}
+     </div>
+    ) : (
+     <div className="rounded-3xl border border-dashed border-charcoal/12 bg-cream/40 px-6 py-20 text-center">
+      <p className="text-sm font-medium text-charcoal">{t("favorites.noResults")}</p>
+      <p className="text-muted-foreground mt-2 text-sm">
+       {t("catalog.tryAgain")}
+      </p>
+     </div>
+    )}
+   </div>
+  </div>
+ );
+}

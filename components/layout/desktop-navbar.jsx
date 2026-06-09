@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Collections, MapPin, Search, SupportAgent, ViewModule, Work } from "@/lib/icons";
+import { FavoritesLink } from "@/components/favorites/favorites-link";
 import { BrandLogoLink } from "@/components/layout/brand-logo";
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 import { ProductsMegaMenu } from "@/components/layout/products-mega-menu";
@@ -36,21 +37,21 @@ function DesktopNavItem({
   productsMenuOpen
   : pathname === item.href || pathname.startsWith(`${item.href}/`);
 
- const className = cn(
-  "nav-desktop-link header-pill-link",
-  active && "nav-desktop-link--active"
- );
-
  const Icon = item.icon ? desktopNavIconMap[item.icon] : null;
  const iconOnly = Boolean(item.iconOnly);
+ const className = cn(
+  iconOnly
+   ? "header-icon-btn size-10 cursor-pointer rounded-full lg:size-11 xl:size-12"
+   : "nav-desktop-link header-pill-link",
+  iconOnly
+   ? active && "header-icon-btn--active"
+   : active && "nav-desktop-link--active"
+ );
  const content = (
   <>
    {Icon ? (
     <Icon
-     className={cn(
-      "nav-desktop-link__icon",
-      iconOnly && "nav-desktop-link__icon--solo"
-     )}
+     className={iconOnly ? "size-[1.45rem]" : "nav-desktop-link__icon"}
      aria-hidden
     />
    ) : null}
@@ -69,7 +70,7 @@ function DesktopNavItem({
      aria-expanded={productsMenuOpen}
      aria-haspopup="true"
      aria-label={iconOnly ? item.label : undefined}
-     className={cn(className, iconOnly && "nav-desktop-link--icon-only", "cursor-pointer")}
+     className={cn(className, "cursor-pointer")}
     >
      {content}
     </button>
@@ -78,7 +79,7 @@ function DesktopNavItem({
      href={item.href}
      onClick={onProductsClose}
      aria-label={iconOnly ? item.label : undefined}
-     className={cn(className, iconOnly && "nav-desktop-link--icon-only")}
+     className={className}
     >
      {content}
     </Link>
@@ -165,6 +166,10 @@ export function DesktopNavbar({
      >
       <Search className="size-[1.45rem]" />
      </button>
+
+     <span className="header-pill-divider" aria-hidden />
+
+     <FavoritesLink />
 
      <span className="header-pill-divider" aria-hidden />
 

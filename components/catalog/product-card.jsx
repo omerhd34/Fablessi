@@ -1,6 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { getPrimaryImageUrl, getProductCardLabel } from "@/lib/product-utils";
+import { ProductFavoriteButton } from "@/components/favorites/product-favorite-button";
+import { useLocale } from "@/contexts/locale-provider";
+import { getCategoryLabelForProduct } from "@/lib/product-category";
+import { getPrimaryImageUrl } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
 export function ProductCard({
@@ -8,18 +13,27 @@ export function ProductCard({
  className,
  priority = false,
  variant = "default",
+ showFavoriteButton = false,
 }) {
+ const { dictionary } = useLocale();
  const imageUrl = getPrimaryImageUrl(product);
  const isCatalog = variant === "catalog";
+ const categoryLabel =
+  product.categoryLabel ??
+  getCategoryLabelForProduct(product.slug, dictionary);
+ const bottomLabel = product.collection?.name ?? product.name;
 
  return (
   <article className={cn("group/card", className)}>
-   <Link href={`/urunler/${product.slug}`} className="block cursor-pointer">
-    <div
-     className={cn(
-      "product-card-kalif relative overflow-hidden",
-      isCatalog ? "product-card-kalif--catalog aspect-5/4 rounded-3xl" : "aspect-4/5"
-     )}
+   <div
+    className={cn(
+     "product-card-kalif relative overflow-hidden",
+     isCatalog ? "product-card-kalif--catalog aspect-5/4 rounded-3xl" : "aspect-4/5"
+    )}
+   >
+    <Link
+     href={`/urunler/${product.slug}`}
+     className="absolute inset-0 block cursor-pointer"
     >
      {imageUrl ? (
       <Image
@@ -40,14 +54,14 @@ export function ProductCard({
 
      <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent" />
 
-     {product.collection?.name ? (
+     {categoryLabel ? (
       <span
        className={cn(
         "absolute top-3 right-3 z-10 inline-flex rounded-2xl bg-white/92 px-3 py-1.5 font-semibold text-charcoal shadow-sm backdrop-blur-sm",
         isCatalog ? "text-sm" : "text-xs"
        )}
       >
-       {product.collection.name}
+       {categoryLabel}
       </span>
      ) : null}
 
@@ -58,11 +72,18 @@ export function ProductCard({
         isCatalog ? "px-4 py-2 text-sm" : "px-3.5 py-1.5 text-xs"
        )}
       >
-       {getProductCardLabel(product)}
+       {bottomLabel}
       </span>
      </div>
-    </div>
-   </Link>
+    </Link>
+
+    {showFavoriteButton ? (
+     <ProductFavoriteButton
+      product={product}
+      className="absolute top-3 left-3 z-20"
+     />
+    ) : null}
+   </div>
   </article>
  );
 }

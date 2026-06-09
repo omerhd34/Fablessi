@@ -18,8 +18,7 @@
         -1 * (var(--header-height-mobile-sm) + var(--search-bar-height))
       );
       padding-top: calc(
-        2 * (var(--header-height-mobile-sm) + var(--search-bar-height)) +
-          1.5rem
+        2 * (var(--header-height-mobile-sm) + var(--search-bar-height)) + 1.5rem
       );
     }
   }
@@ -45,9 +44,7 @@
     .page-header-bleed {
       margin-top: calc(
         -1 *
-          (
-            var(--header-height-mobile-sm) + var(--search-bar-height) + 1.5rem
-          )
+          (var(--header-height-mobile-sm) + var(--search-bar-height) + 1.5rem)
       );
     }
   }

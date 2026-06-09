@@ -1,11 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { showFavoriteToast } from "@/components/favorites/favorite-toast";
 import { ProductDimensionsScrollButton } from "@/components/product/product-dimensions-scroll-button";
+import { useFavorites } from "@/contexts/favorites-provider";
 import { useLocale } from "@/contexts/locale-provider";
-import { CompareArrows, Heart } from "@/lib/icons";
+import { CompareArrows, Heart, HeartFilled } from "@/lib/icons";
 import { getColorLabel } from "@/lib/catalog-colors";
-import { getColorSwatch, getProductShortName } from "@/lib/product-utils";
+import {
+ getColorSwatch,
+ getProductFavoriteToastLabel,
+ getProductShortName,
+} from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
 function getSegmentTextClass(hex) {
@@ -18,11 +24,18 @@ function getSegmentTextClass(hex) {
  return luminance > 0.62 ? "text-charcoal" : "text-white";
 }
 
-function ActionButton({ icon: Icon, children, onClick, className }) {
+function ActionButton({
+ icon: Icon,
+ children,
+ onClick,
+ className,
+ "aria-pressed": ariaPressed,
+}) {
  return (
   <button
    type="button"
    onClick={onClick}
+   aria-pressed={ariaPressed}
    className={cn(
     "flex w-full cursor-pointer items-center gap-3 rounded-2xl border border-charcoal/10 bg-white px-4 py-3.5 text-left text-sm font-medium text-charcoal shadow-[0_1px_3px_rgb(0_0_0/4%)] transition hover:border-charcoal/18 hover:shadow-[0_4px_16px_rgb(0_0_0/6%)]",
     className
@@ -43,8 +56,21 @@ export function ProductDetailLeft({
  onViewDimensions,
  className,
 }) {
- const { t } = useLocale();
+ const { t, dictionary } = useLocale();
+ const { isFavorite, toggleFavorite, hydrated } = useFavorites();
  const variants = product.variants ?? [];
+ const favorited = hydrated && isFavorite(product.slug);
+
+ const handleToggleFavorite = () => {
+  const added = toggleFavorite(product);
+
+  showFavoriteToast({
+   added,
+   title: added ? t("favorites.addedToast") : t("favorites.removedToast"),
+   description: getProductFavoriteToastLabel(product, dictionary),
+   closeLabel: t("common.close"),
+  });
+ };
 
  return (
   <aside className={cn("flex flex-col gap-8", className)}>
@@ -86,7 +112,14 @@ export function ProductDetailLeft({
    </div>
 
    <div className="space-y-2.5">
-    <ActionButton icon={Heart}>{t("product.addToFavorites")}</ActionButton>
+    <ActionButton
+     icon={favorited ? HeartFilled : Heart}
+     onClick={handleToggleFavorite}
+     className={favorited ? "border-charcoal/20 bg-cream/60" : undefined}
+     aria-pressed={favorited}
+    >
+     {favorited ? t("product.removeFromFavorites") : t("product.addToFavorites")}
+    </ActionButton>
     <ActionButton icon={CompareArrows}>{t("product.compareProduct")}</ActionButton>
     <ProductDimensionsScrollButton
      product={product}

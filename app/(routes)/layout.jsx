@@ -6,7 +6,9 @@ import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { MainShell } from "@/components/layout/main-shell";
 import { ContactFloat } from "@/components/layout/contact-float";
+import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { FavoritesProvider } from "@/contexts/favorites-provider";
 import { LocaleProvider } from "@/contexts/locale-provider";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { brandName } from "@/lib/navigation";
@@ -60,12 +62,15 @@ export default async function RootLayout({ children }) {
   >
    <body className="min-h-full flex flex-col font-sans">
     <LocaleProvider locale={locale} dictionary={dictionary}>
-     <TooltipProvider>
-      <MainShell>{children}</MainShell>
-      <Header />
-      <Footer />
-      <ContactFloat />
-     </TooltipProvider>
+     <FavoritesProvider>
+      <TooltipProvider>
+       <MainShell>{children}</MainShell>
+       <Header />
+       <Footer />
+       <ContactFloat />
+       <Toaster position="bottom-center" gap={10} visibleToasts={1} />
+      </TooltipProvider>
+     </FavoritesProvider>
     </LocaleProvider>
    </body>
   </html>
