@@ -162,7 +162,7 @@ export function Footer() {
        rel="noopener noreferrer"
        className="text-charcoal/70 underline underline-offset-2 transition-colors hover:text-charcoal"
       >
-       Ömer Halis Demir
+       Ömer Halis DEMİR
       </Link>
      </p>
     </div>
