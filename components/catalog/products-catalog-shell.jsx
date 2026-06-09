@@ -105,7 +105,7 @@ export function ProductsCatalogShell({
      <h1 className="heading-display text-charcoal">
       {activeCollection
        ? getLocalizedCollectionName(activeCollection, dictionary) ??
-         activeCollection.name
+       activeCollection.name
        : activeGroup
         ? activeGroup.label
         : t("catalog.allProductsTitle")}
