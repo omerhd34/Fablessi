@@ -16,7 +16,7 @@
 | **Sektör** | Bahçe & dış mekan mobilyası |
 | **Konum** | İnegöl / Bursa |
 | **Site türü** | Kurumsal vitrin + ürün kataloğu |
-| **Dil** | Türkçe (varsayılan) · İngilizce |
+| **Dil** | Türkçe (varsayılan) - İngilizce |
 
 Site; ürün fotoğrafları, varyant renkleri (Antrasit, Cappuccino, Gri vb.), teknik ölçüler ve marka hikâyesini ziyaretçilere profesyonel bir arayüzle aktarmak için tasarlanmıştır. E-ticaret sepeti yerine **keşif odaklı** bir katalog yaklaşımı benimsenmiştir; WhatsApp ve telefon üzerinden doğrudan iletişim desteklenir.
 
@@ -26,15 +26,16 @@ Site; ürün fotoğrafları, varyant renkleri (Antrasit, Cappuccino, Gri vb.), t
 
 - **Ana sayfa vitrini** — Hero slider, kategori vitrinleri, öne çıkan ürünler carousel, marka deneyimi banner
 - **Çok dilli arayüz (i18n)** — Türkçe / İngilizce sözlükler, cookie tabanlı dil seçimi, veritabanı alanlarında `nameEn` / `descriptionEn` desteği
-- **Ürün kataloğu** — Kategori ve koleksiyon filtreleri, sıralama, ürün detay sayfaları
+- **Ürün kataloğu** — Kategori ve koleksiyon sayfaları, sayfa içi arama, sıralama, ürün detay sayfaları
 - **Ürün mega menüsü** — 6 kategori grubu, 16+ ürün görsel kartlarla hızlı erişim
 - **Canlı arama** — Header arama çubuğu, debounce ile `/api/search` üzerinden koleksiyon ve ürün sonuçları
 - **Ürün detay** — Varyant seçimi, galeri lightbox, parça bazlı ölçü tablosu, ilgili ürünler
+- **Favoriler** — localStorage ile ürün kaydetme, kategori / koleksiyon filtreleri, arama ve sıralama
 - **Misyon & Vizyon** — Marka değerleri, misyon ve vizyon içeriği
 - **SSS (Sıkça Sorulan Sorular)** — Kategorize edilmiş accordion yapısı
 - **İletişim sayfası** — Showroom adresi, çalışma saatleri, telefon / WhatsApp / e-posta / Instagram ve gömülü harita
 - **İletişim araçları** — Sabit WhatsApp / telefon butonları, footer iletişim alanı
-- **Veritabanı destekli katalog** — Koleksiyon → Ürün → Varyant → Görsel hiyerarşisi (Prisma + MySQL)
+- **Veritabanı destekli katalog** — Koleksiyon → Ürün → Varyant → Görsel hiyerarşisi (Prisma + MySQL, [TiDB Cloud](https://tidbcloud.com/))
 - **Zengin medya arşivi** — Yüzlerce ürün fotoğrafı ve tanıtım videoları (`public/`)
 
 ---
@@ -43,14 +44,40 @@ Site; ürün fotoğrafları, varyant renkleri (Antrasit, Cappuccino, Gri vb.), t
 
 Sitede yer alan başlıca ürün grupları:
 
-| Seri | Ürünler |
-|------|---------|
-| **Açelya** | Oturma grubu — Antrasit, Cappuccino |
-| **Aston** | Oturma grubu — Antrasit, Cappuccino |
-| **Begonia** | Oturma grubu — Antrasit, Gri · 2'li oturma — Cappuccino |
-| **Tesla** | Oturma grubu · Köşe grubu · Masa grubu · Salıncak |
-| **Velar** | Oturma grubu · Köşe grubu · Masa grubu · Salıncak · Şezlong |
-| **Trend** | Sallanır sandalye |
+<table>
+  <thead>
+    <tr>
+      <th align="left" width="1%" nowrap>Seri</th>
+      <th align="left">Ürünler</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td align="left" width="1%" nowrap><strong>Açelya</strong></td>
+      <td>Oturma grubu - Antrasit, Cappuccino</td>
+    </tr>
+    <tr>
+      <td align="left" width="1%" nowrap><strong>Aston</strong></td>
+      <td>Oturma grubu - Antrasit, Cappuccino</td>
+    </tr>
+    <tr>
+      <td align="left" width="1%" nowrap><strong>Begonia</strong></td>
+      <td>Oturma grubu - Antrasit, Gri - 2'li oturma - Cappuccino</td>
+    </tr>
+    <tr>
+      <td align="left" width="1%" nowrap><strong>Tesla</strong></td>
+      <td>Oturma grubu - Köşe grubu - Masa grubu - Salıncak</td>
+    </tr>
+    <tr>
+      <td align="left" width="1%" nowrap><strong>Velar</strong></td>
+      <td>Oturma grubu - Köşe grubu - Masa grubu - Salıncak - Şezlong</td>
+    </tr>
+    <tr>
+      <td align="left" width="1%" nowrap><strong>Trend</strong></td>
+      <td>Sallanır sandalye</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -61,12 +88,12 @@ Sitede yer alan başlıca ürün grupları:
 | Ana sayfa | `/` | Hazır |
 | Ürünler | `/urunler` | Hazır |
 | Ürün detay | `/urunler/[slug]` | Hazır |
+| Favoriler | `/favoriler` | Hazır |
 | Misyon & Vizyon | `/misyon-vizyon` | Hazır |
 | SSS | `/sss` | Hazır |
 | İletişim | `/iletisim` | Hazır |
 | Hakkımızda | `/hakkimizda` | Hazır |
-| Projeler | `/projeler` | Planlandı |
-| KVKK / Gizlilik / Çerez | `/kvkk`, `/gizlilik-politikasi`, `/cerez-politikasi` | Planlandı |
+| KVKK / Gizlilik / Çerez | `/kvkk`, `/gizlilik-politikasi`, `/cerez-politikasi` | Hazır |
 
 ---
 
@@ -76,7 +103,7 @@ Sitede yer alan başlıca ürün grupları:
 |--------|-----------|
 | Framework | [Next.js 16](https://nextjs.org/) (App Router, React Compiler) |
 | UI | React 19, [Tailwind CSS 4](https://tailwindcss.com/), [shadcn/ui](https://ui.shadcn.com/), Base UI / Radix UI |
-| Veritabanı | MySQL + [Prisma ORM](https://www.prisma.io/) 6 |
+| Veritabanı | MySQL ([TiDB Cloud](https://tidbcloud.com/)) + [Prisma ORM](https://www.prisma.io/) 6 |
 | HTTP istemcisi | Axios (dahili API çağrıları) |
 | Carousel | Embla Carousel |
 | Tablo | TanStack React Table |
@@ -91,38 +118,57 @@ Sitede yer alan başlıca ürün grupları:
 ```
 fablessi/
 ├── app/
-│   ├── (routes)/           # Sayfa rotaları
-│   │   ├── (anasayfa)/     # Ana sayfa
-│   │   ├── iletisim/       # İletişim
-│   │   ├── misyon-vizyon/  # Misyon & Vizyon
-│   │   ├── sss/            # SSS
-│   │   └── urunler/        # Ürün listesi ve detay
+│   ├── (routes)/               # Sayfa rotaları
+│   │   ├── (anasayfa)/         # Ana sayfa
+│   │   ├── urunler/            # Ürün listesi ve detay ([slug])
+│   │   ├── favoriler/          # Favori ürünler
+│   │   ├── hakkimizda/         # Hakkımızda
+│   │   ├── misyon-vizyon/      # Misyon & Vizyon
+│   │   ├── sss/                # SSS
+│   │   ├── iletisim/           # İletişim
+│   │   ├── kvkk/               # KVKK
+│   │   ├── gizlilik-politikasi/ # Gizlilik politikası
+│   │   └── cerez-politikasi/   # Çerez politikası
 │   ├── api/
-│   │   ├── locale/         # Dil tercihi (cookie)
-│   │   └── search/         # Katalog arama
-│   └── styles/             # Global ve layout stilleri
+│   │   ├── locale/             # Dil tercihi (cookie)
+│   │   └── search/             # Katalog arama
+│   ├── styles/                 # Global ve layout stilleri
+│   ├── layout.jsx              # Kök layout
+│   ├── error.jsx               # Hata sınırı
+│   ├── loading.jsx             # Genel yükleme durumu
+│   ├── not-found.jsx           # 404 sayfası
+│   └── global-error.jsx        # Kök hata sayfası
 ├── components/
-│   ├── catalog/            # Ürün kataloğu bileşenleri
-│   ├── faq/                # SSS bileşenleri
-│   ├── home/               # Ana sayfa bileşenleri
-│   ├── layout/             # Header, footer, navigasyon, arama
-│   ├── mission/            # Misyon & Vizyon bileşenleri
-│   ├── product/            # Ürün detay bileşenleri
-│   ├── stores/             # Showroom vitrini
-│   └── ui/                 # shadcn/ui primitives
+│   ├── about/                  # Hakkımızda bileşenleri
+│   ├── catalog/                # Ürün kataloğu bileşenleri
+│   ├── faq/                    # SSS bileşenleri
+│   ├── favorites/              # Favori ürünler bileşenleri
+│   ├── home/                   # Ana sayfa bileşenleri
+│   ├── layout/                 # Header, footer, navigasyon, arama
+│   ├── legal/                  # KVKK, gizlilik, çerez bileşenleri
+│   ├── mission/                # Misyon & Vizyon bileşenleri
+│   ├── product/                # Ürün detay bileşenleri
+│   ├── status/                 # Yükleme, hata ve iskelet ekranlar
+│   ├── stores/                 # Showroom vitrini
+│   └── ui/                     # shadcn/ui primitives
 ├── contexts/
-│   └── locale-provider.jsx # İstemci tarafı i18n bağlamı
+│   ├── locale-provider.jsx     # İstemci tarafı i18n bağlamı
+│   └── favorites-provider.jsx  # Favori ürünler bağlamı
+├── hooks/                      # Özel React hook'ları
 ├── lib/
-│   ├── i18n/               # Sözlükler, navigasyon, çeviri yardımcıları
-│   ├── navigation.js       # Menü ve marka sabitleri
-│   ├── site-contact.js     # Telefon, e-posta, sosyal medya
-│   ├── stores.js           # Showroom ve harita bilgileri
-│   ├── axios.js            # API istemci yapılandırması
-│   └── queries/            # Veritabanı sorguları
+│   ├── i18n/                   # Sözlükler, navigasyon, çeviri yardımcıları
+│   ├── queries/                # Veritabanı sorguları (ürün, ana sayfa, arama)
+│   ├── navigation.js           # Menü ve marka sabitleri
+│   ├── site-contact.js         # Telefon, e-posta, sosyal medya
+│   ├── stores.js               # Showroom ve harita bilgileri
+│   ├── favorites.js            # Favori ürünler (localStorage)
+│   ├── product-utils.js        # Ürün serileştirme ve varyant yardımcıları
+│   ├── axios.js                # API istemci yapılandırması
+│   └── prisma.js               # Prisma istemcisi
 ├── prisma/
-│   ├── schema.prisma       # Veritabanı şeması
-│   └── seed.js             # Koleksiyon ve ürün verisi
-└── public/                 # Ürün görselleri ve videolar
+│   ├── schema.prisma           # Veritabanı şeması
+│   └── seed.js                 # Koleksiyon ve ürün verisi
+└── public/                     # Ürün görselleri, videolar ve marka varlıkları
 ```
 
 ---
@@ -132,7 +178,7 @@ fablessi/
 ### Gereksinimler
 
 - Node.js 20+
-- MySQL veritabanı (yerel veya Neon / PlanetScale vb.)
+- MySQL veritabanı — production ortamında [TiDB Cloud](https://tidbcloud.com/) Serverless; yerel geliştirme için TiDB Cloud bağlantısı veya yerel MySQL
 
 ### 1. Depoyu klonlayın
 
@@ -152,8 +198,8 @@ npm install
 Proje kökünde `.env` dosyası oluşturun (`.env.example` dosyasını referans alabilirsiniz):
 
 ```env
-# Veritabanı (zorunlu)
-DATABASE_URL="mysql://KULLANICI:SIFRE@localhost:3306/fablessi"
+# Veritabanı (zorunlu) — TiDB Cloud bağlantı dizesi (Connect → General)
+DATABASE_URL="mysql://KULLANICI:SIFRE@gateway01.REGION.prod.aws.tidbcloud.com:4000/fablessi?sslaccept=strict"
 
 # Dahili API tabanı (Axios — arama vb.)
 NEXT_PUBLIC_API_BASE_URL="http://localhost:3000/api"
@@ -229,14 +275,15 @@ Her ürün; slug, ad, açıklama, ölçü bilgisi (`dimensions`, `dimensionItems
 
 ## Dağıtım (Deployment)
 
-Proje [Vercel](https://vercel.com), [Railway](https://railway.app) veya herhangi bir Node.js hosting ortamında çalıştırılabilir.
+Proje [Vercel](https://vercel.com), [Railway](https://railway.app) veya herhangi bir Node.js hosting ortamında çalıştırılabilir. Üretim veritabanı [TiDB Cloud](https://tidbcloud.com/) Serverless üzerinde barındırılır; Prisma MySQL sürücüsü ile doğrudan uyumludur.
 
-1. Depoyu bağlayın
-2. `DATABASE_URL` ve `NEXT_PUBLIC_*` değişkenlerini ortam ayarlarına ekleyin
-3. Build komutu: `npm run build`
-4. Start komutu: `npm run start`
+1. [TiDB Cloud](https://tidbcloud.com/) konsolundan cluster oluşturun ve bağlantı dizesini alın
+2. Depoyu hosting ortamına bağlayın
+3. `DATABASE_URL` (TiDB Cloud) ve `NEXT_PUBLIC_*` değişkenlerini ortam ayarlarına ekleyin
+4. Build komutu: `npm run build`
+5. Start komutu: `npm run start`
 
-> Production ortamında MySQL bağlantısı zorunludur. Veritabanı olmadan ana sayfa ve ürün kataloğu boş liste gösterir; statik sayfalar (İletişim, SSS, Misyon & Vizyon) normal çalışır.
+> Production ortamında TiDB Cloud / MySQL bağlantısı zorunludur. Veritabanı olmadan ana sayfa ve ürün kataloğu boş liste gösterir; statik sayfalar (İletişim, SSS, Misyon & Vizyon) normal çalışır.
 
 ---
 
