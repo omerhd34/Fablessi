@@ -33,7 +33,6 @@ export function Header() {
    const next = window.scrollY > SCROLL_THRESHOLD;
    setScrolled(next);
    if (next) {
-    setSearchOpen(false);
     setMenuOpen(false);
    }
   };
@@ -59,6 +58,18 @@ export function Header() {
   setSearchOpen(false);
   setMenuOpen(false);
  }, [pathname]);
+
+ useEffect(() => {
+  if (searchOpen) {
+   document.documentElement.dataset.searchOpen = "true";
+  } else {
+   delete document.documentElement.dataset.searchOpen;
+  }
+
+  return () => {
+   delete document.documentElement.dataset.searchOpen;
+  };
+ }, [searchOpen]);
 
  useEffect(() => {
   if (!searchOpen && !productsMenuOpen) return;

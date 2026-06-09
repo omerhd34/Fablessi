@@ -13,8 +13,6 @@ import { getCategoryLabelForProduct } from "@/lib/product-category";
 import { getCollectionProductsHref, getPrimaryImageUrl } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
-const DEBOUNCE_MS = 280;
-
 function SearchProductCard({ product, onNavigate, dictionary }) {
  const imageUrl = getPrimaryImageUrl(product);
  const categoryLabel = getCategoryLabelForProduct(product.slug, dictionary);
@@ -62,6 +60,7 @@ export function HeaderSearchBar({ open, onClose }) {
  const inputRef = useRef(null);
  const [mounted, setMounted] = useState(false);
  const [query, setQuery] = useState("");
+ const [submittedQuery, setSubmittedQuery] = useState("");
  const [loading, setLoading] = useState(false);
  const [results, setResults] = useState({ collections: [], products: [] });
 
@@ -72,6 +71,7 @@ export function HeaderSearchBar({ open, onClose }) {
  useEffect(() => {
   if (!open) {
    setQuery("");
+   setSubmittedQuery("");
    setResults({ collections: [], products: [] });
    setLoading(false);
    return;
@@ -81,8 +81,7 @@ export function HeaderSearchBar({ open, onClose }) {
   return () => window.clearTimeout(timer);
  }, [open]);
 
- const trimmed = query.trim();
- const showResultsPanel = Boolean(trimmed);
+ const showResultsPanel = Boolean(submittedQuery);
 
  useEffect(() => {
   if (!open) {
@@ -97,7 +96,7 @@ export function HeaderSearchBar({ open, onClose }) {
  }, [open]);
 
  useEffect(() => {
-  if (!trimmed) {
+  if (!submittedQuery) {
    setResults({ collections: [], products: [] });
    setLoading(false);
    return;
@@ -105,10 +104,11 @@ export function HeaderSearchBar({ open, onClose }) {
 
   setLoading(true);
   const controller = new AbortController();
-  const timer = window.setTimeout(async () => {
+
+  (async () => {
    try {
     const response = await fetch(
-     `/api/search?q=${encodeURIComponent(trimmed)}`,
+     `/api/search?q=${encodeURIComponent(submittedQuery)}`,
      { signal: controller.signal }
     );
     if (!response.ok) throw new Error("Search failed");
@@ -124,13 +124,10 @@ export function HeaderSearchBar({ open, onClose }) {
    } finally {
     setLoading(false);
    }
-  }, DEBOUNCE_MS);
+  })();
 
-  return () => {
-   controller.abort();
-   window.clearTimeout(timer);
-  };
- }, [trimmed]);
+  return () => controller.abort();
+ }, [submittedQuery]);
 
  const handleNavigate = useCallback(() => {
   onClose();
@@ -138,11 +135,81 @@ export function HeaderSearchBar({ open, onClose }) {
 
  const handleSubmit = (event) => {
   event.preventDefault();
+  setSubmittedQuery(query.trim());
+ };
+
+ const handleClear = () => {
+  setQuery("");
+  setSubmittedQuery("");
+  setResults({ collections: [], products: [] });
+  setLoading(false);
+  inputRef.current?.focus();
  };
 
  const hasResults =
   results.collections.length > 0 || results.products.length > 0;
- const showEmpty = trimmed && !loading && !hasResults;
+ const showEmpty = submittedQuery && !loading && !hasResults;
+
+ const resultsPanel =
+  showResultsPanel ? (
+   <div
+    className={cn(
+     "search-overlay-results",
+     (hasResults || loading || showEmpty) && "search-overlay-results--visible"
+    )}
+   >
+    {loading ? (
+     <div className="search-overlay-status flex justify-center">
+      <div className="search-overlay-loader" role="status" aria-label={t("common.searching")}>
+       <Search className="search-overlay-loader__icon" aria-hidden />
+      </div>
+     </div>
+    ) : null}
+
+    {!loading && results.collections.length > 0 ? (
+     <section className="search-overlay-section">
+      <h3 className="search-overlay-section-title">{t("catalog.collections")}</h3>
+      <ul className="flex flex-wrap gap-2">
+       {results.collections.map((collection) => (
+        <li key={collection.id}>
+         <Link
+          href={getCollectionProductsHref(collection.slug)}
+          onClick={handleNavigate}
+          className="search-collection-chip"
+         >
+          <Folder
+           className="size-4 shrink-0 text-charcoal/55"
+           aria-hidden
+          />
+          {getLocalizedCollectionName(collection, dictionary) ?? collection.name}
+         </Link>
+        </li>
+       ))}
+      </ul>
+     </section>
+    ) : null}
+
+    {!loading && results.products.length > 0 ? (
+     <section className="search-overlay-section">
+      <h3 className="search-overlay-section-title">{t("catalog.products")}</h3>
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+       {results.products.map((product) => (
+        <SearchProductCard
+         key={product.id}
+         product={product}
+         dictionary={dictionary}
+         onNavigate={handleNavigate}
+        />
+       ))}
+      </div>
+     </section>
+    ) : null}
+
+    {showEmpty ? (
+     <p className="search-overlay-status">{t("catalog.noSearchResults")}</p>
+    ) : null}
+   </div>
+  ) : null;
 
  const searchForm = (
   <form
@@ -152,36 +219,43 @@ export function HeaderSearchBar({ open, onClose }) {
   >
    <input
     ref={inputRef}
-    type="search"
+    type="text"
+    inputMode="search"
+    enterKeyHint="search"
+    autoComplete="off"
+    autoCorrect="off"
+    spellCheck={false}
     value={query}
     onChange={(event) => setQuery(event.target.value)}
     placeholder={t("common.searchPlaceholder")}
-    className="min-w-0 flex-1 bg-transparent text-base text-charcoal outline-none placeholder:text-charcoal/45"
+    className="header-search-pill__input min-w-0 flex-1 bg-transparent text-base text-charcoal outline-none placeholder:text-charcoal/45"
     aria-label={t("common.searchLabel")}
    />
-   {query ? (
+   <div className="header-search-pill__actions flex shrink-0 items-center gap-0.5 sm:gap-1">
+    {query ? (
+     <button
+      type="button"
+      onClick={handleClear}
+      className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-charcoal/55 transition-opacity hover:opacity-65"
+      aria-label={t("common.clearSearch")}
+     >
+      <X className="size-5" aria-hidden />
+     </button>
+    ) : null}
     <button
-     type="button"
-     onClick={() => setQuery("")}
-     className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-charcoal/55 transition-opacity hover:opacity-65"
-     aria-label={t("common.clearSearch")}
+     type="submit"
+     className="header-search-submit flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full transition-opacity hover:opacity-65"
+     aria-label={t("common.search")}
     >
-     <X className="size-5" aria-hidden />
+     <Search className="size-5 text-charcoal/70" aria-hidden />
     </button>
-   ) : null}
-   <button
-    type="submit"
-    className="header-search-submit flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-full transition-opacity hover:opacity-65"
-    aria-label={t("common.search")}
-   >
-    <Search className="size-5 text-charcoal/70" aria-hidden />
-   </button>
+   </div>
   </form>
  );
 
  return (
   <>
-   {mounted && open && !showResultsPanel
+   {mounted && open
     ? createPortal(
      <button
       type="button"
@@ -196,90 +270,26 @@ export function HeaderSearchBar({ open, onClose }) {
     )
     : null}
 
-   {open && !showResultsPanel ? (
-    <div className="container-premium pb-4">{searchForm}</div>
+   {open ? (
+    <div
+     className="header-search-shell container-premium pb-4"
+     role={showResultsPanel ? "dialog" : undefined}
+     aria-modal={showResultsPanel ? "true" : undefined}
+     aria-label={showResultsPanel ? t("common.searchResults") : undefined}
+    >
+     {searchForm}
+     {resultsPanel}
+    </div>
    ) : null}
 
-   {mounted && open && showResultsPanel
+   {mounted && open && showResultsPanel && !isHome
     ? createPortal(
-     <div
-      className={cn("search-overlay", isHome && "search-overlay--hero")}
-      role="dialog"
-      aria-modal="true"
-      aria-label={t("common.searchResults")}
-     >
-      <button
-       type="button"
-       className="search-overlay-backdrop"
-       onClick={onClose}
-       aria-label={t("common.closeSearch")}
-      />
-
-      <div className="search-overlay-panel container-premium">
-       {searchForm}
-
-       <div
-        className={cn(
-         "search-overlay-results",
-         (hasResults || loading || showEmpty) &&
-         "search-overlay-results--visible"
-        )}
-       >
-        {loading ? (
-         <div className="search-overlay-status flex justify-center">
-          <div className="search-overlay-loader" role="status" aria-label={t("common.searching")}>
-           <Search className="search-overlay-loader__icon" aria-hidden />
-          </div>
-         </div>
-        ) : null}
-
-        {!loading && results.collections.length > 0 ? (
-         <section className="search-overlay-section">
-          <h3 className="search-overlay-section-title">{t("catalog.collections")}</h3>
-          <ul className="flex flex-wrap gap-2">
-           {results.collections.map((collection) => (
-            <li key={collection.id}>
-             <Link
-              href={getCollectionProductsHref(collection.slug)}
-              onClick={handleNavigate}
-              className="search-collection-chip"
-             >
-              <Folder
-               className="size-4 shrink-0 text-charcoal/55"
-               aria-hidden
-              />
-              {getLocalizedCollectionName(collection, dictionary) ?? collection.name}
-             </Link>
-            </li>
-           ))}
-          </ul>
-         </section>
-        ) : null}
-
-        {!loading && results.products.length > 0 ? (
-         <section className="search-overlay-section">
-          <h3 className="search-overlay-section-title">{t("catalog.products")}</h3>
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-           {results.products.map((product) => (
-            <SearchProductCard
-             key={product.id}
-             product={product}
-             dictionary={dictionary}
-             onNavigate={handleNavigate}
-            />
-           ))}
-          </div>
-         </section>
-        ) : null}
-
-        {showEmpty ? (
-         <p className="search-overlay-status">
-          {t("catalog.noSearchResults")}
-         </p>
-        ) : null}
-       </div>
-      </div>
-     </div>,
+     <button
+      type="button"
+      className="search-results-backdrop"
+      onClick={onClose}
+      aria-label={t("common.closeSearch")}
+     />,
      document.body
     )
     : null}
