@@ -56,7 +56,7 @@ export function StatusActionButton({ onClick, children, primary = false }) {
    type="button"
    onClick={onClick}
    className={cn(
-    "status-page__action",
+    "status-page__action cursor-pointer",
     primary && "status-page__action--primary"
    )}
   >
