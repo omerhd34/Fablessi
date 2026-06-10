@@ -8,10 +8,13 @@ import { t as translate } from "@/lib/i18n/translate";
 
 const LocaleContext = createContext(null);
 
-export function LocaleProvider({ locale, dictionary, children }) {
+export function LocaleProvider({ locale, dictionary, menuGroups = null, children }) {
  const router = useRouter();
 
- const navigation = useMemo(() => buildNavigation(dictionary), [dictionary]);
+ const navigation = useMemo(
+  () => buildNavigation(dictionary, menuGroups),
+  [dictionary, menuGroups]
+ );
 
  const setLocale = useCallback(
   async (nextLocale) => {

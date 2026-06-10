@@ -54,21 +54,24 @@ export function ProductsCatalogShell({
   return sortProducts(list, sort);
  }, [products, search, sort]);
 
- const categoryHeroImage = activeGroup?.items?.[0]?.image ?? null;
+ const categoryHeroImage =
+  activeGroup?.coverImage ?? activeGroup?.items?.[0]?.image ?? null;
 
  return (
   <div className="space-y-6 md:space-y-8">
    {categoryHeroImage ? (
-    <div className="relative -mx-4 hidden h-44 overflow-hidden sm:-mx-5 sm:h-52 md:-mx-6 lg:-mx-8 lg:block lg:h-56 xl:-mx-10">
-     <Image
-      src={categoryHeroImage}
-      alt={activeGroup.label}
-      fill
-      priority
-      sizes="100vw"
-      className="object-cover"
-     />
-     <div className="absolute inset-0 bg-linear-to-b from-black/25 via-black/5 to-transparent" />
+    <div className="page-header-bleed relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
+     <div className="relative aspect-3/1 w-full min-h-[10.5rem] max-h-[min(44vh,580px)] sm:min-h-[12rem] md:min-h-[14rem]">
+      <Image
+       src={categoryHeroImage}
+       alt={activeGroup.label}
+       fill
+       priority
+       sizes="100vw"
+       className="object-cover object-center"
+      />
+      <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/10 to-transparent" />
+     </div>
     </div>
    ) : null}
 

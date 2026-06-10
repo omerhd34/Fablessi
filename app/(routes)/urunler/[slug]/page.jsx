@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { ProductDetailView } from "@/components/product/product-detail-view";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { getLocale } from "@/lib/i18n/server";
+import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { buildNavigation, getProductCategoryGroupFromMenu } from "@/lib/i18n/build-navigation";
 import {
  getCategoryRelatedProducts,
@@ -32,7 +33,8 @@ export default async function UrunDetayPage({ params }) {
  const { slug } = await params;
  const locale = await getLocale();
  const dictionary = getDictionary(locale);
- const navigation = buildNavigation(dictionary);
+ const menuGroups = await getCategoryGroupsForMenu(locale);
+ const navigation = buildNavigation(dictionary, menuGroups);
  const product = await getProductBySlug(slug);
 
  if (!product) {
