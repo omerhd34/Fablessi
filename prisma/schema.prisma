@@ -7,6 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+/// Ürün kategori grubu (ör. Oturma Grupları, Köşe Grupları)
+model ProductCategoryGroup {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  name        String
+  nameEn      String?
+  coverImage  String?
+  sortOrder   Int       @default(0)
+  isPublished Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  products Product[]
+
+  @@index([isPublished, sortOrder])
+  @@map("product_category_groups")
+}
+
 /// Üst düzey koleksiyon (ör. Oturma Odası, Yatak Odası)
 model Collection {
   id            String    @id @default(cuid())
@@ -47,15 +65,17 @@ model Product {
   /// Anasayfa vitrininde gösterilecek ürünler
   isFeatured     Boolean  @default(false)
   featuredOrder  Int      @default(0)
-  collectionId   String
+  collectionId    String
+  categoryGroupId String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  collection Collection @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  collection    Collection            @relation(fields: [collectionId], references: [id], onDelete: Cascade)
+  categoryGroup ProductCategoryGroup? @relation(fields: [categoryGroupId], references: [id], onDelete: SetNull)
   variants   Variant[]
-  images     Image[]
 
   @@index([collectionId])
+  @@index([categoryGroupId])
   @@index([isPublished, sortOrder])
   @@index([isFeatured, featuredOrder])
   @@map("products")
@@ -77,15 +97,16 @@ model Variant {
   updatedAt DateTime @updatedAt
 
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  images  Image[]
 
   @@index([productId])
   @@map("variants")
 }
 
-/// Ürün görseli (galeri)
+/// Varyant görseli (galeri)
 model Image {
   id        String   @id @default(cuid())
-  productId String
+  variantId String
   url       String   @db.VarChar(2048)
   alt       String?
   altEn     String?
@@ -93,8 +114,47 @@ model Image {
   isPrimary Boolean  @default(false)
   createdAt DateTime @default(now())
 
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variant Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
 
-  @@index([productId, sortOrder])
+  @@index([variantId, sortOrder])
   @@map("images")
+}
+
+/// Site içerik blokları (hakkımızda, SSS metinleri, yasal sayfalar vb.)
+model ContentBlock {
+  key       String   @id
+  contentTr Json
+  contentEn Json
+  updatedAt DateTime @updatedAt
+
+  @@map("content_blocks")
+}
+
+/// SSS kategorisi
+model FaqCategory {
+  id             String    @id @default(cuid())
+  slug           String    @unique
+  titleTr        String
+  titleEn        String?
+  sortOrder      Int       @default(0)
+  initialVisible Int       @default(4)
+  items          FaqItem[]
+
+  @@index([sortOrder])
+  @@map("faq_categories")
+}
+
+/// SSS sorusu
+model FaqItem {
+  id         String      @id @default(cuid())
+  categoryId String
+  questionTr String      @db.Text
+  questionEn String?     @db.Text
+  answerTr   String      @db.Text
+  answerEn   String?     @db.Text
+  sortOrder  Int         @default(0)
+  category   FaqCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([categoryId, sortOrder])
+  @@map("faq_items")
 }

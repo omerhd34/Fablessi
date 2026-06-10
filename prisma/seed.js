@@ -95,7 +95,7 @@ const COLLECTIONS = [
     imagePrefixes: ["antrasit", "cappuccino"],
     sortOrder: 1,
     isFeatured: true,
-    featuredOrder: 5,
+    featuredOrder: 1,
     variants: [
      {
       name: "Antrasit",
@@ -173,8 +173,6 @@ const COLLECTIONS = [
     folder: "aston-oturma",
     imagePrefixes: ["antrasit", "cappuccino"],
     sortOrder: 1,
-    isFeatured: true,
-    featuredOrder: 6,
     variants: [
      {
       name: "Antrasit",
@@ -282,8 +280,6 @@ const COLLECTIONS = [
     folder: "begonia-oturma",
     imagePrefixes: ["antrasit", "gri"],
     sortOrder: 2,
-    isFeatured: true,
-    featuredOrder: 7,
     variants: [
      {
       name: "Antrasit",
@@ -375,8 +371,6 @@ const COLLECTIONS = [
     folder: "tesla-kose",
     imagePrefix: "antrasit",
     sortOrder: 1,
-    isFeatured: true,
-    featuredOrder: 8,
     variants: [
      {
       name: "Antrasit",
@@ -474,8 +468,6 @@ const COLLECTIONS = [
      "Tesla seating set; comfortable outdoor furniture for spacious terrace and garden areas; available in Grey.",
     folder: "tesla-oturma",
     sortOrder: 3,
-    isFeatured: true,
-    featuredOrder: 9,
     variants: [
      {
       name: "Gri",
@@ -589,7 +581,7 @@ const COLLECTIONS = [
     imagePrefix: "cappuccino",
     sortOrder: 1,
     isFeatured: true,
-    featuredOrder: 10,
+    featuredOrder: 2,
     variants: [
      {
       name: "Cappuccino",
@@ -687,8 +679,6 @@ const COLLECTIONS = [
      "Velar seating set; one of the most popular models in the premium garden furniture series; available in Blue.",
     folder: "velar-oturma",
     sortOrder: 3,
-    isFeatured: true,
-    featuredOrder: 4,
     variants: [
      {
       name: "Mavi",
@@ -726,7 +716,7 @@ const COLLECTIONS = [
     folder: "velar-salincak",
     sortOrder: 4,
     isFeatured: true,
-    featuredOrder: 3,
+    featuredOrder: 4,
     variants: [
      {
       name: "Gri",
@@ -766,8 +756,6 @@ const COLLECTIONS = [
      "Velar sun lounger with adjustable backrest; suitable for pool and sun terrace use; available in Brown.",
     folder: "velar-sezlong",
     sortOrder: 5,
-    isFeatured: true,
-    featuredOrder: 2,
     variants: [
      {
       name: "Kahverengi",
@@ -820,7 +808,7 @@ const COLLECTIONS = [
     folder: "trend-sandalye",
     sortOrder: 1,
     isFeatured: true,
-    featuredOrder: 1,
+    featuredOrder: 3,
     variants: [
      {
       name: "Mavi",
@@ -836,32 +824,38 @@ const COLLECTIONS = [
  },
 ];
 
-function resolveProductImages(productData) {
- let images;
-
+function resolveVariantImages(productData, variant, variantIndex) {
  if (productData.imagePrefixes?.length) {
-  images = productData.imagePrefixes.flatMap((prefix) =>
-   publicImages(productData.folder, prefix)
-  );
- } else if (productData.imagePrefix) {
-  images = publicImages(productData.folder, productData.imagePrefix);
- } else {
-  images = publicImages(productData.folder);
+  const prefix =
+   productData.imagePrefixes[variantIndex] ??
+   variant.name?.toLocaleLowerCase("tr");
+  return publicImages(productData.folder, prefix);
  }
 
+ if (productData.imagePrefix) {
+  return variantIndex === 0
+   ? publicImages(productData.folder, productData.imagePrefix)
+   : [];
+ }
+
+ return variantIndex === 0 ? publicImages(productData.folder) : [];
+}
+
+function resolveCoverImage(productData) {
+ const firstVariant = productData.variants?.[0];
+ if (!firstVariant) {
+  throw new Error(`Varyant bulunamadı: ${productData.folder}`);
+ }
+
+ const images = resolveVariantImages(productData, firstVariant, 0);
  if (images.length === 0) {
-  const detail = productData.imagePrefixes
-   ? productData.imagePrefixes.join(", ")
-   : productData.imagePrefix ?? "tümü";
-  throw new Error(`Görsel bulunamadı: ${productData.folder} (${detail})`);
+  throw new Error(`Kapak görseli bulunamadı: ${productData.folder}`);
  }
 
- return images;
+ return images[0];
 }
 
 async function createProduct(collectionId, data) {
- const imageUrls = resolveProductImages(data);
-
  await prisma.product.create({
   data: {
    slug: data.slug,
@@ -878,29 +872,71 @@ async function createProduct(collectionId, data) {
    isFeatured: data.isFeatured ?? false,
    featuredOrder: data.featuredOrder ?? 0,
    collectionId,
-   images: {
-    create: imageUrls.map((url, index) => ({
-     url,
-     alt: index === 0 ? data.name : `${data.name} — görsel ${index + 1}`,
-     altEn: index === 0 ? data.nameEn : `${data.nameEn} — image ${index + 1}`,
-     sortOrder: index,
-     isPrimary: index === 0,
-    })),
-   },
    variants: {
-    create: data.variants.map((variant, index) => ({
-     name: variant.name,
-     nameEn: variant.nameEn ?? null,
-     color: variant.color ?? null,
-     material: variant.material ?? null,
-     materialEn: variant.materialEn ?? null,
-     sortOrder: index,
-     isDefault: Boolean(variant.isDefault),
-     sku: `${data.slug}-${index + 1}`.toUpperCase().replace(/-/g, ""),
-    })),
+    create: data.variants.map((variant, index) => {
+     const imageUrls = resolveVariantImages(data, variant, index);
+     if (imageUrls.length === 0) {
+      const detail = data.imagePrefixes
+       ? data.imagePrefixes[index] ?? variant.name
+       : data.imagePrefix ?? "tümü";
+      throw new Error(`Görsel bulunamadı: ${data.folder} (${detail})`);
+     }
+
+     return {
+      name: variant.name,
+      nameEn: variant.nameEn ?? null,
+      color: variant.color ?? null,
+      material: variant.material ?? null,
+      materialEn: variant.materialEn ?? null,
+      sortOrder: index,
+      isDefault: Boolean(variant.isDefault),
+      sku: `${data.slug}-${index + 1}`.toUpperCase().replace(/-/g, ""),
+      images: {
+       create: imageUrls.map((url, imageIndex) => ({
+        url,
+        alt: imageIndex === 0 ? data.name : `${data.name} — görsel ${imageIndex + 1}`,
+        altEn:
+         imageIndex === 0 ? data.nameEn : `${data.nameEn} — image ${imageIndex + 1}`,
+        sortOrder: imageIndex,
+        isPrimary: imageIndex === 0,
+       })),
+      },
+     };
+    }),
    },
   },
  });
+}
+
+async function seedCategoryGroups() {
+ const { productMenuGroupsData } = await import("../lib/i18n/navigation-data.js");
+ const tr = (await import("../lib/i18n/dictionaries/tr.js")).default;
+ const en = (await import("../lib/i18n/dictionaries/en.js")).default;
+
+ console.log("Kategori grupları ekleniyor…");
+
+ for (const [index, group] of productMenuGroupsData.entries()) {
+  const created = await prisma.productCategoryGroup.create({
+   data: {
+    slug: group.slug,
+    name: tr.categories?.[group.slug] ?? group.slug,
+    nameEn: en.categories?.[group.slug] ?? null,
+    coverImage: group.items[0]?.image ?? null,
+    sortOrder: index + 1,
+    isPublished: true,
+   },
+  });
+
+  for (const item of group.items) {
+   const productSlug = item.href.replace("/urunler/", "");
+   await prisma.product.updateMany({
+    where: { slug: productSlug },
+    data: { categoryGroupId: created.id },
+   });
+  }
+
+  console.log(`  ✓ ${created.name} (${group.items.length} ürün)`);
+ }
 }
 
 async function main() {
@@ -908,12 +944,13 @@ async function main() {
  await prisma.image.deleteMany();
  await prisma.variant.deleteMany();
  await prisma.product.deleteMany();
+ await prisma.productCategoryGroup.deleteMany();
  await prisma.collection.deleteMany();
 
  console.log("Koleksiyonlar ve ürünler ekleniyor…");
 
  for (const collectionData of COLLECTIONS) {
-  const coverImage = resolveProductImages(collectionData.products[0])[0];
+  const coverImage = resolveCoverImage(collectionData.products[0]);
 
   const collection = await prisma.collection.create({
    data: {
@@ -935,18 +972,34 @@ async function main() {
   console.log(`  ✓ ${collection.name} (${collectionData.products.length} ürün)`);
  }
 
+ await seedCategoryGroups();
+
  const counts = await Promise.all([
   prisma.collection.count(),
+  prisma.productCategoryGroup.count(),
   prisma.product.count(),
   prisma.variant.count(),
   prisma.image.count(),
  ]);
 
+ const { seedCms } = await import("./seed-cms.mjs");
+ await seedCms(prisma);
+
+ const contentCounts = await Promise.all([
+  prisma.contentBlock.count(),
+  prisma.faqCategory.count(),
+  prisma.faqItem.count(),
+ ]);
+
  console.log("\nSeed tamamlandı:");
  console.log(`  Koleksiyon: ${counts[0]}`);
- console.log(`  Ürün: ${counts[1]}`);
- console.log(`  Varyant: ${counts[2]}`);
- console.log(`  Görsel: ${counts[3]}`);
+ console.log(`  Kategori grubu: ${counts[1]}`);
+ console.log(`  Ürün: ${counts[2]}`);
+ console.log(`  Varyant: ${counts[3]}`);
+ console.log(`  Görsel: ${counts[4]}`);
+ console.log(`  İçerik bloğu: ${contentCounts[0]}`);
+ console.log(`  SSS kategorisi: ${contentCounts[1]}`);
+ console.log(`  SSS sorusu: ${contentCounts[2]}`);
 }
 
 main()
