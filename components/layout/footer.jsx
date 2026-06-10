@@ -52,7 +52,7 @@ function FooterLinkList({ links }) {
 }
 
 export function Footer() {
- const { navigation, t, locale } = useTranslations();
+ const { navigation, t, locale, dictionary } = useTranslations();
  const {
   footerExploreLinks,
   footerCategoryLinks,
@@ -60,7 +60,7 @@ export function Footer() {
  } = navigation;
  const whatsAppHref = getWhatsAppHref();
  const year = new Date().getFullYear();
- const workingHours = getSiteWorkingHours(locale);
+ const workingHours = getSiteWorkingHours(locale, dictionary);
 
  return (
   <footer className="mt-4 rounded-t-[2rem] bg-white pb-28 pt-14 shadow-[0_-4px_32px_rgb(0_0_0/4%)] sm:pb-24 lg:pb-16 lg:pt-16">

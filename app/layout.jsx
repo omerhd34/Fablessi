@@ -2,14 +2,13 @@ import { Montserrat, Poppins } from "next/font/google";
 import "@/app/styles/base.css";
 import "@/app/styles/layout.css";
 import "@/app/styles/shared.css";
-import { Footer } from "@/components/layout/footer";
-import { Header } from "@/components/layout/header";
 import { MainShell } from "@/components/layout/main-shell";
-import { ContactFloat } from "@/components/layout/contact-float";
+import { SiteChrome } from "@/components/layout/site-chrome";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { FavoritesProvider } from "@/contexts/favorites-provider";
 import { LocaleProvider } from "@/contexts/locale-provider";
+import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { brandName } from "@/lib/navigation";
 import { siteMetadata } from "@/lib/site-metadata";
@@ -61,6 +60,7 @@ export async function generateMetadata() {
 
 export default async function RootLayout({ children }) {
  const { locale, dictionary } = await getServerDictionary();
+ const menuGroups = await getCategoryGroupsForMenu(locale);
 
  return (
   <html
@@ -68,13 +68,11 @@ export default async function RootLayout({ children }) {
    className={`${montserrat.variable} ${poppins.variable} h-full antialiased`}
   >
    <body className="min-h-full flex flex-col font-sans">
-    <LocaleProvider locale={locale} dictionary={dictionary}>
+    <LocaleProvider locale={locale} dictionary={dictionary} menuGroups={menuGroups}>
      <FavoritesProvider>
       <TooltipProvider>
        <MainShell>{children}</MainShell>
-       <Header />
-       <Footer />
-       <ContactFloat />
+       <SiteChrome />
        <Toaster position="bottom-center" gap={10} visibleToasts={1} />
       </TooltipProvider>
      </FavoritesProvider>

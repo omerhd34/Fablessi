@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 function SearchProductCard({ product, onNavigate, dictionary }) {
  const imageUrl = getPrimaryImageUrl(product);
- const categoryLabel = getCategoryLabelForProduct(product.slug, dictionary);
+ const categoryLabel = getCategoryLabelForProduct(product, dictionary);
  const bottomLabel =
   getLocalizedCollectionName(product.collection, dictionary) ?? product.name;
 

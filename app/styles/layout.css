@@ -279,7 +279,8 @@ html:has(.faq-hero) .site-header:not([data-home="true"]) .brand-logo-image {
   pointer-events: none;
 }
 
-html:not(:has(.faq-hero)) .site-header[data-menu-open="true"]:not([data-home="true"]) {
+html:not(:has(.faq-hero))
+  .site-header[data-menu-open="true"]:not([data-home="true"]) {
   background: var(--glass-surface-strong);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1513,6 +1514,39 @@ button.contact-float-btn {
 a.contact-float-btn:hover,
 button.contact-float-btn:hover {
   transform: scale(1.1);
+}
+
+html[dir="ltr"],
+[data-sonner-toaster][dir="ltr"] {
+  --toast-close-button-start: auto;
+  --toast-close-button-end: 0.75rem;
+  --toast-close-button-transform: translateY(-50%);
+}
+
+html[dir="rtl"],
+[data-sonner-toaster][dir="rtl"] {
+  --toast-close-button-start: 0.75rem;
+  --toast-close-button-end: auto;
+  --toast-close-button-transform: translateY(-50%);
+}
+
+[data-sonner-toast] [data-close-button] {
+  top: 50% !important;
+  height: 2rem !important;
+  width: 2rem !important;
+  transform: translateY(-50%) !important;
+}
+
+html[dir="ltr"] [data-sonner-toast] [data-close-button],
+[data-sonner-toaster][dir="ltr"] [data-sonner-toast] [data-close-button] {
+  left: auto !important;
+  right: 0.75rem !important;
+}
+
+html[dir="rtl"] [data-sonner-toast] [data-close-button],
+[data-sonner-toaster][dir="rtl"] [data-sonner-toast] [data-close-button] {
+  left: 0.75rem !important;
+  right: auto !important;
 }
 
 [data-sonner-toaster][data-y-position="bottom"] {
