@@ -7,7 +7,7 @@ import { useTranslations } from "@/contexts/locale-provider";
 import { Heart, HeartFilled } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
-export function FavoritesLink({ className }) {
+export function FavoritesLink({ className, iconClassName }) {
  const pathname = usePathname();
  const { count, hydrated } = useFavorites();
  const { t } = useTranslations();
@@ -18,7 +18,8 @@ export function FavoritesLink({ className }) {
   <Link
    href="/favoriler"
    className={cn(
-    "header-icon-btn relative inline-flex size-10 cursor-pointer items-center justify-center rounded-full lg:size-11 xl:size-12",
+    "header-icon-btn inline-flex cursor-pointer items-center justify-center rounded-full",
+    !iconClassName && "size-10 lg:size-11 xl:size-12",
     active && "header-icon-btn--active",
     className
    )}
@@ -26,18 +27,13 @@ export function FavoritesLink({ className }) {
    aria-current={active ? "page" : undefined}
   >
    {visibleCount > 0 ? (
-    <HeartFilled className="size-[1.45rem]" aria-hidden />
-   ) : (
-    <Heart className="size-[1.45rem]" aria-hidden />
-   )}
-   {visibleCount > 0 ? (
-    <span
-     className="absolute top-0 -right-1.5 text-[0.65rem] font-bold leading-none text-red-500"
+    <HeartFilled
+     className={cn(iconClassName ?? "size-[1.45rem]")}
      aria-hidden
-    >
-     +{visibleCount > 99 ? "99+" : visibleCount}
-    </span>
-   ) : null}
+    />
+   ) : (
+    <Heart className={cn(iconClassName ?? "size-[1.45rem]")} aria-hidden />
+   )}
   </Link>
  );
 }

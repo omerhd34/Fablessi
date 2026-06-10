@@ -6,11 +6,10 @@ import { useCallback, useEffect, useState } from "react";
 import { TbArrowUp, TbBrandWhatsapp, TbPhone } from "react-icons/tb";
 import { useTranslations } from "@/contexts/locale-provider";
 import { getWhatsAppHref, sitePhoneHref } from "@/lib/site-contact";
-
-const FLOAT_ICON_STROKE = 2;
-const FLOAT_ICON_CLASS = "nav-compact-search-btn__icon text-charcoal";
+const FLOAT_ICON_STROKE = 3;
 const FLOAT_BUTTON_CLASS =
- "contact-float-btn header-icon-btn nav-compact-search-btn shrink-0 cursor-pointer";
+ "contact-float-btn header-icon-btn shrink-0 cursor-pointer";
+const FLOAT_ICON_CLASS = "contact-float-btn__icon text-charcoal";
 
 function getScrollThreshold() {
  const hero = document.querySelector(".hero-carousel");
@@ -46,51 +45,49 @@ export function ContactFloat() {
 
  return (
   <div className="contact-float pointer-events-none fixed z-50">
-   <div className="contact-float__inner container-premium">
-    <div className="contact-float__stack pointer-events-auto">
-     {showBackToTop ? (
-      <button
-       type="button"
-       onClick={scrollToTop}
-       className={FLOAT_BUTTON_CLASS}
-       aria-label={t("contact.backToTop")}
-      >
-       <TbArrowUp
-        className={FLOAT_ICON_CLASS}
-        strokeWidth={FLOAT_ICON_STROKE}
-        aria-hidden
-       />
-      </button>
-     ) : null}
-     {whatsAppHref ? (
-      <Link
-       href={whatsAppHref}
-       target="_blank"
-       rel="noopener noreferrer"
-       className={FLOAT_BUTTON_CLASS}
-       aria-label={t("contact.whatsapp")}
-      >
-       <TbBrandWhatsapp
-        className={FLOAT_ICON_CLASS}
-        strokeWidth={FLOAT_ICON_STROKE}
-        aria-hidden
-       />
-      </Link>
-     ) : null}
-     {phoneHref ? (
-      <Link
-       href={phoneHref}
-       className={FLOAT_BUTTON_CLASS}
-       aria-label={t("contact.call")}
-      >
-       <TbPhone
-        className={FLOAT_ICON_CLASS}
-        strokeWidth={FLOAT_ICON_STROKE}
-        aria-hidden
-       />
-      </Link>
-     ) : null}
-    </div>
+   <div className="contact-float__stack pointer-events-auto">
+    {showBackToTop ? (
+     <button
+      type="button"
+      onClick={scrollToTop}
+      className={FLOAT_BUTTON_CLASS}
+      aria-label={t("contact.backToTop")}
+     >
+      <TbArrowUp
+       className={FLOAT_ICON_CLASS}
+       strokeWidth={FLOAT_ICON_STROKE}
+       aria-hidden
+      />
+     </button>
+    ) : null}
+    {phoneHref ? (
+     <Link
+      href={phoneHref}
+      className={FLOAT_BUTTON_CLASS}
+      aria-label={t("contact.call")}
+     >
+      <TbPhone
+       className={FLOAT_ICON_CLASS}
+       strokeWidth={FLOAT_ICON_STROKE}
+       aria-hidden
+      />
+     </Link>
+    ) : null}
+    {whatsAppHref ? (
+     <Link
+      href={whatsAppHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={FLOAT_BUTTON_CLASS}
+      aria-label={t("contact.whatsapp")}
+     >
+      <TbBrandWhatsapp
+       className={FLOAT_ICON_CLASS}
+       strokeWidth={FLOAT_ICON_STROKE}
+       aria-hidden
+      />
+     </Link>
+    ) : null}
    </div>
   </div>
  );

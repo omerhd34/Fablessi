@@ -154,11 +154,6 @@ function MobileDrawerFavoritesItem({ pathname, onClose, t }) {
      <Heart className="size-5 shrink-0 text-charcoal/45" aria-hidden />
     )}
     <span className="flex-1">{t("nav.favorites")}</span>
-    {visibleCount > 0 ? (
-     <span className="text-[0.8125rem] font-semibold text-red-500">
-      +{visibleCount > 99 ? "99+" : visibleCount}
-     </span>
-    ) : null}
    </Link>
   </li>
  );
