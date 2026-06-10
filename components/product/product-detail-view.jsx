@@ -5,11 +5,7 @@ import { ProductDetailCenter } from "@/components/product/product-detail-center"
 import { ProductDetailLeft } from "@/components/product/product-detail-left";
 import { ProductDetailRight } from "@/components/product/product-detail-right";
 import { ProductImageLightbox } from "@/components/product/product-image-lightbox";
-import { getImagesForVariant } from "@/lib/product-utils";
-
-function getDefaultVariant(variants) {
- return variants.find((variant) => variant.isDefault) ?? variants[0] ?? null;
-}
+import { getDefaultVariant, getImagesForVariant } from "@/lib/product-utils";
 
 export function ProductDetailView({
  product,

@@ -168,9 +168,8 @@ export function ProductDetailCenter({
       {t("product.productInfo")}
      </AccordionTrigger>
      <AccordionContent className="pb-6 text-sm leading-relaxed text-charcoal/75">
-      {product.description ? <p>{product.description}</p> : null}
-      {product.collection?.description ? (
-       <p className="mt-4">{product.collection.description}</p>
+      {product.description ? (
+       <p className="whitespace-pre-line">{product.description}</p>
       ) : null}
      </AccordionContent>
     </AccordionItem>

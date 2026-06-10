@@ -230,9 +230,8 @@ export function ProductDetailLeft({
      >
       {variants.map((variant, index) => {
        const active = selectedVariant?.id === variant.id;
-       const label = variant.color
-        ? getColorLabel(variant.color, t)
-        : variant.name;
+       const label =
+        (variant.color ? getColorLabel(variant.color, t) : "") || variant.name;
        const swatch = variant.color ? getColorSwatch(variant.color) : "#d1d5db";
 
        return (
@@ -262,6 +261,14 @@ export function ProductDetailLeft({
        );
       })}
      </div>
+     {selectedVariant?.material ? (
+      <div className="flex flex-col gap-1">
+       <p className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
+        {t("product.material")}
+       </p>
+       <p className="text-sm text-charcoal/80">{selectedVariant.material}</p>
+      </div>
+     ) : null}
     </div>
    ) : null}
 

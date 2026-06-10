@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLocale } from "@/contexts/locale-provider";
 import { getLocalizedCollectionName } from "@/lib/i18n/display-names";
-import { getPrimaryImageUrl, getProductCardLabel } from "@/lib/product-utils";
+import { getDefaultVariant, getPrimaryImageUrl, getProductCardLabel } from "@/lib/product-utils";
 
 export function ProductCategoryRelated({ products, categoryLabel }) {
  const { dictionary } = useLocale();
@@ -18,10 +18,8 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
    <div className="p-3">
     <div className="space-y-3">
      {products.map((product) => {
+      const defaultVariant = getDefaultVariant(product.variants);
       const imageUrl = getPrimaryImageUrl(product);
-      const defaultVariant =
-       product.variants?.find((variant) => variant.isDefault) ??
-       product.variants?.[0];
 
       return (
        <Link
