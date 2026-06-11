@@ -47,11 +47,6 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
             product.collection.name}
           </p>
          ) : null}
-         {product.material ? (
-          <p className="text-muted-foreground mt-1 truncate text-xs">
-           {product.material}
-          </p>
-         ) : null}
         </div>
        </Link>
       );

@@ -2,7 +2,6 @@ import {
  validateAdminName,
  validateAdminNameEn,
  validateDimensionItemsText,
- validateProductMaterials,
 } from "@/lib/admin/field-limits";
 import { prisma } from "@/lib/prisma";
 import { slugify } from "@/lib/admin/slug";
@@ -90,11 +89,6 @@ export async function POST(request) {
    return Response.json({ error: imageError }, { status: 400 });
   }
 
-  const materialError = validateProductMaterials(body.material, body.materialEn);
-  if (materialError) {
-   return Response.json({ error: materialError }, { status: 400 });
-  }
-
   const dimensionItemsError = validateDimensionItemsText(body.dimensionItems);
   if (dimensionItemsError) {
    return Response.json({ error: dimensionItemsError }, { status: 400 });
@@ -126,8 +120,6 @@ export async function POST(request) {
     featuredOrder: Number(body.featuredOrder) || 0,
     collectionId: body.collectionId,
     categoryGroupId,
-    material: media.material,
-    materialEn: media.materialEn,
     sku: media.sku,
     images: media.images,
    },

@@ -10,7 +10,6 @@ import { VariantImagesEditor } from "@/components/admin/variant-images-editor";
 import { MAX_FEATURED_PRODUCTS } from "@/lib/admin/featured-products";
 import {
  ADMIN_NAME_FIELDS_HINT,
- ADMIN_MATERIAL_FIELDS_HINT,
  ADMIN_PART_FIELDS_HINT,
  applyProductTextLimits,
  clampAdminPartName,
@@ -20,7 +19,6 @@ import {
  validateAdminName,
  validateAdminNameEn,
  validateDimensionItemsText,
- validateProductMaterials,
 } from "@/lib/admin/field-limits";
 import {
  ADMIN_DRAFT_UPLOAD_FOLDER,
@@ -80,8 +78,6 @@ function createEmptyProduct(collectionId = "", categoryGroupId = "") {
   collectionId,
   categoryGroupId,
   dimensionItems: [{ ...emptyDimensionItem }],
-  material: "",
-  materialEn: "",
   images: [],
  };
 }
@@ -120,8 +116,6 @@ export function ProductForm({
       quantity: normalizeDimensionItemQuantity(item.quantity),
      }))
      : [{ ...emptyDimensionItem }],
-   material: product.material ?? "",
-   materialEn: product.materialEn ?? "",
    images:
     product.images?.map((image) => ({
      url: image.url ?? "",
@@ -147,7 +141,7 @@ export function ProductForm({
   }, 0);
  }, [form.dimensionItems]);
 
- const clampedTextFields = new Set(["name", "nameEn", "material", "materialEn"]);
+ const clampedTextFields = new Set(["name", "nameEn"]);
 
  function updateField(field, value) {
   setForm((current) => {
@@ -293,12 +287,6 @@ export function ProductForm({
 
   if (!(form.images ?? []).some((image) => image.url?.trim())) {
    toast.error("En az bir görsel gereklidir.");
-   return;
-  }
-
-  const materialError = validateProductMaterials(form.material, form.materialEn);
-  if (materialError) {
-   toast.error(materialError);
    return;
   }
 
@@ -630,7 +618,7 @@ export function ProductForm({
 
    <Card>
     <CardHeader>
-     <CardTitle>Görseller ve malzeme</CardTitle>
+     <CardTitle>Görseller</CardTitle>
     </CardHeader>
     <CardContent className="space-y-4">
      <input
@@ -641,27 +629,7 @@ export function ProductForm({
       disabled={uploading}
       className="sr-only"
      />
-     <div className="space-y-3">
-      <div className="grid gap-3 md:grid-cols-2">
-       <div className="space-y-1">
-        <Label>Malzeme (TR)</Label>
-        <Input
-         value={form.material}
-         onChange={(e) => updateField("material", e.target.value)}
-         maxLength={MAX_ADMIN_NAME_LENGTH}
-        />
-       </div>
-       <div className="space-y-1">
-        <Label>Malzeme (EN)</Label>
-        <Input
-         value={form.materialEn}
-         onChange={(e) => updateField("materialEn", e.target.value)}
-         maxLength={MAX_ADMIN_NAME_LENGTH}
-        />
-       </div>
-      </div>
-      <p className="text-xs text-muted-foreground">{ADMIN_MATERIAL_FIELDS_HINT}</p>
-      <VariantImagesEditor
+     <VariantImagesEditor
        images={form.images ?? []}
        productName={form.name}
        uploading={uploading}
@@ -675,7 +643,6 @@ export function ProductForm({
         )
        }
       />
-     </div>
     </CardContent>
    </Card>
 
