@@ -1,21 +1,39 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight } from "@/lib/icons";
+import { ChevronRight, HeroChevronLeft, HeroChevronRight } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import {
  Carousel,
  CarouselContent,
  CarouselDots,
  CarouselItem,
- CarouselNext,
- CarouselPrevious,
+ useCarousel,
 } from "@/components/ui/carousel";
 
 const slideClassName = "basis-full sm:basis-1/3 sm:pl-5";
 
 const navButtonClassName =
- "size-11 rounded-full border-charcoal/12 bg-white text-charcoal shadow-[0_4px_24px_rgb(0_0_0/6%)] transition-all duration-200 hover:border-charcoal/20 hover:bg-cream/60 hover:shadow-[0_8px_32px_rgb(0_0_0/8%)] active:scale-95 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12";
+ "header-glass-btn home-showcase-nav inline-flex size-11 shrink-0 cursor-pointer touch-manipulation items-center justify-center rounded-full text-white transition-all duration-200 active:scale-95 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12";
+
+function HomeShowcaseNav({ direction }) {
+ const { scrollPrev, scrollNext, canScrollNext } = useCarousel();
+ const isPrev = direction === "prev";
+ const disabled = isPrev ? false : !canScrollNext;
+ const Icon = isPrev ? HeroChevronLeft : HeroChevronRight;
+
+ return (
+  <button
+   type="button"
+   onClick={isPrev ? scrollPrev : scrollNext}
+   disabled={disabled}
+   className={navButtonClassName}
+   aria-label={isPrev ? "Önceki slayt" : "Sonraki slayt"}
+  >
+   <Icon strokeWidth={3.5} aria-hidden />
+  </button>
+ );
+}
 
 export function HomeShowcaseSlider({
  title,
@@ -54,7 +72,7 @@ export function HomeShowcaseSlider({
    <Carousel
     opts={{
      align: "start",
-     loop: false,
+     loop: true,
      duration: 28,
      containScroll: "trimSnaps",
      dragFree: false,
@@ -64,23 +82,13 @@ export function HomeShowcaseSlider({
     aria-label={title}
    >
     <div className="mx-auto grid w-full max-w-site-shell grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:gap-4 sm:px-5 md:gap-6 md:px-6 lg:px-8 xl:gap-8 xl:px-10">
-     <CarouselPrevious
-      placement="inline"
-      variant="outline"
-      size="icon-lg"
-      className={navButtonClassName}
-     />
+     <HomeShowcaseNav direction="prev" />
      <div className="min-w-0">
       <CarouselContent className="sm:-ml-5">
        {children}
       </CarouselContent>
      </div>
-     <CarouselNext
-      placement="inline"
-      variant="outline"
-      size="icon-lg"
-      className={navButtonClassName}
-     />
+     <HomeShowcaseNav direction="next" />
     </div>
     <div className="container-premium">
      <CarouselDots className="mt-8" />

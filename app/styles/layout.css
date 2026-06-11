@@ -1413,6 +1413,7 @@ html:has(.page-header-bleed)
 
   .hero-nav-btn,
   .products-mega-menu-arrow.header-glass-btn,
+  .home-showcase-nav.header-glass-btn,
   [data-slot="carousel-previous"].header-glass-btn,
   [data-slot="carousel-next"].header-glass-btn {
     border: 1px solid var(--glass-hero-border);
@@ -1420,6 +1421,10 @@ html:has(.page-header-bleed)
     box-shadow: var(--glass-float-shadow);
     backdrop-filter: var(--glass-hero-blur);
     -webkit-backdrop-filter: var(--glass-hero-blur);
+  }
+
+  .home-showcase-nav.header-glass-btn {
+    color: oklch(1 0 0 / 96%);
   }
 
   .hero-nav-btn {
@@ -1501,7 +1506,8 @@ html:has(.page-header-bleed)
   }
 
   .header-glass-btn svg,
-  .products-mega-menu-arrow svg {
+  .products-mega-menu-arrow svg,
+  .home-showcase-nav svg {
     width: 1.25rem;
     height: 1.25rem;
     stroke-width: 3.5;
@@ -1514,7 +1520,8 @@ html:has(.page-header-bleed)
     }
 
     .header-glass-btn svg,
-    .products-mega-menu-arrow svg {
+    .products-mega-menu-arrow svg,
+    .home-showcase-nav svg {
       width: 1.375rem;
       height: 1.375rem;
     }
