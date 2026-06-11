@@ -71,7 +71,7 @@ export default async function AdminDashboardPage() {
     </Button>
    </AdminPageHeader>
 
-   <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
     {statMeta.map((item) => {
      const Icon = item.icon;
      const value = stats[item.key];
@@ -89,13 +89,15 @@ export default async function AdminDashboardPage() {
          <Icon className="size-4" />
         </div>
        </CardHeader>
-       <CardContent className="flex items-end justify-between gap-3">
+       <CardContent className="flex min-h-10 items-end justify-between gap-3">
         <p className="text-3xl font-semibold tracking-tight">{value}</p>
         {item.href ? (
-         <Button variant="ghost" size="sm" className="cursor-pointer" asChild>
+         <Button variant="ghost" size="sm" className="cursor-pointer shrink-0" asChild>
           <Link href={item.href}>Görüntüle</Link>
          </Button>
-        ) : null}
+        ) : (
+         <span className="inline-flex h-8 shrink-0 px-3" aria-hidden />
+        )}
        </CardContent>
       </Card>
      );
