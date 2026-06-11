@@ -88,31 +88,65 @@ const COLLECTIONS = [
      },
     ]),
     description:
-     "Geniş oturum alanı ve hava koşullarına dayanıklı örgü detaylarıyla Açelya oturma grubu; Antrasit ve Cappuccino renk seçenekleri.",
+     "Geniş oturum alanı ve hava koşullarına dayanıklı örgü detaylarıyla Açelya oturma grubu.",
     descriptionEn:
-     "Azalea seating set with spacious seating and weather-resistant weave details; available in Anthracite and Cappuccino.",
+     "Azalea seating set with spacious seating and weather-resistant weave details.",
     folder: "acelya-oturma",
-    imagePrefixes: ["antrasit", "cappuccino"],
+    imagePrefix: "antrasit",
     sortOrder: 1,
     isFeatured: true,
     featuredOrder: 1,
-    variants: [
+    material: "Outdoor kumaş",
+    materialEn: "Outdoor fabric",
+   },
+   {
+    slug: "acelya-oturma-2",
+    name: "Açelya Oturma Grubu",
+    nameEn: "Azalea Seating Set",
+    ...dimItems([
      {
-      name: "Antrasit",
-      nameEn: "Anthracite",
-      color: "Antrasit",
-      material: "Outdoor kumaş",
-      materialEn: "Outdoor fabric",
-      isDefault: true,
+      name: "3'lü Koltuk",
+      nameEn: "3-Seater Sofa",
+      widthCm: 185,
+      depthCm: 75,
+      heightCm: 80,
+      amount: 6500,
      },
      {
-      name: "Cappuccino",
-      nameEn: "Cappuccino",
-      color: "Cappuccino",
-      material: "Outdoor kumaş",
-      materialEn: "Outdoor fabric",
+      name: "Tekli Koltuk",
+      nameEn: "Armchair",
+      widthCm: 75,
+      depthCm: 75,
+      heightCm: 80,
+      amount: 3800,
+      quantity: 2,
      },
-    ],
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 80,
+      depthCm: 140,
+      heightCm: 70,
+      amount: 5200,
+     },
+     {
+      name: "Benç",
+      nameEn: "Bench",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 43,
+      amount: 2200,
+     },
+    ]),
+    description:
+     "Geniş oturum alanı ve hava koşullarına dayanıklı örgü detaylarıyla Açelya oturma grubu.",
+    descriptionEn:
+     "Azalea seating set with spacious seating and weather-resistant weave details.",
+    folder: "acelya-oturma",
+    imagePrefix: "cappuccino",
+    sortOrder: 2,
+    material: "Outdoor kumaş",
+    materialEn: "Outdoor fabric",
    },
   ],
  },
@@ -167,29 +201,64 @@ const COLLECTIONS = [
      },
     ]),
     description:
-     "Alüminyum iskelet ve UV dayanımlı kumaş kaplamalı Aston oturma grubu; Antrasit ve Cappuccino renk seçenekleri.",
+     "Alüminyum iskelet ve UV dayanımlı kumaş kaplamalı Aston oturma grubu.",
     descriptionEn:
-     "Aston seating set with aluminum frame and UV-resistant fabric upholstery; available in Anthracite and Cappuccino.",
+     "Aston seating set with aluminum frame and UV-resistant fabric upholstery.",
     folder: "aston-oturma",
-    imagePrefixes: ["antrasit", "cappuccino"],
+    imagePrefix: "antrasit",
     sortOrder: 1,
-    variants: [
+    material: "Outdoor kumaş",
+    materialEn: "Outdoor fabric",
+   },
+   {
+    slug: "aston-oturma-2",
+    name: "Aston Oturma Grubu",
+    nameEn: "Aston Seating Set",
+    ...dimItems([
      {
-      name: "Antrasit",
-      nameEn: "Anthracite",
-      color: "Antrasit",
-      material: "Outdoor kumaş",
-      materialEn: "Outdoor fabric",
-      isDefault: true,
+      name: "3'lü Koltuk",
+      nameEn: "3-Seater Sofa",
+      widthCm: 185,
+      depthCm: 85,
+      heightCm: 80,
+      amount: 5500,
      },
      {
-      name: "Cappuccino",
-      nameEn: "Cappuccino",
-      color: "Cappuccino",
-      material: "Outdoor kumaş",
-      materialEn: "Outdoor fabric",
+      name: "Tekli Koltuk",
+      nameEn: "Armchair",
+      widthCm: 70,
+      depthCm: 85,
+      heightCm: 80,
+      amount: 3500,
+      quantity: 2,
      },
-    ],
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 80,
+      depthCm: 140,
+      heightCm: 70,
+      amount: 5000,
+     },
+     {
+      name: "Puf",
+      nameEn: "Pouf",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 43,
+      amount: 2000,
+      quantity: 2,
+     },
+    ]),
+    description:
+     "Alüminyum iskelet ve UV dayanımlı kumaş kaplamalı Aston oturma grubu.",
+    descriptionEn:
+     "Aston seating set with aluminum frame and UV-resistant fabric upholstery.",
+    folder: "aston-oturma",
+    imagePrefix: "cappuccino",
+    sortOrder: 2,
+    material: "Outdoor kumaş",
+    materialEn: "Outdoor fabric",
    },
   ],
  },
@@ -198,9 +267,9 @@ const COLLECTIONS = [
   name: "Begonia",
   nameEn: "Begonia",
   description:
-   "Begonia serisi; farklı oturum konfigürasyonları ve renk seçenekleriyle esnek dış mekân çözümleri sunar.",
+   "Begonia serisi; farklı oturum konfigürasyonlarıyla esnek dış mekân çözümleri sunar.",
   descriptionEn:
-   "The Begonia series offers flexible outdoor solutions with different seating configurations and color options.",
+   "The Begonia series offers flexible outdoor solutions with different seating configurations.",
   sortOrder: 3,
   products: [
    {
@@ -222,16 +291,8 @@ const COLLECTIONS = [
     folder: "begonia-2li",
     imagePrefix: "cappuccino",
     sortOrder: 1,
-    variants: [
-     {
-      name: "Cappuccino",
-      nameEn: "Cappuccino",
-      color: "Cappuccino",
-      material: "Outdoor kumaş",
-      materialEn: "Outdoor fabric",
-      isDefault: true,
-     },
-    ],
+    material: "Outdoor kumaş",
+    materialEn: "Outdoor fabric",
    },
    {
     slug: "begonia-oturma",
@@ -274,29 +335,64 @@ const COLLECTIONS = [
      },
     ]),
     description:
-     "Geniş oturum kapasitesi ve dayanıklı dış mekân malzemeleriyle Begonia oturma grubu; Antrasit ve Gri renk seçenekleri.",
+     "Geniş oturum kapasitesi ve dayanıklı dış mekân malzemeleriyle Begonia oturma grubu.",
     descriptionEn:
-     "Begonia seating set with generous seating capacity and durable outdoor materials; available in Anthracite and Grey.",
+     "Begonia seating set with generous seating capacity and durable outdoor materials.",
     folder: "begonia-oturma",
-    imagePrefixes: ["antrasit", "gri"],
+    imagePrefix: "antrasit",
     sortOrder: 2,
-    variants: [
+    material: "Outdoor kumaş",
+    materialEn: "Outdoor fabric",
+   },
+   {
+    slug: "begonia-oturma-2",
+    name: "Begonia Oturma Grubu",
+    nameEn: "Begonia Seating Set",
+    ...dimItems([
      {
-      name: "Antrasit",
-      nameEn: "Anthracite",
-      color: "Antrasit",
-      material: "Outdoor kumaş",
-      materialEn: "Outdoor fabric",
-      isDefault: true,
+      name: "3'lü Koltuk",
+      nameEn: "3-Seater Sofa",
+      widthCm: 185,
+      depthCm: 75,
+      heightCm: 80,
+      amount: 6200,
      },
      {
-      name: "Gri",
-      nameEn: "Grey",
-      color: "Gri",
-      material: "Outdoor kumaş",
-      materialEn: "Outdoor fabric",
+      name: "Tekli Koltuk",
+      nameEn: "Armchair",
+      widthCm: 70,
+      depthCm: 75,
+      heightCm: 80,
+      amount: 3400,
+      quantity: 2,
      },
-    ],
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 80,
+      depthCm: 140,
+      heightCm: 70,
+      amount: 5100,
+     },
+     {
+      name: "Puf",
+      nameEn: "Pouf",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 43,
+      amount: 1900,
+      quantity: 2,
+     },
+    ]),
+    description:
+     "Geniş oturum kapasitesi ve dayanıklı dış mekân malzemeleriyle Begonia oturma grubu.",
+    descriptionEn:
+     "Begonia seating set with generous seating capacity and durable outdoor materials.",
+    folder: "begonia-oturma",
+    imagePrefix: "gri",
+    sortOrder: 3,
+    material: "Outdoor kumaş",
+    materialEn: "Outdoor fabric",
    },
   ],
  },
@@ -365,22 +461,14 @@ const COLLECTIONS = [
      },
     ]),
     description:
-     "Modüler Tesla köşe grubu; L form oturma düzeni ve Antrasit renk seçeneği.",
+     "Modüler Tesla köşe grubu; L form oturma düzeni.",
     descriptionEn:
-     "Modular Tesla corner set with L-shaped seating layout and Anthracite color option.",
+     "Modular Tesla corner set with L-shaped seating layout.",
     folder: "tesla-kose",
     imagePrefix: "antrasit",
     sortOrder: 1,
-    variants: [
-     {
-      name: "Antrasit",
-      nameEn: "Anthracite",
-      color: "Antrasit",
-      material: "Outdoor kumaş",
-      materialEn: "Outdoor fabric",
-      isDefault: true,
-     },
-    ],
+    material: "Outdoor kumaş",
+    materialEn: "Outdoor fabric",
    },
    {
     slug: "tesla-masa",
@@ -406,21 +494,13 @@ const COLLECTIONS = [
      },
     ]),
     description:
-     "Tesla masa grubu; dış mekân yemek ve oturma alanları için masa ve sandalye kombinasyonu; Gri renk seçeneği.",
+     "Tesla masa grubu; dış mekân yemek ve oturma alanları için masa ve sandalye kombinasyonu.",
     descriptionEn:
-     "Tesla table set; table and chair combination for outdoor dining and seating areas; available in Grey.",
+     "Tesla table set; table and chair combination for outdoor dining and seating areas.",
     folder: "tesla-masa",
     sortOrder: 2,
-    variants: [
-     {
-      name: "Gri",
-      nameEn: "Grey",
-      color: "Gri",
-      material: "Alüminyum & cam",
-      materialEn: "Aluminum & glass",
-      isDefault: true,
-     },
-    ],
+    material: "Alüminyum & cam",
+    materialEn: "Aluminum & glass",
    },
    {
     slug: "tesla-oturma",
@@ -463,21 +543,13 @@ const COLLECTIONS = [
      },
     ]),
     description:
-     "Tesla oturma grubu; geniş teras ve bahçe alanları için konforlu dış mekân mobilyası; Gri renk seçeneği.",
+     "Tesla oturma grubu; geniş teras ve bahçe alanları için konforlu dış mekân mobilyası.",
     descriptionEn:
-     "Tesla seating set; comfortable outdoor furniture for spacious terrace and garden areas; available in Grey.",
+     "Tesla seating set; comfortable outdoor furniture for spacious terrace and garden areas.",
     folder: "tesla-oturma",
     sortOrder: 3,
-    variants: [
-     {
-      name: "Gri",
-      nameEn: "Grey",
-      color: "Gri",
-      material: "Outdoor kumaş",
-      materialEn: "Outdoor fabric",
-      isDefault: true,
-     },
-    ],
+    material: "Outdoor kumaş",
+    materialEn: "Outdoor fabric",
    },
    //! ÖLÇÜLER YANLIŞ
    {
@@ -499,21 +571,13 @@ const COLLECTIONS = [
      },
     ]),
     description:
-     "Tesla salıncak; bahçe ve terasta dinlenme için tasarlanmış dayanıklı salıncak modeli; Gri renk seçeneği.",
+     "Tesla salıncak; bahçe ve terasta dinlenme için tasarlanmış dayanıklı salıncak modeli.",
     descriptionEn:
-     "Tesla swing; a durable swing model designed for relaxation in the garden and on the terrace; available in Grey.",
+     "Tesla swing; a durable swing model designed for relaxation in the garden and on the terrace.",
     folder: "tesla-salincak",
     sortOrder: 4,
-    variants: [
-     {
-      name: "Gri",
-      nameEn: "Grey",
-      color: "Gri",
-      material: "Alüminyum ve örgü",
-      materialEn: "Aluminum and weave",
-      isDefault: true,
-     },
-    ],
+    material: "Alüminyum ve örgü",
+    materialEn: "Aluminum and weave",
    },
   ],
  },
@@ -574,24 +638,16 @@ const COLLECTIONS = [
      },
     ]),
     description:
-     "Geniş oturum alanı ve modüler yapıya sahip Velar köşe grubu; Cappuccino renk seçeneği.",
+     "Geniş oturum alanı ve modüler yapıya sahip Velar köşe grubu.",
     descriptionEn:
-     "Velar corner set with spacious seating and modular structure; available in Cappuccino.",
+     "Velar corner set with spacious seating and modular structure.",
     folder: "velar-kose",
     imagePrefix: "cappuccino",
     sortOrder: 1,
     isFeatured: true,
     featuredOrder: 2,
-    variants: [
-     {
-      name: "Cappuccino",
-      nameEn: "Cappuccino",
-      color: "Cappuccino",
-      material: "Outdoor kumaş",
-      materialEn: "Outdoor fabric",
-      isDefault: true,
-     },
-    ],
+    material: "Outdoor kumaş",
+    materialEn: "Outdoor fabric",
    },
    {
     slug: "velar-masa",
@@ -617,21 +673,13 @@ const COLLECTIONS = [
      },
     ]),
     description:
-     "Velar masa grubu; teras ve bahçe yemek alanları için şık masa takımı; Kahverengi renk seçeneği.",
+     "Velar masa grubu; teras ve bahçe yemek alanları için şık masa takımı.",
     descriptionEn:
-     "Velar table set; an elegant dining set for terrace and garden dining areas; available in Brown.",
+     "Velar table set; an elegant dining set for terrace and garden dining areas.",
     folder: "velar-masa",
     sortOrder: 2,
-    variants: [
-     {
-      name: "Kahverengi",
-      nameEn: "Brown",
-      color: "Kahverengi",
-      material: "Alüminyum & cam",
-      materialEn: "Aluminum & glass",
-      isDefault: true,
-     },
-    ],
+    material: "Alüminyum & cam",
+    materialEn: "Aluminum & glass",
    },
    {
     slug: "velar-oturma",
@@ -674,21 +722,13 @@ const COLLECTIONS = [
      },
     ]),
     description:
-     "Velar oturma grubu; premium bahçe mobilyası serisinin en çok tercih edilen modellerinden; Mavi renk seçeneği.",
+     "Velar oturma grubu; premium bahçe mobilyası serisinin en çok tercih edilen modellerinden.",
     descriptionEn:
-     "Velar seating set; one of the most popular models in the premium garden furniture series; available in Blue.",
+     "Velar seating set; one of the most popular models in the premium garden furniture series.",
     folder: "velar-oturma",
     sortOrder: 3,
-    variants: [
-     {
-      name: "Mavi",
-      nameEn: "Blue",
-      color: "Mavi",
-      material: "Outdoor kumaş",
-      materialEn: "Outdoor fabric",
-      isDefault: true,
-     },
-    ],
+    material: "Outdoor kumaş",
+    materialEn: "Outdoor fabric",
    },
    //! ÖLÇÜLER YANLIŞ
    {
@@ -710,23 +750,15 @@ const COLLECTIONS = [
      },
     ]),
     description:
-     "Velar salıncak; havuz kenarı ve teras dinlenme köşeleri için; Gri renk seçeneği.",
+     "Velar salıncak; havuz kenarı ve teras dinlenme köşeleri için.",
     descriptionEn:
-     "Velar swing; for poolside and terrace relaxation corners; available in Grey.",
+     "Velar swing; for poolside and terrace relaxation corners.",
     folder: "velar-salincak",
     sortOrder: 4,
     isFeatured: true,
     featuredOrder: 4,
-    variants: [
-     {
-      name: "Gri",
-      nameEn: "Grey",
-      color: "Gri",
-      material: "Alüminyum ve örgü",
-      materialEn: "Aluminum and weave",
-      isDefault: true,
-     },
-    ],
+    material: "Alüminyum ve örgü",
+    materialEn: "Aluminum and weave",
    },
    {
     slug: "velar-sezlong",
@@ -751,21 +783,13 @@ const COLLECTIONS = [
      },
     ]),
     description:
-     "Velar şezlong; ayarlanabilir sırtlı yapısıyla havuz ve güneş terası kullanımına uygun; Kahverengi renk seçeneği.",
+     "Velar şezlong; ayarlanabilir sırtlı yapısıyla havuz ve güneş terası kullanımına uygun.",
     descriptionEn:
-     "Velar sun lounger with adjustable backrest; suitable for pool and sun terrace use; available in Brown.",
+     "Velar sun lounger with adjustable backrest; suitable for pool and sun terrace use.",
     folder: "velar-sezlong",
     sortOrder: 5,
-    variants: [
-     {
-      name: "Kahverengi",
-      nameEn: "Brown",
-      color: "Kahverengi",
-      material: "Alüminyum",
-      materialEn: "Aluminum",
-      isDefault: true,
-     },
-    ],
+    material: "Alüminyum",
+    materialEn: "Aluminum",
    },
   ],
  },
@@ -802,52 +826,30 @@ const COLLECTIONS = [
      },
     ]),
     description:
-     "Trend sallanır sandalye; rahat oturum ve salınım hareketiyle teras ve bahçe keyfi; Mavi renk seçeneği.",
+     "Trend sallanır sandalye; rahat oturum ve salınım hareketiyle teras ve bahçe keyfi.",
     descriptionEn:
-     "Trend rocking chair; terrace and garden enjoyment with comfortable seating and gentle rocking motion; available in Blue.",
+     "Trend rocking chair; terrace and garden enjoyment with comfortable seating and gentle rocking motion.",
     folder: "trend-sandalye",
     sortOrder: 1,
     isFeatured: true,
     featuredOrder: 3,
-    variants: [
-     {
-      name: "Mavi",
-      nameEn: "Blue",
-      color: "Mavi",
-      material: "Alüminyum ve örgü",
-      materialEn: "Aluminum and weave",
-      isDefault: true,
-     },
-    ],
+    material: "Alüminyum ve örgü",
+    materialEn: "Aluminum and weave",
    },
   ],
  },
 ];
 
-function resolveVariantImages(productData, variant, variantIndex) {
- if (productData.imagePrefixes?.length) {
-  const prefix =
-   productData.imagePrefixes[variantIndex] ??
-   variant.name?.toLocaleLowerCase("tr");
-  return publicImages(productData.folder, prefix);
- }
-
+function resolveProductImages(productData) {
  if (productData.imagePrefix) {
-  return variantIndex === 0
-   ? publicImages(productData.folder, productData.imagePrefix)
-   : [];
+  return publicImages(productData.folder, productData.imagePrefix);
  }
 
- return variantIndex === 0 ? publicImages(productData.folder) : [];
+ return publicImages(productData.folder);
 }
 
 function resolveCoverImage(productData) {
- const firstVariant = productData.variants?.[0];
- if (!firstVariant) {
-  throw new Error(`Varyant bulunamadı: ${productData.folder}`);
- }
-
- const images = resolveVariantImages(productData, firstVariant, 0);
+ const images = resolveProductImages(productData);
  if (images.length === 0) {
   throw new Error(`Kapak görseli bulunamadı: ${productData.folder}`);
  }
@@ -856,6 +858,11 @@ function resolveCoverImage(productData) {
 }
 
 async function createProduct(collectionId, data) {
+ const imageUrls = resolveProductImages(data);
+ if (imageUrls.length === 0) {
+  throw new Error(`Görsel bulunamadı: ${data.folder}`);
+ }
+
  await prisma.product.create({
   data: {
    slug: data.slug,
@@ -871,56 +878,49 @@ async function createProduct(collectionId, data) {
    sortOrder: data.sortOrder,
    isFeatured: data.isFeatured ?? false,
    featuredOrder: data.featuredOrder ?? 0,
+   material: data.material ?? null,
+   materialEn: data.materialEn ?? null,
+   sku: data.slug.toUpperCase().replace(/-/g, ""),
    collectionId,
-   variants: {
-    create: data.variants.map((variant, index) => {
-     const imageUrls = resolveVariantImages(data, variant, index);
-     if (imageUrls.length === 0) {
-      const detail = data.imagePrefixes
-       ? data.imagePrefixes[index] ?? variant.name
-       : data.imagePrefix ?? "tümü";
-      throw new Error(`Görsel bulunamadı: ${data.folder} (${detail})`);
-     }
-
-     return {
-      name: variant.name,
-      nameEn: variant.nameEn ?? null,
-      color: variant.color ?? null,
-      material: variant.material ?? null,
-      materialEn: variant.materialEn ?? null,
-      sortOrder: index,
-      isDefault: Boolean(variant.isDefault),
-      sku: `${data.slug}-${index + 1}`.toUpperCase().replace(/-/g, ""),
-      images: {
-       create: imageUrls.map((url, imageIndex) => ({
-        url,
-        alt: imageIndex === 0 ? data.name : `${data.name} — görsel ${imageIndex + 1}`,
-        altEn:
-         imageIndex === 0 ? data.nameEn : `${data.nameEn} — image ${imageIndex + 1}`,
-        sortOrder: imageIndex,
-        isPrimary: imageIndex === 0,
-       })),
-      },
-     };
-    }),
+   images: {
+    create: imageUrls.map((url, imageIndex) => ({
+     url,
+     alt: imageIndex === 0 ? data.name : `${data.name} — görsel ${imageIndex + 1}`,
+     altEn:
+      imageIndex === 0 ? data.nameEn : `${data.nameEn} — image ${imageIndex + 1}`,
+     sortOrder: imageIndex,
+     isPrimary: imageIndex === 0,
+    })),
    },
   },
  });
 }
 
+const CATEGORY_GROUP_LABELS = {
+ "oturma-gruplari": { name: "Oturma Grupları", nameEn: "Seating Sets" },
+ "kose-gruplari": { name: "Köşe Grupları", nameEn: "Corner Sets" },
+ masalar: { name: "Masa Grupları", nameEn: "Table Sets" },
+ salincak: { name: "Salıncak", nameEn: "Swings" },
+ sezlong: { name: "Şezlong", nameEn: "Sun Loungers" },
+ sandalyeler: { name: "Sandalyeler", nameEn: "Chairs" },
+};
+
 async function seedCategoryGroups() {
  const { productMenuGroupsData } = await import("../lib/i18n/navigation-data.js");
- const tr = (await import("../lib/i18n/dictionaries/tr.js")).default;
- const en = (await import("../lib/i18n/dictionaries/en.js")).default;
 
  console.log("Kategori grupları ekleniyor…");
 
  for (const [index, group] of productMenuGroupsData.entries()) {
+  const labels = CATEGORY_GROUP_LABELS[group.slug] ?? {
+   name: group.slug,
+   nameEn: null,
+  };
+
   const created = await prisma.productCategoryGroup.create({
    data: {
     slug: group.slug,
-    name: tr.categories?.[group.slug] ?? group.slug,
-    nameEn: en.categories?.[group.slug] ?? null,
+    name: labels.name,
+    nameEn: labels.nameEn,
     coverImage: group.items[0]?.image ?? null,
     sortOrder: index + 1,
     isPublished: true,
@@ -929,20 +929,25 @@ async function seedCategoryGroups() {
 
   for (const item of group.items) {
    const productSlug = item.href.replace("/urunler/", "");
+
    await prisma.product.updateMany({
-    where: { slug: productSlug },
+    where: {
+     OR: [
+      { slug: productSlug },
+      { slug: { startsWith: `${productSlug}-` } },
+     ],
+    },
     data: { categoryGroupId: created.id },
    });
   }
 
-  console.log(`  ✓ ${created.name} (${group.items.length} ürün)`);
+  console.log(`  ✓ ${created.name} (${group.items.length} menü öğesi)`);
  }
 }
 
 async function main() {
  console.log("Veritabanı temizleniyor…");
  await prisma.image.deleteMany();
- await prisma.variant.deleteMany();
  await prisma.product.deleteMany();
  await prisma.productCategoryGroup.deleteMany();
  await prisma.collection.deleteMany();
@@ -978,7 +983,6 @@ async function main() {
   prisma.collection.count(),
   prisma.productCategoryGroup.count(),
   prisma.product.count(),
-  prisma.variant.count(),
   prisma.image.count(),
  ]);
 
@@ -995,8 +999,7 @@ async function main() {
  console.log(`  Koleksiyon: ${counts[0]}`);
  console.log(`  Kategori grubu: ${counts[1]}`);
  console.log(`  Ürün: ${counts[2]}`);
- console.log(`  Varyant: ${counts[3]}`);
- console.log(`  Görsel: ${counts[4]}`);
+ console.log(`  Görsel: ${counts[3]}`);
  console.log(`  İçerik bloğu: ${contentCounts[0]}`);
  console.log(`  SSS kategorisi: ${contentCounts[1]}`);
  console.log(`  SSS sorusu: ${contentCounts[2]}`);

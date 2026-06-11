@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import { MdAdd, MdDeleteOutline, MdSave } from "react-icons/md";
 import { AdminFormSelect } from "@/components/admin/admin-form-select";
 import { DeleteButton } from "@/components/admin/delete-button";
-import { VariantColorInput } from "@/components/admin/variant-color-input";
 import { VariantImagesEditor } from "@/components/admin/variant-images-editor";
 import { MAX_FEATURED_PRODUCTS } from "@/lib/admin/featured-products";
 import { slugify } from "@/lib/admin/slug";
@@ -34,16 +33,6 @@ function normalizeDimensionItemQuantity(quantity) {
  return String(quantity);
 }
 
-const emptyVariant = {
- name: "",
- nameEn: "",
- color: "",
- material: "",
- materialEn: "",
- isDefault: false,
- images: [],
-};
-
 const emptyImage = {
  url: "",
  alt: "",
@@ -69,7 +58,9 @@ function createEmptyProduct(collectionId = "", categoryGroupId = "") {
   collectionId,
   categoryGroupId,
   dimensionItems: [{ ...emptyDimensionItem }],
-  variants: [{ ...emptyVariant, isDefault: true }],
+  material: "",
+  materialEn: "",
+  images: [],
  };
 }
 
@@ -104,31 +95,21 @@ export function ProductForm({
       quantity: normalizeDimensionItemQuantity(item.quantity),
      }))
      : [{ ...emptyDimensionItem }],
-   variants:
-    product.variants?.length > 0
-     ? product.variants.map((variant) => ({
-      name: variant.name ?? "",
-      nameEn: variant.nameEn ?? "",
-      color: variant.color ?? "",
-      material: variant.material ?? "",
-      materialEn: variant.materialEn ?? "",
-      isDefault: Boolean(variant.isDefault),
-      images:
-       variant.images?.map((image) => ({
-        url: image.url ?? "",
-        alt: image.alt ?? "",
-        altEn: image.altEn ?? "",
-        isPrimary: Boolean(image.isPrimary),
-       })) ?? [],
-     }))
-     : [{ ...emptyVariant, isDefault: true }],
+   material: product.material ?? "",
+   materialEn: product.materialEn ?? "",
+   images:
+    product.images?.map((image) => ({
+     url: image.url ?? "",
+     alt: image.alt ?? "",
+     altEn: image.altEn ?? "",
+     isPrimary: Boolean(image.isPrimary),
+    })) ?? [],
    categoryGroupId: product.categoryGroupId ?? product.categoryGroup?.id ?? "",
   };
  });
  const [loading, setLoading] = useState(false);
- const [uploadingVariantIndex, setUploadingVariantIndex] = useState(null);
- const [uploadStatusByVariant, setUploadStatusByVariant] = useState({});
- const [uploadTargetIndex, setUploadTargetIndex] = useState(null);
+ const [uploading, setUploading] = useState(false);
+ const [uploadStatus, setUploadStatus] = useState("");
  const fileInputRef = useRef(null);
  const canMarkFeatured = Boolean(form.isFeatured) || featuredCount < maxFeatured;
 
@@ -184,19 +165,15 @@ export function ProductForm({
   });
  }
 
- function updateVariantImages(variantIndex, updater) {
+ function updateImages(updater) {
   setForm((current) => ({
    ...current,
-   variants: current.variants.map((variant, index) =>
-    index === variantIndex
-     ? { ...variant, images: updater(variant.images ?? []) }
-     : variant
-   ),
+   images: updater(current.images ?? []),
   }));
  }
 
- function moveVariantImage(variantIndex, imageIndex, direction) {
-  updateVariantImages(variantIndex, (images) => {
+ function moveImage(imageIndex, direction) {
+  updateImages((images) => {
    const items = [...images];
    const target = imageIndex + direction;
    if (target < 0 || target >= items.length) return items;
@@ -205,8 +182,8 @@ export function ProductForm({
   });
  }
 
- function setPrimaryVariantImage(variantIndex, imageIndex) {
-  updateVariantImages(variantIndex, (images) =>
+ function setPrimaryImage(imageIndex) {
+  updateImages((images) =>
    images.map((image, index) => ({
     ...image,
     isPrimary: index === imageIndex,
@@ -214,28 +191,22 @@ export function ProductForm({
   );
  }
 
- function getVariantUploadFolder(variant, variantIndex) {
-  const base = slugify(form.name) || product?.slug;
-  const suffix = slugify(variant.name) || `v${variantIndex + 1}`;
-  return `${base}/${suffix}`;
+ function getUploadFolder() {
+  return slugify(form.name) || product?.slug || "";
  }
 
  async function handleUpload(event) {
   const file = event.target.files?.[0];
-  const variantIndex = uploadTargetIndex;
-  if (!file || variantIndex == null) return;
+  if (!file) return;
 
-  const folder = getVariantUploadFolder(form.variants[variantIndex], variantIndex);
+  const folder = getUploadFolder();
   if (!folder || !slugify(form.name)) {
    toast.error("Önce ürün adı girin");
    return;
   }
 
-  setUploadStatusByVariant((current) => ({
-   ...current,
-   [variantIndex]: `${file.name} yükleniyor…`,
-  }));
-  setUploadingVariantIndex(variantIndex);
+  setUploadStatus(`${file.name} yükleniyor…`);
+  setUploading(true);
   try {
    const body = new FormData();
    body.append("file", file);
@@ -248,7 +219,7 @@ export function ProductForm({
    const data = await response.json();
    if (!response.ok) throw new Error(data.error || "Yükleme başarısız");
 
-   updateVariantImages(variantIndex, (images) => [
+   updateImages((images) => [
     ...images,
     {
      ...emptyImage,
@@ -256,25 +227,18 @@ export function ProductForm({
      isPrimary: images.length === 0,
     },
    ]);
-   setUploadStatusByVariant((current) => ({
-    ...current,
-    [variantIndex]: `${file.name} eklendi`,
-   }));
+   setUploadStatus(`${file.name} eklendi`);
    toast.success("Görsel yüklendi");
   } catch (error) {
-   setUploadStatusByVariant((current) => ({
-    ...current,
-    [variantIndex]: "",
-   }));
+   setUploadStatus("");
    toast.error(error.message);
   } finally {
-   setUploadingVariantIndex(null);
+   setUploading(false);
    event.target.value = "";
   }
  }
 
- function openVariantUpload(variantIndex) {
-  setUploadTargetIndex(variantIndex);
+ function openUpload() {
   fileInputRef.current?.click();
  }
 
@@ -286,14 +250,11 @@ export function ProductForm({
    const payload = {
     ...form,
     slug: slugify(form.name),
-    variants: form.variants.map((variant) => ({
-     ...variant,
-     images: (variant.images ?? []).map((image, index) => ({
-      ...image,
-      isPrimary:
-       image.isPrimary ||
-       (index === 0 && !(variant.images ?? []).some((item) => item.isPrimary)),
-     })),
+    images: (form.images ?? []).map((image, index) => ({
+     ...image,
+     isPrimary:
+      image.isPrimary ||
+      (index === 0 && !(form.images ?? []).some((item) => item.isPrimary)),
     })),
    };
 
@@ -605,7 +566,7 @@ export function ProductForm({
 
    <Card>
     <CardHeader>
-     <CardTitle>Varyantlar</CardTitle>
+     <CardTitle>Görseller ve malzeme</CardTitle>
     </CardHeader>
     <CardContent className="space-y-4">
      <input
@@ -613,114 +574,41 @@ export function ProductForm({
       type="file"
       accept="image/jpeg,image/png,image/webp"
       onChange={handleUpload}
-      disabled={uploadingVariantIndex != null}
+      disabled={uploading}
       className="sr-only"
      />
-     {form.variants.map((variant, index) => (
-      <div key={`variant-${index}`} className="space-y-3 rounded-lg border p-4">
-       <div className="grid gap-3 md:grid-cols-3">
-        <div className="space-y-1">
-         <Label>Ad (TR)</Label>
-         <Input
-          value={variant.name}
-          onChange={(e) =>
-           updateListItem("variants", index, "name", e.target.value)
-          }
-         />
-        </div>
-        <div className="space-y-1">
-         <Label>Ad (EN)</Label>
-         <Input
-          value={variant.nameEn}
-          onChange={(e) =>
-           updateListItem("variants", index, "nameEn", e.target.value)
-          }
-         />
-        </div>
-        <div className="space-y-1">
-         <Label>Renk</Label>
-         <VariantColorInput
-          value={variant.color ?? ""}
-          onChange={(nextColor) =>
-           updateListItem("variants", index, "color", nextColor)
-          }
-         />
-        </div>
-        <div className="space-y-1">
-         <Label>Malzeme (TR)</Label>
-         <Input
-          value={variant.material}
-          onChange={(e) =>
-           updateListItem("variants", index, "material", e.target.value)
-          }
-         />
-        </div>
-        <div className="space-y-1">
-         <Label>Malzeme (EN)</Label>
-         <Input
-          value={variant.materialEn}
-          onChange={(e) =>
-           updateListItem("variants", index, "materialEn", e.target.value)
-          }
-         />
-        </div>
-        <label className="flex cursor-pointer items-center gap-2 self-end pb-1">
-         <Checkbox
-          checked={Boolean(variant.isDefault)}
-          onCheckedChange={(checked) => {
-           setForm((current) => ({
-            ...current,
-            variants: current.variants.map((item, itemIndex) => ({
-             ...item,
-             isDefault: itemIndex === index ? Boolean(checked) : false,
-            })),
-           }));
-          }}
-         />
-         <span className="text-sm">Varsayılan</span>
-        </label>
+     <div className="space-y-3">
+      <div className="grid gap-3 md:grid-cols-2">
+       <div className="space-y-1">
+        <Label>Malzeme (TR)</Label>
+        <Input
+         value={form.material}
+         onChange={(e) => updateField("material", e.target.value)}
+        />
        </div>
-       <VariantImagesEditor
-        images={variant.images ?? []}
-        productName={form.name}
-        uploading={uploadingVariantIndex === index}
-        uploadStatus={uploadStatusByVariant[index] ?? ""}
-        onSelectFile={() => openVariantUpload(index)}
-        onSetPrimary={(imageIndex) => setPrimaryVariantImage(index, imageIndex)}
-        onMove={(imageIndex, direction) =>
-         moveVariantImage(index, imageIndex, direction)
-        }
-        onRemove={(imageIndex) =>
-         updateVariantImages(index, (images) =>
-          images.filter((_, itemIndex) => itemIndex !== imageIndex)
-         )
-        }
-       />
-       <div className="flex justify-end border-t border-border/60 pt-3">
-        <Button
-         type="button"
-         variant="outline"
-         size="sm"
-         className="cursor-pointer border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive disabled:border-border disabled:text-muted-foreground disabled:hover:bg-transparent"
-         onClick={() => removeListItem("variants", index)}
-         disabled={form.variants.length === 1}
-        >
-         <MdDeleteOutline aria-hidden />
-         Varyantı kaldır
-        </Button>
+       <div className="space-y-1">
+        <Label>Malzeme (EN)</Label>
+        <Input
+         value={form.materialEn}
+         onChange={(e) => updateField("materialEn", e.target.value)}
+        />
        </div>
       </div>
-     ))}
-     <Button
-      type="button"
-      variant="outline"
-      size="sm"
-      className="cursor-pointer"
-      onClick={() => addListItem("variants", { ...emptyVariant })}
-     >
-      <MdAdd aria-hidden />
-      Varyant ekle
-     </Button>
+      <VariantImagesEditor
+       images={form.images ?? []}
+       productName={form.name}
+       uploading={uploading}
+       uploadStatus={uploadStatus}
+       onSelectFile={openUpload}
+       onSetPrimary={setPrimaryImage}
+       onMove={moveImage}
+       onRemove={(imageIndex) =>
+        updateImages((images) =>
+         images.filter((_, itemIndex) => itemIndex !== imageIndex)
+        )
+       }
+      />
+     </div>
     </CardContent>
    </Card>
 
@@ -738,7 +626,7 @@ export function ProductForm({
     <Button
      type="submit"
      className="cursor-pointer gap-2"
-     disabled={loading || uploadingVariantIndex != null}
+     disabled={loading || uploading}
     >
      {loading ? (
       "Kaydediliyor…"

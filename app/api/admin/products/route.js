@@ -3,15 +3,13 @@ import { slugify } from "@/lib/admin/slug";
 import { getFeaturedLimitError } from "@/lib/admin/featured-products";
 import {
  parseDimensionItems,
- parseVariants,
+ parseProductMedia,
 } from "@/lib/admin/product-payload";
 import { requireAdmin, handleAdminError } from "@/lib/admin/require-admin";
 
-const variantInclude = {
- orderBy: { sortOrder: "asc" },
- include: {
-  images: { orderBy: { sortOrder: "asc" } },
- },
+const productInclude = {
+ collection: { select: { id: true, name: true, slug: true } },
+ images: { orderBy: { sortOrder: "asc" } },
 };
 
 export async function GET() {
@@ -22,7 +20,7 @@ export async function GET() {
    orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
    include: {
     collection: { select: { id: true, name: true, slug: true } },
-    _count: { select: { variants: true } },
+    _count: { select: { images: true } },
    },
   });
 
@@ -69,7 +67,7 @@ export async function POST(request) {
    }
   }
 
-  const variants = parseVariants(body.variants, slug, name, nameEn);
+  const media = parseProductMedia(body, slug, name, nameEn);
 
   const isFeatured = Boolean(body.isFeatured);
   const featuredLimitError = await getFeaturedLimitError({ isFeatured });
@@ -95,12 +93,12 @@ export async function POST(request) {
     featuredOrder: Number(body.featuredOrder) || 0,
     collectionId: body.collectionId,
     categoryGroupId,
-    variants: variants.length ? { create: variants } : undefined,
+    material: media.material,
+    materialEn: media.materialEn,
+    sku: media.sku,
+    images: media.images,
    },
-   include: {
-    collection: { select: { id: true, name: true, slug: true } },
-    variants: variantInclude,
-   },
+   include: productInclude,
   });
 
   return Response.json(product, { status: 201 });

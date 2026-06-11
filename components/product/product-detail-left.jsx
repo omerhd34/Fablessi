@@ -6,28 +6,16 @@ import { ProductDimensionsScrollButton } from "@/components/product/product-dime
 import { useFavorites } from "@/contexts/favorites-provider";
 import { useLocale } from "@/contexts/locale-provider";
 import { Heart, HeartFilled, Payments } from "@/lib/icons";
-import { getColorLabel } from "@/lib/catalog-colors";
 import {
- getColorSwatch,
  getFormattedProductPriceParts,
  getPriceItemLabel,
  getPriceItemLineTotal,
  getPriceItems,
+ getProductCardLabel,
  getProductDisplayPrice,
  getProductFavoriteToastLabel,
- getProductShortName,
 } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
-
-function getSegmentTextClass(hex) {
- const normalized = hex.replace("#", "");
- const r = Number.parseInt(normalized.slice(0, 2), 16);
- const g = Number.parseInt(normalized.slice(2, 4), 16);
- const b = Number.parseInt(normalized.slice(4, 6), 16);
- const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-
- return luminance > 0.62 ? "text-charcoal" : "text-white";
-}
 
 function ProductDetailPrice({ product, locale, className }) {
  const { t } = useLocale();
@@ -155,15 +143,12 @@ export function ProductDetailLeft({
  product,
  categoryLabel,
  categoryHref,
- selectedVariant,
- onVariantChange,
  onViewDimensions,
  section = "all",
  className,
 }) {
  const { t, dictionary, locale } = useLocale();
  const { isFavorite, toggleFavorite, hydrated } = useFavorites();
- const variants = product.variants ?? [];
  const favorited = hydrated && isFavorite(product.slug);
 
  const handleToggleFavorite = () => {
@@ -211,64 +196,19 @@ export function ProductDetailLeft({
     </ol>
    </nav>
    <h1 className="font-heading text-3xl font-semibold tracking-tight text-charcoal md:text-4xl">
-    {getProductShortName(product, dictionary)}
+    {getProductCardLabel(product, dictionary)}
    </h1>
   </div>
  ) : null;
 
  const controls = showControls ? (
   <div className="flex flex-col gap-4">
-   {variants.length > 0 ? (
-    <div className="product-color-picker flex flex-col gap-4">
+   {product.material ? (
+    <div className="flex flex-col gap-1">
      <p className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
-      {t("product.color")}
+      {t("product.material")}
      </p>
-     <div
-      className="product-color-picker__tray flex h-12 w-full"
-      role="listbox"
-      aria-label={t("product.colorOptions")}
-     >
-      {variants.map((variant, index) => {
-       const active = selectedVariant?.id === variant.id;
-       const label =
-        (variant.color ? getColorLabel(variant.color, t) : "") || variant.name;
-       const swatch = variant.color ? getColorSwatch(variant.color) : "#d1d5db";
-
-       return (
-        <button
-         key={variant.id}
-         type="button"
-         title={label}
-         role="option"
-         aria-selected={active}
-         onClick={() => onVariantChange(variant)}
-         className={cn(
-          "product-color-segment flex min-w-0 flex-1 items-center justify-center px-2",
-          index > 0 && "product-color-segment--divider"
-         )}
-         style={{ backgroundColor: swatch }}
-         aria-label={label}
-        >
-         <span
-          className={cn(
-           "product-color-segment__label truncate text-xs font-semibold tracking-wide",
-           getSegmentTextClass(swatch)
-          )}
-         >
-          {label}
-         </span>
-        </button>
-       );
-      })}
-     </div>
-     {selectedVariant?.material ? (
-      <div className="flex flex-col gap-1">
-       <p className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
-        {t("product.material")}
-       </p>
-       <p className="text-sm text-charcoal/80">{selectedVariant.material}</p>
-      </div>
-     ) : null}
+     <p className="text-sm text-charcoal/80">{product.material}</p>
     </div>
    ) : null}
 

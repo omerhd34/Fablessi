@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useLocale } from "@/contexts/locale-provider";
 import { getLocalizedCollectionName } from "@/lib/i18n/display-names";
-import { getDefaultVariant, getPrimaryImageUrl, getProductCardLabel } from "@/lib/product-utils";
+import { getPrimaryImageUrl, getProductCardLabel } from "@/lib/product-utils";
 
 export function ProductCategoryRelated({ products, categoryLabel }) {
  const { dictionary } = useLocale();
@@ -18,7 +18,6 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
    <div className="p-3">
     <div className="space-y-3">
      {products.map((product) => {
-      const defaultVariant = getDefaultVariant(product.variants);
       const imageUrl = getPrimaryImageUrl(product);
 
       return (
@@ -48,9 +47,9 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
             product.collection.name}
           </p>
          ) : null}
-         {defaultVariant?.material ? (
+         {product.material ? (
           <p className="text-muted-foreground mt-1 truncate text-xs">
-           {defaultVariant.material}
+           {product.material}
           </p>
          ) : null}
         </div>

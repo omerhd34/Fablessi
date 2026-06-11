@@ -40,9 +40,9 @@ const SORT_COLUMNS = {
   getValue: (product) =>
    getProductPriceTotal(product) ?? Number.POSITIVE_INFINITY,
  },
- variants: {
-  label: "Varyant",
-  getValue: (product) => product._count.variants,
+ images: {
+  label: "Görsel",
+  getValue: (product) => product._count.images,
  },
  status: {
   label: "Durum",
@@ -62,7 +62,7 @@ const EMPTY_FILTERS = {
  categoryGroupId: "",
  priceMin: "",
  priceMax: "",
- variants: "",
+ images: "",
  status: "",
  searchQuery: "",
 };
@@ -70,7 +70,7 @@ const EMPTY_FILTERS = {
 function buildFilterOptions(products) {
  const collections = new Map();
  const categories = new Map();
- const variantCounts = new Set();
+ const imageCounts = new Set();
  let priceMin = Number.POSITIVE_INFINITY;
  let priceMax = Number.NEGATIVE_INFINITY;
 
@@ -86,7 +86,7 @@ function buildFilterOptions(products) {
    priceMin = Math.min(priceMin, total);
    priceMax = Math.max(priceMax, total);
   }
-  variantCounts.add(product._count.variants);
+  imageCounts.add(product._count.images);
  }
 
  return {
@@ -100,7 +100,7 @@ function buildFilterOptions(products) {
    priceMin === Number.POSITIVE_INFINITY
     ? null
     : { min: priceMin, max: priceMax },
-  variants: [...variantCounts]
+  images: [...imageCounts]
    .sort((a, b) => a - b)
    .map((count) => ({ value: String(count), label: String(count) })),
   status: STATUS_FILTER_OPTIONS,
@@ -123,7 +123,7 @@ function matchesFilters(product, filters) {
   const max = Number(filters.priceMax);
   if (!Number.isFinite(max) || total == null || total > max) return false;
  }
- if (filters.variants && String(product._count.variants) !== filters.variants) {
+ if (filters.images && String(product._count.images) !== filters.images) {
   return false;
  }
  if (filters.status === "published" && !product.isPublished) return false;
@@ -274,14 +274,14 @@ export function ProductsTable({ products }) {
      </div>
 
      <div className="space-y-1.5">
-      <Label className={filterLabelClass}>Varyant</Label>
+      <Label className={filterLabelClass}>Görsel</Label>
       <AdminFormSelect
        allowEmpty
        emptyLabel="Tümü"
        placeholder="Tümü"
-       value={filters.variants}
-       onValueChange={(value) => updateFilter("variants", value)}
-       options={filterOptions.variants}
+       value={filters.images}
+       onValueChange={(value) => updateFilter("images", value)}
+       options={filterOptions.images}
        className="w-full"
       />
      </div>
@@ -377,7 +377,7 @@ export function ProductsTable({ products }) {
           {total != null ? total.toLocaleString("tr-TR") : "—"}
          </TableCell>
          <TableCell className="px-4 py-3 tabular-nums">
-          {product._count.variants}
+          {product._count.images}
          </TableCell>
          <TableCell className="px-4 py-3">
           <div className="flex flex-wrap items-center gap-1">

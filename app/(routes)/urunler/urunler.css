@@ -57,38 +57,6 @@
   background: oklch(0.955 0.006 90 / 60%);
 }
 
-.site-inner .product-color-picker__tray {
-  overflow: hidden;
-  border-radius: 1.125rem;
-  border: 1px solid oklch(0.22 0.01 260 / 12%);
-  box-shadow: 0 1px 3px rgb(0 0 0 / 5%);
-}
-
-.site-inner .product-color-segment {
-  position: relative;
-  height: 100%;
-  border: none;
-  cursor: pointer;
-  transition: filter 0.2s ease;
-}
-
-.site-inner .product-color-segment--divider {
-  box-shadow: inset 1px 0 0 rgb(255 255 255 / 35%);
-}
-
-.site-inner .product-color-segment:hover {
-  filter: brightness(1.04);
-}
-
-.site-inner .product-color-segment__label {
-  max-width: 100%;
-  text-shadow: 0 1px 2px rgb(0 0 0 / 18%);
-}
-
-.site-inner .product-color-segment__label.text-charcoal {
-  text-shadow: 0 1px 1px rgb(255 255 255 / 55%);
-}
-
 .site-inner .product-gallery-frame {
   border: 1px solid oklch(0.22 0.01 260 / 14%);
   background: rgb(255 255 255);

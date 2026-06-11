@@ -5,7 +5,6 @@ import {
  MdCategory,
  MdCollections,
  MdImage,
- MdPalette,
  MdViewModule,
 } from "react-icons/md";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
@@ -17,7 +16,6 @@ const statMeta = [
  { key: "collections", label: "Koleksiyon", href: "/admin/collections", icon: MdCollections },
  { key: "categoryGroups", label: "Kategori grubu", href: "/admin/categories", icon: MdCategory },
  { key: "products", label: "Ürün", href: "/admin/products", icon: MdViewModule },
- { key: "variants", label: "Varyant", icon: MdPalette },
  { key: "images", label: "Görsel", icon: MdImage },
 ];
 

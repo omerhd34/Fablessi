@@ -1,11 +1,10 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { ProductDetailCenter } from "@/components/product/product-detail-center";
 import { ProductDetailLeft } from "@/components/product/product-detail-left";
 import { ProductDetailRight } from "@/components/product/product-detail-right";
 import { ProductImageLightbox } from "@/components/product/product-image-lightbox";
-import { getDefaultVariant, getImagesForVariant } from "@/lib/product-utils";
 
 export function ProductDetailView({
  product,
@@ -13,17 +12,10 @@ export function ProductDetailView({
  categoryHref,
  categoryProducts = [],
 }) {
- const [selectedVariant, setSelectedVariant] = useState(() =>
-  getDefaultVariant(product.variants)
- );
  const [lightbox, setLightbox] = useState({ images: [], index: null });
  const [openDimensions, setOpenDimensions] = useState(false);
  const centerScrollRef = useRef(null);
-
- const visibleImages = useMemo(
-  () => getImagesForVariant(product.images, selectedVariant),
-  [product.images, selectedVariant]
- );
+ const visibleImages = product.images ?? [];
 
  const openLightbox = (images, index) => {
   if (!images.length) return;
@@ -66,8 +58,6 @@ export function ProductDetailView({
      product={product}
      categoryLabel={categoryLabel}
      categoryHref={categoryHref}
-     selectedVariant={selectedVariant}
-     onVariantChange={setSelectedVariant}
      onViewDimensions={handleViewDimensions}
      section="header"
      className="lg:hidden"
@@ -76,8 +66,6 @@ export function ProductDetailView({
      product={product}
      categoryLabel={categoryLabel}
      categoryHref={categoryHref}
-     selectedVariant={selectedVariant}
-     onVariantChange={setSelectedVariant}
      onViewDimensions={handleViewDimensions}
      className="hidden lg:flex lg:shrink-0 lg:overflow-hidden"
     />
@@ -97,8 +85,6 @@ export function ProductDetailView({
         product={product}
         categoryLabel={categoryLabel}
         categoryHref={categoryHref}
-        selectedVariant={selectedVariant}
-        onVariantChange={setSelectedVariant}
         onViewDimensions={handleViewDimensions}
         section="controls"
         className="lg:hidden"
@@ -109,7 +95,6 @@ export function ProductDetailView({
 
     <ProductDetailRight
      product={product}
-     selectedVariant={selectedVariant}
      categoryLabel={categoryLabel}
      categoryProducts={categoryProducts}
      className="lg:self-start"

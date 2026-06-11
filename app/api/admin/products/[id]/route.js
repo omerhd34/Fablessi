@@ -3,15 +3,14 @@ import { slugify } from "@/lib/admin/slug";
 import { getFeaturedLimitError } from "@/lib/admin/featured-products";
 import {
  parseDimensionItems,
- parseVariants,
+ parseProductMedia,
 } from "@/lib/admin/product-payload";
 import { requireAdmin, handleAdminError } from "@/lib/admin/require-admin";
 
-const variantInclude = {
- orderBy: { sortOrder: "asc" },
- include: {
-  images: { orderBy: { sortOrder: "asc" } },
- },
+const productInclude = {
+ collection: { select: { id: true, name: true, slug: true } },
+ categoryGroup: { select: { id: true, name: true, slug: true } },
+ images: { orderBy: { sortOrder: "asc" } },
 };
 
 export async function GET(_request, { params }) {
@@ -21,11 +20,7 @@ export async function GET(_request, { params }) {
 
   const product = await prisma.product.findUnique({
    where: { id },
-   include: {
-    collection: { select: { id: true, name: true, slug: true } },
-    categoryGroup: { select: { id: true, name: true, slug: true } },
-    variants: variantInclude,
-   },
+   include: productInclude,
   });
 
   if (!product) {
@@ -73,7 +68,7 @@ export async function PUT(request, { params }) {
    }
   }
   const nameEn = body.nameEn?.trim() || null;
-  const variants = parseVariants(body.variants, slug, name, nameEn);
+  const media = parseProductMedia(body, slug, name, nameEn);
 
   const categoryGroupId =
    body.categoryGroupId !== undefined
@@ -98,7 +93,7 @@ export async function PUT(request, { params }) {
   }
 
   const product = await prisma.$transaction(async (tx) => {
-   await tx.variant.deleteMany({ where: { productId: id } });
+   await tx.image.deleteMany({ where: { productId: id } });
 
    return tx.product.update({
     where: { id },
@@ -119,12 +114,12 @@ export async function PUT(request, { params }) {
      featuredOrder: Number(body.featuredOrder) ?? existing.featuredOrder,
      collectionId: body.collectionId ?? existing.collectionId,
      categoryGroupId,
-     variants: variants.length ? { create: variants } : undefined,
+     material: media.material,
+     materialEn: media.materialEn,
+     sku: media.sku,
+     images: media.images,
     },
-    include: {
-     collection: { select: { id: true, name: true, slug: true } },
-     variants: variantInclude,
-    },
+    include: productInclude,
    });
   });
 

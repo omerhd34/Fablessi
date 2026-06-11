@@ -65,6 +65,9 @@ model Product {
   /// Anasayfa vitrininde gösterilecek ürünler
   isFeatured     Boolean  @default(false)
   featuredOrder  Int      @default(0)
+  material       String?
+  materialEn     String?
+  sku            String?  @unique
   collectionId    String
   categoryGroupId String?
   createdAt    DateTime @default(now())
@@ -72,7 +75,7 @@ model Product {
 
   collection    Collection            @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   categoryGroup ProductCategoryGroup? @relation(fields: [categoryGroupId], references: [id], onDelete: SetNull)
-  variants   Variant[]
+  images        Image[]
 
   @@index([collectionId])
   @@index([categoryGroupId])
@@ -81,32 +84,10 @@ model Product {
   @@map("products")
 }
 
-/// Renk / malzeme varyantı
-model Variant {
-  id         String   @id @default(cuid())
-  productId  String
-  name       String
-  nameEn     String?
-  color      String?
-  material   String?
-  materialEn String?
-  sku       String?  @unique
-  sortOrder Int      @default(0)
-  isDefault Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  images  Image[]
-
-  @@index([productId])
-  @@map("variants")
-}
-
-/// Varyant görseli (galeri)
+/// Ürün görseli (galeri)
 model Image {
   id        String   @id @default(cuid())
-  variantId String
+  productId String
   url       String   @db.VarChar(2048)
   alt       String?
   altEn     String?
@@ -114,9 +95,9 @@ model Image {
   isPrimary Boolean  @default(false)
   createdAt DateTime @default(now())
 
-  variant Variant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  @@index([variantId, sortOrder])
+  @@index([productId, sortOrder])
   @@map("images")
 }
 
