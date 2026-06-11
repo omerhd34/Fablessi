@@ -14,7 +14,7 @@ import {
 const slideClassName = "basis-full sm:basis-1/3 sm:pl-5";
 
 const navButtonClassName =
- "header-glass-btn home-showcase-nav inline-flex size-11 shrink-0 cursor-pointer touch-manipulation items-center justify-center rounded-full text-white transition-all duration-200 active:scale-95 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12";
+ "header-glass-btn home-showcase-nav inline-flex size-11 shrink-0 cursor-pointer touch-manipulation items-center justify-center rounded-full text-white disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12";
 
 function HomeShowcaseNav({ direction }) {
  const { scrollPrev, scrollNext, canScrollNext } = useCarousel();
