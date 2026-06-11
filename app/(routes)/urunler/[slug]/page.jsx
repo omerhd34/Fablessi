@@ -2,6 +2,10 @@ import { notFound } from "next/navigation";
 import { ProductDetailView } from "@/components/product/product-detail-view";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { getLocale } from "@/lib/i18n/server";
+import {
+ trProductSeoDescriptionSuffix,
+ enProductSeoDescriptionSuffix,
+} from "@/lib/seo/local";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { buildNavigation, getProductCategoryGroupFromMenu } from "@/lib/i18n/build-navigation";
 import {
@@ -21,11 +25,14 @@ export async function generateMetadata({ params }) {
   return { title: dictionary.product.notFound ?? "Product Not Found" };
  }
 
+ const seoSuffix =
+  locale === "en" ? enProductSeoDescriptionSuffix : trProductSeoDescriptionSuffix;
+
  return {
   title: product.name,
   description:
    product.description ??
-   `${product.name} — ${dictionary.metadata.title}`,
+   `${product.name} — ${seoSuffix}`,
  };
 }
 

@@ -11,6 +11,7 @@ import { LocaleProvider } from "@/contexts/locale-provider";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { brandName } from "@/lib/navigation";
+import { buildOrganizationJsonLd } from "@/lib/seo/json-ld";
 import { siteMetadata } from "@/lib/site-metadata";
 
 const montserrat = Montserrat({
@@ -40,6 +41,7 @@ export async function generateMetadata() {
    template: siteMetadata.title.template,
   },
   description,
+  keywords: dictionary.metadata.keywords ?? siteMetadata.keywords,
   alternates: {
    canonical: "/",
   },
@@ -61,6 +63,7 @@ export async function generateMetadata() {
 export default async function RootLayout({ children }) {
  const { locale, dictionary } = await getServerDictionary();
  const menuGroups = await getCategoryGroupsForMenu(locale);
+ const organizationJsonLd = buildOrganizationJsonLd(locale);
 
  return (
   <html
@@ -68,6 +71,10 @@ export default async function RootLayout({ children }) {
    className={`${montserrat.variable} ${poppins.variable} h-full antialiased`}
   >
    <body className="min-h-full flex flex-col font-sans">
+    <script
+     type="application/ld+json"
+     dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+    />
     <LocaleProvider locale={locale} dictionary={dictionary} menuGroups={menuGroups}>
      <FavoritesProvider>
       <TooltipProvider>
