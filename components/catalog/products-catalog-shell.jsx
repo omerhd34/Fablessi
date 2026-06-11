@@ -7,23 +7,31 @@ import { ProductsCatalogToolbar } from "@/components/catalog/products-catalog-to
 import { ProductsCategoryCarousel } from "@/components/catalog/products-category-carousel";
 import { useLocale } from "@/contexts/locale-provider";
 import { getLocalizedCollectionName } from "@/lib/i18n/display-names";
+import { getProductDisplayPrice } from "@/lib/product-utils";
+
+function compareByPrice(a, b, ascending) {
+ const priceA = getProductDisplayPrice(a);
+ const priceB = getProductDisplayPrice(b);
+
+ if (priceA == null && priceB == null) return 0;
+ if (priceA == null) return 1;
+ if (priceB == null) return -1;
+
+ return ascending ? priceA - priceB : priceB - priceA;
+}
 
 function sortProducts(products, sort) {
  const list = [...products];
 
  switch (sort) {
+  case "price-asc":
+   return list.sort((a, b) => compareByPrice(a, b, true));
+  case "price-desc":
+   return list.sort((a, b) => compareByPrice(a, b, false));
   case "newest":
-   return list.sort(
-    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-   );
-  case "name-asc":
-   return list.sort((a, b) => a.name.localeCompare(b.name, "tr"));
-  case "name-desc":
-   return list.sort((a, b) => b.name.localeCompare(a.name, "tr"));
-  case "featured":
   default:
    return list.sort(
-    (a, b) => a.sortOrder - b.sortOrder || a.name.localeCompare(b.name, "tr")
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
    );
  }
 }
@@ -37,7 +45,7 @@ export function ProductsCatalogShell({
 }) {
  const { t, dictionary } = useLocale();
  const [search, setSearch] = useState("");
- const [sort, setSort] = useState("featured");
+ const [sort, setSort] = useState("newest");
 
  const filteredProducts = useMemo(() => {
   const query = search.trim().toLowerCase();
