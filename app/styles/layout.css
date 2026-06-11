@@ -770,7 +770,9 @@ html:has(.page-header-bleed)
     opacity: 0.82;
   }
 
-  html:has(.faq-hero) .site-header .nav-desktop-pill.header-pill {
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
+    .nav-desktop-pill.header-pill {
     border: 1px solid var(--glass-hero-border);
     background: var(--glass-hero-icon-surface);
     box-shadow: var(--glass-hero-shadow);
@@ -778,41 +780,80 @@ html:has(.page-header-bleed)
     -webkit-backdrop-filter: var(--glass-hero-blur);
   }
 
-  html:has(.faq-hero) .site-header .nav-desktop-pill .header-pill-divider {
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
+    .nav-desktop-pill
+    .header-pill-divider {
     background: oklch(1 0 0 / 34%);
   }
 
-  html:has(.faq-hero) .site-header .nav-desktop-pill .header-icon-btn--active {
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
+    .nav-desktop-pill
+    .header-icon-btn--active {
     border-color: var(--glass-hero-border);
     background: oklch(1 0 0 / 22%);
     box-shadow: none;
   }
 
-  html:has(.faq-hero) .site-header .nav-desktop-pill .header-pill-link,
-  html:has(.faq-hero) .site-header .nav-desktop-pill .nav-desktop-link,
-  html:has(.faq-hero) .site-header .nav-desktop-pill .header-icon-btn,
-  html:has(.faq-hero) .site-header .nav-desktop-pill .header-glass-btn,
-  html:has(.faq-hero) .site-header .products-mega-menu-arrow.header-glass-btn {
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
+    .nav-desktop-pill
+    .header-pill-link,
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
+    .nav-desktop-pill
+    .nav-desktop-link,
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
+    .nav-desktop-pill
+    .header-icon-btn,
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
+    .nav-desktop-pill
+    .header-glass-btn,
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
+    .products-mega-menu-arrow.header-glass-btn {
     color: oklch(1 0 0 / 96%);
   }
 
-  html:has(.faq-hero) .site-header .nav-desktop-pill .nav-desktop-link__icon,
-  html:has(.faq-hero) .site-header .nav-desktop-pill .header-icon-btn svg {
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
+    .nav-desktop-pill
+    .nav-desktop-link__icon,
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
+    .nav-desktop-pill
+    .header-icon-btn
+    svg {
     color: currentColor;
   }
 
-  html:has(.faq-hero) .site-header .nav-desktop-pill .nav-desktop-link--active,
   html:has(.faq-hero)
-    .site-header
+    .site-header:not([data-hero-overlay="false"])
+    .nav-desktop-pill
+    .nav-desktop-link--active,
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
     .nav-desktop-pill
     .nav-desktop-link--active
     .nav-desktop-link__icon {
     color: oklch(1 0 0 / 100%);
   }
 
-  html:has(.faq-hero) .site-header .nav-desktop-pill .header-pill-link:hover,
-  html:has(.faq-hero) .site-header .nav-desktop-pill .header-icon-btn:hover,
-  html:has(.faq-hero) .site-header .nav-desktop-pill .nav-desktop-link:hover {
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
+    .nav-desktop-pill
+    .header-pill-link:hover,
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
+    .nav-desktop-pill
+    .header-icon-btn:hover,
+  html:has(.faq-hero)
+    .site-header:not([data-hero-overlay="false"])
+    .nav-desktop-pill
+    .nav-desktop-link:hover {
     opacity: 0.82;
   }
 
@@ -1306,7 +1347,7 @@ html:has(.page-header-bleed)
 
   .site-header[data-home="true"] .products-mega-menu-scroll,
   html:has(.faq-hero)
-    .site-header:not([data-home="true"])
+    .site-header:not([data-home="true"]):not([data-hero-overlay="false"])
     .products-mega-menu-scroll {
     scrollbar-color: oklch(1 0 0 / 92%) transparent;
   }
@@ -1314,7 +1355,7 @@ html:has(.page-header-bleed)
   .site-header[data-home="true"]
     .products-mega-menu-scroll::-webkit-scrollbar-thumb,
   html:has(.faq-hero)
-    .site-header:not([data-home="true"])
+    .site-header:not([data-home="true"]):not([data-hero-overlay="false"])
     .products-mega-menu-scroll::-webkit-scrollbar-thumb {
     background: oklch(1 0 0 / 92%);
   }
@@ -1322,13 +1363,16 @@ html:has(.page-header-bleed)
   .site-header[data-home="true"]
     .products-mega-menu-scroll:hover::-webkit-scrollbar-thumb,
   html:has(.faq-hero)
-    .site-header:not([data-home="true"])
+    .site-header:not([data-home="true"]):not([data-hero-overlay="false"])
     .products-mega-menu-scroll:hover::-webkit-scrollbar-thumb {
     background: oklch(1 0 0 / 100%);
   }
 
   html:not(:has(.faq-hero))
     .site-header:not([data-home="true"])
+    .products-mega-menu-panel,
+  html:has(.faq-hero)
+    .site-header:not([data-home="true"])[data-hero-overlay="false"]
     .products-mega-menu-panel {
     border-color: var(--glass-border);
     background: oklch(0.995 0.004 90 / 96%) !important;
@@ -1339,6 +1383,9 @@ html:has(.page-header-bleed)
 
   html:not(:has(.faq-hero))
     .site-header:not([data-home="true"])
+    .products-mega-menu-section-title,
+  html:has(.faq-hero)
+    .site-header:not([data-home="true"])[data-hero-overlay="false"]
     .products-mega-menu-section-title {
     color: oklch(0.18 0.01 260);
     text-shadow: none;
@@ -1346,6 +1393,9 @@ html:has(.page-header-bleed)
 
   html:not(:has(.faq-hero))
     .site-header:not([data-home="true"])
+    .products-mega-menu-view-all,
+  html:has(.faq-hero)
+    .site-header:not([data-home="true"])[data-hero-overlay="false"]
     .products-mega-menu-view-all {
     color: oklch(0.38 0.01 260);
     text-shadow: none;
@@ -1353,12 +1403,18 @@ html:has(.page-header-bleed)
 
   html:not(:has(.faq-hero))
     .site-header:not([data-home="true"])
+    .products-mega-menu-view-all:hover,
+  html:has(.faq-hero)
+    .site-header:not([data-home="true"])[data-hero-overlay="false"]
     .products-mega-menu-view-all:hover {
     color: oklch(0.18 0.01 260);
   }
 
   html:not(:has(.faq-hero))
     .site-header:not([data-home="true"])
+    .products-mega-menu-arrow.header-glass-btn,
+  html:has(.faq-hero)
+    .site-header:not([data-home="true"])[data-hero-overlay="false"]
     .products-mega-menu-arrow.header-glass-btn {
     border-color: var(--glass-border);
     background: var(--glass-surface-strong) !important;
