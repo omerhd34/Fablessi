@@ -279,13 +279,6 @@ html:has(.faq-hero) .site-header:not([data-home="true"]) .brand-logo-image {
   pointer-events: none;
 }
 
-html:not(:has(.faq-hero))
-  .site-header[data-menu-open="true"]:not([data-home="true"]) {
-  background: var(--glass-surface-strong);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
 .site-header a,
 .site-header button,
 .site-header input,
