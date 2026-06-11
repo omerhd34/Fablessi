@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useMemo, useState } from "react";
 import { ProductCard } from "@/components/catalog/product-card";
 import { ProductsCatalogToolbar } from "@/components/catalog/products-catalog-toolbar";
@@ -62,32 +61,13 @@ export function ProductsCatalogShell({
   return sortProducts(list, sort);
  }, [products, search, sort]);
 
- const categoryHeroImage =
-  activeGroup?.coverImage ?? activeGroup?.items?.[0]?.image ?? null;
-
  return (
   <div className="space-y-6 md:space-y-8">
-   {categoryHeroImage ? (
-    <div className="page-header-bleed relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
-     <div className="relative aspect-3/1 w-full min-h-[10.5rem] max-h-[min(44vh,580px)] sm:min-h-[12rem] md:min-h-[14rem]">
-      <Image
-       src={categoryHeroImage}
-       alt={activeGroup.label}
-       fill
-       priority
-       sizes="100vw"
-       className="object-cover object-center"
-      />
-      <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/10 to-transparent" />
-     </div>
-    </div>
-   ) : null}
-
    <div>
     <h1 className="heading-display text-charcoal">
      {activeCollection
       ? getLocalizedCollectionName(activeCollection, dictionary) ??
-       activeCollection.name
+      activeCollection.name
       : activeGroup
        ? activeGroup.label
        : t("catalog.allProductsTitle")}

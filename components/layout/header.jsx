@@ -43,6 +43,8 @@ export function Header() {
  const [menuOpen, setMenuOpen] = useState(false);
 
  const isHome = pathname === "/";
+ const isProductsPage =
+  pathname === "/urunler" || pathname.startsWith("/urunler/");
  const headerHidden =
   isHome && scrolled && !searchOpen && !menuOpen && !productsMenuOpen;
 
@@ -69,6 +71,11 @@ export function Header() {
  }, []);
 
  useLayoutEffect(() => {
+  if (isProductsPage) {
+   setHeroOverlay(false);
+   return;
+  }
+
   const updateHeroOverlay = () => {
    const hero = document.querySelector(HERO_SELECTORS);
    if (!hero) {
@@ -97,7 +104,7 @@ export function Header() {
    heroObserver?.disconnect();
    headerObserver?.disconnect();
   };
- }, [pathname]);
+ }, [pathname, isProductsPage]);
 
  useEffect(() => {
   setProductsMenuOpen(false);
