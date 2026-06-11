@@ -2,9 +2,13 @@
 
 İnegöl merkezli **Fablessi** markası için geliştirilen kurumsal web sitesi ve dijital ürün kataloğu. Bahçe ve dış mekan mobilyalarını premium, minimalist bir vitrin deneyimiyle sunar; koleksiyonlar, ürün galerileri, iletişim ve konum bilgilerini tek çatı altında toplar.
 
-**Canlı depo:** [github.com/omerhd34/fablessi](https://github.com/omerhd34/fablessi)
+**Site:** [www.fablessi.com](https://www.fablessi.com/)
 
-![Fablessi bahçe mobilyası](public/acelya-oturma/antrasit-01.jpg)
+<p align="center">
+  <img src="public/slayts/1/2560x1707.jpg" alt="Fablessi bahçe mobilyası — dış mekan oturma koleksiyonu" width="32%" />
+  <img src="public/acelya-oturma/antrasit-01.jpg" alt="Açelya Oturma Grubu" width="32%" />
+  <img src="public/velar-oturma/01.jpg" alt="Fablessi üretim deneyimi — bahçe mobilyası atölyesi" width="32%" />
+</p>
 
 ---
 
