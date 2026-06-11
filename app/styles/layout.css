@@ -1227,11 +1227,15 @@ html:has(.page-header-bleed)
     font-weight: 600;
     color: oklch(1 0 0 / 92%);
     text-shadow: 0 1px 8px oklch(0 0 0 / 40%);
-    transition: color 0.2s ease;
+    transform-origin: right center;
+    transition:
+      color 0.2s ease,
+      transform 0.2s ease;
   }
 
   .products-mega-menu-view-all:hover {
     color: oklch(1 0 0 / 100%);
+    transform: scale(1.1);
   }
 
   .products-mega-menu-arrow {
@@ -1290,6 +1294,29 @@ html:has(.page-header-bleed)
 
   .products-mega-menu-scroll:hover::-webkit-scrollbar-thumb {
     background: oklch(0.5 0.01 260 / 0.48);
+  }
+
+  .site-header[data-home="true"] .products-mega-menu-scroll,
+  html:has(.faq-hero)
+    .site-header:not([data-home="true"])
+    .products-mega-menu-scroll {
+    scrollbar-color: oklch(1 0 0 / 92%) transparent;
+  }
+
+  .site-header[data-home="true"]
+    .products-mega-menu-scroll::-webkit-scrollbar-thumb,
+  html:has(.faq-hero)
+    .site-header:not([data-home="true"])
+    .products-mega-menu-scroll::-webkit-scrollbar-thumb {
+    background: oklch(1 0 0 / 92%);
+  }
+
+  .site-header[data-home="true"]
+    .products-mega-menu-scroll:hover::-webkit-scrollbar-thumb,
+  html:has(.faq-hero)
+    .site-header:not([data-home="true"])
+    .products-mega-menu-scroll:hover::-webkit-scrollbar-thumb {
+    background: oklch(1 0 0 / 100%);
   }
 
   html:not(:has(.faq-hero))
@@ -1492,6 +1519,14 @@ html:has(.page-header-bleed)
       height: 1.375rem;
     }
   }
+}
+
+html[data-scroll-locked="true"] .site-header {
+  padding-right: var(--scrollbar-width, 0px);
+}
+
+html[data-scroll-locked="true"] .contact-float {
+  right: calc(1.25rem + var(--scrollbar-width, 0px));
 }
 
 .contact-float {
