@@ -11,6 +11,8 @@ export function ProductDetailView({
  categoryLabel,
  categoryHref,
  categoryProducts = [],
+ collectionLabel,
+ collectionProducts = [],
 }) {
  const [lightbox, setLightbox] = useState({ images: [], index: null });
  const [openDimensions, setOpenDimensions] = useState(false);
@@ -97,6 +99,8 @@ export function ProductDetailView({
      product={product}
      categoryLabel={categoryLabel}
      categoryProducts={categoryProducts}
+     collectionLabel={collectionLabel}
+     collectionProducts={collectionProducts}
      className="lg:self-start"
     />
    </div>

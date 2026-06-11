@@ -48,6 +48,8 @@ function FavoriteToastContent({
 }
 
 export function showFavoriteToast({ added, title, description, closeLabel }) {
+ toast.dismiss(FAVORITE_TOAST_ID);
+
  toast.custom(
   (id) => (
    <FavoriteToastContent
@@ -62,6 +64,11 @@ export function showFavoriteToast({ added, title, description, closeLabel }) {
    id: FAVORITE_TOAST_ID,
    duration: 3200,
    unstyled: true,
+   closeButton: false,
+   classNames: {
+    toast:
+     "!min-h-0 !gap-0 !border-0 !bg-transparent !p-0 !shadow-none !backdrop-blur-none",
+   },
   }
  );
 }

@@ -1,8 +1,16 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { showFavoriteToast } from "@/components/favorites/favorite-toast";
 import { ProductDimensionsScrollButton } from "@/components/product/product-dimensions-scroll-button";
+import {
+ Accordion,
+ AccordionContent,
+ AccordionItem,
+ AccordionTrigger,
+} from "@/components/ui/accordion";
 import { useFavorites } from "@/contexts/favorites-provider";
 import { useLocale } from "@/contexts/locale-provider";
 import { Heart, HeartFilled, Payments } from "@/lib/icons";
@@ -11,22 +19,24 @@ import {
  getPriceItemLabel,
  getPriceItemLineTotal,
  getPriceItems,
- getProductCardLabel,
  getProductDisplayPrice,
  getProductFavoriteToastLabel,
+ getProductShortName,
 } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
-function ProductDetailPrice({ product, locale, className }) {
- const { t } = useLocale();
- const priceItems = getPriceItems(product);
- const total = getProductDisplayPrice(product);
+const productPanelClassName =
+ "overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)]";
 
- if (priceItems.length === 0 || total == null) return null;
-
- const { amount, currency } = getFormattedProductPriceParts(total, locale);
- const isSingleItem = priceItems.length === 1;
-
+function ProductDetailPriceBody({
+ priceItems,
+ locale,
+ isSingleItem,
+ amount,
+ currency,
+ t,
+ showLabel = true,
+}) {
  if (isSingleItem) {
   const item = priceItems[0];
   const itemLabel = getPriceItemLabel(item);
@@ -36,22 +46,25 @@ function ProductDetailPrice({ product, locale, className }) {
   );
 
   return (
-   <div
-    className={cn(
-     "product-detail-price flex w-full gap-3 rounded-3xl border border-charcoal/12 bg-white px-5 py-4 shadow-[0_1px_3px_rgb(0_0_0/4%)]",
-     className
-    )}
-   >
-    <Payments className="mt-0.5 size-5 shrink-0 text-black" aria-hidden />
-    <div className="flex min-w-0 flex-1 flex-col gap-2">
+   <div className="flex min-w-0 flex-1 flex-col gap-2">
+    {showLabel ? (
      <span className="text-[0.65rem] font-semibold tracking-[0.18em] text-charcoal/40 uppercase">
       {t("product.price")}
      </span>
-     {itemLabel ? (
-      <p className="text-sm leading-snug font-semibold wrap-break-word text-charcoal">
-       {itemLabel}
-      </p>
-     ) : null}
+    ) : null}
+    {itemLabel ? (
+     <div className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 gap-y-1">
+      <p className="text-sm font-medium wrap-break-word text-charcoal">{itemLabel}</p>
+      <div className="flex shrink-0 items-baseline justify-end gap-1.5 text-right">
+       <span className="font-heading text-xl font-semibold tracking-tight text-charcoal tabular-nums sm:text-2xl">
+        {itemAmount}
+       </span>
+       <span className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
+        {currency}
+       </span>
+      </div>
+     </div>
+    ) : (
      <div className="flex items-baseline gap-2">
       <span className="font-heading text-xl font-semibold tracking-tight text-charcoal tabular-nums sm:text-2xl">
        {itemAmount}
@@ -60,61 +73,110 @@ function ProductDetailPrice({ product, locale, className }) {
        {currency}
       </span>
      </div>
-    </div>
+    )}
    </div>
   );
  }
 
  return (
-  <div
-   className={cn(
-    "product-detail-price flex w-full gap-3 rounded-3xl border border-charcoal/12 bg-white px-5 py-4 shadow-[0_1px_3px_rgb(0_0_0/4%)]",
-    className
-   )}
-  >
-   <Payments className="mt-0.5 size-5 shrink-0 text-black" aria-hidden />
-   <div className="flex min-w-0 flex-1 flex-col gap-3">
+  <div className="flex min-w-0 flex-1 flex-col gap-3">
+   {showLabel ? (
     <span className="text-[0.65rem] font-semibold tracking-[0.18em] text-charcoal/40 uppercase">
      {t("product.price")}
     </span>
-    <ul className="flex flex-col gap-2">
-     {priceItems.map((item, index) => {
-      const itemLabel = getPriceItemLabel(item);
-      const { amount: itemAmount } = getFormattedProductPriceParts(
-       getPriceItemLineTotal(item),
-       locale
-      );
+   ) : null}
+   <ul className="flex flex-col gap-2">
+    {priceItems.map((item, index) => {
+     const itemLabel = getPriceItemLabel(item);
+     const { amount: itemAmount } = getFormattedProductPriceParts(
+      getPriceItemLineTotal(item),
+      locale
+     );
 
-      return (
-       <li
-        key={`${item.name}-${index}`}
-        className="grid gap-1 text-sm text-charcoal sm:grid-cols-[minmax(0,1fr)_auto] sm:items-baseline sm:gap-3"
-       >
-        <span className="font-medium wrap-break-word">
-         {itemLabel ?? "—"}
-        </span>
-        <span className="tabular-nums text-charcoal/75 sm:text-right">
-         {itemAmount} {currency}
-        </span>
-       </li>
-      );
-     })}
-    </ul>
-    <div className="flex items-baseline justify-between gap-3 border-t border-charcoal/10 pt-3">
-     <span className="text-sm font-semibold text-charcoal">
-      {t("product.priceTotal")}
+     return (
+      <li
+       key={`${item.name}-${index}`}
+       className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 text-sm text-charcoal"
+      >
+       <span className="font-medium wrap-break-word">{itemLabel ?? "—"}</span>
+       <span className="shrink-0 text-right tabular-nums text-charcoal/75">
+        {itemAmount} {currency}
+       </span>
+      </li>
+     );
+    })}
+   </ul>
+   <div className="flex items-baseline justify-between gap-3 border-t border-charcoal/10 pt-3">
+    <span className="text-sm font-semibold text-charcoal">{t("product.priceTotal")}</span>
+    <div className="flex items-baseline gap-2">
+     <span className="font-heading text-xl font-semibold tracking-tight text-charcoal tabular-nums sm:text-2xl">
+      {amount}
      </span>
-     <div className="flex items-baseline gap-2">
-      <span className="font-heading text-xl font-semibold tracking-tight text-charcoal tabular-nums sm:text-2xl">
-       {amount}
-      </span>
-      <span className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
-       {currency}
-      </span>
-     </div>
+     <span className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
+      {currency}
+     </span>
     </div>
    </div>
   </div>
+ );
+}
+
+function ProductDetailPrice({ product, locale, className }) {
+ const { t } = useLocale();
+ const [open, setOpen] = useState("");
+ const priceItems = getPriceItems(product);
+ const total = getProductDisplayPrice(product);
+
+ useEffect(() => {
+  if (window.matchMedia("(min-width: 1024px)").matches) {
+   setOpen("price");
+  }
+ }, []);
+
+ if (priceItems.length === 0 || total == null) return null;
+
+ const { amount, currency } = getFormattedProductPriceParts(total, locale);
+ const isSingleItem = priceItems.length === 1;
+ const isOpen = open === "price";
+
+ return (
+  <Accordion
+   type="single"
+   collapsible
+   value={open}
+   onValueChange={setOpen}
+   className={cn("product-detail-price w-full", className)}
+  >
+   <AccordionItem value="price" className={productPanelClassName}>
+    <AccordionTrigger className="cursor-pointer items-center gap-3 rounded-none border-0 py-4 hover:no-underline">
+     <Payments className="size-5 shrink-0 text-black" aria-hidden />
+     <span className="flex min-w-0 flex-1 items-center justify-between gap-3">
+      <span className="text-sm font-medium text-charcoal">{t("product.price")}</span>
+      {!isOpen ? (
+       <span className="flex shrink-0 items-baseline gap-1.5">
+        <span className="font-heading text-lg font-semibold tracking-tight text-charcoal tabular-nums">
+         {amount}
+        </span>
+        <span className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
+         {currency}
+        </span>
+       </span>
+      ) : null}
+     </span>
+    </AccordionTrigger>
+    <AccordionContent className="pb-6">
+     <ProductDetailPriceBody
+      priceItems={priceItems}
+      locale={locale}
+      isSingleItem={isSingleItem}
+      amount={amount}
+      currency={currency}
+      t={t}
+      showLabel={false}
+     />
+    </AccordionContent>
+   </AccordionItem>
+  </Accordion>
  );
 }
 
@@ -198,7 +260,7 @@ export function ProductDetailLeft({
     </ol>
    </nav>
    <h1 className="font-heading min-w-0 text-3xl font-semibold tracking-tight wrap-break-word text-charcoal md:text-4xl">
-    {getProductCardLabel(product, dictionary)}
+    {getProductShortName(product, dictionary)}
    </h1>
   </div>
  ) : null;

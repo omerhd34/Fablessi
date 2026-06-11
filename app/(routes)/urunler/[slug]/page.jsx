@@ -10,6 +10,7 @@ import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { buildNavigation, getProductCategoryGroupFromMenu } from "@/lib/i18n/build-navigation";
 import {
  getCategoryRelatedProducts,
+ getCollectionRelatedProducts,
  getProductBySlug,
 } from "@/lib/queries/products";
 
@@ -53,6 +54,7 @@ export default async function UrunDetayPage({ params }) {
   navigation.productsMegaMenu
  );
  const categoryProducts = await getCategoryRelatedProducts(slug);
+ const collectionProducts = await getCollectionRelatedProducts(slug);
 
  return (
   <div className="page-content-offset pb-10 md:pb-14">
@@ -62,6 +64,8 @@ export default async function UrunDetayPage({ params }) {
      categoryLabel={categoryGroup?.label ?? null}
      categoryHref={categoryGroup?.href ?? null}
      categoryProducts={categoryProducts}
+     collectionLabel={product.collection?.name ?? null}
+     collectionProducts={collectionProducts}
     />
    </div>
   </div>

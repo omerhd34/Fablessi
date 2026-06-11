@@ -135,7 +135,7 @@ export function ProductDetailCenter({
  const [accordionValue, setAccordionValue] = useState([]);
 
  useEffect(() => {
-  if (window.matchMedia("(min-width: 768px)").matches) {
+  if (window.matchMedia("(min-width: 1024px)").matches) {
    setAccordionValue(["product-info"]);
   }
  }, []);
@@ -181,10 +181,7 @@ export function ProductDetailCenter({
       className="scroll-mt-6 overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)]"
      >
       <AccordionTrigger className="cursor-pointer py-4 text-base font-semibold text-charcoal hover:no-underline">
-       {t("product.dimensionsTableTitle")}{" "}
-       <span className="font-normal text-charcoal/55">
-        ({t("product.dimensionUnit")})
-       </span>
+       {t("product.dimensionsTableTitle")} ({t("product.dimensionUnit")})
       </AccordionTrigger>
       <AccordionContent className="pb-5">
        <ProductDimensionsTable product={product} t={t} />
