@@ -205,14 +205,7 @@ export function ProductDetailLeft({
 
  const controls = showControls ? (
   <div className="flex flex-col gap-4">
-   {product.material ? (
-    <div className="flex flex-col gap-1">
-     <p className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
-      {t("product.material")}
-     </p>
-     <p className="text-sm text-charcoal/80">{product.material}</p>
-    </div>
-   ) : null}
+   <ProductDetailPrice product={product} locale={locale} />
 
    <ActionButton
     icon={favorited ? HeartFilled : Heart}
@@ -222,9 +215,7 @@ export function ProductDetailLeft({
    >
     {favorited ? t("product.removeFromFavorites") : t("product.addToFavorites")}
    </ActionButton>
-   {section === "controls" ? (
-    <ProductDetailPrice product={product} locale={locale} />
-   ) : null}
+
    {section === "all" ? (
     <ProductDimensionsScrollButton
      product={product}
@@ -232,9 +223,6 @@ export function ProductDetailLeft({
      onClick={onViewDimensions}
      className="rounded-3xl border-charcoal/12 px-5 py-4"
     />
-   ) : null}
-   {section === "all" ? (
-    <ProductDetailPrice product={product} locale={locale} />
    ) : null}
   </div>
  ) : null;
