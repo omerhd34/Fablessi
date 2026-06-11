@@ -221,6 +221,11 @@ NEXT_PUBLIC_WHATSAPP_NUMBER="90XXXXXXXXXX"
 
 # Sosyal medya (isteğe bağlı)
 NEXT_PUBLIC_INSTAGRAM_URL=""
+
+# Cloudinary — admin panelinden görsel yükleme (zorunlu, üretim)
+CLOUDINARY_CLOUD_NAME=""
+CLOUDINARY_API_KEY=""
+CLOUDINARY_API_SECRET=""
 ```
 
 ### 4. Veritabanını hazırlayın
@@ -284,7 +289,7 @@ Proje [Vercel](https://vercel.com), [Railway](https://railway.app) veya herhangi
 
 1. [TiDB Cloud](https://tidbcloud.com/) konsolundan cluster oluşturun ve bağlantı dizesini alın
 2. Depoyu hosting ortamına bağlayın
-3. `DATABASE_URL` (TiDB Cloud) ve `NEXT_PUBLIC_*` değişkenlerini ortam ayarlarına ekleyin
+3. `DATABASE_URL` (TiDB Cloud), Cloudinary (`CLOUDINARY_*`) ve `NEXT_PUBLIC_*` değişkenlerini ortam ayarlarına ekleyin
 4. Build komutu: `npm run build`
 5. Start komutu: `npm run start`
 
@@ -298,7 +303,7 @@ Proje [Vercel](https://vercel.com), [Railway](https://railway.app) veya herhangi
 
 - `public/acelya-oturma/`, `public/aston-oturma/`, `public/begonia-oturma/` …
 
-Yeni ürün eklerken admin panelinden görseller yüklenebilir; seed verisi için görseller `public/` altına konur ve `prisma/seed.js` ile `lib/i18n/navigation-data.js` güncellenir. Aynı modelin farklı renkleri ayrı ürün kaydı olarak eklenir.
+Yeni ürün eklerken admin panelinden görseller [Cloudinary](https://cloudinary.com/) üzerine yüklenir; veritabanında tam URL (`https://res.cloudinary.com/...`) saklanır. Seed verisi için görseller `public/` altına konur ve `prisma/seed.js` ile `lib/i18n/navigation-data.js` güncellenir. Aynı modelin farklı renkleri ayrı ürün kaydı olarak eklenir.
 
 ---
 

@@ -1,8 +1,7 @@
-import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { requireAdmin, handleAdminError } from "@/lib/admin/require-admin";
+import { CloudinaryConfigError, uploadImageBuffer } from "@/lib/cloudinary";
 
-const PUBLIC_DIR = path.join(process.cwd(), "public");
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/jpg"]);
 
 function sanitizeFolder(folder) {
@@ -11,7 +10,7 @@ function sanitizeFolder(folder) {
   .slice(0, 80);
 }
 
-function sanitizeFilename(name) {
+function sanitizePublicId(name) {
  const ext = path.extname(name).toLowerCase();
  const base = path
   .basename(name, ext)
@@ -19,7 +18,7 @@ function sanitizeFilename(name) {
   .toLowerCase()
   .slice(0, 80);
 
- return `${base || "image"}${ext || ".jpg"}`;
+ return base || "image";
 }
 
 export async function POST(request) {
@@ -52,13 +51,18 @@ export async function POST(request) {
    return Response.json({ error: "Dosya 10 MB'dan büyük olamaz" }, { status: 400 });
   }
 
-  const filename = sanitizeFilename(file.name);
-  const dir = path.join(PUBLIC_DIR, folder);
-  await mkdir(dir, { recursive: true });
-  await writeFile(path.join(dir, filename), buffer);
+  const result = await uploadImageBuffer(buffer, {
+   folder,
+   publicId: sanitizePublicId(file.name),
+  });
 
-  return Response.json({ url: `/${folder}/${filename}` });
+  return Response.json({ url: result.secure_url });
  } catch (error) {
+  if (error instanceof CloudinaryConfigError) {
+   return Response.json({ error: error.message }, { status: error.status });
+  }
+
+  console.error("[admin/upload]", error);
   return handleAdminError(error);
  }
 }
