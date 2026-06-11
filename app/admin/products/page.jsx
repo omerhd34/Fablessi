@@ -12,7 +12,7 @@ export default async function AdminProductsPage() {
   <div className="space-y-6">
    <AdminPageHeader
     title="Ürünler"
-    description="Fiyat, ölçü, varyant ve görselleri yönetin."
+    description="Fiyat, ölçü, malzeme ve görselleri yönetin."
    >
     <Button className="cursor-pointer gap-2" asChild>
      <Link href="/admin/products/new">
