@@ -13,7 +13,7 @@ export function AboutPageContent() {
     <div className="container-premium">
      <div className="about-visual__image relative aspect-16/9 overflow-hidden rounded-2xl sm:aspect-21/9">
       <Image
-       src="/velar-oturma/01.jpg"
+       src="https://res.cloudinary.com/dbo6puh1c/image/upload/v1781205876/fablessi/velar-oturma/01.jpg"
        alt=""
        fill
        sizes="(max-width: 1280px) 100vw, 1200px"

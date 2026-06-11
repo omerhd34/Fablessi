@@ -10,7 +10,7 @@ export function BrandExperienceBanner() {
  return (
   <section className="relative min-h-[420px] overflow-hidden md:min-h-[520px]">
    <Image
-    src="/velar-oturma/01.jpg"
+    src="https://res.cloudinary.com/dbo6puh1c/image/upload/v1781205876/fablessi/velar-oturma/01.jpg"
     alt={t("home.brandExperienceAlt")}
     fill
     sizes="100vw"

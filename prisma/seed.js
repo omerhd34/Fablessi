@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const { PrismaClient } = require("@prisma/client");
+const { resolveMediaUrl } = require("../lib/media/resolve-media-url.cjs");
 
 const prisma = new PrismaClient();
 
@@ -18,17 +19,7 @@ function publicImages(folder, prefix = null) {
   .filter((file) => /\.(jpe?g|png|webp)$/i.test(file))
   .filter((file) => !prefix || file.startsWith(prefix))
   .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
-  .map((file) => `/${folder}/${file}`);
-}
-
-function dims(widthCm, depthCm, heightCm) {
- return {
-  dimensions: `${widthCm} x ${depthCm} x ${heightCm} cm`,
-  widthCm,
-  depthCm,
-  heightCm,
-  dimensionItems: [{ widthCm, depthCm, heightCm }],
- };
+  .map((file) => resolveMediaUrl(`/${folder}/${file}`));
 }
 
 function dimItems(items) {
@@ -769,7 +760,7 @@ async function seedCategoryGroups() {
     slug: group.slug,
     name: labels.name,
     nameEn: labels.nameEn,
-    coverImage: group.items[0]?.image ?? null,
+    coverImage: resolveMediaUrl(group.items[0]?.image ?? null),
     sortOrder: index + 1,
     isPublished: true,
    },
