@@ -90,9 +90,8 @@ export function AdminNav() {
       </Link>
      </Button>
      <Button
-      variant="ghost"
       size="sm"
-      className="cursor-pointer gap-2 text-muted-foreground hover:text-foreground"
+      className="cursor-pointer gap-2 border-transparent bg-red-600 text-white hover:bg-red-800/90 hover:text-white"
       onClick={handleLogout}
      >
       <MdLogout className="size-4" />
