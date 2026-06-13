@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
  MdAdd,
+ MdAddCircleOutline,
  MdArticle,
  MdCategory,
  MdCollections,
@@ -9,8 +10,27 @@ import {
 } from "react-icons/md";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
 import { getAdminStats } from "@/lib/admin/queries";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
+
+const headerActions = [
+ {
+  label: "Yeni ürün",
+  href: "/admin/products/new",
+  className: "bg-neutral-900 text-white hover:bg-neutral-900/85",
+ },
+ {
+  label: "Yeni koleksiyon",
+  href: "/admin/collections/new",
+  className: "bg-neutral-500 text-white hover:bg-neutral-500/85",
+ },
+ {
+  label: "Yeni kategori",
+  href: "/admin/categories/new",
+  className: "bg-neutral-300 text-neutral-900 hover:bg-neutral-300/85",
+ },
+];
 
 const statMeta = [
  { key: "collections", label: "Koleksiyon", href: "/admin/collections", icon: MdCollections },
@@ -25,12 +45,14 @@ const quickActions = [
   description: "Kataloga yeni bir ürün, fiyat ve görsel ekleyin.",
   href: "/admin/products/new",
   cta: "Ürün oluştur",
+  icon: MdAddCircleOutline,
  },
  {
   title: "Koleksiyon yönet",
   description: "Serileri düzenleyin veya yeni koleksiyon açın.",
   href: "/admin/collections",
   cta: "Koleksiyonlar",
+  icon: MdCollections,
  },
  {
   title: "Kategori grupları",
@@ -57,18 +79,18 @@ export default async function AdminDashboardPage() {
     title="Yönetim Paneli"
     description="Koleksiyonları, ürünleri, site içeriklerini ve görselleri tek yerden yönetin."
    >
-    <Button className="cursor-pointer gap-2" asChild>
-     <Link href="/admin/products/new">
-      <MdAdd className="size-4" />
-      Yeni ürün
-     </Link>
-    </Button>
-    <Button variant="outline" className="cursor-pointer gap-2" asChild>
-     <Link href="/admin/collections/new">
-      <MdAdd className="size-4" />
-      Yeni koleksiyon
-     </Link>
-    </Button>
+    {headerActions.map((action) => (
+     <Button
+      key={action.href}
+      className={cn("cursor-pointer gap-2 border-transparent shadow-none", action.className)}
+      asChild
+     >
+      <Link href={action.href}>
+       <MdAdd className="size-4" />
+       {action.label}
+      </Link>
+     </Button>
+    ))}
    </AdminPageHeader>
 
    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -76,31 +98,38 @@ export default async function AdminDashboardPage() {
      const Icon = item.icon;
      const value = stats[item.key];
 
-     return (
+     const card = (
       <Card
-       key={item.key}
-       className="border-border/70 bg-card/90 shadow-sm transition-shadow hover:shadow-md"
+       className={cn(
+        "border-border/70 bg-card/90 shadow-sm transition-shadow",
+        item.href && "hover:border-border hover:shadow-md"
+       )}
       >
-       <CardHeader className="flex-row items-start justify-between gap-3 space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
-         {item.label}
-        </CardTitle>
-        <div className="rounded-lg bg-muted p-2 text-muted-foreground">
-         <Icon className="size-4" />
+       <CardContent className="flex items-center justify-between gap-4 p-5">
+        <div className="min-w-0 space-y-1">
+         <p className="text-sm font-medium text-muted-foreground">{item.label}</p>
+         <p className="text-3xl font-semibold tracking-tight">{value}</p>
         </div>
-       </CardHeader>
-       <CardContent className="flex min-h-10 items-end justify-between gap-3">
-        <p className="text-3xl font-semibold tracking-tight">{value}</p>
-        {item.href ? (
-         <Button variant="ghost" size="sm" className="cursor-pointer shrink-0" asChild>
-          <Link href={item.href}>Görüntüle</Link>
-         </Button>
-        ) : (
-         <span className="inline-flex h-8 shrink-0 px-3" aria-hidden />
-        )}
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">
+         <Icon className="size-5" />
+        </div>
        </CardContent>
       </Card>
      );
+
+     if (item.href) {
+      return (
+       <Link
+        key={item.key}
+        href={item.href}
+        className="block rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+       >
+        {card}
+       </Link>
+      );
+     }
+
+     return <div key={item.key}>{card}</div>;
     })}
    </div>
 
@@ -109,24 +138,24 @@ export default async function AdminDashboardPage() {
      const ActionIcon = action.icon;
 
      return (
-     <Card
-      key={action.href}
-      className="border-border/70 bg-card/90 shadow-sm transition-shadow hover:shadow-md"
-     >
-      <CardContent className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
-       <div className="space-y-1">
-        <div className="flex items-center gap-2">
-         {ActionIcon ? <ActionIcon className="size-5 text-muted-foreground" /> : null}
-         <h2 className="text-lg font-semibold tracking-tight">{action.title}</h2>
+      <Card
+       key={action.href}
+       className="border-border/70 bg-card/90 shadow-sm transition-shadow hover:shadow-md"
+      >
+       <CardContent className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="space-y-1">
+         <div className="flex items-center gap-2">
+          {ActionIcon ? <ActionIcon className="size-5 text-muted-foreground" /> : null}
+          <h2 className="text-lg font-semibold tracking-tight">{action.title}</h2>
+         </div>
+         <p className="text-sm text-muted-foreground">{action.description}</p>
         </div>
-        <p className="text-sm text-muted-foreground">{action.description}</p>
-       </div>
-       <Button variant="outline" className="cursor-pointer shrink-0" asChild>
-        <Link href={action.href}>{action.cta}</Link>
-       </Button>
-      </CardContent>
-     </Card>
-    );
+        <Button variant="outline" className="cursor-pointer shrink-0" asChild>
+         <Link href={action.href}>{action.cta}</Link>
+        </Button>
+       </CardContent>
+      </Card>
+     );
     })}
    </div>
   </div>
