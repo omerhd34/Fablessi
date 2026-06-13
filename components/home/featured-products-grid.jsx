@@ -12,8 +12,10 @@ export function FeaturedProductsGrid({ products }) {
 
  return (
   <HomeShowcaseSlider
+   id="one-cikan-urunler"
    title={t("home.featuredTitle")}
    description={t("home.featuredDescription")}
+   action={{ href: "/urunler", label: t("nav.products") }}
    itemCount={products.length}
   >
    {products.map((product, index) => (

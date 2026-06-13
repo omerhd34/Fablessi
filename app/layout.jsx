@@ -11,7 +11,7 @@ import { LocaleProvider } from "@/contexts/locale-provider";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { brandName } from "@/lib/navigation";
-import { buildOrganizationJsonLd } from "@/lib/seo/json-ld";
+import { buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/lib/seo/json-ld";
 import { siteMetadata } from "@/lib/site-metadata";
 
 const montserrat = Montserrat({
@@ -64,6 +64,7 @@ export default async function RootLayout({ children }) {
  const { locale, dictionary } = await getServerDictionary();
  const menuGroups = await getCategoryGroupsForMenu(locale);
  const organizationJsonLd = buildOrganizationJsonLd(locale);
+ const webSiteJsonLd = buildWebSiteJsonLd();
 
  return (
   <html
@@ -74,6 +75,10 @@ export default async function RootLayout({ children }) {
     <script
      type="application/ld+json"
      dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+    />
+    <script
+     type="application/ld+json"
+     dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
     />
     <LocaleProvider locale={locale} dictionary={dictionary} menuGroups={menuGroups}>
      <FavoritesProvider>

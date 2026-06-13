@@ -36,6 +36,7 @@ function HomeShowcaseNav({ direction }) {
 }
 
 export function HomeShowcaseSlider({
+ id,
  title,
  description,
  action,
@@ -48,7 +49,7 @@ export function HomeShowcaseSlider({
  }
 
  return (
-  <section className={cn("section-padding bg-white", className)}>
+  <section id={id} className={cn("section-padding bg-white", className)}>
    <div className="container-premium">
     <div className="mb-10 text-center md:mb-14">
      <h2 className="heading-display text-charcoal">{title}</h2>

@@ -11,7 +11,7 @@ import {
 
 export const revalidate = 60;
 
-export const generateMetadata = createPageMetadata("products");
+export const generateMetadata = createPageMetadata("products", { index: true });
 
 export default async function UrunlerPage({ searchParams }) {
  const params = await searchParams;
