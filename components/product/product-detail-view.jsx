@@ -55,9 +55,20 @@ export function ProductDetailView({
   }, 350);
  }, []);
 
+ const hasCategoryPanel = categoryLabel && categoryProducts.length > 0;
+ const hasCollectionPanel = collectionLabel && collectionProducts.length > 0;
+ const hasRightPanel = hasCategoryPanel || hasCollectionPanel;
+
  return (
   <>
-   <div className="flex flex-col gap-4 lg:grid lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)_minmax(0,19rem)] lg:items-start lg:gap-8 xl:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_minmax(0,21rem)] xl:gap-10">
+   <div
+    className={cn(
+     "flex flex-col gap-4 lg:grid lg:items-start lg:gap-8",
+     hasRightPanel
+      ? "lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)_minmax(0,19rem)] xl:grid-cols-[minmax(0,18rem)_minmax(0,1fr)_minmax(0,21rem)] xl:gap-10"
+      : "lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] xl:grid-cols-[minmax(0,18rem)_minmax(0,1fr)]"
+    )}
+   >
     <ProductDetailLeft
      product={product}
      categoryLabel={categoryLabel}
@@ -100,14 +111,16 @@ export function ProductDetailView({
      />
     </section>
 
-    <ProductDetailRight
-     product={product}
-     categoryLabel={categoryLabel}
-     categoryProducts={categoryProducts}
-     collectionLabel={collectionLabel}
-     collectionProducts={collectionProducts}
-     className="lg:self-start"
-    />
+    {hasRightPanel ? (
+     <ProductDetailRight
+      product={product}
+      categoryLabel={categoryLabel}
+      categoryProducts={categoryProducts}
+      collectionLabel={collectionLabel}
+      collectionProducts={collectionProducts}
+      className="lg:self-start"
+     />
+    ) : null}
    </div>
 
    <ProductImageLightbox
