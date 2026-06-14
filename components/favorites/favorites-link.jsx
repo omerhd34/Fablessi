@@ -6,6 +6,12 @@ import { useFavorites } from "@/contexts/favorites-provider";
 import { useTranslations } from "@/contexts/locale-provider";
 import { Heart, HeartFilled } from "@/lib/icons";
 import { cn } from "@/lib/utils";
+import {
+ headerIconBtnClass,
+ heroNavActiveIconBtnClass,
+ heroNavLinkOverlayClass,
+ plainIconActiveClass,
+} from "@/lib/layout/header-styles";
 
 export function FavoritesLink({ className, iconClassName }) {
  const pathname = usePathname();
@@ -18,9 +24,11 @@ export function FavoritesLink({ className, iconClassName }) {
   <Link
    href="/favoriler"
    className={cn(
-    "header-icon-btn inline-flex cursor-pointer items-center justify-center rounded-full",
+    headerIconBtnClass,
+    heroNavLinkOverlayClass,
+    "inline-flex cursor-pointer items-center justify-center rounded-full",
     !iconClassName && "size-10 lg:size-11 xl:size-12",
-    active && "header-icon-btn--active",
+    active && cn(plainIconActiveClass, heroNavActiveIconBtnClass),
     className
    )}
    aria-label={t("favorites.navLabel", { count: visibleCount })}

@@ -12,12 +12,22 @@ import {
 } from "@/components/ui/carousel";
 import { ChevronRight } from "@/lib/icons";
 import { useTranslations } from "@/contexts/locale-provider";
+import {
+ headerGlassBtnClass,
+ heroMegaMenuScrollClass,
+ heroNavLinkOverlayClass,
+ lightMegaMenuArrowClass,
+ lightMegaMenuPanelClass,
+ lightMegaMenuTitleClass,
+ lightMegaMenuViewAllClass,
+} from "@/lib/layout/header-styles";
+import { containerPremiumClass } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 
 function ProductMenuCard({ item }) {
  return (
   <Link href={item.href} className="group block">
-   <div className="products-mega-menu-card relative aspect-square overflow-hidden rounded-2xl">
+   <div className="relative aspect-square overflow-hidden rounded-2xl border border-(--glass-border) bg-(--glass-surface) shadow-[0_2px_12px_rgb(0_0_0/6%)]">
     <Image
      src={item.image}
      alt={item.label}
@@ -56,6 +66,13 @@ function handleMegaMenuWheel(event) {
  event.stopPropagation();
 }
 
+const megaMenuArrowClass = cn(
+ headerGlassBtnClass,
+ heroNavLinkOverlayClass,
+ lightMegaMenuArrowClass,
+ "products-mega-menu-arrow absolute top-1/2! z-2 -translate-y-1/2! cursor-pointer disabled:opacity-0 [&_svg]:size-5 md:[&_svg]:size-[1.375rem] [&_svg]:[stroke-width:3.5]"
+);
+
 export function ProductsMegaMenu({ open, panelRef }) {
  const { navigation, t } = useTranslations();
  const { groups } = navigation.productsMegaMenu;
@@ -93,25 +110,39 @@ export function ProductsMegaMenu({ open, panelRef }) {
    )}
    aria-hidden={!open}
   >
-   <div className="container-premium">
+   <div className={containerPremiumClass}>
     <div
      ref={panelRef}
-     className="products-mega-menu-panel overflow-hidden p-3 pr-4 md:p-5 md:pr-6"
+     className={cn(
+      "products-mega-menu-panel overflow-hidden rounded-4xl border border-(--glass-hero-border) bg-(--glass-hero-surface)! p-3 pr-4 shadow-(--glass-hero-shadow) [backdrop-filter:var(--glass-hero-blur)] [-webkit-backdrop-filter:var(--glass-hero-blur)] md:p-5 md:pr-6",
+      lightMegaMenuPanelClass
+     )}
     >
      <div
       ref={scrollRef}
-      className="products-mega-menu-scroll max-h-[min(72vh,44rem)] overflow-x-hidden overflow-y-auto overscroll-contain"
+      className={cn(
+       "products-mega-menu-scroll max-h-[min(72vh,44rem)] overflow-x-hidden overflow-y-auto overscroll-contain pe-1 [scrollbar-color:oklch(0.62_0.01_260/0.38)_transparent] scrollbar-thin hover:[&::-webkit-scrollbar-thumb]:bg-charcoal/48 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-charcoal/32 [&::-webkit-scrollbar-track]:my-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:w-1",
+       heroMegaMenuScrollClass
+      )}
      >
       <div className="space-y-6">
        {groups.map((group) => (
         <section key={group.slug} aria-label={group.label}>
          <div className="mb-3 flex items-center justify-between gap-3 px-1">
-          <h3 className="products-mega-menu-section-title">
+          <h3
+           className={cn(
+            "products-mega-menu-section-title text-sm font-bold tracking-[-0.01em] text-white/96 [text-shadow:0_1px_10px_oklch(0_0_0/45%)] md:text-base",
+            lightMegaMenuTitleClass
+           )}
+          >
            {group.label}
           </h3>
           <Link
            href={group.href}
-           className="products-mega-menu-view-all"
+           className={cn(
+            "products-mega-menu-view-all inline-flex shrink-0 origin-right items-center gap-0.5 text-[0.8125rem] font-semibold text-white/92 transition-[color,transform] duration-200 [text-shadow:0_1px_8px_oklch(0_0_0/40%)] hover:scale-110 hover:text-white",
+            lightMegaMenuViewAllClass
+           )}
           >
            {t("categories.viewAll")}
            <ChevronRight className="size-3.5 shrink-0" aria-hidden />
@@ -141,11 +172,11 @@ export function ProductsMegaMenu({ open, panelRef }) {
            <>
             <CarouselPrevious
              variant="ghost"
-             className="header-glass-btn products-mega-menu-arrow products-mega-menu-arrow--prev size-9 cursor-pointer disabled:opacity-0 md:size-10"
+             className={cn(megaMenuArrowClass, "products-mega-menu-arrow--prev left-1! right-auto! size-9 md:left-2! md:size-10")}
             />
             <CarouselNext
              variant="ghost"
-             className="header-glass-btn products-mega-menu-arrow products-mega-menu-arrow--next size-9 cursor-pointer disabled:opacity-0 md:size-10"
+             className={cn(megaMenuArrowClass, "products-mega-menu-arrow--next right-1! left-auto! size-9 md:right-2! md:size-10")}
             />
            </>
           ) : null}

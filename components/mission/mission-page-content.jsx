@@ -4,6 +4,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { DynamicReactIcon } from "@/components/ui/dynamic-react-icon";
 import { useTranslations } from "@/contexts/locale-provider";
+import {
+ missionCtaClass,
+ missionIntroClass,
+ missionStatementClass,
+ missionStatementsClass,
+ missionValueClass,
+ missionValueIconClass,
+ missionVisualImageClass,
+} from "@/lib/layout/page-styles";
+import {
+ containerPremiumClass,
+ sectionPaddingSmClass,
+} from "@/lib/layout/shared-styles";
+import { cn } from "@/lib/utils";
 
 export function MissionPageContent() {
  const { dictionary } = useTranslations();
@@ -11,18 +25,18 @@ export function MissionPageContent() {
 
  return (
   <>
-   <section className="mission-intro pb-12 md:pb-14">
-    <div className="container-premium">
+   <section className={cn("mission-intro pb-12 md:pb-14", missionIntroClass)}>
+    <div className={containerPremiumClass}>
      <p className="mx-auto max-w-2xl text-center font-body text-sm leading-relaxed text-charcoal/75 md:text-[0.95rem]">
       {missionVision.intro}
      </p>
     </div>
    </section>
 
-   <section className="mission-statements section-padding-sm">
-    <div className="container-premium">
+   <section className={cn("mission-statements", sectionPaddingSmClass, missionStatementsClass)}>
+    <div className={containerPremiumClass}>
      <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
-      <article className="mission-statement rounded-2xl px-7 py-9 md:px-9 md:py-10">
+      <article className={cn("mission-statement rounded-2xl px-7 py-9 md:px-9 md:py-10", missionStatementClass)}>
        <h2 className="font-display text-[clamp(1rem,2.2vw,1.35rem)] font-normal tracking-[0.32em] text-charcoal uppercase">
         {missionVision.missionTitle}
        </h2>
@@ -31,7 +45,7 @@ export function MissionPageContent() {
        </p>
       </article>
 
-      <article className="mission-statement rounded-2xl px-7 py-9 md:px-9 md:py-10">
+      <article className={cn("mission-statement rounded-2xl px-7 py-9 md:px-9 md:py-10", missionStatementClass)}>
        <h2 className="font-display text-[clamp(1rem,2.2vw,1.35rem)] font-normal tracking-[0.32em] text-charcoal uppercase">
         {missionVision.visionTitle}
        </h2>
@@ -44,11 +58,11 @@ export function MissionPageContent() {
    </section>
 
    <section
-    className="mission-visual section-padding-sm"
+    className={cn("mission-visual", sectionPaddingSmClass)}
     aria-hidden
    >
-    <div className="container-premium">
-     <div className="mission-visual__image relative aspect-16/9 overflow-hidden rounded-2xl sm:aspect-21/9">
+    <div className={containerPremiumClass}>
+     <div className={cn("relative aspect-16/9 overflow-hidden rounded-2xl sm:aspect-21/9", missionVisualImageClass)}>
       <Image
        src="https://res.cloudinary.com/dbo6puh1c/image/upload/v1781205876/fablessi/velar-oturma/01.jpg"
        alt=""
@@ -61,10 +75,10 @@ export function MissionPageContent() {
    </section>
 
    <section
-    className="mission-values section-padding-sm"
+    className={cn("mission-values", sectionPaddingSmClass)}
     aria-labelledby="mission-values-heading"
    >
-    <div className="container-premium">
+    <div className={containerPremiumClass}>
      <h2
       id="mission-values-heading"
       className="text-center font-display text-[clamp(1rem,2.2vw,1.35rem)] font-normal tracking-[0.32em] text-charcoal uppercase"
@@ -76,9 +90,9 @@ export function MissionPageContent() {
       {missionVision.values.map((value) => (
        <article
         key={value.title}
-        className="mission-value rounded-2xl px-6 py-8 text-center"
+        className={cn("mission-value rounded-2xl px-6 py-8 text-center", missionValueClass)}
        >
-        <div className="mission-value__icon mx-auto" aria-hidden>
+        <div className={cn("mx-auto", missionValueIconClass)} aria-hidden>
          <DynamicReactIcon
           name={value.icon}
           className="size-6 text-charcoal/70"
@@ -100,7 +114,7 @@ export function MissionPageContent() {
     className="mission-commitments pb-16 md:pb-20"
     aria-labelledby="mission-commitments-heading"
    >
-    <div className="container-premium">
+    <div className={containerPremiumClass}>
      <div className="mx-auto max-w-2xl text-center">
       <h2
        id="mission-commitments-heading"
@@ -122,8 +136,8 @@ export function MissionPageContent() {
     </div>
    </section>
 
-   <section className="container-premium pb-20 md:pb-28">
-    <div className="mission-cta rounded-2xl px-6 py-10 text-center text-white md:px-10 md:py-12">
+   <section className={cn(containerPremiumClass, "pb-20 md:pb-28")}>
+    <div className={cn("mission-cta rounded-2xl px-6 py-10 text-center text-white md:px-10 md:py-12", missionCtaClass)}>
      <h2 className="font-display text-[clamp(1rem,2.2vw,1.35rem)] font-normal tracking-[0.28em] uppercase">
       {missionVision.ctaTitle}
      </h2>

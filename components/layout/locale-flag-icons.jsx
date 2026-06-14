@@ -18,7 +18,10 @@ export function LocaleFlagIcon({ locale, className, variant = "menu" }) {
     width={22}
     height={22}
     unoptimized
-    className={cn("locale-switcher-btn__flag", className)}
+    className={cn(
+     "size-[1.375rem] rounded-full object-cover lg:size-[1.45rem]",
+     className
+    )}
     aria-hidden
    />
   );
@@ -31,7 +34,7 @@ export function LocaleFlagIcon({ locale, className, variant = "menu" }) {
    width={24}
    height={24}
    unoptimized
-   className={cn("locale-flag-icon", className)}
+   className={cn("locale-flag-icon size-6 shrink-0 rounded-full object-cover", className)}
    aria-hidden
   />
  );

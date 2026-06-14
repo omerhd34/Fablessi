@@ -1,4 +1,3 @@
-import "./page.css";
 import { MissionHero } from "@/components/mission/mission-hero";
 import { MissionPageContent } from "@/components/mission/mission-page-content";
 import { createPageMetadata } from "@/lib/i18n/page-metadata";

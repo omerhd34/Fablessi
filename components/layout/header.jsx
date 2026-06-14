@@ -79,7 +79,7 @@ export function Header() {
   const updateHeroOverlay = () => {
    const hero = document.querySelector(HERO_SELECTORS);
    if (!hero) {
-    setHeroOverlay(undefined);
+    setHeroOverlay(false);
     return;
    }
    setHeroOverlay(isLogoOverHero());
@@ -113,6 +113,11 @@ export function Header() {
  }, [pathname]);
 
  useEffect(() => {
+  document.documentElement.style.setProperty(
+   "--search-bar-height",
+   searchOpen ? "4.75rem" : "0rem"
+  );
+
   if (searchOpen) {
    document.documentElement.dataset.searchOpen = "true";
   } else {
@@ -120,6 +125,7 @@ export function Header() {
   }
 
   return () => {
+   document.documentElement.style.setProperty("--search-bar-height", "0rem");
    delete document.documentElement.dataset.searchOpen;
   };
  }, [searchOpen]);
@@ -140,15 +146,13 @@ export function Header() {
  return (
   <header
    data-home={isHome ? "true" : "false"}
-   data-hero-overlay={
-    heroOverlay === undefined ? undefined : heroOverlay ? "true" : "false"
-   }
+   data-hero-overlay={heroOverlay ? "true" : "false"}
    data-search-open={searchOpen ? "true" : "false"}
    data-menu-open={productsMenuOpen || menuOpen || searchOpen ? "true" : "false"}
    data-hidden={headerHidden ? "true" : "false"}
    className={cn(
-    "site-header fixed inset-x-0 top-0 transition-[transform,opacity] duration-300 ease-out",
-    headerHidden && "-translate-y-full opacity-0 pointer-events-none"
+    "site-header group/header pointer-events-none fixed inset-x-0 top-0 z-50 bg-transparent transition-[transform,opacity] duration-300 ease-out [&_.header-search-shell]:pointer-events-auto [&_.products-mega-menu-root[data-open=true]_.products-mega-menu-panel]:pointer-events-auto **:[[role=search]]:pointer-events-auto [&_a]:pointer-events-auto [&_button]:pointer-events-auto [&_form]:pointer-events-auto [&_input]:pointer-events-auto",
+    headerHidden && "pointer-events-none -translate-y-full opacity-0"
    )}
   >
    <Navbar

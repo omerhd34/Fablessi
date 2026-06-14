@@ -7,6 +7,8 @@ import { ProductsCategoryCarousel } from "@/components/catalog/products-category
 import { useLocale } from "@/contexts/locale-provider";
 import { getLocalizedCollectionName } from "@/lib/i18n/display-names";
 import { getProductDisplayPrice } from "@/lib/product-utils";
+import { headingDisplayClass } from "@/lib/layout/shared-styles";
+import { cn } from "@/lib/utils";
 
 function compareByPrice(a, b, ascending) {
  const priceA = getProductDisplayPrice(a);
@@ -64,7 +66,7 @@ export function ProductsCatalogShell({
  return (
   <div className="space-y-6 md:space-y-8">
    <div>
-    <h1 className="heading-display text-charcoal">
+    <h1 className={cn(headingDisplayClass, "text-charcoal")}>
      {activeCollection
       ? getLocalizedCollectionName(activeCollection, dictionary) ??
       activeCollection.name

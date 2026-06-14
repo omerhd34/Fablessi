@@ -10,6 +10,8 @@ import {
  getProductCardBottomLabel,
  getProductDisplayPrice,
 } from "@/lib/product-utils";
+import { productCardKalifClass } from "@/lib/layout/shared-styles";
+import { catalogProductCardClass } from "@/lib/layout/product-styles";
 import { cn } from "@/lib/utils";
 
 export function ProductCard({
@@ -34,8 +36,11 @@ export function ProductCard({
   <article className={cn("group/card", className)}>
    <div
     className={cn(
-     "product-card-kalif relative overflow-hidden",
-     isCatalog ? "product-card-kalif--catalog aspect-5/4 rounded-3xl" : "aspect-4/5"
+     productCardKalifClass,
+     "group/card relative",
+     isCatalog
+      ? cn("product-card-kalif--catalog aspect-5/4 rounded-3xl", catalogProductCardClass)
+      : "aspect-4/5"
     )}
    >
     <Link

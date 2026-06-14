@@ -1,4 +1,3 @@
-import "./page.css";
 import { AboutHero } from "@/components/about/about-hero";
 import { AboutPageContent } from "@/components/about/about-page-content";
 import { createPageMetadata } from "@/lib/i18n/page-metadata";

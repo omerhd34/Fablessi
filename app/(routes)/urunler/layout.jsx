@@ -1,4 +1,3 @@
-import "./urunler.css";
 import { createPageMetadata } from "@/lib/i18n/page-metadata";
 
 export const generateMetadata = createPageMetadata("products", {

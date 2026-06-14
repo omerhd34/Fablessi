@@ -5,11 +5,13 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { TbArrowUp, TbBrandWhatsapp, TbPhone } from "react-icons/tb";
 import { useTranslations } from "@/contexts/locale-provider";
+import {
+ contactFloatBtnClass,
+ contactFloatIconClass,
+} from "@/lib/layout/header-styles";
 import { getWhatsAppHref, sitePhoneHref } from "@/lib/site-contact";
+
 const FLOAT_ICON_STROKE = 3;
-const FLOAT_BUTTON_CLASS =
- "contact-float-btn header-icon-btn shrink-0 cursor-pointer";
-const FLOAT_ICON_CLASS = "contact-float-btn__icon";
 
 function getScrollThreshold() {
  const hero = document.querySelector(".hero-carousel");
@@ -44,17 +46,17 @@ export function ContactFloat() {
  if (!whatsAppHref && !phoneHref) return null;
 
  return (
-  <div className="contact-float pointer-events-none fixed z-50">
-   <div className="contact-float__stack pointer-events-auto">
+  <div className="pointer-events-none fixed inset-x-auto right-5 bottom-[max(1.25rem,env(safe-area-inset-bottom))] z-50">
+   <div className="pointer-events-auto flex flex-col items-center gap-3">
     {showBackToTop ? (
      <button
       type="button"
       onClick={scrollToTop}
-      className={FLOAT_BUTTON_CLASS}
+      className={contactFloatBtnClass}
       aria-label={t("contact.backToTop")}
      >
       <TbArrowUp
-       className={FLOAT_ICON_CLASS}
+       className={contactFloatIconClass}
        strokeWidth={FLOAT_ICON_STROKE}
        aria-hidden
       />
@@ -63,11 +65,11 @@ export function ContactFloat() {
     {phoneHref ? (
      <Link
       href={phoneHref}
-      className={FLOAT_BUTTON_CLASS}
+      className={contactFloatBtnClass}
       aria-label={t("contact.call")}
      >
       <TbPhone
-       className={FLOAT_ICON_CLASS}
+       className={contactFloatIconClass}
        strokeWidth={FLOAT_ICON_STROKE}
        aria-hidden
       />
@@ -78,11 +80,11 @@ export function ContactFloat() {
       href={whatsAppHref}
       target="_blank"
       rel="noopener noreferrer"
-      className={FLOAT_BUTTON_CLASS}
+      className={contactFloatBtnClass}
       aria-label={t("contact.whatsapp")}
      >
       <TbBrandWhatsapp
-       className={FLOAT_ICON_CLASS}
+       className={contactFloatIconClass}
        strokeWidth={FLOAT_ICON_STROKE}
        aria-hidden
       />

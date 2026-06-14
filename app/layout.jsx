@@ -1,7 +1,5 @@
 import { Montserrat, Poppins } from "next/font/google";
 import "@/app/styles/base.css";
-import "@/app/styles/layout.css";
-import "@/app/styles/shared.css";
 import { MainShell } from "@/components/layout/main-shell";
 import { SiteChrome } from "@/components/layout/site-chrome";
 import { Toaster } from "@/components/ui/sonner";

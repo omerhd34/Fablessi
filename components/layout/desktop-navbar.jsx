@@ -11,6 +11,20 @@ import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 import { ProductsMegaMenu } from "@/components/layout/products-mega-menu";
 import { useTranslations } from "@/contexts/locale-provider";
 import { useIsDesktopNav } from "@/hooks/use-is-desktop-nav";
+import {
+ headerIconBtnClass,
+ headerPillClass,
+ headerPillDividerClass,
+ headerPillLinkClass,
+ heroNavActiveIconBtnClass,
+ heroNavActiveLinkOverlayClass,
+ heroNavDividerOverlayClass,
+ heroNavIconColorOverlayClass,
+ heroNavLinkOverlayClass,
+ heroNavPillOverlayClass,
+ plainIconActiveClass,
+} from "@/lib/layout/header-styles";
+import { containerPremiumClass } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 
 const desktopNavIconMap = {
@@ -20,6 +34,12 @@ const desktopNavIconMap = {
  stores: MapPin,
  contact: SupportAgent,
 };
+
+const navDesktopLinkClass =
+ "nav-desktop-link inline-flex items-center gap-[0.4375rem] px-3 py-2 text-sm font-medium whitespace-nowrap transition-[opacity,color] duration-200 xl:gap-2 xl:px-[1.125rem] xl:py-2.5 xl:text-base";
+
+const navDesktopLinkIconClass =
+ "nav-desktop-link__icon size-[1.0625rem] shrink-0 text-charcoal/60 xl:size-[1.125rem]";
 
 function DesktopNavItem({
  item,
@@ -41,17 +61,30 @@ function DesktopNavItem({
  const iconOnly = Boolean(item.iconOnly);
  const className = cn(
   iconOnly
-   ? "header-icon-btn size-10 cursor-pointer rounded-full lg:size-11 xl:size-12"
-   : "nav-desktop-link header-pill-link",
+   ? cn(
+      headerIconBtnClass,
+      heroNavLinkOverlayClass,
+      "size-10 cursor-pointer rounded-full lg:size-11 xl:size-12"
+     )
+   : cn(navDesktopLinkClass, headerPillLinkClass, heroNavLinkOverlayClass),
   iconOnly
-   ? active && "header-icon-btn--active"
-   : active && "nav-desktop-link--active"
+   ? active && cn(plainIconActiveClass, heroNavActiveIconBtnClass)
+   : active &&
+      cn(
+       "nav-desktop-link--active font-semibold text-charcoal/90",
+       heroNavActiveLinkOverlayClass
+      )
  );
  const content = (
   <>
    {Icon ? (
     <Icon
-     className={iconOnly ? "size-[1.45rem]" : "nav-desktop-link__icon"}
+     className={cn(
+      iconOnly ? "size-[1.45rem]" : navDesktopLinkIconClass,
+      heroNavIconColorOverlayClass,
+      active && !iconOnly && "text-charcoal/75",
+      active && !iconOnly && heroNavActiveLinkOverlayClass
+     )}
      aria-hidden
     />
    ) : null}
@@ -61,7 +94,16 @@ function DesktopNavItem({
 
  return (
   <>
-   {showDivider ? <span className="header-pill-divider" aria-hidden /> : null}
+   {showDivider ? (
+    <span
+     className={cn(
+      headerPillDividerClass,
+      "nav-desktop-pill-divider mx-2",
+      heroNavDividerOverlayClass
+     )}
+     aria-hidden
+    />
+   ) : null}
    {isProducts ? (
     <button
      ref={productsButtonRef}
@@ -129,14 +171,18 @@ export function DesktopNavbar({
  if (!isDesktopNav) return null;
 
  return (
-  <div className="nav-desktop relative" aria-label={t("nav.desktopMenu")}>
-   <div className="container-premium nav-desktop-bar ">
-    <div className="nav-desktop-bar__logo">
+  <div className="relative hidden lg:block" aria-label={t("nav.desktopMenu")}>
+   <div className={cn(containerPremiumClass, "flex min-h-24 items-center justify-between gap-4 xl:gap-8")}>
+    <div className="block h-fit w-fit flex-none self-center p-0 leading-none [&_.brand-logo-image]:h-12! xl:[&_.brand-logo-image]:!h-[3.25rem]">
      <BrandLogoLink size="xl" />
     </div>
 
     <nav
-     className="header-pill nav-desktop-pill"
+     className={cn(
+      headerPillClass,
+      heroNavPillOverlayClass,
+      "nav-desktop-pill ml-auto inline-flex h-12 w-fit max-w-[min(100%,42rem)] shrink-0 items-center overflow-x-auto px-1.5 scrollbar-none xl:h-[3.35rem] xl:px-2 [&::-webkit-scrollbar]:hidden"
+     )}
      aria-label={t("nav.mainNav")}
     >
      {primaryNavItems.map((item, index) => (
@@ -152,14 +198,23 @@ export function DesktopNavbar({
       />
      ))}
 
-     <span className="header-pill-divider" aria-hidden />
+     <span
+     className={cn(
+      headerPillDividerClass,
+      "nav-desktop-pill-divider mx-2",
+      heroNavDividerOverlayClass
+     )}
+     aria-hidden
+    />
 
      <button
       type="button"
       onClick={onSearchToggle}
       className={cn(
-       "header-icon-btn size-10 cursor-pointer rounded-full lg:size-11 xl:size-12",
-       searchOpen && "header-icon-btn--active"
+       headerIconBtnClass,
+       heroNavLinkOverlayClass,
+       "size-10 cursor-pointer rounded-full lg:size-11 xl:size-12",
+       searchOpen && cn(plainIconActiveClass, heroNavActiveIconBtnClass)
       )}
       aria-label={t("common.search")}
       aria-expanded={searchOpen}
@@ -167,11 +222,25 @@ export function DesktopNavbar({
       <Search className="size-[1.45rem]" />
      </button>
 
-     <span className="header-pill-divider" aria-hidden />
+     <span
+     className={cn(
+      headerPillDividerClass,
+      "nav-desktop-pill-divider mx-2",
+      heroNavDividerOverlayClass
+     )}
+     aria-hidden
+    />
 
      <FavoritesLink />
 
-     <span className="header-pill-divider" aria-hidden />
+     <span
+     className={cn(
+      headerPillDividerClass,
+      "nav-desktop-pill-divider mx-2",
+      heroNavDividerOverlayClass
+     )}
+     aria-hidden
+    />
 
      <LocaleSwitcher />
     </nav>

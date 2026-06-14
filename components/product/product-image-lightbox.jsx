@@ -6,6 +6,16 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import { useLocale } from "@/contexts/locale-provider";
 import { ChevronLeft, ChevronRight, Loader2Icon, X } from "@/lib/icons";
+import {
+ lightboxFlipEnterNextClass,
+ lightboxFlipEnterPrevClass,
+ lightboxFlipExitNextClass,
+ lightboxFlipExitPrevClass,
+ lightboxImageFrameClass,
+ lightboxSlideLayerClass,
+ lightboxSlideOpenClass,
+ lightboxStageClass,
+} from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 
 const SWIPE_THRESHOLD = 48;
@@ -13,7 +23,7 @@ const SLIDE_DURATION_MS = 750;
 
 function LightboxImage({ image, alt }) {
  return (
-  <div className="lightbox-image-frame relative h-full w-full overflow-hidden">
+  <div className={lightboxImageFrameClass}>
    <Image
     src={image.url}
     alt={alt}
@@ -44,7 +54,7 @@ function LightboxControlButton({
    className={cn(
     "flex items-center justify-center rounded-full backdrop-blur-md transition duration-200 focus-visible:outline-none focus-visible:ring-2",
     isInactive
-     ? "lightbox-nav-btn--waiting scale-95 opacity-80"
+     ? "cursor-default scale-95 opacity-80"
      : "cursor-pointer opacity-100 active:scale-95",
     variant === "glass" &&
     "border border-white/15 bg-white/10 text-white shadow-[0_8px_32px_rgb(0_0_0/24%)] hover:border-white/25 hover:bg-white/18 focus-visible:ring-white/40",
@@ -60,11 +70,11 @@ function LightboxControlButton({
 }
 
 function getEnterClass(direction) {
- return direction === 1 ? "lightbox-flip-enter-next" : "lightbox-flip-enter-prev";
+ return direction === 1 ? lightboxFlipEnterNextClass : lightboxFlipEnterPrevClass;
 }
 
 function getExitClass(direction) {
- return direction === 1 ? "lightbox-flip-exit-next" : "lightbox-flip-exit-prev";
+ return direction === 1 ? lightboxFlipExitNextClass : lightboxFlipExitPrevClass;
 }
 
 export function ProductImageLightbox({
@@ -221,7 +231,7 @@ export function ProductImageLightbox({
   >
    <div className="absolute inset-0 flex h-full w-full items-center justify-center px-14 pt-14 pb-4 md:px-20 md:pt-16 lg:px-24 lg:pt-20 lg:pb-8">
     <div
-     className="lightbox-stage relative h-full w-full max-w-7xl overflow-hidden"
+     className={lightboxStageClass}
      onClick={(event) => event.stopPropagation()}
      onTouchStart={handleTouchStart}
      onTouchEnd={handleTouchEnd}
@@ -230,7 +240,8 @@ export function ProductImageLightbox({
       <div
        key={`exit-${transition.from}-${visibleIndex}`}
        className={cn(
-        "lightbox-slide-layer pointer-events-none",
+        lightboxSlideLayerClass,
+        "pointer-events-none z-1",
         getExitClass(transition.direction)
        )}
       >
@@ -246,11 +257,12 @@ export function ProductImageLightbox({
      <div
       key={`active-${visibleIndex}`}
       className={cn(
-       "lightbox-slide-layer",
+       lightboxSlideLayerClass,
+       "z-2",
        transition
-        ? getEnterClass(transition.direction)
+        ? cn(getEnterClass(transition.direction), "z-2")
         : showOpenAnimation
-         ? "lightbox-slide-open"
+         ? lightboxSlideOpenClass
          : null
       )}
      >

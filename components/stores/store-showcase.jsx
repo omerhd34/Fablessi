@@ -6,6 +6,13 @@ import { FaLocationArrow, FaWhatsapp, Mail, Phone } from "@/lib/icons";
 import { getWhatsAppHref, socialLinks } from "@/lib/site-contact";
 import { useMemo } from "react";
 import { useTranslations } from "@/contexts/locale-provider";
+import {
+ storeMapClass,
+ storeMapEmbedClass,
+ storeShowcaseGridClass,
+ storeShowcaseInfoClass,
+} from "@/lib/layout/page-styles";
+import { cn } from "@/lib/utils";
 import { brandFullNameUppercase } from "@/lib/navigation";
 import { getFlagshipStore } from "@/lib/stores";
 
@@ -44,8 +51,8 @@ export function StoreShowcase() {
     </h1>
    </div>
 
-   <div className="store-showcase-grid grid gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12">
-    <div className="store-showcase-info flex min-w-0 flex-col lg:h-full">
+   <div className={cn("grid gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12", storeShowcaseGridClass)}>
+    <div className={cn("flex min-w-0 flex-col", storeShowcaseInfoClass)}>
      <div className="flex flex-1 flex-col text-sm leading-relaxed text-charcoal/85 md:text-[0.95rem]">
       <div className="space-y-4">
       <h2 className="font-display text-base font-semibold tracking-[0.18em] text-charcoal md:text-lg">
@@ -123,11 +130,11 @@ export function StoreShowcase() {
      </div>
     </div>
 
-    <div className="store-map">
+    <div className={storeMapClass}>
      <iframe
       title={t("contact.mapLocation", { name: store.name })}
       src={store.mapEmbedUrl}
-      className="store-map__embed"
+      className={storeMapEmbedClass}
       loading="lazy"
       referrerPolicy="no-referrer-when-downgrade"
       allowFullScreen

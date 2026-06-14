@@ -1,5 +1,8 @@
 "use client";
 
+import { legalSectionClass } from "@/lib/layout/page-styles";
+import { cn } from "@/lib/utils";
+
 const headingClassByLevel = {
  2: "font-display text-[0.875rem] font-semibold tracking-[0.26em] text-charcoal uppercase md:text-base",
  3: "mt-6 font-display text-[0.8125rem] font-semibold tracking-[0.22em] text-charcoal uppercase md:text-[0.95rem]",
@@ -15,7 +18,7 @@ const listClassName =
 export function LegalSection({ section, contentKey, level = 2 }) {
  const HeadingTag = level === 2 ? "h2" : level === 3 ? "h3" : "h4";
  const sectionClassName =
-  level === 2 ? "legal-page__section" : "legal-page__subsection";
+  level === 2 ? legalSectionClass : "mt-8";
 
  return (
   <section

@@ -4,7 +4,14 @@ import { FavoritesMobileControls } from "@/components/favorites/favorites-mobile
 import { ProductsSortMenu } from "@/components/catalog/products-sort-menu";
 import { useTranslations } from "@/contexts/locale-provider";
 import { getFavoritesSortOptions } from "@/lib/i18n/catalog";
+import {
+ catalogSearchFieldClass,
+ catalogSearchIconClass,
+ catalogSearchInputClass,
+ catalogSearchPillClass,
+} from "@/lib/layout/header-styles";
 import { Search } from "@/lib/icons";
+import { cn } from "@/lib/utils";
 
 export function FavoritesToolbar({
  search,
@@ -43,18 +50,18 @@ export function FavoritesToolbar({
     <form
      role="search"
      onSubmit={(event) => event.preventDefault()}
-     className="header-search-pill flex-1"
+     className={cn(catalogSearchPillClass, "flex-1")}
     >
-     <div className="header-search-pill__field">
+     <div className={catalogSearchFieldClass}>
       <input
        type="search"
        value={search}
        onChange={(event) => onSearchChange(event.target.value)}
        placeholder={t("favorites.searchPlaceholder")}
-       className="header-search-pill__input"
+       className={catalogSearchInputClass}
        aria-label={t("favorites.search")}
       />
-      <Search className="header-search-pill__icon" aria-hidden />
+      <Search className={catalogSearchIconClass} aria-hidden />
      </div>
     </form>
 

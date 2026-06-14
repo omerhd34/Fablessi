@@ -21,6 +21,11 @@ import {
 import { useFavorites } from "@/contexts/favorites-provider";
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 import { MobileProductsCategoryGrid } from "@/components/layout/mobile-products-category-grid";
+import {
+ mobileNavSheetClosedClass,
+ mobileNavSheetOpenClass,
+ mobileNavSheetOverlayClass,
+} from "@/lib/layout/header-styles";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "@/contexts/locale-provider";
 import { brandName } from "@/lib/navigation";
@@ -44,6 +49,18 @@ const mobileNavIconMap = {
  contact: SupportAgent,
 };
 
+const mobileNavSheetClass =
+ "mobile-nav-sheet top-3.5! bottom-3.5! left-3.5! h-auto! w-[min(21.5rem,calc(100vw-1.75rem))]! max-w-[21.5rem]! gap-0! rounded-4xl border border-[var(--glass-hero-border)]! bg-[var(--glass-hero-surface)]! text-white/94 shadow-[var(--glass-hero-shadow)]! transition-none! sm:top-5! sm:bottom-5! sm:left-5! sm:w-[min(25.5rem,calc(100vw-2.5rem))]! sm:max-w-[25.5rem] sm:rounded-[2.25rem] [backdrop-filter:var(--glass-hero-blur)] [-webkit-backdrop-filter:var(--glass-hero-blur)]";
+
+const mobileNavScrollClass =
+ "mobile-nav-sheet__scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 [scrollbar-color:oklch(1_0_0/42%)_transparent] [scrollbar-width:thin] hover:[&::-webkit-scrollbar-thumb]:bg-white/55 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/38 [&::-webkit-scrollbar-track]:my-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:w-1 [@media(hover:hover)_and_(pointer:fine)]:pr-3";
+
+const mobileNavLinkClass =
+ "flex min-h-14 cursor-pointer items-center gap-3 px-0 py-4 text-[0.9375rem] font-medium text-white/92 transition-colors duration-200 hover:text-white";
+
+const mobileNavIconClass =
+ "size-5 shrink-0 text-white/68 transition-colors duration-200 group-hover:text-white/88";
+
 export function MobileMenuDrawer({ pathname, onClose }) {
  const [productsViewOpen, setProductsViewOpen] = useState(false);
  const { navigation, t } = useTranslations();
@@ -54,7 +71,13 @@ export function MobileMenuDrawer({ pathname, onClose }) {
   <SheetContent
    side="left"
    showCloseButton={false}
-   className="mobile-nav-sheet flex flex-col bg-transparent! p-0 data-open:animate-none data-closed:animate-none"
+   overlayClassName={mobileNavSheetOverlayClass}
+   className={cn(
+    mobileNavSheetClass,
+    mobileNavSheetOpenClass,
+    mobileNavSheetClosedClass,
+    "mobile-nav-sheet flex flex-col bg-transparent! p-0 data-open:animate-none data-closed:animate-none"
+   )}
   >
    <SheetHeader className="sr-only">
     <SheetTitle>
@@ -68,14 +91,10 @@ export function MobileMenuDrawer({ pathname, onClose }) {
     <SheetClose asChild>
      <button
       type="button"
-      className="mobile-nav-sheet__close -mr-1.5 flex size-10 cursor-pointer items-center justify-center rounded-full"
+      className="-mr-1.5 flex size-10 cursor-pointer items-center justify-center rounded-full text-white/82 transition-[color,background-color] duration-200 hover:bg-white/12 hover:text-white focus-visible:shadow-[0_0_0_2px_oklch(1_0_0/28%)] focus-visible:outline-none"
       aria-label={t("nav.closeMenu")}
      >
-      <CloseIcon
-       className="mobile-nav-sheet__close-icon size-5 shrink-0"
-       strokeWidth={3.25}
-       aria-hidden
-      />
+      <CloseIcon className="size-5 shrink-0" strokeWidth={3.25} aria-hidden />
      </button>
     </SheetClose>
    </div>
@@ -85,15 +104,15 @@ export function MobileMenuDrawer({ pathname, onClose }) {
      <button
       type="button"
       onClick={() => setProductsViewOpen(false)}
-      className="mobile-nav-sheet__back mx-5 mb-4 flex cursor-pointer items-center gap-2 border-b pb-4 text-left"
+      className="group mx-5 mb-4 flex cursor-pointer items-center gap-2 border-b border-white/18 pb-4 text-left text-[1.0625rem] font-semibold text-white/94 transition-colors duration-200 hover:text-white"
      >
-      <ChevronLeft className="mobile-nav-sheet__icon size-5 shrink-0" aria-hidden />
-      <ViewModule className="mobile-nav-sheet__icon size-5 shrink-0" aria-hidden />
+      <ChevronLeft className={mobileNavIconClass} aria-hidden />
+      <ViewModule className={mobileNavIconClass} aria-hidden />
       {t("nav.products")}
      </button>
 
-     <div className="mobile-nav-sheet__scroll min-h-0 flex-1 overflow-y-auto overscroll-contain">
-      <div className="mobile-nav-sheet__scroll-inner">
+     <div className={mobileNavScrollClass}>
+      <div className="px-0">
        <MobileProductsCategoryGrid onClose={onClose} />
       </div>
      </div>
@@ -101,10 +120,10 @@ export function MobileMenuDrawer({ pathname, onClose }) {
    ) : (
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
      <nav
-      className="mobile-nav-sheet__scroll flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain"
+      className={cn(mobileNavScrollClass, "flex min-h-0 flex-1 flex-col")}
       aria-label={t("nav.mainNav")}
      >
-      <ul className="mobile-nav-sheet__scroll-inner flex flex-col">
+      <ul className="flex flex-col px-0">
        {mobileNavItems.map((item) =>
         item.href === "/favoriler" ? (
          <MobileDrawerFavoritesItem
@@ -127,7 +146,7 @@ export function MobileMenuDrawer({ pathname, onClose }) {
       </ul>
      </nav>
 
-     <div className="mobile-nav-sheet__footer shrink-0 border-t px-5 py-4">
+     <div className="mobile-nav-sheet__footer shrink-0 border-t border-white/18 px-5 py-4">
       <LocaleSwitcher variant="mobile" />
      </div>
     </div>
@@ -143,21 +162,22 @@ function MobileDrawerFavoritesItem({ pathname, onClose, t }) {
  const visibleCount = hydrated ? count : 0;
 
  return (
-  <li className="mobile-nav-item border-b last:border-b-0">
+  <li className="mobile-nav-item border-b border-white/18 last:border-b-0">
    <Link
     href="/favoriler"
     onClick={onClose}
     className={cn(
-     "mobile-nav-sheet__link flex min-h-14 cursor-pointer items-center gap-3 px-0 py-4 text-[0.9375rem] font-medium",
-     active && "mobile-nav-sheet__link--active"
+     mobileNavLinkClass,
+     "group",
+     active && "font-semibold text-white"
     )}
     aria-label={t("favorites.navLabel", { count: visibleCount })}
     aria-current={active ? "page" : undefined}
    >
     {visibleCount > 0 ? (
-     <HeartFilled className="mobile-nav-sheet__icon size-5 shrink-0" aria-hidden />
+     <HeartFilled className={mobileNavIconClass} aria-hidden />
     ) : (
-     <Heart className="mobile-nav-sheet__icon size-5 shrink-0" aria-hidden />
+     <Heart className={mobileNavIconClass} aria-hidden />
     )}
     <span className="flex-1">{t("nav.favorites")}</span>
    </Link>
@@ -181,22 +201,21 @@ function MobileDrawerNavItem({
 
  if (isProductsMenu) {
   return (
-   <li className="mobile-nav-item border-b last:border-b-0">
+   <li className="mobile-nav-item border-b border-white/18 last:border-b-0">
     <button
      type="button"
      onClick={onOpenProductsMenu}
      className={cn(
-      "mobile-nav-sheet__link flex min-h-14 w-full cursor-pointer items-center gap-3 px-0 py-4 text-left text-[0.9375rem] font-medium",
-      active && "mobile-nav-sheet__link--active"
+      mobileNavLinkClass,
+      "group w-full text-left",
+      active && "font-semibold text-white"
      )}
      aria-label={t("nav.openProductCategories")}
     >
-     {Icon ? (
-      <Icon className="mobile-nav-sheet__icon size-5 shrink-0" aria-hidden />
-     ) : null}
+     {Icon ? <Icon className={mobileNavIconClass} aria-hidden /> : null}
      <span className="flex-1">{item.label}</span>
      <HeroChevronRight
-      className="mobile-nav-sheet__chevron size-4 shrink-0"
+      className="size-4 shrink-0 text-white/72 transition-colors duration-200 group-hover:text-white/92"
       strokeWidth={3.5}
       aria-hidden
      />
@@ -206,18 +225,17 @@ function MobileDrawerNavItem({
  }
 
  return (
-  <li className="mobile-nav-item border-b last:border-b-0">
+  <li className="mobile-nav-item border-b border-white/18 last:border-b-0">
    <Link
     href={item.href}
     onClick={onClose}
     className={cn(
-     "mobile-nav-sheet__link flex min-h-14 cursor-pointer items-center gap-3 px-0 py-4 text-[0.9375rem] font-medium",
-     active && "mobile-nav-sheet__link--active"
+     mobileNavLinkClass,
+     "group",
+     active && "font-semibold text-white"
     )}
    >
-    {Icon ? (
-     <Icon className="mobile-nav-sheet__icon size-5 shrink-0" aria-hidden />
-    ) : null}
+    {Icon ? <Icon className={mobileNavIconClass} aria-hidden /> : null}
     {item.label}
    </Link>
   </li>

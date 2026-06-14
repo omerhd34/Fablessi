@@ -8,13 +8,20 @@ import {
 } from "@/components/home/home-showcase-slider";
 import { useMemo } from "react";
 import { useTranslations } from "@/contexts/locale-provider";
+import {
+ containerPremiumClass,
+ headingDisplayClass,
+ productCardKalifClass,
+ sectionPaddingClass,
+} from "@/lib/layout/shared-styles";
+import { cn } from "@/lib/utils";
 
 function CategoryCard({ category, variant = "desktop" }) {
  const isMobile = variant === "mobile";
 
  return (
   <Link href={category.href} className="group/card block">
-   <div className="product-card-kalif relative aspect-4/5 overflow-hidden rounded-3xl sm:rounded-[1.25rem]">
+   <div className={cn(productCardKalifClass, "relative aspect-4/5 rounded-3xl sm:rounded-[1.25rem]")}>
     <Image
      src={category.image}
      alt={category.label}
@@ -67,11 +74,11 @@ export function CategoriesShowcase() {
  return (
   <>
    <section
-    className="section-padding bg-white sm:hidden"
+    className={cn(sectionPaddingClass, "bg-white sm:hidden")}
     aria-label={t("categories.categoriesAria")}
    >
-    <div className="container-premium">
-     <h2 className="heading-display text-charcoal mb-6 text-left">
+    <div className={containerPremiumClass}>
+     <h2 className={cn(headingDisplayClass, "mb-6 text-left text-charcoal")}>
       {t("home.categoriesTitle")}
      </h2>
      <div className="grid grid-cols-2 gap-3">

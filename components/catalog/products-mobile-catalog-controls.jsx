@@ -3,6 +3,11 @@
 import { ProductsSortMenu } from "@/components/catalog/products-sort-menu";
 import { useTranslations } from "@/contexts/locale-provider";
 import { Search, X } from "@/lib/icons";
+import {
+ catalogMobileGlassClass,
+ catalogMobileSearchClass,
+} from "@/lib/layout/product-styles";
+import { cn } from "@/lib/utils";
 
 export function ProductsMobileCatalogControls({
  search,
@@ -17,7 +22,11 @@ export function ProductsMobileCatalogControls({
    <form
     role="search"
     onSubmit={(event) => event.preventDefault()}
-    className="catalog-mobile-search flex h-11 min-w-0 flex-1 items-center gap-2.5 rounded-full border border-charcoal/12 bg-white px-4 shadow-[0_1px_2px_rgb(0_0_0/4%)]"
+    className={cn(
+     catalogMobileSearchClass,
+     catalogMobileGlassClass,
+     "min-w-0 flex-1"
+    )}
    >
     <Search className="size-4 shrink-0 text-charcoal/45" aria-hidden />
     <input

@@ -6,6 +6,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { useMemo } from "react";
 import { useTranslations } from "@/contexts/locale-provider";
 import { HeroChevronLeft, HeroChevronRight } from "@/lib/icons";
+import { productCategoryTileClass } from "@/lib/layout/product-styles";
 import { cn } from "@/lib/utils";
 
 export function ProductsCategoryCarousel({ activeSlug, className }) {
@@ -42,7 +43,7 @@ export function ProductsCategoryCarousel({ activeSlug, className }) {
          active && "ring-2 ring-charcoal/20 ring-offset-2 rounded-2xl"
         )}
        >
-        <div className="product-category-tile relative aspect-4/3 overflow-hidden rounded-2xl">
+        <div className={cn("relative aspect-4/3 overflow-hidden rounded-2xl", productCategoryTileClass)}>
          {category.image ? (
           <Image
            src={category.image}

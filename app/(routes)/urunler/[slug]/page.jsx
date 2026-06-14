@@ -3,6 +3,11 @@ import { ProductDetailView } from "@/components/product/product-detail-view";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { getLocale } from "@/lib/i18n/server";
 import {
+ containerPremiumClass,
+ pageContentOffsetClass,
+} from "@/lib/layout/shared-styles";
+import { cn } from "@/lib/utils";
+import {
  trProductSeoDescriptionSuffix,
  enProductSeoDescriptionSuffix,
 } from "@/lib/seo/local";
@@ -61,8 +66,8 @@ export default async function UrunDetayPage({ params }) {
  const collectionProducts = await getCollectionRelatedProducts(slug);
 
  return (
-  <div className="page-content-offset pb-10 md:pb-14">
-   <div className="container-premium">
+  <div className={cn(pageContentOffsetClass, "pb-10 md:pb-14")}>
+   <div className={containerPremiumClass}>
     <ProductDetailView
      product={product}
      categoryLabel={categoryGroup?.label ?? null}

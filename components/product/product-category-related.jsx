@@ -10,6 +10,13 @@ import {
  AccordionTrigger,
 } from "@/components/ui/accordion";
 import { getPrimaryImageUrl } from "@/lib/product-utils";
+import {
+ productRelatedItemClass,
+ productRelatedItemThumbClass,
+ productRelatedPanelClass,
+ productRelatedPanelHeaderClass,
+} from "@/lib/layout/product-styles";
+import { cn } from "@/lib/utils";
 
 export function ProductCategoryRelated({ products, categoryLabel }) {
  const [open, setOpen] = useState(["related-panel"]);
@@ -21,10 +28,10 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
    type="multiple"
    value={open}
    onValueChange={setOpen}
-   className="product-related-panel flex shrink-0 flex-col overflow-hidden rounded-3xl"
+   className={cn("flex shrink-0 flex-col overflow-hidden rounded-3xl", productRelatedPanelClass)}
   >
    <AccordionItem value="related-panel" className="border-b-0">
-    <AccordionTrigger className="product-related-panel__header shrink-0 cursor-pointer justify-center px-4 py-3.5 text-sm font-semibold text-charcoal hover:no-underline">
+    <AccordionTrigger className={cn("shrink-0 cursor-pointer justify-center px-4 py-3.5 text-sm font-semibold text-charcoal hover:no-underline", productRelatedPanelHeaderClass)}>
      <span className="flex-1 text-center">{categoryLabel}</span>
     </AccordionTrigger>
     <AccordionContent className="p-3 [&_a]:no-underline">
@@ -36,9 +43,9 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
         <Link
          key={product.id}
          href={`/urunler/${product.slug}`}
-         className="product-related-item group flex cursor-pointer items-center gap-3 rounded-2xl p-2.5 no-underline"
+         className={cn("group flex cursor-pointer items-center gap-3 rounded-2xl p-2.5 no-underline", productRelatedItemClass)}
         >
-         <div className="product-related-item__thumb relative size-16 shrink-0 overflow-hidden rounded-xl">
+         <div className={cn("relative size-16 shrink-0 overflow-hidden rounded-xl", productRelatedItemThumbClass)}>
           {imageUrl ? (
            <Image
             src={imageUrl}

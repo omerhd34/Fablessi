@@ -14,6 +14,8 @@ import {
  getAvailableFavoriteCollections,
  sortFavorites,
 } from "@/lib/favorites-filters";
+import { headingDisplayClass } from "@/lib/layout/shared-styles";
+import { cn } from "@/lib/utils";
 
 export function FavoritesView() {
  const { favorites, hydrated } = useFavorites();
@@ -52,7 +54,7 @@ export function FavoritesView() {
  if (favorites.length === 0) {
   return (
    <div className="rounded-3xl border border-dashed border-charcoal/12 bg-cream/40 px-6 py-20 text-center">
-    <h1 className="heading-display text-charcoal">{t("favorites.title")}</h1>
+    <h1 className={cn(headingDisplayClass, "text-charcoal")}>{t("favorites.title")}</h1>
     <p className="text-muted-foreground mx-auto mt-3 max-w-md text-sm">
      {t("favorites.emptyDescription")}
     </p>
@@ -80,7 +82,7 @@ export function FavoritesView() {
 
    <div className="min-w-0 flex-1 space-y-6 md:space-y-8">
     <div>
-     <h1 className="heading-display text-charcoal">{t("favorites.title")}</h1>
+     <h1 className={cn(headingDisplayClass, "text-charcoal")}>{t("favorites.title")}</h1>
      <p className="text-muted-foreground mt-2 hidden text-sm lg:block">
       {t("catalog.listing", { count: filteredFavorites.length })}
      </p>

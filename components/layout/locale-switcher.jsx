@@ -13,10 +13,12 @@ function MobileLocaleSwitcher({ className }) {
  const { locale, setLocale, t } = useLocale();
 
  return (
-  <div className={cn("locale-switcher locale-switcher--mobile", className)}>
-   <p className="locale-switcher-mobile__label">{t("common.language")}</p>
+  <div className={cn("w-full", className)}>
+   <p className="locale-switcher-mobile__label mb-3 text-[0.6875rem] font-bold tracking-[0.12em] text-white/78 uppercase">
+    {t("common.language")}
+   </p>
    <div
-    className="locale-switcher-mobile__options"
+    className="grid grid-cols-2 gap-2.5"
     role="listbox"
     aria-label={t("common.selectLanguage")}
    >
@@ -30,8 +32,9 @@ function MobileLocaleSwitcher({ className }) {
        role="option"
        aria-selected={active}
        className={cn(
-        "locale-switcher-mobile__option",
-        active && "locale-switcher-mobile__option--active"
+        "locale-switcher-mobile__option inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full border border-[var(--glass-hero-border)] bg-[var(--glass-hero-icon-surface)] px-3.5 py-2.5 text-sm font-medium text-white/92 transition-[border-color,background-color,color,box-shadow] duration-200 [backdrop-filter:var(--glass-hero-blur)] [-webkit-backdrop-filter:var(--glass-hero-blur)] hover:bg-white/20 [&_.locale-flag-icon]:size-[1.375rem]",
+        active &&
+         "locale-switcher-mobile__option--active border-[var(--glass-hero-border)] bg-white/22 font-semibold text-white shadow-none"
        )}
        onClick={() => setLocale(item)}
       >
@@ -52,7 +55,10 @@ function HeaderLocaleSwitcher({ className }) {
  return (
   <button
    type="button"
-   className={cn("locale-switcher-btn", className)}
+   className={cn(
+    "relative inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 shadow-none transition-opacity duration-200 hover:opacity-82 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal/35 data-[state=open]:opacity-100 lg:size-11 xl:size-12",
+    className
+   )}
    aria-label={t("common.switchTo", {
     language: localeLabels[nextLocale],
    })}

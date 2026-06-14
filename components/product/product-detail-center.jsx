@@ -18,6 +18,10 @@ import {
 import { ProductDimensionsTable } from "@/components/product/product-dimensions-table";
 import { useLocale } from "@/contexts/locale-provider";
 import { getDimensionItems } from "@/lib/product-utils";
+import {
+ productGalleryFrameClass,
+ productGalleryMobileCarouselClass,
+} from "@/lib/layout/product-styles";
 import { cn } from "@/lib/utils";
 
 function ProductGalleryImage({
@@ -33,7 +37,10 @@ function ProductGalleryImage({
   "relative block w-full overflow-hidden",
   isSlide
    ? "aspect-4/3 bg-white min-[48rem]:aspect-16/10"
-   : "product-gallery-frame aspect-4/3 min-[1152px]:aspect-16/10 cursor-pointer rounded-3xl bg-white",
+   : cn(
+      "aspect-4/3 min-[1152px]:aspect-16/10 cursor-pointer rounded-3xl bg-white",
+      productGalleryFrameClass
+     ),
   className
  );
 
@@ -80,7 +87,7 @@ function ProductGallery({ images, onImageClick, t }) {
 
  return (
   <>
-   <div className="product-gallery-mobile min-[1152px]:hidden">
+   <div className={cn("min-[1152px]:hidden", productGalleryMobileCarouselClass)}>
     <Carousel
      opts={{
       align: "start",

@@ -14,6 +14,13 @@ import {
  SheetTitle,
 } from "@/components/ui/sheet";
 import { CloseIcon, FilterIcon, Search, X } from "@/lib/icons";
+import { catalogFilterSheetOverlayClass } from "@/lib/layout/header-styles";
+import {
+ catalogFilterSheetClass,
+ catalogMobileActionClass,
+ catalogMobileGlassClass,
+ catalogMobileSearchClass,
+} from "@/lib/layout/product-styles";
 import { cn } from "@/lib/utils";
 
 function ActiveFilterChip({ label, onRemove, removeLabel }) {
@@ -67,7 +74,7 @@ export function FavoritesMobileControls({
     <button
      type="button"
      onClick={() => setFilterOpen(true)}
-     className="catalog-mobile-action flex h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-charcoal/12 bg-white px-4 text-sm font-medium text-charcoal shadow-[0_1px_2px_rgb(0_0_0/4%)] transition hover:border-charcoal/20"
+     className={cn(catalogMobileActionClass, catalogMobileGlassClass)}
      aria-expanded={filterOpen}
     >
      <FilterIcon className="size-4 text-charcoal/65" aria-hidden />
@@ -90,7 +97,7 @@ export function FavoritesMobileControls({
    <form
     role="search"
     onSubmit={(event) => event.preventDefault()}
-    className="catalog-mobile-search flex h-11 items-center gap-2.5 rounded-full border border-charcoal/12 bg-white px-4 shadow-[0_1px_2px_rgb(0_0_0/4%)]"
+    className={cn(catalogMobileSearchClass, catalogMobileGlassClass)}
    >
     <Search className="size-4 shrink-0 text-charcoal/45" aria-hidden />
     <input
@@ -161,7 +168,8 @@ export function FavoritesMobileControls({
     <SheetContent
      side="bottom"
      showCloseButton={false}
-     className="catalog-filter-sheet flex max-h-[min(88dvh,40rem)] flex-col rounded-t-[1.75rem] border-charcoal/10 bg-cream/95 p-0 text-charcoal backdrop-blur-xl"
+     overlayClassName={catalogFilterSheetOverlayClass}
+     className={catalogFilterSheetClass}
     >
      <SheetHeader className="sr-only">
       <SheetTitle>{t("catalog.productFilters")}</SheetTitle>

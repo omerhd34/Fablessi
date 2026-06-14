@@ -1,6 +1,20 @@
 import Link from "next/link";
+import {
+ containerPremiumClass,
+ pageContentOffsetClass,
+} from "@/lib/layout/shared-styles";
+import {
+ statusPageActionClass,
+ statusPageActionPrimaryClass,
+ statusPageActionsClass,
+ statusPageClass,
+ statusPageCodeClass,
+ statusPageContentClass,
+ statusPageDescriptionClass,
+ statusPageInnerClass,
+ statusPageTitleClass,
+} from "@/lib/layout/page-styles";
 import { cn } from "@/lib/utils";
-import "./status-page.css";
 
 export function StatusPage({
  code,
@@ -11,24 +25,30 @@ export function StatusPage({
 }) {
  return (
   <section
-   className={cn("status-page page-content-offset container-premium pb-20", className)}
+   className={cn(
+    pageContentOffsetClass,
+    containerPremiumClass,
+    statusPageClass,
+    "pb-20",
+    className
+   )}
    aria-labelledby="status-page-title"
   >
-   <div className="status-page__inner">
+   <div className={statusPageInnerClass}>
     {code ? (
-     <p className="status-page__code" aria-hidden="true">
+     <p className={statusPageCodeClass} aria-hidden="true">
       {code}
      </p>
     ) : null}
-    <div className="status-page__content">
-     <h1 id="status-page-title" className="status-page__title">
+    <div className={statusPageContentClass}>
+     <h1 id="status-page-title" className={statusPageTitleClass}>
       {title}
      </h1>
      {description ? (
-      <p className="status-page__description">{description}</p>
+      <p className={statusPageDescriptionClass}>{description}</p>
      ) : null}
      {children ? (
-      <div className="status-page__actions">{children}</div>
+      <div className={statusPageActionsClass}>{children}</div>
      ) : null}
     </div>
    </div>
@@ -40,10 +60,7 @@ export function StatusActionLink({ href, children, primary = false }) {
  return (
   <Link
    href={href}
-   className={cn(
-    "status-page__action",
-    primary && "status-page__action--primary"
-   )}
+   className={cn(statusPageActionClass, primary && statusPageActionPrimaryClass)}
   >
    {children}
   </Link>
@@ -56,8 +73,9 @@ export function StatusActionButton({ onClick, children, primary = false }) {
    type="button"
    onClick={onClick}
    className={cn(
-    "status-page__action cursor-pointer",
-    primary && "status-page__action--primary"
+    statusPageActionClass,
+    "cursor-pointer",
+    primary && statusPageActionPrimaryClass
    )}
   >
    {children}

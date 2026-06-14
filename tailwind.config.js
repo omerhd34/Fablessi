@@ -16,6 +16,7 @@ module.exports = {
   extend: {
    fontFamily: {
     sans: ["var(--font-montserrat)", "ui-sans-serif", "system-ui", "sans-serif"],
+    body: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
     display: ["var(--font-montserrat)", "ui-sans-serif", "system-ui", "sans-serif"],
     heading: ["var(--font-montserrat)", "ui-sans-serif", "system-ui", "sans-serif"],
    },

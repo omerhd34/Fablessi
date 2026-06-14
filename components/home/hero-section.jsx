@@ -6,12 +6,16 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "@/contexts/locale-provider";
 import { HeroChevronLeft, HeroChevronRight } from "@/lib/icons";
 import { buildHeroSlides } from "@/lib/i18n/hero-slides-data";
+import { headerGlassBtnClass } from "@/lib/layout/header-styles";
 import { cn } from "@/lib/utils";
 
 const HERO_AUTOPLAY_MS = 12_000;
 const HERO_DESKTOP_MQ = "(min-width: 1024px)";
 
-const heroNavButtonClass = "hero-nav-btn";
+const heroNavButtonClass = cn(
+ headerGlassBtnClass,
+ "absolute top-1/2 z-10 hidden size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-white/96 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/45 active:scale-100 sm:size-[3.25rem] lg:flex lg:size-[3.75rem] [&_svg]:size-[1.375rem] md:[&_svg]:size-[1.875rem] [&_svg]:[stroke-width:3.5]"
+);
 
 function HeroSlideImage({ slide, priority, className }) {
  const { images, alt } = slide;
@@ -154,10 +158,10 @@ export function HeroSection() {
   <section className="hero-carousel relative w-full touch-pan-y">
    <div
     className={cn(
-     "hero-carousel__viewport overflow-hidden",
+     "overflow-hidden select-none",
      dragEnabled
-      ? "hero-carousel__viewport--draggable"
-      : "hero-carousel__viewport--static"
+      ? "cursor-grab touch-pan-y pinch-zoom active:cursor-grabbing"
+      : "cursor-default touch-auto active:cursor-default"
     )}
     ref={emblaRef}
    >
@@ -179,11 +183,11 @@ export function HeroSection() {
    <button
     type="button"
     onClick={scrollPrev}
-    className={cn(heroNavButtonClass, "hero-nav-btn--prev hero-nav-btn--desktop")}
+    className={cn(heroNavButtonClass, "left-2 sm:left-4 lg:left-6")}
     aria-label={t("hero.prevSlide")}
    >
     <HeroChevronLeft
-     className="hero-nav-btn__icon"
+     className="size-[1.375rem] text-current md:size-[1.875rem]"
      strokeWidth={3.5}
      aria-hidden
     />
@@ -191,25 +195,25 @@ export function HeroSection() {
    <button
     type="button"
     onClick={scrollNext}
-    className={cn(heroNavButtonClass, "hero-nav-btn--next hero-nav-btn--desktop")}
+    className={cn(heroNavButtonClass, "right-2 sm:right-4 lg:right-6")}
     aria-label={t("hero.nextSlide")}
    >
     <HeroChevronRight
-     className="hero-nav-btn__icon"
+     className="size-[1.375rem] text-current md:size-[1.875rem]"
      strokeWidth={3.5}
      aria-hidden
     />
    </button>
 
-   <div className="hero-carousel__dots absolute left-1/2 z-10 flex -translate-x-1/2 gap-2">
+   <div className="absolute bottom-6 left-1/2 z-10 flex -translate-x-1/2 gap-2">
     {heroSlides.map((slide, index) => (
      <button
       key={slide.key}
       type="button"
       onClick={() => emblaApi?.scrollTo(index)}
       className={cn(
-       "hero-carousel__dash cursor-pointer transition-all duration-300",
-       selectedIndex === index && "hero-carousel__dash--active"
+       "h-1 cursor-pointer rounded-full bg-white/45 transition-all duration-300 hover:bg-white/70",
+       selectedIndex === index ? "w-9 bg-white" : "w-7"
       )}
       aria-label={t("hero.slide", { n: index + 1 })}
       aria-current={selectedIndex === index ? "true" : undefined}

@@ -2,6 +2,11 @@ import { ProductsCatalogShell } from "@/components/catalog/products-catalog-shel
 import { buildProductsMegaMenu } from "@/lib/i18n/build-navigation";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { createPageMetadata } from "@/lib/i18n/page-metadata";
+import {
+ containerPremiumClass,
+ pageContentOffsetClass,
+} from "@/lib/layout/shared-styles";
+import { cn } from "@/lib/utils";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getLocale } from "@/lib/i18n/server";
 import {
@@ -29,7 +34,7 @@ export default async function UrunlerPage({ searchParams }) {
  const products = await getPublishedProducts(categorySlug, collectionSlug);
 
  return (
-  <div className="container-premium page-content-offset pb-20 md:pb-28">
+  <div className={cn(containerPremiumClass, pageContentOffsetClass, "pb-20 md:pb-28")}>
    <ProductsCatalogShell
     products={products}
     activeGroup={activeGroup}

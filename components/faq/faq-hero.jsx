@@ -44,10 +44,10 @@ export function FaqHero() {
 
  return (
   <section
-   className="faq-hero relative w-full"
+   className="faq-hero relative mt-0 w-full"
    style={{ "--faq-hero-header-offset": `${headerOffset}px` }}
   >
-   <div className="faq-hero__frame relative min-h-[min(58vh,640px)] w-full md:min-h-[min(52vh,560px)] lg:min-h-[min(48vh,520px)]">
+   <div className="relative min-h-[min(58vh,640px)] w-full md:min-h-[min(52vh,560px)] lg:min-h-[min(48vh,520px)]">
     <Image
      src={faqHeroImage}
      alt=""
@@ -58,13 +58,16 @@ export function FaqHero() {
     />
     <div className="absolute inset-0 bg-black/30" aria-hidden />
 
-    <div className="faq-hero__content absolute inset-0 z-10 flex flex-col items-center justify-center px-6 pb-10 text-center text-white">
+    <div
+     className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 pb-10 text-center text-white"
+     style={{ paddingTop: "var(--faq-hero-header-offset, 0px)" }}
+    >
      <h1 className="text-2xl font-semibold tracking-tight md:text-[2rem] lg:text-[2.25rem]">
       {t("faq.pageTitle")}
      </h1>
 
      <nav
-      className="faq-hero__tabs mt-8 flex w-full flex-nowrap items-center justify-center gap-x-2 sm:gap-x-4 md:gap-x-8"
+      className="mx-auto mt-8 flex w-full flex-nowrap items-center justify-center gap-x-2 sm:gap-x-4 md:gap-x-8"
       aria-label={t("faq.categoriesAria")}
      >
       {faqCategoryTabs.map((tab) => (

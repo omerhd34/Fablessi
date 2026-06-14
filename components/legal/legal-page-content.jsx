@@ -9,6 +9,13 @@ import {
  sitePhoneHref,
 } from "@/lib/site-contact";
 import Link from "next/link";
+import { containerPremiumClass } from "@/lib/layout/shared-styles";
+import {
+ legalContactClass,
+ legalIntroClass,
+ legalSectionClass,
+} from "@/lib/layout/page-styles";
+import { cn } from "@/lib/utils";
 
 export function LegalPageContent({ contentKey }) {
  const { dictionary, t } = useTranslations();
@@ -17,9 +24,9 @@ export function LegalPageContent({ contentKey }) {
 
  return (
   <article className="legal-page pb-20 md:pb-28">
-   <div className="container-premium">
+   <div className={containerPremiumClass}>
     {content.intro ? (
-     <p className="legal-page__intro w-full font-body text-[0.95rem] leading-relaxed text-charcoal/75 md:text-base">
+     <p className={cn("w-full font-body text-[0.95rem] leading-relaxed text-charcoal/75 md:text-base", legalIntroClass)}>
       {content.intro}
      </p>
     ) : null}
@@ -30,7 +37,7 @@ export function LegalPageContent({ contentKey }) {
      {content.sections.map((section) => (
       <section
        key={section.title}
-       className="legal-page__section"
+       className={legalSectionClass}
        aria-labelledby={`legal-${contentKey}-${section.id}`}
       >
        <h2
@@ -60,7 +67,7 @@ export function LegalPageContent({ contentKey }) {
      ))}
     </div>
 
-    <aside className="legal-page__contact mt-14 w-full rounded-2xl px-6 py-8 md:px-9 md:py-10">
+    <aside className={cn("mt-14 w-full rounded-2xl px-6 py-8 md:px-9 md:py-10", legalContactClass)}>
      <h2 className="font-display text-[0.875rem] font-semibold tracking-[0.26em] text-charcoal uppercase md:text-base">
       {t("legal.shared.contactTitle")}
      </h2>

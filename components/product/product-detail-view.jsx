@@ -5,6 +5,8 @@ import { ProductDetailCenter } from "@/components/product/product-detail-center"
 import { ProductDetailLeft } from "@/components/product/product-detail-left";
 import { ProductDetailRight } from "@/components/product/product-detail-right";
 import { ProductImageLightbox } from "@/components/product/product-image-lightbox";
+import { productDetailScrollClass } from "@/lib/layout/product-styles";
+import { cn } from "@/lib/utils";
 
 export function ProductDetailView({
  product,
@@ -74,7 +76,10 @@ export function ProductDetailView({
 
     <section
      ref={centerScrollRef}
-     className="min-h-0 lg:max-h-[calc(100dvh-var(--header-height-desktop)-2rem)] lg:overflow-y-auto lg:pr-1 lg:pb-6 product-detail-scroll"
+     className={cn(
+      "min-h-0 lg:max-h-[calc(100dvh-var(--header-height-desktop)-2rem)] lg:overflow-y-auto lg:pr-1 lg:pb-6",
+      productDetailScrollClass
+     )}
     >
      <ProductDetailCenter
       product={product}

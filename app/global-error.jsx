@@ -1,8 +1,6 @@
 "use client";
 
 import "@/app/styles/base.css";
-import "@/app/styles/layout.css";
-import "@/app/styles/shared.css";
 import { GlobalErrorView } from "@/components/status/global-error-view";
 
 export default function GlobalErrorPage({ error, reset }) {

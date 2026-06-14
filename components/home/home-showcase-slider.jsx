@@ -2,6 +2,12 @@
 
 import Link from "next/link";
 import { ChevronRight, HeroChevronLeft, HeroChevronRight } from "@/lib/icons";
+import { headerGlassBtnClass } from "@/lib/layout/header-styles";
+import {
+ containerPremiumClass,
+ headingDisplayClass,
+ sectionPaddingClass,
+} from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 import {
  Carousel,
@@ -13,8 +19,10 @@ import {
 
 const slideClassName = "basis-full sm:basis-1/3 sm:pl-5";
 
-const navButtonClassName =
- "header-glass-btn home-showcase-nav inline-flex size-11 shrink-0 cursor-pointer touch-manipulation items-center justify-center rounded-full text-white disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12";
+const navButtonClassName = cn(
+ headerGlassBtnClass,
+ "home-showcase-nav inline-flex size-11 shrink-0 cursor-pointer touch-manipulation items-center justify-center rounded-full text-white/96 transition-[transform,background-color,border-color] duration-300 hover:scale-110 active:scale-100 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12 [&_svg]:size-5 md:[&_svg]:size-[1.375rem] [&_svg]:[stroke-width:3.5]"
+);
 
 function HomeShowcaseNav({ direction }) {
  const { scrollPrev, scrollNext, canScrollNext } = useCarousel();
@@ -49,10 +57,10 @@ export function HomeShowcaseSlider({
  }
 
  return (
-  <section id={id} className={cn("section-padding bg-white", className)}>
-   <div className="container-premium">
+  <section id={id} className={cn(sectionPaddingClass, "bg-white", className)}>
+   <div className={containerPremiumClass}>
     <div className="mb-10 text-center md:mb-14">
-     <h2 className="heading-display text-charcoal">{title}</h2>
+     <h2 className={cn(headingDisplayClass, "text-charcoal")}>{title}</h2>
      {description ? (
       <p className="text-muted-foreground mx-auto mt-3 max-w-2xl text-sm md:text-base">
        {description}
@@ -91,7 +99,7 @@ export function HomeShowcaseSlider({
      </div>
      <HomeShowcaseNav direction="next" />
     </div>
-    <div className="container-premium">
+    <div className={containerPremiumClass}>
      <CarouselDots className="mt-8" />
     </div>
    </Carousel>
