@@ -12,10 +12,12 @@ import Link from "next/link";
 import { containerPremiumClass } from "@/lib/layout/shared-styles";
 import {
  legalContactClass,
- legalIntroClass,
  legalSectionClass,
 } from "@/lib/layout/page-styles";
 import { cn } from "@/lib/utils";
+
+const legalContactIconClass =
+ "inline-flex scale-100 text-charcoal/70 transition-[scale,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:text-charcoal motion-reduce:duration-150";
 
 export function LegalPageContent({ contentKey }) {
  const { dictionary, t } = useTranslations();
@@ -26,7 +28,7 @@ export function LegalPageContent({ contentKey }) {
   <article className="legal-page pb-20 md:pb-28">
    <div className={containerPremiumClass}>
     {content.intro ? (
-     <p className={cn("w-full font-body text-[0.95rem] leading-relaxed text-charcoal/75 md:text-base", legalIntroClass)}>
+     <p className={cn("w-full font-body text-[0.95rem] leading-relaxed text-charcoal/75 md:text-base")}>
       {content.intro}
      </p>
     ) : null}
@@ -68,7 +70,7 @@ export function LegalPageContent({ contentKey }) {
     </div>
 
     <aside className={cn("mt-14 w-full rounded-2xl px-6 py-8 md:px-9 md:py-10", legalContactClass)}>
-     <h2 className="font-display text-[0.875rem] font-semibold tracking-[0.26em] text-charcoal uppercase md:text-base">
+     <h2 className="font-display text-base font-semibold tracking-tight text-charcoal md:text-lg">
       {t("legal.shared.contactTitle")}
      </h2>
      <p className="mt-4 font-body text-[0.95rem] leading-relaxed text-charcoal/75 md:text-base">
@@ -78,7 +80,7 @@ export function LegalPageContent({ contentKey }) {
       {sitePhoneHref ? (
        <Link
         href={sitePhoneHref}
-        className="text-charcoal/70 transition-colors hover:text-charcoal"
+        className={legalContactIconClass}
         aria-label={t("footer.phone", { phone: sitePhone })}
        >
         <Phone className="size-5 shrink-0" aria-hidden />
@@ -89,7 +91,7 @@ export function LegalPageContent({ contentKey }) {
         href={whatsAppHref}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-charcoal/70 transition-colors hover:text-charcoal"
+        className={legalContactIconClass}
         aria-label={t("contact.whatsapp")}
        >
         <FaWhatsapp className="size-5" aria-hidden />
@@ -98,7 +100,7 @@ export function LegalPageContent({ contentKey }) {
       {siteEmail ? (
        <Link
         href={`mailto:${siteEmail}`}
-        className="text-charcoal/70 transition-colors hover:text-charcoal"
+        className={legalContactIconClass}
         aria-label={t("footer.email", { email: siteEmail })}
        >
         <Mail className="size-5 shrink-0" aria-hidden />
