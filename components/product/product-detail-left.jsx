@@ -28,6 +28,16 @@ import { cn } from "@/lib/utils";
 const productPanelClassName =
  "overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)]";
 
+const productBreadcrumbLinkClass =
+ "inline-block scale-100 transition-[scale,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:text-charcoal motion-reduce:duration-150";
+
+const productBreadcrumbRootLinkClass = cn(productBreadcrumbLinkClass, "origin-right");
+
+const productBreadcrumbCategoryLinkClass = cn(
+ productBreadcrumbLinkClass,
+ "origin-left"
+);
+
 function ProductDetailPriceBody({
  priceItems,
  locale,
@@ -232,23 +242,20 @@ export function ProductDetailLeft({
  const header = showHeader ? (
   <div className="min-w-0 space-y-3">
    <nav aria-label={t("catalog.products")}>
-    <ol className="text-muted-foreground flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs font-medium tracking-[0.14em] uppercase">
+    <ol className="text-muted-foreground flex flex-wrap items-center gap-y-1 text-xs font-medium tracking-[0.14em] uppercase">
      <li>
-      <Link href="/urunler" className="transition-colors hover:text-charcoal">
+      <Link href="/urunler" className={productBreadcrumbRootLinkClass}>
        {t("catalog.products")}
       </Link>
      </li>
      {categoryLabel ? (
       <>
-       <li aria-hidden className="text-charcoal/25">
+       <li aria-hidden className="shrink-0 px-2 text-charcoal/25 select-none">
         /
        </li>
        <li>
         {categoryHref ? (
-         <Link
-          href={categoryHref}
-          className="transition-colors hover:text-charcoal"
-         >
+         <Link href={categoryHref} className={productBreadcrumbCategoryLinkClass}>
           {categoryLabel}
          </Link>
         ) : (
