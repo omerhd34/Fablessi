@@ -29,7 +29,7 @@ export function BrandExperienceBanner() {
     </p>
     <Link
      href="/hakkimizda"
-     className="mt-8 inline-flex h-11 items-center justify-center rounded-full bg-white px-8 text-sm font-semibold text-charcoal transition-[transform_0.2s_ease,background-color_0.2s_ease] hover:scale-110 hover:bg-white/90 active:scale-100"
+     className="mt-8 inline-flex h-11 scale-100 items-center justify-center rounded-full bg-white px-8 text-sm font-semibold text-charcoal transition-[scale,background-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:bg-white/90 active:scale-100 motion-reduce:duration-150"
     >
      {t("home.brandExperienceCta")}
     </Link>

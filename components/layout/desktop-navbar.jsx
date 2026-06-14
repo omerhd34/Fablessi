@@ -36,7 +36,7 @@ const desktopNavIconMap = {
 };
 
 const navDesktopLinkClass =
- "nav-desktop-link inline-flex items-center gap-[0.4375rem] px-3 py-2 text-sm font-medium whitespace-nowrap transition-[opacity,color] duration-200 xl:gap-2 xl:px-[1.125rem] xl:py-2.5 xl:text-base";
+ "nav-desktop-link inline-flex scale-100 items-center gap-[0.4375rem] px-3 py-2 text-sm font-medium whitespace-nowrap transition-[scale,opacity,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 xl:gap-2 xl:px-[1.125rem] xl:py-2.5 xl:text-base motion-reduce:duration-150";
 
 const navDesktopLinkIconClass =
  "nav-desktop-link__icon size-[1.0625rem] shrink-0 text-charcoal/60 xl:size-[1.125rem]";
@@ -62,18 +62,18 @@ function DesktopNavItem({
  const className = cn(
   iconOnly
    ? cn(
-      headerIconBtnClass,
-      heroNavLinkOverlayClass,
-      "size-10 cursor-pointer rounded-full lg:size-11 xl:size-12"
-     )
+    headerIconBtnClass,
+    heroNavLinkOverlayClass,
+    "size-10 cursor-pointer rounded-full lg:size-11 xl:size-12"
+   )
    : cn(navDesktopLinkClass, headerPillLinkClass, heroNavLinkOverlayClass),
   iconOnly
    ? active && cn(plainIconActiveClass, heroNavActiveIconBtnClass)
    : active &&
-      cn(
-       "nav-desktop-link--active font-semibold text-charcoal/90",
-       heroNavActiveLinkOverlayClass
-      )
+   cn(
+    "nav-desktop-link--active font-semibold text-charcoal/90",
+    heroNavActiveLinkOverlayClass
+   )
  );
  const content = (
   <>
@@ -173,7 +173,7 @@ export function DesktopNavbar({
  return (
   <div className="relative hidden lg:block" aria-label={t("nav.desktopMenu")}>
    <div className={cn(containerPremiumClass, "flex min-h-24 items-center justify-between gap-4 xl:gap-8")}>
-    <div className="block h-fit w-fit flex-none self-center p-0 leading-none [&_.brand-logo-image]:h-12! xl:[&_.brand-logo-image]:!h-[3.25rem]">
+    <div className="block h-fit w-fit flex-none self-center p-0 leading-none [&_.brand-logo-image]:h-12! xl:[&_.brand-logo-image]:h-13!">
      <BrandLogoLink size="xl" />
     </div>
 
@@ -199,13 +199,13 @@ export function DesktopNavbar({
      ))}
 
      <span
-     className={cn(
-      headerPillDividerClass,
-      "nav-desktop-pill-divider mx-2",
-      heroNavDividerOverlayClass
-     )}
-     aria-hidden
-    />
+      className={cn(
+       headerPillDividerClass,
+       "nav-desktop-pill-divider mx-2",
+       heroNavDividerOverlayClass
+      )}
+      aria-hidden
+     />
 
      <button
       type="button"
@@ -223,24 +223,24 @@ export function DesktopNavbar({
      </button>
 
      <span
-     className={cn(
-      headerPillDividerClass,
-      "nav-desktop-pill-divider mx-2",
-      heroNavDividerOverlayClass
-     )}
-     aria-hidden
-    />
+      className={cn(
+       headerPillDividerClass,
+       "nav-desktop-pill-divider mx-2",
+       heroNavDividerOverlayClass
+      )}
+      aria-hidden
+     />
 
      <FavoritesLink />
 
      <span
-     className={cn(
-      headerPillDividerClass,
-      "nav-desktop-pill-divider mx-2",
-      heroNavDividerOverlayClass
-     )}
-     aria-hidden
-    />
+      className={cn(
+       headerPillDividerClass,
+       "nav-desktop-pill-divider mx-2",
+       heroNavDividerOverlayClass
+      )}
+      aria-hidden
+     />
 
      <LocaleSwitcher />
     </nav>

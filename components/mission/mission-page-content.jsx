@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { DynamicReactIcon } from "@/components/ui/dynamic-react-icon";
 import { useTranslations } from "@/contexts/locale-provider";
+import { SupportAgent, ViewModule } from "@/lib/icons";
 import {
  missionCtaClass,
  missionIntroClass,
@@ -62,7 +63,7 @@ export function MissionPageContent() {
     aria-hidden
    >
     <div className={containerPremiumClass}>
-     <div className={cn("relative aspect-16/9 overflow-hidden rounded-2xl sm:aspect-21/9", missionVisualImageClass)}>
+     <div className={cn("relative aspect-video overflow-hidden rounded-2xl sm:aspect-21/9", missionVisualImageClass)}>
       <Image
        src="https://res.cloudinary.com/dbo6puh1c/image/upload/v1781205876/fablessi/velar-oturma/01.jpg"
        alt=""
@@ -144,17 +145,19 @@ export function MissionPageContent() {
      <p className="mx-auto mt-4 max-w-xl font-body text-sm leading-relaxed text-white/82 md:text-[0.95rem]">
       {missionVision.ctaDescription}
      </p>
-     <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+     <div className="mt-8 flex flex-wrap items-center justify-center gap-5">
       <Link
        href="/urunler"
-       className="inline-flex h-11 items-center justify-center rounded-full bg-white px-8 text-sm font-semibold text-charcoal transition hover:bg-white/92"
+       className="inline-flex h-11 scale-100 items-center justify-center gap-2 rounded-full bg-white px-8 text-sm font-semibold text-charcoal transition-[scale,background-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:bg-white/92 motion-reduce:duration-150"
       >
+       <ViewModule className="size-4.5 shrink-0" aria-hidden />
        {missionVision.ctaProducts}
       </Link>
       <Link
        href="/iletisim"
-       className="inline-flex h-11 items-center justify-center rounded-full border border-white/35 px-8 text-sm font-semibold text-white transition hover:bg-white/10"
+       className="inline-flex h-11 scale-100 items-center justify-center gap-2 rounded-full border border-white/35 px-8 text-sm font-semibold text-white transition-[scale,background-color,border-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:border-white/50 hover:bg-white/10 motion-reduce:duration-150"
       >
+       <SupportAgent className="size-4.5 shrink-0" aria-hidden />
        {missionVision.ctaContact}
       </Link>
      </div>

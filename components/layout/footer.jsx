@@ -17,6 +17,9 @@ import {
 import { containerPremiumClass } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 
+const footerContactIconLinkClass =
+ "inline-flex scale-100 text-charcoal/70 transition-[scale,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:text-charcoal motion-reduce:duration-150";
+
 function FooterColumn({ title, titleHref, children, className }) {
  const titleClassName =
   "font-body text-[13px] font-semibold tracking-wide text-charcoal transition-colors hover:text-charcoal/80";
@@ -96,7 +99,7 @@ export function Footer() {
         {sitePhoneHref ? (
          <Link
           href={sitePhoneHref}
-          className="text-charcoal/70 transition-colors hover:text-charcoal"
+          className={footerContactIconLinkClass}
           aria-label={t("footer.phone", { phone: sitePhone })}
          >
           <Phone className="size-4 shrink-0" aria-hidden />
@@ -107,7 +110,7 @@ export function Footer() {
           href={whatsAppHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-charcoal/70 transition-colors hover:text-charcoal"
+          className={footerContactIconLinkClass}
           aria-label={t("contact.whatsapp")}
          >
           <FaWhatsapp className="size-4" aria-hidden />
@@ -116,7 +119,7 @@ export function Footer() {
         {siteEmail ? (
          <Link
           href={`mailto:${siteEmail}`}
-          className="text-charcoal/70 transition-colors hover:text-charcoal"
+          className={footerContactIconLinkClass}
           aria-label={t("footer.email", { email: siteEmail })}
          >
           <Mail className="size-4 shrink-0" aria-hidden />
@@ -127,7 +130,7 @@ export function Footer() {
           href={flagshipStore.mapUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-charcoal/70 transition-colors hover:text-charcoal"
+          className={footerContactIconLinkClass}
           aria-label={t("footer.location")}
          >
           <MapPin className="size-4 shrink-0" aria-hidden />
@@ -139,7 +142,7 @@ export function Footer() {
           href={item.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-charcoal/70 transition-colors hover:text-charcoal"
+          className={footerContactIconLinkClass}
           aria-label={item.label}
          >
           <SocialIcon label={item.label} />

@@ -28,7 +28,10 @@ export function ProductsMobileCatalogControls({
      "min-w-0 flex-1"
     )}
    >
-    <Search className="size-4 shrink-0 text-charcoal/45" aria-hidden />
+    <Search
+     className="size-4 shrink-0 scale-100 text-charcoal/45 transition-[scale] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-125 motion-reduce:duration-150"
+     aria-hidden
+    />
     <input
      type="search"
      value={search}

@@ -157,10 +157,10 @@ export function HeaderSearchBar({ open, onClose }) {
    >
     {loading ? (
      <div className="flex justify-center px-2 py-6 text-center text-sm text-charcoal/60">
-      <div className="relative grid size-[3.25rem] place-items-center" role="status" aria-label={t("common.searching")}>
+      <div className="relative grid size-13 place-items-center" role="status" aria-label={t("common.searching")}>
        <div className="absolute inset-0 animate-[search-overlay-loader-spin_0.9s_cubic-bezier(0.45,0.05,0.35,0.95)_infinite] rounded-full border-2 border-charcoal/10 border-t-kalif-blue border-r-[oklch(0.52_0.14_250/40%)]" />
        <div className="absolute inset-[0.4rem] animate-[search-overlay-loader-glow_1.6s_ease-in-out_infinite] rounded-full bg-[oklch(0.52_0.14_250/6%)]" />
-       <Search className="relative z-1 size-[1.125rem] animate-[search-overlay-loader-icon_1.6s_ease-in-out_infinite] text-charcoal/70" aria-hidden />
+       <Search className="relative z-1 size-4.5 animate-[search-overlay-loader-icon_1.6s_ease-in-out_infinite] text-charcoal/70" aria-hidden />
       </div>
      </div>
     ) : null}
@@ -248,10 +248,10 @@ export function HeaderSearchBar({ open, onClose }) {
      ) : null}
      <button
       type="submit"
-      className="flex size-7 shrink-0 cursor-pointer items-center justify-center border-0 bg-transparent text-charcoal/78 transition-opacity duration-150 hover:opacity-65"
+      className="flex size-7 shrink-0 scale-100 cursor-pointer items-center justify-center border-0 bg-transparent text-charcoal/78 transition-[scale,opacity] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-125 hover:opacity-65 motion-reduce:duration-150"
       aria-label={t("common.search")}
      >
-      <Search className="size-[1.125rem]" aria-hidden />
+      <Search className="size-4.5" aria-hidden />
      </button>
     </div>
    </div>
@@ -291,7 +291,7 @@ export function HeaderSearchBar({ open, onClose }) {
     ? createPortal(
      <button
       type="button"
-      className="search-results-backdrop fixed right-0 bottom-0 left-0 z-40 cursor-pointer border-0 bg-[oklch(0.99_0.006_88/55%)] [backdrop-filter:blur(14px)_saturate(120%)] [-webkit-backdrop-filter:blur(14px)_saturate(120%)] top-[calc(var(--header-height-mobile)+var(--search-bar-height))] sm:max-lg:[top:calc(var(--header-height-mobile-sm)+var(--search-bar-height))] lg:[top:calc(var(--header-height-desktop)+var(--search-bar-height))]"
+      className="search-results-backdrop fixed right-0 bottom-0 left-0 z-40 cursor-pointer border-0 bg-[oklch(0.99_0.006_88/55%)] [backdrop-filter:blur(14px)_saturate(120%)] [-webkit-backdrop-filter:blur(14px)_saturate(120%)] top-[calc(var(--header-height-mobile)+var(--search-bar-height))] sm:max-lg:top-[calc(var(--header-height-mobile-sm)+var(--search-bar-height))] lg:top-[calc(var(--header-height-desktop)+var(--search-bar-height))]"
       onClick={onClose}
       aria-label={t("common.closeSearch")}
      />,

@@ -32,9 +32,9 @@ function MobileLocaleSwitcher({ className }) {
        role="option"
        aria-selected={active}
        className={cn(
-        "locale-switcher-mobile__option inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full border border-[var(--glass-hero-border)] bg-[var(--glass-hero-icon-surface)] px-3.5 py-2.5 text-sm font-medium text-white/92 transition-[border-color,background-color,color,box-shadow] duration-200 [backdrop-filter:var(--glass-hero-blur)] [-webkit-backdrop-filter:var(--glass-hero-blur)] hover:bg-white/20 [&_.locale-flag-icon]:size-[1.375rem]",
+        "locale-switcher-mobile__option inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-full border border-(--glass-hero-border) bg-(--glass-hero-icon-surface) px-3.5 py-2.5 text-sm font-medium text-white/92 transition-[border-color,background-color,color,box-shadow] duration-200 [backdrop-filter:var(--glass-hero-blur)] [-webkit-backdrop-filter:var(--glass-hero-blur)] hover:bg-white/20 [&_.locale-flag-icon]:size-5.5",
         active &&
-         "locale-switcher-mobile__option--active border-[var(--glass-hero-border)] bg-white/22 font-semibold text-white shadow-none"
+        "locale-switcher-mobile__option--active border-(--glass-hero-border) bg-white/22 font-semibold text-white shadow-none"
        )}
        onClick={() => setLocale(item)}
       >
@@ -56,7 +56,7 @@ function HeaderLocaleSwitcher({ className }) {
   <button
    type="button"
    className={cn(
-    "relative inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 shadow-none transition-opacity duration-200 hover:opacity-82 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal/35 data-[state=open]:opacity-100 lg:size-11 xl:size-12",
+    "relative inline-flex size-10 shrink-0 scale-100 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 shadow-none transition-[scale,opacity] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:opacity-82 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal/35 data-[state=open]:opacity-100 motion-reduce:duration-150 lg:size-11 xl:size-12",
     className
    )}
    aria-label={t("common.switchTo", {

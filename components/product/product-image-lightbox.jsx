@@ -52,10 +52,10 @@ function LightboxControlButton({
     onClick?.(event);
    }}
    className={cn(
-    "flex items-center justify-center rounded-full backdrop-blur-md transition duration-200 focus-visible:outline-none focus-visible:ring-2",
+    "flex scale-100 items-center justify-center rounded-full backdrop-blur-md transition-[scale,background-color,border-color,opacity] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-none focus-visible:ring-2 motion-reduce:duration-150",
     isInactive
      ? "cursor-default scale-95 opacity-80"
-     : "cursor-pointer opacity-100 active:scale-95",
+     : "cursor-pointer opacity-100 hover:scale-110 active:scale-105",
     variant === "glass" &&
     "border border-white/15 bg-white/10 text-white shadow-[0_8px_32px_rgb(0_0_0/24%)] hover:border-white/25 hover:bg-white/18 focus-visible:ring-white/40",
     variant === "dark" &&

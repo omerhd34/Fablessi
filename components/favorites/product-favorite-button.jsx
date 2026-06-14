@@ -35,7 +35,7 @@ export function ProductFavoriteButton({ product, className }) {
    }
    aria-pressed={favorited}
    className={cn(
-    "inline-flex size-9 cursor-pointer items-center justify-center rounded-full bg-white/92 text-charcoal shadow-sm backdrop-blur-sm transition hover:bg-white",
+    "inline-flex size-9 scale-100 cursor-pointer items-center justify-center rounded-full bg-white/92 text-charcoal shadow-sm backdrop-blur-sm transition-[scale,background-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:bg-white motion-reduce:duration-150",
     favorited && "text-red-500",
     className
    )}

@@ -6,8 +6,14 @@ import useEmblaCarousel from "embla-carousel-react";
 import { useMemo } from "react";
 import { useTranslations } from "@/contexts/locale-provider";
 import { HeroChevronLeft, HeroChevronRight } from "@/lib/icons";
+import { contactFloatBtnClass } from "@/lib/layout/header-styles";
 import { productCategoryTileClass } from "@/lib/layout/product-styles";
 import { cn } from "@/lib/utils";
+
+const categoryCarouselNavBtnClass = cn(
+ contactFloatBtnClass,
+ "size-10 text-charcoal/75 hover:text-charcoal"
+);
 
 export function ProductsCategoryCarousel({ activeSlug, className }) {
  const { navigation, t } = useTranslations();
@@ -28,8 +34,22 @@ export function ProductsCategoryCarousel({ activeSlug, className }) {
  });
 
  return (
-  <div className={cn("relative", className)}>
-   <div className="overflow-hidden" ref={emblaRef}>
+  <div
+   className={cn(
+    "hidden items-center gap-2 md:grid md:grid-cols-[auto_minmax(0,1fr)_auto] md:gap-3",
+    className
+   )}
+  >
+   <button
+    type="button"
+    onClick={() => emblaApi?.scrollPrev()}
+    className={categoryCarouselNavBtnClass}
+    aria-label={t("product.previousCategories")}
+   >
+    <HeroChevronLeft className="size-5" aria-hidden />
+   </button>
+
+   <div className="min-w-0 overflow-hidden" ref={emblaRef}>
     <div className="flex gap-3 md:gap-4">
      {carouselCategories.map((category) => {
       const active = activeSlug === category.slug;
@@ -39,7 +59,7 @@ export function ProductsCategoryCarousel({ activeSlug, className }) {
         key={category.slug}
         href={category.href}
         className={cn(
-         "group relative min-w-0 shrink-0 cursor-pointer basis-[42%] sm:basis-[30%] md:basis-[22%] lg:basis-[18%]",
+         "group relative min-w-0 shrink-0 cursor-pointer basis-[calc((100%-4rem)/5)]",
          active && "ring-2 ring-charcoal/20 ring-offset-2 rounded-2xl"
         )}
        >
@@ -49,7 +69,7 @@ export function ProductsCategoryCarousel({ activeSlug, className }) {
            src={category.image}
            alt={category.label}
            fill
-           sizes="(max-width: 640px) 42vw, 18vw"
+           sizes="20vw"
            className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
           />
          ) : null}
@@ -66,19 +86,11 @@ export function ProductsCategoryCarousel({ activeSlug, className }) {
 
    <button
     type="button"
-    onClick={() => emblaApi?.scrollPrev()}
-    className="absolute top-1/2 -left-3 z-10 hidden size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-charcoal/10 bg-white/90 text-charcoal shadow-sm backdrop-blur-sm transition hover:bg-white md:flex"
-    aria-label={t("product.previousCategories")}
-   >
-    <HeroChevronLeft className="size-5" />
-   </button>
-   <button
-    type="button"
     onClick={() => emblaApi?.scrollNext()}
-    className="absolute top-1/2 -right-3 z-10 hidden size-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-charcoal/10 bg-white/90 text-charcoal shadow-sm backdrop-blur-sm transition hover:bg-white md:flex"
+    className={categoryCarouselNavBtnClass}
     aria-label={t("product.nextCategories")}
    >
-    <HeroChevronRight className="size-5" />
+    <HeroChevronRight className="size-5" aria-hidden />
    </button>
   </div>
  );

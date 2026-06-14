@@ -30,7 +30,7 @@ function getInstagramLabel(href) {
 }
 
 const contactLinkClassName =
- "inline-flex items-center gap-2.5 text-charcoal/85 transition-colors hover:text-charcoal";
+ "inline-flex w-fit scale-100 origin-left items-center gap-2.5 text-charcoal/85 transition-[scale,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105 hover:text-charcoal motion-reduce:duration-150";
 
 export function StoreShowcase() {
  const { t, locale, dictionary } = useTranslations();
@@ -55,77 +55,77 @@ export function StoreShowcase() {
     <div className={cn("flex min-w-0 flex-col", storeShowcaseInfoClass)}>
      <div className="flex flex-1 flex-col text-sm leading-relaxed text-charcoal/85 md:text-[0.95rem]">
       <div className="space-y-4">
-      <h2 className="font-display text-base font-semibold tracking-[0.18em] text-charcoal md:text-lg">
-       {store.name}
-      </h2>
+       <h2 className="font-display text-base font-semibold tracking-[0.18em] text-charcoal md:text-lg">
+        {store.name}
+       </h2>
 
-      <p>{store.address}</p>
+       <p>{store.address}</p>
 
-      <div className="space-y-1">
-       {store.hours.map((row) => (
-        <p key={row.label}>
-         {row.label}: {row.hours}
-        </p>
-       ))}
-      </div>
+       <div className="space-y-1">
+        {store.hours.map((row) => (
+         <p key={row.label}>
+          {row.label}: {row.hours}
+         </p>
+        ))}
+       </div>
 
-      <div className="flex flex-col gap-3 pt-1">
-       {store.phoneHref ? (
-        <Link href={store.phoneHref} className={contactLinkClassName}>
-         <Phone className="size-5 shrink-0 text-charcoal/50" aria-hidden />
-         <span>{store.phone}</span>
-        </Link>
-       ) : null}
-       {whatsAppHref ? (
-        <Link
-         href={whatsAppHref}
-         target="_blank"
-         rel="noopener noreferrer"
-         className={contactLinkClassName}
-        >
-         <FaWhatsapp className="size-5 shrink-0 text-charcoal/50" aria-hidden />
-         <span>{store.phone}</span>
-        </Link>
-       ) : null}
-       {store.email ? (
-        <Link
-         href={`mailto:${store.email}`}
-         className={contactLinkClassName}
-        >
-         <Mail className="size-5 shrink-0 text-charcoal/50" aria-hidden />
-         <span>{store.email}</span>
-        </Link>
-       ) : null}
-       {socialLinks
-        .filter((item) => item.href)
-        .map((item) => (
+       <div className="flex flex-col gap-3 pt-1">
+        {store.phoneHref ? (
+         <Link href={store.phoneHref} className={contactLinkClassName}>
+          <Phone className="size-5 shrink-0 text-charcoal/50" aria-hidden />
+          <span>{store.phone}</span>
+         </Link>
+        ) : null}
+        {whatsAppHref ? (
          <Link
-          key={item.label}
-          href={item.href}
+          href={whatsAppHref}
           target="_blank"
           rel="noopener noreferrer"
           className={contactLinkClassName}
          >
-          <SocialIcon
-           label={item.label}
-           className="size-5 shrink-0 text-charcoal/50"
-          />
-          <span>{getInstagramLabel(item.href)}</span>
+          <FaWhatsapp className="size-5 shrink-0 text-charcoal/50" aria-hidden />
+          <span>{store.phone}</span>
          </Link>
-        ))}
-      </div>
+        ) : null}
+        {store.email ? (
+         <Link
+          href={`mailto:${store.email}`}
+          className={contactLinkClassName}
+         >
+          <Mail className="size-5 shrink-0 text-charcoal/50" aria-hidden />
+          <span>{store.email}</span>
+         </Link>
+        ) : null}
+        {socialLinks
+         .filter((item) => item.href)
+         .map((item) => (
+          <Link
+           key={item.label}
+           href={item.href}
+           target="_blank"
+           rel="noopener noreferrer"
+           className={contactLinkClassName}
+          >
+           <SocialIcon
+            label={item.label}
+            className="size-5 shrink-0 text-charcoal/50"
+           />
+           <span>{getInstagramLabel(item.href)}</span>
+          </Link>
+         ))}
+       </div>
       </div>
 
       <div className="mt-auto flex justify-end border-t border-charcoal/10 pt-4">
-      <Link
-       href={store.mapUrl}
-       target="_blank"
-       rel="noopener noreferrer"
-       className="inline-flex items-center gap-1.5 font-display text-[0.65rem] tracking-[0.22em] text-charcoal/70 uppercase transition-colors hover:text-charcoal"
-      >
-       <FaLocationArrow className="size-3.5 shrink-0" aria-hidden />
-       {t("contact.viewOnMap")}
-      </Link>
+       <Link
+        href={store.mapUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex scale-100 items-center gap-1.5 font-display text-[0.65rem] tracking-[0.22em] text-charcoal/70 uppercase transition-[scale,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105 hover:text-charcoal motion-reduce:duration-150"
+       >
+        <FaLocationArrow className="size-3.5 shrink-0" aria-hidden />
+        {t("contact.viewOnMap")}
+       </Link>
       </div>
      </div>
     </div>

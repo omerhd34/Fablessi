@@ -12,6 +12,9 @@ import { useTranslations } from "@/contexts/locale-provider";
 import { getSortOptions } from "@/lib/i18n/catalog";
 import { cn } from "@/lib/utils";
 
+const sortMenuHoverClass =
+ "scale-100 transition-[scale,background-color,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-150";
+
 export function ProductsSortMenu({
  sort,
  onSortChange,
@@ -58,11 +61,23 @@ export function ProductsSortMenu({
      className="w-[min(17.5rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-charcoal/8 bg-white p-0 text-charcoal shadow-[0_8px_32px_rgb(0_0_0/12%)] ring-0"
     >
      <div className="flex items-center justify-between px-5 py-4">
-      <p className="text-base font-semibold text-charcoal">{t("catalog.sort")}</p>
+      <p
+       className={cn(
+        "origin-left text-base font-semibold text-charcoal",
+        sortMenuHoverClass,
+        "hover:scale-105"
+       )}
+      >
+       {t("catalog.sort")}
+      </p>
       <button
        type="button"
        onClick={() => setOpen(false)}
-       className="flex size-8 cursor-pointer items-center justify-center rounded-full text-charcoal/55 transition hover:bg-charcoal/6 hover:text-charcoal"
+       className={cn(
+        "flex size-8 scale-100 cursor-pointer items-center justify-center rounded-full text-charcoal/55",
+        sortMenuHoverClass,
+        "hover:scale-110 hover:bg-charcoal/6 hover:text-charcoal"
+       )}
        aria-label={t("catalog.closeSort")}
       >
        <CloseIcon className="size-5 stroke-[1.75]" aria-hidden />
@@ -83,7 +98,8 @@ export function ProductsSortMenu({
           setOpen(false);
          }}
          className={cn(
-          "cursor-pointer rounded-xl px-3 py-3 text-left text-sm leading-snug text-charcoal/75 transition-colors focus:bg-charcoal/6 focus:text-charcoal",
+          sortMenuHoverClass,
+          "origin-left cursor-pointer rounded-xl px-3 py-3 text-left text-sm leading-snug text-charcoal/75 hover:scale-[1.03] focus:bg-charcoal/6 focus:text-charcoal",
           active && "bg-charcoal/6 font-semibold text-charcoal"
          )}
         >

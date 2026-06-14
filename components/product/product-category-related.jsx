@@ -43,7 +43,11 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
         <Link
          key={product.id}
          href={`/urunler/${product.slug}`}
-         className={cn("group flex cursor-pointer items-center gap-3 rounded-2xl p-2.5 no-underline", productRelatedItemClass)}
+         className={cn(
+          "group flex cursor-pointer items-center gap-3 rounded-2xl p-2.5 no-underline",
+          productRelatedItemClass,
+          "origin-center scale-100 transition-[scale,border-color,background-color,box-shadow] duration-[2000ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.02] motion-reduce:duration-150"
+         )}
         >
          <div className={cn("relative size-16 shrink-0 overflow-hidden rounded-xl", productRelatedItemThumbClass)}>
           {imageUrl ? (
@@ -52,7 +56,7 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
             alt={product.images?.[0]?.alt ?? product.name}
             fill
             sizes="64px"
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            className="object-cover"
            />
           ) : null}
          </div>

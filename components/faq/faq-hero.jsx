@@ -76,7 +76,7 @@ export function FaqHero() {
         type="button"
         onClick={() => scrollToCategory(tab.id)}
         className={cn(
-         "cursor-pointer rounded-full border border-white/35 bg-white/20 px-4 py-2 font-body text-xs font-medium text-white backdrop-blur-sm transition-colors hover:bg-white/30 md:px-5"
+         "scale-100 cursor-pointer rounded-full border border-white/35 bg-white/20 px-4 py-2 font-body text-xs font-medium text-white backdrop-blur-sm transition-[scale,background-color,border-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:border-white/45 hover:bg-white/30 md:px-5 motion-reduce:duration-150"
         )}
        >
         {tab.label}

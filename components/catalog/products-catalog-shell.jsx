@@ -80,10 +80,7 @@ export function ProductsCatalogShell({
    </div>
 
    {!categorySlug && !collectionSlug ? (
-    <ProductsCategoryCarousel
-     activeSlug={categorySlug}
-     className="hidden md:block"
-    />
+    <ProductsCategoryCarousel activeSlug={categorySlug} />
    ) : null}
 
    <ProductsCatalogToolbar

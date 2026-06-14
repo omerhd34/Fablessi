@@ -45,7 +45,7 @@ export function BrandLogoLink({ href = "/", size = "md", className }) {
      maxWidth: "none",
     }}
     className={cn(
-     "brand-logo-image m-0 block h-auto origin-left p-0 antialiased transition-[transform,filter] duration-300 ease-out font-features-['kern'_1] [text-rendering:geometricPrecision] group-hover/logo:scale-[1.08] group-focus-visible/logo:scale-[1.08] motion-safe:duration-650 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)]",
+     "brand-logo-image m-0 block h-auto origin-left scale-100 p-0 antialiased transition-[scale,filter] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] font-features-['kern'_1] [text-rendering:geometricPrecision] group-hover/logo:scale-[1.08] group-focus-visible/logo:scale-[1.08] motion-reduce:duration-150",
      brandLogoImageFilterClass
     )}
    />

@@ -34,13 +34,13 @@ function ProductGalleryImage({
 }) {
  const isSlide = variant === "slide";
  const wrapperClassName = cn(
-  "relative block w-full overflow-hidden",
+  "group/gallery-image relative block w-full overflow-hidden",
   isSlide
    ? "aspect-4/3 bg-white min-[48rem]:aspect-16/10"
    : cn(
-      "aspect-4/3 min-[1152px]:aspect-16/10 cursor-pointer rounded-3xl bg-white",
-      productGalleryFrameClass
-     ),
+    "aspect-4/3 min-[1152px]:aspect-16/10 cursor-pointer rounded-3xl bg-white",
+    productGalleryFrameClass
+   ),
   className
  );
 
@@ -50,10 +50,7 @@ function ProductGalleryImage({
    alt={image.alt ?? t("product.productImage")}
    fill
    sizes="(max-width: 1151px) 100vw, 60vw"
-   className={cn(
-    "object-cover transition-transform duration-300",
-    !isSlide && "hover:scale-[1.02]"
-   )}
+   className="object-cover scale-100 transition-[scale] duration-1500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/gallery-image:scale-[1.03] motion-reduce:duration-150"
    priority={index === 0}
   />
  );

@@ -140,7 +140,7 @@ export function ProductsMegaMenu({ open, panelRef }) {
           <Link
            href={group.href}
            className={cn(
-            "products-mega-menu-view-all inline-flex shrink-0 origin-right items-center gap-0.5 text-[0.8125rem] font-semibold text-white/92 transition-[color,transform] duration-200 [text-shadow:0_1px_8px_oklch(0_0_0/40%)] hover:scale-110 hover:text-white",
+            "products-mega-menu-view-all inline-flex shrink-0 origin-right scale-100 items-center gap-0.5 text-[0.8125rem] font-semibold text-white/92 transition-[color,scale] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] [text-shadow:0_1px_8px_oklch(0_0_0/40%)] hover:scale-110 hover:text-white motion-reduce:duration-150",
             lightMegaMenuViewAllClass
            )}
           >

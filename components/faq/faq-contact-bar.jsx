@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { FaWhatsapp, Mail, Phone } from "@/lib/icons";
+import { useTranslations } from "@/contexts/locale-provider";
 import {
  getWhatsAppHref,
  siteEmail,
@@ -7,18 +10,22 @@ import {
  sitePhoneHref,
 } from "@/lib/site-contact";
 
+const faqContactIconLinkClass =
+ "inline-flex scale-100 items-center justify-center text-charcoal/70 transition-[scale,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:text-charcoal motion-reduce:duration-150";
+
 export function FaqContactBar() {
+ const { t } = useTranslations();
  const whatsAppHref = getWhatsAppHref();
 
  return (
-  <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 font-body text-sm text-charcoal/75 md:gap-x-10 md:text-[0.9rem]">
+  <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 md:gap-x-10">
    {sitePhoneHref ? (
     <Link
      href={sitePhoneHref}
-     className="inline-flex items-center gap-2 transition-colors hover:text-charcoal"
+     className={faqContactIconLinkClass}
+     aria-label={t("footer.phone", { phone: sitePhone })}
     >
-     <Phone className="size-4 shrink-0 text-charcoal/45" />
-     <span>{sitePhone}</span>
+     <Phone className="size-6 shrink-0" aria-hidden />
     </Link>
    ) : null}
 
@@ -27,20 +34,20 @@ export function FaqContactBar() {
      href={whatsAppHref}
      target="_blank"
      rel="noopener noreferrer"
-     className="inline-flex items-center gap-2 transition-colors hover:text-charcoal"
+     className={faqContactIconLinkClass}
+     aria-label={t("contact.whatsapp")}
     >
-     <FaWhatsapp className="size-4 shrink-0 text-charcoal/45" />
-     <span>WhatsApp</span>
+     <FaWhatsapp className="size-6 shrink-0" aria-hidden />
     </Link>
    ) : null}
 
    {siteEmail ? (
     <Link
      href={`mailto:${siteEmail}`}
-     className="inline-flex items-center gap-2 transition-colors hover:text-charcoal"
+     className={faqContactIconLinkClass}
+     aria-label={t("footer.email", { email: siteEmail })}
     >
-     <Mail className="size-4 shrink-0 text-charcoal/45" />
-     <span>{siteEmail}</span>
+     <Mail className="size-6 shrink-0" aria-hidden />
     </Link>
    ) : null}
   </div>
