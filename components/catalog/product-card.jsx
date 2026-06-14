@@ -28,7 +28,7 @@ export function ProductCard({
  const displayPrice = getProductDisplayPrice(product);
  const priceLabel = formatProductPrice(displayPrice, locale);
  const badgeClassName = cn(
-  "inline-flex rounded-full border border-white/20 bg-white/15 font-medium text-white shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md",
+  "inline-flex scale-100 rounded-full border border-white/20 bg-white/15 font-medium text-white shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md transition-[scale] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.08] motion-reduce:duration-150",
   isCatalog ? "px-3 py-1.5 text-xs" : "px-2.5 py-1 text-[0.65rem]"
  );
 
@@ -67,11 +67,15 @@ export function ProductCard({
      <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent" />
 
      <div className="absolute right-3 bottom-3 left-3 flex items-end justify-between gap-2">
-      <span className={cn(badgeClassName, "min-w-0 max-w-[65%] truncate")}>
+      <span
+       className={cn(badgeClassName, "origin-left min-w-0 max-w-[65%] truncate")}
+      >
        {bottomLabel}
       </span>
       {priceLabel ? (
-       <span className={cn(badgeClassName, "shrink-0")}>{priceLabel}</span>
+       <span className={cn(badgeClassName, "origin-right shrink-0")}>
+        {priceLabel}
+       </span>
       ) : null}
      </div>
     </Link>
