@@ -66,7 +66,7 @@ export function HomeShowcaseSlider({
      {action ? (
       <Link
        href={action.href}
-       className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-charcoal/70 transition hover:text-charcoal"
+       className="mt-4 inline-flex scale-100 origin-center items-center gap-1 text-sm font-semibold text-charcoal/70 transition-[scale,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105 hover:text-charcoal motion-reduce:duration-150"
       >
        {action.label}
        <ChevronRight className="size-4 shrink-0" aria-hidden />
