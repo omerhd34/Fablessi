@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ChevronRight, HeroChevronLeft, HeroChevronRight } from "@/lib/icons";
-import { homeShowcaseNavBtnClass } from "@/lib/layout/header-styles";
+import { contactFloatBtnClass } from "@/lib/layout/header-styles";
 import {
  containerPremiumClass,
  headingDisplayClass,
@@ -19,7 +19,10 @@ import {
 
 const slideClassName = "basis-full sm:basis-1/3 sm:pl-5";
 
-const navButtonClassName = homeShowcaseNavBtnClass;
+const navButtonClassName = cn(
+ contactFloatBtnClass,
+ "size-11 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12 [&_svg]:size-5 md:[&_svg]:size-[1.375rem] [&_svg]:[stroke-width:3.5]"
+);
 
 function HomeShowcaseNav({ direction }) {
  const { scrollPrev, scrollNext, canScrollNext } = useCarousel();

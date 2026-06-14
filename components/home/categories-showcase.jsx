@@ -19,6 +19,12 @@ import { cn } from "@/lib/utils";
 function CategoryCard({ category, variant = "desktop" }) {
  const isMobile = variant === "mobile";
 
+ const labelClassName =
+  "scale-100 origin-left transition-[scale] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-105 motion-reduce:duration-150";
+
+ const badgeClassName =
+  "inline-flex rounded-full border border-white/20 bg-white/15 font-semibold text-white shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md";
+
  return (
   <Link href={category.href} className="group/card block">
    <div className={cn(productCardKalifClass, "relative aspect-4/5 rounded-3xl sm:rounded-[1.25rem]")}>
@@ -27,7 +33,7 @@ function CategoryCard({ category, variant = "desktop" }) {
      alt={category.label}
      fill
      sizes={isMobile ? "48vw" : "(max-width: 640px) 88vw, 33vw"}
-     className="size-full object-cover transition-transform duration-500 group-hover/card:scale-[1.03]"
+     className="size-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-[1.03] motion-reduce:duration-150"
     />
     <div
      className={
@@ -37,12 +43,14 @@ function CategoryCard({ category, variant = "desktop" }) {
      }
     />
     {isMobile ? (
-     <span className="absolute bottom-3.5 left-3.5 text-sm font-semibold text-white drop-shadow-[0_1px_8px_rgb(0_0_0/45%)]">
-      {category.label}
-     </span>
+     <div className="absolute right-3 bottom-3 left-3">
+      <span className={cn(labelClassName, badgeClassName, "px-3 py-1.5 text-xs")}>
+       {category.label}
+      </span>
+     </div>
     ) : (
      <div className="absolute right-3 bottom-3 left-3">
-      <span className="inline-flex rounded-full bg-white/95 px-3.5 py-1.5 text-xs font-semibold text-charcoal shadow-sm backdrop-blur-sm">
+      <span className={cn(labelClassName, badgeClassName, "px-3.5 py-1.5 text-xs")}>
        {category.label}
       </span>
      </div>
