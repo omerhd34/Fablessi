@@ -50,3 +50,5 @@ cursorrules.md
 *.mov
 *.MOV
 /public/video/
+
+.cursorignore
