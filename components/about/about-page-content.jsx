@@ -1,11 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useTranslations } from "@/contexts/locale-provider";
 import {
  aboutContentBodyClass,
  aboutContentClosingClass,
  aboutVisualImageClass,
+ visualHeroTitleLineClass,
+ visualHeroTitleShadowClass,
 } from "@/lib/layout/page-styles";
 import {
  containerPremiumClass,
@@ -13,22 +16,59 @@ import {
 } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 
+const ABOUT_VISUAL_IMAGES = {
+ sm: "/about-visual/mobile.png",
+ md: "/about-visual/tablet.png",
+ lg: "/about-visual/laptop.png",
+ xl: "/about-visual/genis-ekran.png",
+};
+
 export function AboutPageContent() {
  const { dictionary } = useTranslations();
  const { about } = dictionary;
 
+ const visualAlt = about.visualTitleLines.join(" ");
+
  return (
   <>
-   <section className={cn("about-visual", sectionPaddingSmClass)} aria-hidden>
+   <section className={cn("about-visual", sectionPaddingSmClass)}>
     <div className={containerPremiumClass}>
-     <div className={cn("relative aspect-16/9 overflow-hidden rounded-2xl sm:aspect-21/9", aboutVisualImageClass)}>
-      <Image
-       src="https://res.cloudinary.com/dbo6puh1c/image/upload/v1781205876/fablessi/velar-oturma/01.jpg"
-       alt=""
-       fill
-       sizes="(max-width: 1280px) 100vw, 1200px"
-       className="object-cover object-center"
-      />
+     <div className={cn("relative aspect-video overflow-hidden rounded-2xl sm:aspect-21/9", aboutVisualImageClass)}>
+      <picture className="absolute inset-0 block h-full w-full">
+       <source media="(min-width: 96rem)" srcSet={ABOUT_VISUAL_IMAGES.xl} />
+       <source media="(min-width: 64rem)" srcSet={ABOUT_VISUAL_IMAGES.lg} />
+       <source media="(min-width: 48rem)" srcSet={ABOUT_VISUAL_IMAGES.md} />
+       <Image
+        src={ABOUT_VISUAL_IMAGES.sm}
+        alt={visualAlt}
+        fill
+        sizes="(max-width: 1280px) 100vw, 1200px"
+        className="object-cover object-center"
+       />
+      </picture>
+      <div className="pointer-events-none absolute inset-x-0 top-[10%] px-5 text-center sm:top-[11%] sm:px-8 md:top-[12%] lg:top-[13%]">
+       <h2
+        className={cn(
+         "mx-auto flex w-full max-w-[min(100%,40rem)] flex-col items-center gap-2 sm:max-w-[min(100%,46rem)] sm:gap-2.5 lg:max-w-[min(100%,52rem)] lg:gap-3",
+         visualHeroTitleShadowClass
+        )}
+       >
+        <span className={cn("block sm:whitespace-nowrap", visualHeroTitleLineClass.lead)}>
+         {about.visualTitleLines[0]}
+        </span>
+        <span className={cn("block sm:whitespace-nowrap", visualHeroTitleLineClass.emphasis)}>
+         {about.visualTitleLines[1]}
+        </span>
+       </h2>
+      </div>
+      <div className="absolute inset-x-0 bottom-[7%] flex justify-center px-6 sm:bottom-[8%] md:bottom-[9%]">
+       <Link
+        href="/urunler"
+        className="inline-flex h-11 scale-100 items-center justify-center rounded-full border border-white/35 bg-white/15 px-8 text-sm font-semibold tracking-[0.08em] text-white uppercase shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md transition-[scale,background-color,border-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105 hover:border-white/50 hover:bg-white/22 active:scale-100 motion-reduce:duration-150"
+       >
+        {about.visualCta}
+       </Link>
+      </div>
      </div>
     </div>
    </section>
