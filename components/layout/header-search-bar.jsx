@@ -277,7 +277,10 @@ export function HeaderSearchBar({ open, onClose }) {
 
    {open ? (
     <div
-     className={cn("header-search-shell relative z-2 pb-4", containerPremiumClass)}
+     className={cn(
+      "header-search-shell relative z-2 pb-4 max-lg:mt-3",
+      containerPremiumClass
+     )}
      role={showResultsPanel ? "dialog" : undefined}
      aria-modal={showResultsPanel ? "true" : undefined}
      aria-label={showResultsPanel ? t("common.searchResults") : undefined}

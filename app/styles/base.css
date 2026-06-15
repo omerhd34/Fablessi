@@ -159,7 +159,7 @@
 
 @keyframes mobile-nav-drawer-in {
   from {
-    transform: translateX(calc(-100% - 1.25rem));
+    transform: translateX(-100%);
     opacity: 0.6;
   }
 
@@ -176,7 +176,7 @@
   }
 
   to {
-    transform: translateX(calc(-100% - 1.25rem));
+    transform: translateX(-100%);
     opacity: 0.6;
   }
 }

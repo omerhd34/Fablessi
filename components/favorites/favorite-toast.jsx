@@ -2,6 +2,7 @@
 
 import { toast } from "sonner";
 import { CloseIcon, Heart, HeartFilled } from "@/lib/icons";
+import { cn } from "@/lib/utils";
 
 const FAVORITE_TOAST_ID = "favorite-toast";
 
@@ -16,9 +17,14 @@ function FavoriteToastContent({
   <div
    role="status"
    aria-live="polite"
-   className="pointer-events-auto flex w-[min(100vw-2rem,22rem)] items-start gap-3 rounded-2xl border border-charcoal/10 bg-white/96 p-3.5 shadow-[0_12px_40px_rgb(0_0_0/12%)] backdrop-blur-md"
+   className="pointer-events-auto flex w-[min(100vw-2rem,22rem)] items-start gap-3 rounded-2xl border border-(--glass-hero-border) bg-(--glass-hero-icon-surface) p-3.5 shadow-(--glass-float-shadow) [backdrop-filter:var(--glass-hero-blur)] [-webkit-backdrop-filter:var(--glass-hero-blur)]"
   >
-   <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-500">
+   <div
+    className={cn(
+     "flex size-10 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/15",
+     added ? "text-red-400" : "text-white/90"
+    )}
+   >
     {added ? (
      <HeartFilled className="size-5" aria-hidden />
     ) : (
@@ -38,7 +44,7 @@ function FavoriteToastContent({
    <button
     type="button"
     onClick={() => toast.dismiss(id)}
-    className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-charcoal/45 transition hover:bg-charcoal/6 hover:text-charcoal"
+    className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full text-charcoal/55 transition hover:bg-white/15 hover:text-charcoal"
     aria-label={closeLabel}
    >
     <CloseIcon className="size-4" aria-hidden />
@@ -48,8 +54,6 @@ function FavoriteToastContent({
 }
 
 export function showFavoriteToast({ added, title, description, closeLabel }) {
- toast.dismiss(FAVORITE_TOAST_ID);
-
  toast.custom(
   (id) => (
    <FavoriteToastContent

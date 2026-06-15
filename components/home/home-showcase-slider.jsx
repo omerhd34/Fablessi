@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronRight, HeroChevronLeft, HeroChevronRight } from "@/lib/icons";
 import { contactFloatBtnClass } from "@/lib/layout/header-styles";
 import {
@@ -18,11 +19,91 @@ import {
 } from "@/components/ui/carousel";
 
 const slideClassName = "basis-full sm:basis-1/3 sm:pl-5";
+const SHOWCASE_AUTOPLAY_MS = 6000;
 
 const navButtonClassName = cn(
  contactFloatBtnClass,
- "size-11 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12 [&_svg]:size-5 md:[&_svg]:size-[1.375rem] [&_svg]:[stroke-width:3.5]"
+ "hidden size-11 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12 min-[1024px]:inline-flex [&_svg]:size-5 md:[&_svg]:size-[1.375rem] [&_svg]:[stroke-width:3.5]"
 );
+
+function useShowcaseAutoplay(api, enabled) {
+ const autoplayTimerRef = useRef(null);
+ const autoplayRemainingRef = useRef(SHOWCASE_AUTOPLAY_MS);
+ const autoplayStartedAtRef = useRef(0);
+
+ const clearAutoplayTimer = useCallback(() => {
+  if (autoplayTimerRef.current !== null) {
+   window.clearTimeout(autoplayTimerRef.current);
+   autoplayTimerRef.current = null;
+  }
+ }, []);
+
+ const scheduleAutoplay = useCallback(
+  (delay = SHOWCASE_AUTOPLAY_MS) => {
+   if (!api || !enabled) return;
+
+   clearAutoplayTimer();
+   autoplayRemainingRef.current = delay;
+   autoplayStartedAtRef.current = Date.now();
+
+   if (document.hidden) return;
+
+   autoplayTimerRef.current = window.setTimeout(() => {
+    api.scrollNext();
+   }, delay);
+  },
+  [api, clearAutoplayTimer, enabled]
+ );
+
+ const pauseAutoplay = useCallback(() => {
+  if (autoplayTimerRef.current === null) return;
+
+  const elapsed = Date.now() - autoplayStartedAtRef.current;
+  autoplayRemainingRef.current = Math.max(
+   0,
+   autoplayRemainingRef.current - elapsed
+  );
+  clearAutoplayTimer();
+ }, [clearAutoplayTimer]);
+
+ const resumeAutoplay = useCallback(() => {
+  if (!api || !enabled || autoplayTimerRef.current !== null) return;
+  scheduleAutoplay(autoplayRemainingRef.current);
+ }, [api, enabled, scheduleAutoplay]);
+
+ useEffect(() => {
+  if (!api || !enabled) return;
+
+  const onSelect = () => scheduleAutoplay();
+  const onPointerDown = () => clearAutoplayTimer();
+
+  onSelect();
+  api.on("select", onSelect);
+  api.on("reInit", onSelect);
+  api.on("pointerDown", onPointerDown);
+
+  return () => {
+   api.off("select", onSelect);
+   api.off("reInit", onSelect);
+   api.off("pointerDown", onPointerDown);
+   clearAutoplayTimer();
+  };
+ }, [api, clearAutoplayTimer, enabled, scheduleAutoplay]);
+
+ useEffect(() => {
+  const onVisibilityChange = () => {
+   if (document.hidden) {
+    pauseAutoplay();
+   } else {
+    resumeAutoplay();
+   }
+  };
+
+  document.addEventListener("visibilitychange", onVisibilityChange);
+  return () =>
+   document.removeEventListener("visibilitychange", onVisibilityChange);
+ }, [pauseAutoplay, resumeAutoplay]);
+}
 
 function HomeShowcaseNav({ direction }) {
  const { scrollPrev, scrollNext, canScrollNext } = useCarousel();
@@ -43,6 +124,18 @@ function HomeShowcaseNav({ direction }) {
  );
 }
 
+function HomeShowcaseTrack({ children }) {
+ return (
+  <div className="mx-auto w-full max-w-site-shell px-4 sm:px-5 md:px-6 min-[1024px]:grid min-[1024px]:grid-cols-[auto_minmax(0,1fr)_auto] min-[1024px]:items-center min-[1024px]:gap-6 min-[1024px]:px-8 xl:gap-8 xl:px-10">
+   <HomeShowcaseNav direction="prev" />
+   <div className="min-w-0">
+    <CarouselContent className="sm:-ml-5">{children}</CarouselContent>
+   </div>
+   <HomeShowcaseNav direction="next" />
+  </div>
+ );
+}
+
 export function HomeShowcaseSlider({
  id,
  title,
@@ -52,6 +145,21 @@ export function HomeShowcaseSlider({
  className,
  children,
 }) {
+ const [carouselApi, setCarouselApi] = useState(null);
+ const [autoplayEnabled, setAutoplayEnabled] = useState(true);
+
+ useEffect(() => {
+  const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const updateAutoplay = () => setAutoplayEnabled(!motionQuery.matches);
+
+  updateAutoplay();
+  motionQuery.addEventListener("change", updateAutoplay);
+
+  return () => motionQuery.removeEventListener("change", updateAutoplay);
+ }, []);
+
+ useShowcaseAutoplay(carouselApi, autoplayEnabled && itemCount > 1);
+
  if (!itemCount) {
   return null;
  }
@@ -79,6 +187,7 @@ export function HomeShowcaseSlider({
    </div>
 
    <Carousel
+    setApi={setCarouselApi}
     opts={{
      align: "start",
      loop: true,
@@ -90,15 +199,7 @@ export function HomeShowcaseSlider({
     className="w-full"
     aria-label={title}
    >
-    <div className="mx-auto grid w-full max-w-site-shell grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:gap-4 sm:px-5 md:gap-6 md:px-6 lg:px-8 xl:gap-8 xl:px-10">
-     <HomeShowcaseNav direction="prev" />
-     <div className="min-w-0">
-      <CarouselContent className="sm:-ml-5">
-       {children}
-      </CarouselContent>
-     </div>
-     <HomeShowcaseNav direction="next" />
-    </div>
+    <HomeShowcaseTrack>{children}</HomeShowcaseTrack>
     <div className={containerPremiumClass}>
      <CarouselDots className="mt-8" />
     </div>

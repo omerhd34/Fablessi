@@ -16,26 +16,32 @@ export function ProductFavoriteButton({ product, className }) {
   event.preventDefault();
   event.stopPropagation();
 
-  const added = toggleFavorite(product);
+  const wasFavorited = isFavorite(product.slug);
+  toggleFavorite(product);
 
   showFavoriteToast({
-   added,
-   title: added ? t("favorites.addedToast") : t("favorites.removedToast"),
+   added: !wasFavorited,
+   title: wasFavorited ? t("favorites.removedToast") : t("favorites.addedToast"),
    description: getProductFavoriteToastLabel(product, dictionary),
    closeLabel: t("common.close"),
   });
+ };
+
+ const stopPointerPropagation = (event) => {
+  event.stopPropagation();
  };
 
  return (
   <button
    type="button"
    onClick={handleClick}
+   onPointerDown={stopPointerPropagation}
    aria-label={
     favorited ? t("product.removeFromFavorites") : t("product.addToFavorites")
    }
    aria-pressed={favorited}
    className={cn(
-    "inline-flex size-9 scale-100 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md transition-[scale,background-color,border-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:bg-white/22 motion-reduce:duration-150",
+    "relative z-30 inline-flex size-9 touch-manipulation scale-100 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md transition-[scale,background-color,border-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:bg-white/22 motion-reduce:duration-150",
     favorited && "text-red-400",
     className
    )}

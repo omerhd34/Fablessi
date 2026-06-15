@@ -226,11 +226,12 @@ export function ProductDetailLeft({
  const favorited = hydrated && isFavorite(product.slug);
 
  const handleToggleFavorite = () => {
-  const added = toggleFavorite(product);
+  const wasFavorited = isFavorite(product.slug);
+  toggleFavorite(product);
 
   showFavoriteToast({
-   added,
-   title: added ? t("favorites.addedToast") : t("favorites.removedToast"),
+   added: !wasFavorited,
+   title: wasFavorited ? t("favorites.removedToast") : t("favorites.addedToast"),
    description: getProductFavoriteToastLabel(product, dictionary),
    closeLabel: t("common.close"),
   });

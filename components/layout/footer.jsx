@@ -67,7 +67,7 @@ export function Footer() {
  const workingHours = getSiteWorkingHours(locale, dictionary);
 
  return (
-  <footer className="mt-4 rounded-t-[2rem] bg-white pb-28 pt-14 shadow-[0_-4px_32px_rgb(0_0_0/4%)] sm:pb-24 lg:pb-16 lg:pt-16">
+  <footer className="mt-4 rounded-t-[2rem] bg-white pt-14 shadow-[0_-4px_32px_rgb(0_0_0/4%)] lg:pt-16">
    <div className={containerPremiumClass}>
     <div className="grid gap-y-12 gap-x-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-12 xl:gap-x-16">
      <FooterColumn title={t("footer.categories")}>
@@ -153,21 +153,23 @@ export function Footer() {
      </FooterColumn>
     </div>
 
-    <div className="mt-14 flex flex-col gap-4 border-t border-charcoal/8 pt-8 lg:mt-16 lg:pt-10 sm:flex-row sm:items-center sm:justify-between">
-     <p className="font-body text-[12px] text-charcoal/55">
-      {year} © {brandName}
-     </p>
-     <p className="font-body text-[12px] text-charcoal/55 sm:text-right">
-      {t("footer.siteDeveloper")}{" "}
-      <Link
-       href="https://www.omerhalisdemir.com.tr/"
-       target="_blank"
-       rel="noopener noreferrer"
-       className="text-charcoal/70 underline underline-offset-2 transition-colors hover:text-charcoal"
-      >
-       OHD
-      </Link>
-     </p>
+    <div className="mt-20 border-t border-charcoal/8 pt-8 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:mt-14 lg:mt-16 lg:pt-10">
+     <div className="flex min-h-(--glass-float-size) pr-[calc(1.25rem+var(--glass-float-size)+0.75rem)] max-sm:flex-col max-sm:justify-end max-sm:gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
+      <p className="font-body text-[12px] text-charcoal/55">
+       {year} © {brandName}
+      </p>
+      <p className="font-body text-[12px] text-charcoal/55 sm:text-right">
+       {t("footer.siteDeveloper")}{" "}
+       <Link
+        href="https://www.veltstack.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-charcoal/70 underline underline-offset-2 transition-colors hover:text-charcoal"
+       >
+        VeltStack
+       </Link>
+      </p>
+     </div>
     </div>
    </div>
   </footer>

@@ -64,20 +64,24 @@ export function ProductCard({
       <div className="absolute inset-0 bg-cream/70" aria-hidden />
      )}
 
-     <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent" />
+     <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-black/15" />
 
-     <div className="absolute right-3 bottom-3 left-3 flex items-end justify-between gap-2">
+     {priceLabel ? (
       <span
-       className={cn(badgeClassName, "origin-left min-w-0 max-w-[65%] truncate")}
+       className={cn(badgeClassName, "absolute top-3 right-3 z-10 shrink-0")}
       >
-       {bottomLabel}
+       {priceLabel}
       </span>
-      {priceLabel ? (
-       <span className={cn(badgeClassName, "origin-right shrink-0")}>
-        {priceLabel}
-       </span>
-      ) : null}
-     </div>
+     ) : null}
+
+     <span
+      className={cn(
+       badgeClassName,
+       "absolute bottom-3 left-3 z-10 max-w-[calc(100%-1.5rem)] origin-left text-left leading-snug line-clamp-2"
+      )}
+     >
+      {bottomLabel}
+     </span>
     </Link>
 
     {showFavoriteButton ? (

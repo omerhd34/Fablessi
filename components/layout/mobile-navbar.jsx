@@ -59,8 +59,8 @@ export function MobileNavbar({ searchOpen, onSearchToggle, onMenuOpen }) {
    <div className="flex min-h-[calc(var(--glass-mobile-btn-size)+0.875rem)] items-center justify-between gap-1.5 pt-3.5 sm:max-lg:min-h-[calc(var(--glass-mobile-btn-size)+1rem)] sm:max-lg:gap-2 sm:max-lg:pt-4">
     <div
      className={cn(
-      "block h-fit w-fit flex-none self-center p-0 leading-none [&_.brand-logo-image]:h-9! sm:max-lg:[&_.brand-logo-image]:!h-10",
-      isHome && "min-w-0 shrink self-center [&_.brand-logo-image]:h-[2.375rem]! sm:max-lg:[&_.brand-logo-image]:!h-[2.625rem]"
+      "block h-fit w-fit flex-none self-center p-0 leading-none [&_.brand-logo-image]:h-9! sm:max-lg:[&_.brand-logo-image]:h-10!",
+      isHome && "min-w-0 shrink self-center [&_.brand-logo-image]:h-9.5! sm:max-lg:[&_.brand-logo-image]:h-10.5!"
      )}
     >
      <BrandLogoLink size="md" />

@@ -50,7 +50,7 @@ const mobileNavIconMap = {
 };
 
 const mobileNavSheetClass =
- "mobile-nav-sheet top-3.5! bottom-3.5! left-3.5! h-auto! w-[min(21.5rem,calc(100vw-1.75rem))]! max-w-[21.5rem]! gap-0! rounded-4xl border border-[var(--glass-hero-border)]! bg-[var(--glass-hero-surface)]! text-white/94 shadow-[var(--glass-hero-shadow)]! transition-none! sm:top-5! sm:bottom-5! sm:left-5! sm:w-[min(25.5rem,calc(100vw-2.5rem))]! sm:max-w-[25.5rem] sm:rounded-[2.25rem] [backdrop-filter:var(--glass-hero-blur)] [-webkit-backdrop-filter:var(--glass-hero-blur)]";
+ "mobile-nav-sheet top-0! bottom-0! left-0! h-full! w-full! max-w-none! sm:max-w-none! gap-0! rounded-none border-0 border-r border-[var(--glass-hero-border)]! bg-[var(--glass-hero-surface)]! text-white/94 shadow-[var(--glass-hero-shadow)]! transition-none! [backdrop-filter:var(--glass-hero-blur)] [-webkit-backdrop-filter:var(--glass-hero-blur)]";
 
 const mobileNavScrollClass =
  "mobile-nav-sheet__scroll min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 [scrollbar-color:oklch(1_0_0/42%)_transparent] [scrollbar-width:thin] hover:[&::-webkit-scrollbar-thumb]:bg-white/55 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/38 [&::-webkit-scrollbar-track]:my-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:w-1 [@media(hover:hover)_and_(pointer:fine)]:pr-3";
