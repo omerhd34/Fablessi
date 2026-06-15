@@ -3,8 +3,14 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useTranslations } from "@/contexts/locale-provider";
-import { faqHeroImage } from "@/lib/faq";
 import { cn } from "@/lib/utils";
+
+const FAQ_HERO_IMAGES = {
+ sm: "/about-visual/mobile.png",
+ md: "/about-visual/tablet.png",
+ lg: "/about-visual/laptop.png",
+ xl: "/about-visual/genis-ekran.png",
+};
 
 function getSiteHeaderHeight() {
  const header = document.querySelector(".site-header");
@@ -47,19 +53,24 @@ export function FaqHero() {
    className="faq-hero relative mt-0 w-full"
    style={{ "--faq-hero-header-offset": `${headerOffset}px` }}
   >
-   <div className="relative min-h-[min(58vh,640px)] w-full md:min-h-[min(52vh,560px)] lg:min-h-[min(48vh,520px)]">
-    <Image
-     src={faqHeroImage}
-     alt=""
-     fill
-     priority
-     sizes="100vw"
-     className="object-cover object-center"
-    />
+   <div className="relative min-h-[min(42vh,400px)] w-full sm:min-h-[min(48vh,480px)] md:min-h-[min(52vh,560px)] lg:min-h-[min(48vh,520px)]">
+    <picture className="absolute inset-0 block h-full w-full">
+     <source media="(min-width: 96rem)" srcSet={FAQ_HERO_IMAGES.xl} />
+     <source media="(min-width: 64rem)" srcSet={FAQ_HERO_IMAGES.lg} />
+     <source media="(min-width: 48rem)" srcSet={FAQ_HERO_IMAGES.md} />
+     <Image
+      src={FAQ_HERO_IMAGES.sm}
+      alt=""
+      fill
+      priority
+      sizes="100vw"
+      className="object-cover object-center"
+     />
+    </picture>
     <div className="absolute inset-0 bg-black/30" aria-hidden />
 
     <div
-     className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 pb-10 text-center text-white"
+     className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 pb-6 text-center text-white sm:pb-10"
      style={{ paddingTop: "var(--faq-hero-header-offset, 0px)" }}
     >
      <h1 className="text-2xl font-semibold tracking-tight md:text-[2rem] lg:text-[2.25rem]">
@@ -67,7 +78,7 @@ export function FaqHero() {
      </h1>
 
      <nav
-      className="mx-auto mt-8 flex w-full flex-nowrap items-center justify-center gap-x-2 sm:gap-x-4 md:gap-x-8"
+      className="mx-auto mt-5 flex w-full flex-nowrap items-center justify-center gap-x-2 sm:mt-8 sm:gap-x-4 md:gap-x-8"
       aria-label={t("faq.categoriesAria")}
      >
       {faqCategoryTabs.map((tab) => (

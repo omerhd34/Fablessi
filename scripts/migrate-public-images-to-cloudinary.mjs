@@ -14,7 +14,6 @@ const FOLDERS_PATH = path.join(ROOT, "lib", "media", "product-folders.json");
 
 const SOURCE_FILES_TO_PATCH = [
  "lib/i18n/navigation-data.js",
- "lib/faq.js",
  "components/about/about-page-content.jsx",
  "components/mission/mission-page-content.jsx",
  "components/home/brand-experience-banner.jsx",
