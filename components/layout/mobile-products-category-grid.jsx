@@ -25,7 +25,7 @@ export function MobileProductsCategoryGrid({ onClose }) {
      key={category.slug}
      href={category.href}
      onClick={onClose}
-     className="group relative block aspect-4/5 overflow-hidden rounded-2xl bg-cream/60"
+     className="group relative block aspect-4/5 overflow-hidden rounded-2xl bg-cream/60 md:aspect-auto md:h-52"
     >
      {category.image ? (
       <>
