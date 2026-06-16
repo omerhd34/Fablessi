@@ -11,6 +11,7 @@ import {
  missionCommitmentItemClass,
  missionCtaClass,
  missionSectionHeaderClass,
+ missionIntroClass,
  missionStatementClass,
  missionStatementsClass,
  missionValueClass,
@@ -56,14 +57,21 @@ export function MissionPageContent() {
   <>
    <section
     className={cn(
-     "mission-statements border-t border-charcoal/8",
-     sectionPaddingSmClass,
-     missionStatementsClass
+     "mission-intro bg-background pb-12 pt-10 md:pb-14 md:pt-14",
+     missionIntroClass
     )}
    >
     <div className={containerPremiumClass}>
-     <MissionSectionHeader title={missionVision.pageTitle} />
+     <p className="mx-auto max-w-3xl text-center font-body text-sm leading-relaxed text-charcoal/75 md:text-[0.95rem]">
+      {missionVision.intro}
+     </p>
+    </div>
+   </section>
 
+   <section
+    className={cn("mission-statements", sectionPaddingSmClass, missionStatementsClass)}
+   >
+    <div className={containerPremiumClass}>
      <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
       <article
        className={cn(
@@ -164,7 +172,7 @@ export function MissionPageContent() {
     <div className={containerPremiumClass}>
      <div
       className={cn(
-       "relative aspect-video overflow-hidden rounded-2xl sm:aspect-21/9",
+       "header-logo-light-zone relative aspect-video overflow-hidden rounded-2xl sm:aspect-21/9",
        missionVisualImageClass
       )}
      >

@@ -1,15 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
  reactCompiler: true,
- async redirects() {
-  return [
-   {
-    source: "/misyon-vizyon",
-    destination: "/hakkimizda",
-    permanent: true,
-   },
-  ];
- },
  async rewrites() {
   return [
    {

@@ -24,6 +24,7 @@ import {
  getProductShortName,
 } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
+import { useFavorites } from "@/contexts/favorites-provider";
 
 const productPanelClassName =
  "overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)]";

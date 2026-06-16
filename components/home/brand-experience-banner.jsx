@@ -25,7 +25,7 @@ export function BrandExperienceBanner() {
  const alt = brandExperienceTitleLines.join(" ");
 
  return (
-  <section className="relative min-h-[360px] overflow-hidden sm:min-h-[400px] lg:min-h-[520px]">
+  <section className="header-logo-light-zone relative min-h-[360px] overflow-hidden sm:min-h-[400px] lg:min-h-[520px]">
    <picture className="absolute inset-0 block h-full w-full">
     <source
      media="(min-width: 96rem) and (min-resolution: 2dppx)"

@@ -7,8 +7,8 @@ import { Navbar } from "@/components/layout/navbar";
 import { HeaderSearchBar } from "@/components/layout/header-search-bar";
 import { cn } from "@/lib/utils";
 
-const HERO_SELECTORS =
- ".hero-carousel, .page-header-bleed, .faq-hero, .mission-hero, .about-hero";
+const LOGO_LIGHT_ZONE_SELECTORS =
+ ".hero-carousel, .page-header-bleed, .faq-hero, .mission-hero, .about-hero, .header-logo-light-zone";
 
 function getHeaderHideThreshold() {
  const header = document.querySelector(".site-header");
@@ -19,9 +19,9 @@ function getHeaderHideThreshold() {
  return Math.max(80, headerHeight + 16);
 }
 
-function isLogoOverHero() {
- const hero = document.querySelector(HERO_SELECTORS);
- if (!hero) return false;
+function isLogoOverImageZone() {
+ const zones = document.querySelectorAll(LOGO_LIGHT_ZONE_SELECTORS);
+ if (zones.length === 0) return false;
 
  const logos = document.querySelectorAll(".site-header .brand-logo-image");
  let logo = null;
@@ -37,10 +37,21 @@ function isLogoOverHero() {
  if (!logo) return true;
 
  const logoRect = logo.getBoundingClientRect();
- const heroRect = hero.getBoundingClientRect();
+ const logoCenterX = logoRect.left + logoRect.width / 2;
  const logoCenterY = logoRect.top + logoRect.height / 2;
 
- return logoCenterY >= heroRect.top && logoCenterY <= heroRect.bottom;
+ for (const zone of zones) {
+  const zoneRect = zone.getBoundingClientRect();
+  const overlapsZone =
+   logoCenterX >= zoneRect.left &&
+   logoCenterX <= zoneRect.right &&
+   logoCenterY >= zoneRect.top &&
+   logoCenterY <= zoneRect.bottom;
+
+  if (overlapsZone) return true;
+ }
+
+ return false;
 }
 
 export function Header() {
@@ -115,12 +126,12 @@ export function Header() {
   }
 
   const updateHeroOverlay = () => {
-   const hero = document.querySelector(HERO_SELECTORS);
-   if (!hero) {
+   const zones = document.querySelectorAll(LOGO_LIGHT_ZONE_SELECTORS);
+   if (zones.length === 0) {
     setHeroOverlay(false);
     return;
    }
-   setHeroOverlay(isLogoOverHero());
+   setHeroOverlay(isLogoOverImageZone());
   };
 
   updateHeroOverlay();
@@ -128,9 +139,9 @@ export function Header() {
   window.addEventListener("scroll", updateHeroOverlay, { passive: true });
   window.addEventListener("resize", updateHeroOverlay);
 
-  const hero = document.querySelector(HERO_SELECTORS);
-  const heroObserver = hero ? new ResizeObserver(updateHeroOverlay) : null;
-  heroObserver?.observe(hero);
+  const zones = document.querySelectorAll(LOGO_LIGHT_ZONE_SELECTORS);
+  const zoneObserver = new ResizeObserver(updateHeroOverlay);
+  zones.forEach((zone) => zoneObserver.observe(zone));
 
   const header = document.querySelector(".site-header");
   const headerObserver = header ? new ResizeObserver(updateHeroOverlay) : null;
@@ -139,7 +150,7 @@ export function Header() {
   return () => {
    window.removeEventListener("scroll", updateHeroOverlay);
    window.removeEventListener("resize", updateHeroOverlay);
-   heroObserver?.disconnect();
+   zoneObserver.disconnect();
    headerObserver?.disconnect();
   };
  }, [pathname, isProductsPage]);
