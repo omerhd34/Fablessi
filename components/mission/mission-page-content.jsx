@@ -18,6 +18,7 @@ import {
  containerPremiumClass,
  sectionPaddingSmClass,
 } from "@/lib/layout/shared-styles";
+import { MOBILE_LAYOUT_MAX } from "@/lib/layout/breakpoints";
 import { cn } from "@/lib/utils";
 
 export function MissionPageContent() {
@@ -68,7 +69,7 @@ export function MissionPageContent() {
        src="https://res.cloudinary.com/dbo6puh1c/image/upload/v1781205876/fablessi/velar-oturma/01.jpg"
        alt=""
        fill
-       sizes="(max-width: 1280px) 100vw, 1200px"
+       sizes={`(max-width: ${MOBILE_LAYOUT_MAX}) 100vw, ${MOBILE_LAYOUT_MAX}`}
        className="object-cover object-center"
       />
      </div>

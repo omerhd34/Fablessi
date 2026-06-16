@@ -9,17 +9,25 @@ import { cn } from "@/lib/utils";
 const LOGO_WIDTH = 1168;
 const LOGO_HEIGHT = 268;
 
-const logoHeights = {
- xs: "2rem",
- sm: "2.25rem",
- md: "2.5rem",
- lg: "2.75rem",
- xl: "3.5rem",
+const logoHeightClasses = {
+ xs: "h-8",
+ sm: "h-9",
+ md: "h-10",
+ lg: "h-11",
+ xl: "h-14",
 };
+
+export const brandLogoMobileNavWrapperClass =
+ "[&_.brand-logo-image]:h-9! sm:max-lg:[&_.brand-logo-image]:h-10! lg:[&_.brand-logo-image]:h-14!";
+
+export const brandLogoMobileNavHomeWrapperClass =
+ "[&_.brand-logo-image]:h-9.5! sm:max-lg:[&_.brand-logo-image]:h-10.5! lg:[&_.brand-logo-image]:h-14!";
+
+export const brandLogoDesktopNavWrapperClass = "[&_.brand-logo-image]:h-14!";
 
 export function BrandLogoLink({ href = "/", size = "md", className }) {
  const { t } = useTranslations();
- const logoHeight = logoHeights[size] ?? logoHeights.md;
+ const logoHeightClass = logoHeightClasses[size] ?? logoHeightClasses.md;
 
  return (
   <Link
@@ -39,13 +47,9 @@ export function BrandLogoLink({ href = "/", size = "md", className }) {
     decoding="async"
     fetchPriority="high"
     draggable={false}
-    style={{
-     height: logoHeight,
-     width: "auto",
-     maxWidth: "none",
-    }}
     className={cn(
-     "brand-logo-image m-0 block h-auto origin-left scale-100 p-0 antialiased transition-[scale,filter] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] font-features-['kern'_1] [text-rendering:geometricPrecision] group-hover/logo:scale-[1.08] group-focus-visible/logo:scale-[1.08] motion-reduce:duration-150",
+     "brand-logo-image m-0 block w-auto max-w-none origin-left scale-100 p-0 antialiased transition-[scale,filter] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] font-features-['kern'_1] [text-rendering:geometricPrecision] group-hover/logo:scale-[1.08] group-focus-visible/logo:scale-[1.08] motion-reduce:duration-150",
+     logoHeightClass,
      brandLogoImageFilterClass
     )}
    />

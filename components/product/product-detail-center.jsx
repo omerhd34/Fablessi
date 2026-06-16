@@ -18,6 +18,7 @@ import {
 import { ProductDimensionsTable } from "@/components/product/product-dimensions-table";
 import { useLocale } from "@/contexts/locale-provider";
 import { getDimensionItems } from "@/lib/product-utils";
+import { LG_MQ } from "@/lib/layout/breakpoints";
 import {
  productGalleryFrameClass,
  productGalleryMobileCarouselClass,
@@ -139,7 +140,7 @@ export function ProductDetailCenter({
  const [accordionValue, setAccordionValue] = useState([]);
 
  useEffect(() => {
-  if (window.matchMedia("(min-width: 1024px)").matches) {
+  if (window.matchMedia(LG_MQ).matches) {
    setAccordionValue(["product-info"]);
   }
  }, []);

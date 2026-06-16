@@ -23,7 +23,7 @@ const SHOWCASE_AUTOPLAY_MS = 6000;
 
 const navButtonClassName = cn(
  contactFloatBtnClass,
- "hidden size-11 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12 min-[1024px]:inline-flex [&_svg]:size-5 md:[&_svg]:size-[1.375rem] [&_svg]:[stroke-width:3.5]"
+ "hidden size-11 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12 lg:inline-flex [&_svg]:size-5 md:[&_svg]:size-[1.375rem] [&_svg]:[stroke-width:3.5]"
 );
 
 function useShowcaseAutoplay(api, enabled) {
@@ -126,7 +126,7 @@ function HomeShowcaseNav({ direction }) {
 
 function HomeShowcaseTrack({ children }) {
  return (
-  <div className="mx-auto w-full max-w-site-shell px-4 sm:px-5 md:px-6 min-[1024px]:grid min-[1024px]:grid-cols-[auto_minmax(0,1fr)_auto] min-[1024px]:items-center min-[1024px]:gap-6 min-[1024px]:px-8 xl:gap-8 xl:px-10">
+  <div className="mx-auto w-full max-w-site-shell px-4 sm:px-5 md:px-6 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-6 lg:px-8 xl:gap-8 xl:px-10">
    <HomeShowcaseNav direction="prev" />
    <div className="min-w-0">
     <CarouselContent className="sm:-ml-5">{children}</CarouselContent>

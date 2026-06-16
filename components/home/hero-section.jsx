@@ -7,14 +7,18 @@ import { useTranslations } from "@/contexts/locale-provider";
 import { HeroChevronLeft, HeroChevronRight } from "@/lib/icons";
 import { buildHeroSlides } from "@/lib/i18n/hero-slides-data";
 import { headerGlassBtnClass } from "@/lib/layout/header-styles";
+import { DESKTOP_LAYOUT_MQ } from "@/lib/layout/breakpoints";
 import { cn } from "@/lib/utils";
 
 const HERO_AUTOPLAY_MS = 12_000;
-const HERO_DESKTOP_MQ = "(min-width: 1024px)";
+
+function isHeroDesktopViewport() {
+ return window.matchMedia(DESKTOP_LAYOUT_MQ).matches;
+}
 
 const heroNavButtonClass = cn(
  headerGlassBtnClass,
- "absolute top-1/2 z-10 hidden size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-white/96 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/45 active:scale-100 sm:size-[3.25rem] lg:flex lg:size-[3.75rem] [&_svg]:size-[1.375rem] md:[&_svg]:size-[1.875rem] [&_svg]:[stroke-width:3.5]"
+ "absolute top-1/2 z-20 hidden desktop:inline-flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-white/96 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/45 active:scale-100 sm:size-[3.25rem] desktop:size-[3.75rem] [&_svg]:size-[1.375rem] md:[&_svg]:size-[1.875rem] [&_svg]:[stroke-width:3.5]"
 );
 
 function HeroSlideImage({ slide, priority, className }) {
@@ -23,7 +27,7 @@ function HeroSlideImage({ slide, priority, className }) {
  return (
   <picture className="absolute inset-0 block h-full w-full">
    <source media="(min-width: 96rem)" srcSet={images["2xl"]} />
-   <source media="(min-width: 80rem)" srcSet={images.xl} />
+   <source media="(min-width: 90rem)" srcSet={images.xl} />
    <source media="(min-width: 64rem)" srcSet={images.lg} />
    <source media="(min-width: 48rem)" srcSet={images.md} />
    <Image
@@ -44,11 +48,10 @@ export function HeroSection() {
   () => buildHeroSlides(dictionary),
   [dictionary]
  );
- const [dragEnabled, setDragEnabled] = useState(true);
  const [emblaRef, emblaApi] = useEmblaCarousel({
   loop: true,
   duration: 30,
-  watchDrag: dragEnabled,
+  watchDrag: () => !isHeroDesktopViewport(),
   dragFree: false,
  });
  const [selectedIndex, setSelectedIndex] = useState(0);
@@ -57,22 +60,15 @@ export function HeroSection() {
  const autoplayStartedAtRef = useRef(0);
 
  useEffect(() => {
-  const desktopMediaQuery = window.matchMedia(HERO_DESKTOP_MQ);
-  const updateDragEnabled = () => setDragEnabled(!desktopMediaQuery.matches);
-
-  updateDragEnabled();
-  desktopMediaQuery.addEventListener("change", updateDragEnabled);
-
-  return () => {
-   desktopMediaQuery.removeEventListener("change", updateDragEnabled);
-  };
- }, []);
-
- useEffect(() => {
   if (!emblaApi) return;
-  emblaApi.reInit({ watchDrag: dragEnabled });
-  emblaApi.scrollTo(0, true);
- }, [dragEnabled, emblaApi, heroSlides]);
+
+  const desktopMediaQuery = window.matchMedia(DESKTOP_LAYOUT_MQ);
+  const onBreakpointChange = () => emblaApi.reInit();
+
+  desktopMediaQuery.addEventListener("change", onBreakpointChange);
+  return () =>
+   desktopMediaQuery.removeEventListener("change", onBreakpointChange);
+ }, [emblaApi]);
 
  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
@@ -157,12 +153,7 @@ export function HeroSection() {
  return (
   <section className="hero-carousel relative w-full touch-pan-y">
    <div
-    className={cn(
-     "overflow-hidden select-none",
-     dragEnabled
-      ? "cursor-grab touch-pan-y pinch-zoom active:cursor-grabbing"
-      : "cursor-default touch-auto active:cursor-default"
-    )}
+    className="overflow-hidden select-none cursor-grab touch-pan-y pinch-zoom active:cursor-grabbing desktop:cursor-default desktop:touch-auto"
     ref={emblaRef}
    >
     <div className="flex">
@@ -183,7 +174,7 @@ export function HeroSection() {
    <button
     type="button"
     onClick={scrollPrev}
-    className={cn(heroNavButtonClass, "left-2 sm:left-4 lg:left-6")}
+    className={cn(heroNavButtonClass, "left-2 sm:left-4 desktop:left-6")}
     aria-label={t("hero.prevSlide")}
    >
     <HeroChevronLeft
@@ -195,7 +186,7 @@ export function HeroSection() {
    <button
     type="button"
     onClick={scrollNext}
-    className={cn(heroNavButtonClass, "right-2 sm:right-4 lg:right-6")}
+    className={cn(heroNavButtonClass, "right-2 sm:right-4 desktop:right-6")}
     aria-label={t("hero.nextSlide")}
    >
     <HeroChevronRight

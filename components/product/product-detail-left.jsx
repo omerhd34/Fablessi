@@ -11,7 +11,7 @@ import {
  AccordionItem,
  AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useFavorites } from "@/contexts/favorites-provider";
+import { LG_MQ } from "@/lib/layout/breakpoints";
 import { useLocale } from "@/contexts/locale-provider";
 import { Heart, HeartFilled, Payments } from "@/lib/icons";
 import {
@@ -138,7 +138,7 @@ function ProductDetailPrice({ product, locale, className }) {
  const total = getProductDisplayPrice(product);
 
  useEffect(() => {
-  if (window.matchMedia("(min-width: 1024px)").matches) {
+  if (window.matchMedia(LG_MQ).matches) {
    setOpen("price");
   }
  }, []);

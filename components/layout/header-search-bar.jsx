@@ -278,7 +278,7 @@ export function HeaderSearchBar({ open, onClose }) {
    {open ? (
     <div
      className={cn(
-      "header-search-shell relative z-2 pb-4 max-lg:mt-3",
+      "header-search-shell relative z-2 pb-4 mobile-layout:mt-3",
       containerPremiumClass
      )}
      role={showResultsPanel ? "dialog" : undefined}
@@ -294,7 +294,7 @@ export function HeaderSearchBar({ open, onClose }) {
     ? createPortal(
      <button
       type="button"
-      className="search-results-backdrop fixed right-0 bottom-0 left-0 z-40 cursor-pointer border-0 bg-[oklch(0.99_0.006_88/55%)] [backdrop-filter:blur(14px)_saturate(120%)] [-webkit-backdrop-filter:blur(14px)_saturate(120%)] top-[calc(var(--header-height-mobile)+var(--search-bar-height))] sm:max-lg:top-[calc(var(--header-height-mobile-sm)+var(--search-bar-height))] lg:top-[calc(var(--header-height-desktop)+var(--search-bar-height))]"
+      className="search-results-backdrop fixed right-0 bottom-0 left-0 z-40 cursor-pointer border-0 bg-[oklch(0.99_0.006_88/55%)] [backdrop-filter:blur(14px)_saturate(120%)] [-webkit-backdrop-filter:blur(14px)_saturate(120%)] top-[calc(var(--header-height-mobile)+var(--search-bar-height))] sm:mobile-layout:top-[calc(var(--header-height-mobile-sm)+var(--search-bar-height))] desktop:top-[calc(var(--header-height-desktop)+var(--search-bar-height))]"
       onClick={onClose}
       aria-label={t("common.closeSearch")}
      />,

@@ -2,9 +2,8 @@
 
 import { usePathname } from "next/navigation";
 import { Menu, Search } from "@/lib/icons";
-import { BrandLogoLink } from "@/components/layout/brand-logo";
+import { BrandLogoLink, brandLogoMobileNavHomeWrapperClass, brandLogoMobileNavWrapperClass } from "@/components/layout/brand-logo";
 import { useTranslations } from "@/contexts/locale-provider";
-import { useIsDesktopNav } from "@/hooks/use-is-desktop-nav";
 import {
  headerIconBtnClass,
  headerPillCircleClass,
@@ -21,12 +20,9 @@ const compactBtnClass = cn(
 );
 
 export function MobileNavbar({ searchOpen, onSearchToggle, onMenuOpen }) {
- const isDesktopNav = useIsDesktopNav();
  const pathname = usePathname();
  const isHome = pathname === "/";
  const { t } = useTranslations();
-
- if (isDesktopNav) return null;
 
  const searchButton = (
   <button
@@ -53,20 +49,22 @@ export function MobileNavbar({ searchOpen, onSearchToggle, onMenuOpen }) {
 
  return (
   <div
-   className={cn(containerPremiumClass, "lg:hidden")}
+   className={cn(containerPremiumClass, "desktop:hidden")}
    aria-label={t("nav.mobileMenu")}
   >
-   <div className="flex min-h-[calc(var(--glass-mobile-btn-size)+0.875rem)] items-center justify-between gap-1.5 pt-3.5 sm:max-lg:min-h-[calc(var(--glass-mobile-btn-size)+1rem)] sm:max-lg:gap-2 sm:max-lg:pt-4">
+   <div className="flex min-h-[calc(var(--glass-mobile-btn-size)+0.875rem)] items-center justify-between gap-1.5 pt-3.5 md:mobile-layout:min-h-[calc(var(--glass-mobile-btn-size)+1rem)] md:mobile-layout:gap-2 md:mobile-layout:pt-4">
     <div
      className={cn(
-      "block h-fit w-fit flex-none self-center p-0 leading-none [&_.brand-logo-image]:h-9! sm:max-lg:[&_.brand-logo-image]:h-10!",
-      isHome && "min-w-0 shrink self-center [&_.brand-logo-image]:h-9.5! sm:max-lg:[&_.brand-logo-image]:h-10.5!"
+      "block h-fit w-fit flex-none self-center p-0 leading-none",
+      isHome
+       ? cn("min-w-0 shrink self-center", brandLogoMobileNavHomeWrapperClass)
+       : brandLogoMobileNavWrapperClass
      )}
     >
-     <BrandLogoLink size="md" />
+     <BrandLogoLink size="xl" />
     </div>
 
-    <div className="flex shrink-0 flex-nowrap items-center gap-1.5 sm:max-lg:gap-2">
+    <div className="flex shrink-0 flex-nowrap items-center gap-1.5 md:mobile-layout:gap-2">
      {searchButton}
      {menuButton}
     </div>

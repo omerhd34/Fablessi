@@ -6,11 +6,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Collections, MapPin, Search, SupportAgent, ViewModule, Work } from "@/lib/icons";
 import { FavoritesLink } from "@/components/favorites/favorites-link";
-import { BrandLogoLink } from "@/components/layout/brand-logo";
+import { BrandLogoLink, brandLogoDesktopNavWrapperClass } from "@/components/layout/brand-logo";
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 import { ProductsMegaMenu } from "@/components/layout/products-mega-menu";
 import { useTranslations } from "@/contexts/locale-provider";
-import { useIsDesktopNav } from "@/hooks/use-is-desktop-nav";
 import {
  headerIconBtnClass,
  headerPillClass,
@@ -138,7 +137,6 @@ export function DesktopNavbar({
  searchOpen,
 }) {
  const pathname = usePathname();
- const isDesktopNav = useIsDesktopNav();
  const megaMenuPanelRef = useRef(null);
  const productsButtonRef = useRef(null);
  const { navigation, t } = useTranslations();
@@ -168,12 +166,10 @@ export function DesktopNavbar({
   return () => document.removeEventListener("pointerdown", onPointerDown);
  }, [productsMenuOpen]);
 
- if (!isDesktopNav) return null;
-
  return (
-  <div className="relative hidden lg:block" aria-label={t("nav.desktopMenu")}>
+  <div className="relative hidden desktop:block" aria-label={t("nav.desktopMenu")}>
    <div className={cn(containerPremiumClass, "flex min-h-24 items-center justify-between gap-4 xl:gap-8")}>
-    <div className="block h-fit w-fit flex-none self-center p-0 leading-none [&_.brand-logo-image]:h-14! xl:[&_.brand-logo-image]:h-16!">
+    <div className={cn("block h-fit w-fit flex-none self-center p-0 leading-none", brandLogoDesktopNavWrapperClass)}>
      <BrandLogoLink size="xl" />
     </div>
 

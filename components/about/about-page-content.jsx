@@ -14,6 +14,7 @@ import {
  containerPremiumClass,
  sectionPaddingSmClass,
 } from "@/lib/layout/shared-styles";
+import { MOBILE_LAYOUT_MAX } from "@/lib/layout/breakpoints";
 import { cn } from "@/lib/utils";
 
 const ABOUT_VISUAL_IMAGES = {
@@ -42,7 +43,7 @@ export function AboutPageContent() {
         src={ABOUT_VISUAL_IMAGES.sm}
         alt={visualAlt}
         fill
-        sizes="(max-width: 1280px) 100vw, 1200px"
+        sizes={`(max-width: ${MOBILE_LAYOUT_MAX}) 100vw, ${MOBILE_LAYOUT_MAX}`}
         className="object-cover object-center"
        />
       </picture>

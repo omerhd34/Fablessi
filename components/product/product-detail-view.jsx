@@ -5,6 +5,7 @@ import { ProductDetailCenter } from "@/components/product/product-detail-center"
 import { ProductDetailLeft } from "@/components/product/product-detail-left";
 import { ProductDetailRight } from "@/components/product/product-detail-right";
 import { ProductImageLightbox } from "@/components/product/product-image-lightbox";
+import { LG_MQ } from "@/lib/layout/breakpoints";
 import { productDetailScrollClass } from "@/lib/layout/product-styles";
 import { cn } from "@/lib/utils";
 
@@ -29,7 +30,7 @@ export function ProductDetailView({
  const closeLightbox = () => setLightbox({ images: [], index: null });
 
  const handleViewDimensions = useCallback(() => {
-  const isContainedScroll = window.matchMedia("(min-width: 1024px)").matches;
+  const isContainedScroll = window.matchMedia(LG_MQ).matches;
 
   setOpenDimensions(true);
 
