@@ -1,4 +1,7 @@
-import { buildSiteNavigationJsonLd } from "@/lib/seo/json-ld";
+import {
+ buildFeaturedSectionJsonLd,
+ buildSiteNavigationJsonLd,
+} from "@/lib/seo/json-ld";
 import { getServerDictionary } from "@/lib/i18n/server";
 
 export const metadata = {
@@ -9,8 +12,9 @@ export const metadata = {
 };
 
 export default async function AnasayfaLayout({ children }) {
- const { dictionary } = await getServerDictionary();
- const siteNavigationJsonLd = buildSiteNavigationJsonLd(dictionary);
+ const { locale } = await getServerDictionary();
+ const siteNavigationJsonLd = buildSiteNavigationJsonLd(locale);
+ const featuredSectionJsonLd = buildFeaturedSectionJsonLd(locale);
 
  return (
   <>
@@ -18,6 +22,12 @@ export default async function AnasayfaLayout({ children }) {
     type="application/ld+json"
     dangerouslySetInnerHTML={{ __html: JSON.stringify(siteNavigationJsonLd) }}
    />
+   {featuredSectionJsonLd ? (
+    <script
+     type="application/ld+json"
+     dangerouslySetInnerHTML={{ __html: JSON.stringify(featuredSectionJsonLd) }}
+    />
+   ) : null}
    {children}
   </>
  );

@@ -1,14 +1,14 @@
 import { ProductsCatalogShell } from "@/components/catalog/products-catalog-shell";
 import { buildProductsMegaMenu } from "@/lib/i18n/build-navigation";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
-import { createPageMetadata } from "@/lib/i18n/page-metadata";
+import { getLocale, getServerDictionary } from "@/lib/i18n/server";
+import { getGoogleProductsDescription } from "@/lib/seo/google-snippets";
 import {
  containerPremiumClass,
  pageContentOffsetClass,
 } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
-import { getLocale } from "@/lib/i18n/server";
 import {
  getCollectionBySlug,
  getPublishedProducts,
@@ -16,7 +16,23 @@ import {
 
 export const revalidate = 60;
 
-export const generateMetadata = createPageMetadata("products", { index: true });
+export async function generateMetadata({ searchParams }) {
+ const params = await searchParams;
+ const categorySlug = params?.kategori ?? null;
+ const { dictionary, locale } = await getServerDictionary();
+ const page = dictionary.pages.products;
+ const googleDescription = getGoogleProductsDescription(categorySlug, locale);
+
+ return {
+  title: page.title,
+  description: googleDescription ?? page.description,
+  keywords: page.keywords ?? dictionary.metadata.keywords,
+  robots: {
+   index: true,
+   follow: true,
+  },
+ };
+}
 
 export default async function UrunlerPage({ searchParams }) {
  const params = await searchParams;

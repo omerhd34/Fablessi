@@ -8,7 +8,7 @@ import { FavoritesProvider } from "@/contexts/favorites-provider";
 import { LocaleProvider } from "@/contexts/locale-provider";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getServerDictionary } from "@/lib/i18n/server";
-import { brandName } from "@/lib/navigation";
+import { brandFullName } from "@/lib/navigation";
 import { buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/lib/seo/json-ld";
 import { siteMetadata } from "@/lib/site-metadata";
 
@@ -28,7 +28,7 @@ const poppins = Poppins({
 
 export async function generateMetadata() {
  const { dictionary, locale } = await getServerDictionary();
- const title = `${brandName} | ${dictionary.metadata.title}`;
+ const title = `${brandFullName} | ${dictionary.metadata.title}`;
  const description = dictionary.metadata.description;
  const openGraphLocale = locale === "en" ? "en_US" : "tr_TR";
 
@@ -62,7 +62,7 @@ export default async function RootLayout({ children }) {
  const { locale, dictionary } = await getServerDictionary();
  const menuGroups = await getCategoryGroupsForMenu(locale);
  const organizationJsonLd = buildOrganizationJsonLd(locale);
- const webSiteJsonLd = buildWebSiteJsonLd();
+ const webSiteJsonLd = buildWebSiteJsonLd(locale);
 
  return (
   <html
