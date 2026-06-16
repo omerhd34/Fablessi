@@ -47,7 +47,10 @@ export default async function UrunlerPage({ searchParams }) {
  const activeCollection = collectionSlug
   ? await getCollectionBySlug(collectionSlug)
   : null;
- const products = await getPublishedProducts(categorySlug, collectionSlug);
+ const products =
+  categorySlug || collectionSlug
+   ? await getPublishedProducts(categorySlug, collectionSlug)
+   : [];
 
  return (
   <div className={cn(containerPremiumClass, pageContentOffsetClass, "pb-20 md:pb-28")}>

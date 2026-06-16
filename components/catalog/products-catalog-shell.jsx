@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { ProductCard } from "@/components/catalog/product-card";
 import { ProductsCatalogToolbar } from "@/components/catalog/products-catalog-toolbar";
 import { ProductsCategoryCarousel } from "@/components/catalog/products-category-carousel";
+import { ProductsCategoryGrid } from "@/components/catalog/products-category-grid";
 import { useLocale } from "@/contexts/locale-provider";
 import { getLocalizedCollectionName } from "@/lib/i18n/display-names";
 import { getProductDisplayPrice } from "@/lib/product-utils";
@@ -48,6 +49,8 @@ export function ProductsCatalogShell({
  const [search, setSearch] = useState("");
  const [sort, setSort] = useState("newest");
 
+ const isCategoryLanding = !categorySlug && !collectionSlug;
+
  const filteredProducts = useMemo(() => {
   const query = search.trim().toLowerCase();
 
@@ -62,6 +65,22 @@ export function ProductsCatalogShell({
 
   return sortProducts(list, sort);
  }, [products, search, sort]);
+
+ if (isCategoryLanding) {
+  return (
+   <div className="space-y-6 md:space-y-8">
+    <div className="text-center md:text-left">
+     <h1 className={cn(headingDisplayClass, "text-charcoal")}>
+      {t("home.categoriesTitle")}
+     </h1>
+     <p className="text-muted-foreground mx-auto mt-3 max-w-2xl text-sm md:mx-0 md:text-base">
+      {t("home.categoriesDescription")}
+     </p>
+    </div>
+    <ProductsCategoryGrid />
+   </div>
+  );
+ }
 
  return (
   <div className="space-y-6 md:space-y-8">
@@ -78,10 +97,6 @@ export function ProductsCatalogShell({
      {t("catalog.listing", { count: filteredProducts.length })}
     </p>
    </div>
-
-   {!categorySlug && !collectionSlug ? (
-    <ProductsCategoryCarousel activeSlug={categorySlug} />
-   ) : null}
 
    <ProductsCatalogToolbar
     search={search}
@@ -112,6 +127,12 @@ export function ProductsCatalogShell({
      </p>
     </div>
    )}
+
+   {categorySlug ? (
+    <div className="border-t border-charcoal/8 pt-8 md:pt-10">
+     <ProductsCategoryCarousel activeSlug={categorySlug} />
+    </div>
+   ) : null}
   </div>
  );
 }
