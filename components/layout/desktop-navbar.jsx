@@ -173,7 +173,7 @@ export function DesktopNavbar({
  return (
   <div className="relative hidden lg:block" aria-label={t("nav.desktopMenu")}>
    <div className={cn(containerPremiumClass, "flex min-h-24 items-center justify-between gap-4 xl:gap-8")}>
-    <div className="block h-fit w-fit flex-none self-center p-0 leading-none [&_.brand-logo-image]:h-12! xl:[&_.brand-logo-image]:h-13!">
+    <div className="block h-fit w-fit flex-none self-center p-0 leading-none [&_.brand-logo-image]:h-14! xl:[&_.brand-logo-image]:h-16!">
      <BrandLogoLink size="xl" />
     </div>
 

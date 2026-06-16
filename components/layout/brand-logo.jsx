@@ -14,7 +14,7 @@ const logoHeights = {
  sm: "2.25rem",
  md: "2.5rem",
  lg: "2.75rem",
- xl: "3rem",
+ xl: "3.5rem",
 };
 
 export function BrandLogoLink({ href = "/", size = "md", className }) {
