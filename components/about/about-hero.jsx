@@ -9,7 +9,7 @@ export function AboutHero() {
  const { t } = useTranslations();
 
  return (
-  <section className="pt-[calc(var(--header-height-mobile)+2.5rem)] pb-4 sm:pt-[calc(var(--header-height-mobile-sm)+3rem)] lg:pt-[calc(var(--header-height-desktop)+3.25rem)]">
+  <section className="pt-[calc(var(--header-height-mobile)+2.5rem)] pb-6 sm:pt-[calc(var(--header-height-mobile-sm)+3rem)] sm:pb-8 lg:pt-[calc(var(--header-height-desktop)+3.25rem)]">
    <div className={cn(containerPremiumClass, "text-center")}>
     <p className="text-[0.68rem] font-semibold tracking-[0.38em] text-charcoal/50">
      {brandFullNameUppercase}
@@ -20,5 +20,4 @@ export function AboutHero() {
    </div>
   </section>
  );
-
 }

@@ -32,9 +32,14 @@ export function AboutPageContent() {
 
  return (
   <>
-   <section className={cn("about-visual", sectionPaddingSmClass)}>
+   <section className={cn("about-visual", sectionPaddingSmClass, "pt-0")}>
     <div className={containerPremiumClass}>
-     <div className={cn("relative aspect-video overflow-hidden rounded-2xl sm:aspect-21/9", aboutVisualImageClass)}>
+     <div
+      className={cn(
+       "relative aspect-video overflow-hidden rounded-2xl sm:aspect-21/9",
+       aboutVisualImageClass
+      )}
+     >
       <picture className="absolute inset-0 block h-full w-full">
        <source media="(min-width: 96rem)" srcSet={ABOUT_VISUAL_IMAGES.xl} />
        <source media="(min-width: 64rem)" srcSet={ABOUT_VISUAL_IMAGES.lg} />
@@ -74,9 +79,9 @@ export function AboutPageContent() {
     </div>
    </section>
 
-   <section className="about-content pb-20 md:pb-28">
+   <section className="about-content pb-12 md:pb-16">
     <div className={containerPremiumClass}>
-     <div className={cn("about-content__body mx-auto max-w-5xl", aboutContentBodyClass)}>
+     <div className={cn("about-content__body w-full", aboutContentBodyClass)}>
       <p className="about-content__greeting font-display text-[clamp(1.15rem,2.8vw,1.45rem)] font-semibold leading-snug tracking-tight text-charcoal">
        {about.greeting}
       </p>
@@ -92,7 +97,12 @@ export function AboutPageContent() {
        ))}
       </div>
 
-      <p className={cn("about-content__closing mt-10 font-display text-[clamp(1rem,2.2vw,1.2rem)] font-medium tracking-tight text-charcoal", aboutContentClosingClass)}>
+      <p
+       className={cn(
+        "about-content__closing mt-10 font-display text-[clamp(1rem,2.2vw,1.2rem)] font-medium tracking-tight text-charcoal",
+        aboutContentClosingClass
+       )}
+      >
        {about.closing}
       </p>
      </div>
@@ -100,5 +110,4 @@ export function AboutPageContent() {
    </section>
   </>
  );
-
 }

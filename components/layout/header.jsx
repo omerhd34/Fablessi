@@ -8,7 +8,7 @@ import { HeaderSearchBar } from "@/components/layout/header-search-bar";
 import { cn } from "@/lib/utils";
 
 const HERO_SELECTORS =
- ".hero-carousel, .page-header-bleed, .faq-hero, .mission-hero";
+ ".hero-carousel, .page-header-bleed, .faq-hero, .mission-hero, .about-hero";
 
 function getHeaderHideThreshold() {
  const header = document.querySelector(".site-header");
