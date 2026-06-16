@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight } from "@/lib/icons";
 import {
  HomeShowcaseSlide,
  HomeShowcaseSlider,
@@ -98,13 +97,6 @@ export function CategoriesShowcase() {
       <p className="text-muted-foreground mx-auto mt-3 max-w-2xl text-sm md:text-base">
        {t("home.categoriesDescription")}
       </p>
-      <Link
-       href="/urunler"
-       className="mt-4 inline-flex scale-100 origin-center items-center gap-1 text-sm font-semibold text-charcoal/70 transition-[scale,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105 hover:text-charcoal motion-reduce:duration-150"
-      >
-       {t("categories.allCategories")}
-       <ChevronRight className="size-4 shrink-0" aria-hidden />
-      </Link>
      </div>
      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-5">
       {categories.map((category) => (
@@ -118,7 +110,6 @@ export function CategoriesShowcase() {
     className="hidden desktop:block"
     title={t("home.categoriesTitle")}
     description={t("home.categoriesDescription")}
-    action={{ href: "/urunler", label: t("categories.allCategories") }}
     itemCount={categories.length}
     slidesPerView={2}
    >
