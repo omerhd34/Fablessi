@@ -86,29 +86,6 @@ export function MissionPageContent() {
       {missionVision.valuesTitle}
      </h2>
 
-     <div className={cn("relative mt-10 aspect-video overflow-hidden rounded-2xl sm:aspect-21/9", missionVisualImageClass)}>
-      <picture className="absolute inset-0 block h-full w-full">
-       <source
-        media="(min-width: 96rem) and (min-resolution: 2dppx)"
-        srcSet={MISSION_VALUES_IMAGES.xl2x}
-       />
-       <source media="(min-width: 96rem)" srcSet={MISSION_VALUES_IMAGES.xl} />
-       <source media="(min-width: 64rem)" srcSet={MISSION_VALUES_IMAGES.lg} />
-       <source media="(min-width: 48rem)" srcSet={MISSION_VALUES_IMAGES.md} />
-       <source
-        media="(max-width: 47.99rem) and (min-resolution: 2dppx)"
-        srcSet={MISSION_VALUES_IMAGES.sm2x}
-       />
-       <Image
-        src={MISSION_VALUES_IMAGES.sm}
-        alt=""
-        fill
-        sizes={`(max-width: ${MOBILE_LAYOUT_MAX}) 100vw, ${MOBILE_LAYOUT_MAX}`}
-        className="object-cover object-center"
-       />
-      </picture>
-     </div>
-
      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
       {missionVision.values.map((value) => (
        <article
@@ -118,7 +95,7 @@ export function MissionPageContent() {
         <div className={cn("mx-auto", missionValueIconClass)} aria-hidden>
          <DynamicReactIcon
           name={value.icon}
-          className="size-6 text-charcoal/70"
+          className="size-6 text-charcoal/70 transition-colors duration-[2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/mission-value:text-charcoal motion-reduce:duration-150"
          />
         </div>
         <h3
@@ -139,7 +116,7 @@ export function MissionPageContent() {
    </section>
 
    <section
-    className="mission-commitments pb-16 md:pb-20"
+    className="mission-commitments pb-6 md:pb-8"
     aria-labelledby="mission-commitments-heading"
    >
     <div className={containerPremiumClass}>
@@ -160,6 +137,33 @@ export function MissionPageContent() {
         </li>
        ))}
       </ul>
+     </div>
+    </div>
+   </section>
+
+   <section className="mission-values-visual pb-12 pt-4 md:pb-16 md:pt-6" aria-hidden>
+    <div className={containerPremiumClass}>
+     <div className={cn("relative aspect-video overflow-hidden rounded-2xl sm:aspect-21/9", missionVisualImageClass)}>
+      <picture className="absolute inset-0 block h-full w-full">
+       <source
+        media="(min-width: 96rem) and (min-resolution: 2dppx)"
+        srcSet={MISSION_VALUES_IMAGES.xl2x}
+       />
+       <source media="(min-width: 96rem)" srcSet={MISSION_VALUES_IMAGES.xl} />
+       <source media="(min-width: 64rem)" srcSet={MISSION_VALUES_IMAGES.lg} />
+       <source media="(min-width: 48rem)" srcSet={MISSION_VALUES_IMAGES.md} />
+       <source
+        media="(max-width: 47.99rem) and (min-resolution: 2dppx)"
+        srcSet={MISSION_VALUES_IMAGES.sm2x}
+       />
+       <Image
+        src={MISSION_VALUES_IMAGES.sm}
+        alt=""
+        fill
+        sizes={`(max-width: ${MOBILE_LAYOUT_MAX}) 100vw, ${MOBILE_LAYOUT_MAX}`}
+        className="object-cover object-center"
+       />
+      </picture>
      </div>
     </div>
    </section>

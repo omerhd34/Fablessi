@@ -24,6 +24,7 @@ export function ProductCard({
  const { locale } = useLocale();
  const imageUrl = getPrimaryImageUrl(product);
  const isCatalog = variant === "catalog";
+ const isFeatured = variant === "featured";
  const bottomLabel = getProductCardBottomLabel(product, locale);
  const displayPrice = getProductDisplayPrice(product);
  const priceLabel = formatProductPrice(displayPrice, locale);
@@ -40,7 +41,9 @@ export function ProductCard({
      "group/card relative",
      isCatalog
       ? cn("product-card-kalif--catalog aspect-5/4 rounded-3xl", catalogProductCardClass)
-      : "aspect-4/5"
+      : isFeatured
+       ? "aspect-5/4 sm:aspect-3/2"
+       : "aspect-4/5"
     )}
    >
     <Link
@@ -55,7 +58,9 @@ export function ProductCard({
        sizes={
         isCatalog
          ? "(max-width: 640px) 100vw, 50vw"
-         : "(max-width: 768px) 50vw, 25vw"
+         : isFeatured
+          ? "(max-width: 640px) 100vw, 50vw"
+          : "(max-width: 768px) 50vw, 25vw"
        }
        className="size-full object-cover transition-transform duration-500 group-hover/card:scale-[1.03]"
        priority={priority}

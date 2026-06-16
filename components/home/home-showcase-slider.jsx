@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { ChevronRight, HeroChevronLeft, HeroChevronRight } from "@/lib/icons";
 import { contactFloatBtnClass } from "@/lib/layout/header-styles";
 import {
@@ -18,7 +18,15 @@ import {
  useCarousel,
 } from "@/components/ui/carousel";
 
-const slideClassName = "basis-full sm:basis-1/3 sm:pl-5";
+const ShowcaseSlidesContext = createContext(3);
+
+function getSlideClassName(slidesPerView) {
+ return cn(
+  "basis-full sm:pl-5",
+  slidesPerView === 2 ? "sm:basis-1/2" : "sm:basis-1/3"
+ );
+}
+
 const SHOWCASE_AUTOPLAY_MS = 6000;
 
 const navButtonClassName = cn(
@@ -142,6 +150,7 @@ export function HomeShowcaseSlider({
  description,
  action,
  itemCount = 0,
+ slidesPerView = 3,
  className,
  children,
 }) {
@@ -186,31 +195,35 @@ export function HomeShowcaseSlider({
     </div>
    </div>
 
-   <Carousel
-    setApi={setCarouselApi}
-    opts={{
-     align: "start",
-     loop: true,
-     duration: 28,
-     containScroll: "trimSnaps",
-     dragFree: false,
-     slidesToScroll: 1,
-    }}
-    className="w-full"
-    aria-label={title}
-   >
-    <HomeShowcaseTrack>{children}</HomeShowcaseTrack>
-    <div className={containerPremiumClass}>
-     <CarouselDots className="mt-8" />
-    </div>
-   </Carousel>
+   <ShowcaseSlidesContext.Provider value={slidesPerView}>
+    <Carousel
+     setApi={setCarouselApi}
+     opts={{
+      align: "start",
+      loop: true,
+      duration: 28,
+      containScroll: "trimSnaps",
+      dragFree: false,
+      slidesToScroll: 1,
+     }}
+     className="w-full"
+     aria-label={title}
+    >
+     <HomeShowcaseTrack>{children}</HomeShowcaseTrack>
+     <div className={containerPremiumClass}>
+      <CarouselDots className="mt-8" />
+     </div>
+    </Carousel>
+   </ShowcaseSlidesContext.Provider>
   </section>
  );
 }
 
 export function HomeShowcaseSlide({ children, className }) {
+ const slidesPerView = useContext(ShowcaseSlidesContext);
+
  return (
-  <CarouselItem className={cn(slideClassName, className)}>
+  <CarouselItem className={cn(getSlideClassName(slidesPerView), className)}>
    {children}
   </CarouselItem>
  );

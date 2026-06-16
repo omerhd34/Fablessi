@@ -32,14 +32,14 @@ function CategoryCard({ category, variant = "desktop" }) {
     className={cn(
      productCardKalifClass,
      "relative rounded-3xl sm:rounded-[1.25rem]",
-     isStacked ? "h-48 sm:h-52 md:h-56 lg:h-60" : "aspect-4/5"
+     isStacked ? "h-48 sm:h-52 md:h-56 lg:h-60" : "aspect-3/2"
     )}
    >
     <Image
      src={category.image}
      alt={category.label}
      fill
-     sizes={isStacked ? "50vw" : "(max-width: 640px) 88vw, 33vw"}
+     sizes="50vw"
      className="size-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-[1.03] motion-reduce:duration-150"
     />
     <div
@@ -120,6 +120,7 @@ export function CategoriesShowcase() {
     description={t("home.categoriesDescription")}
     action={{ href: "/urunler", label: t("categories.allCategories") }}
     itemCount={categories.length}
+    slidesPerView={2}
    >
     {categories.map((category) => (
      <HomeShowcaseSlide key={category.slug}>

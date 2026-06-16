@@ -17,12 +17,14 @@ export function FeaturedProductsGrid({ products }) {
    description={t("home.featuredDescription")}
    action={{ href: "/urunler", label: t("nav.products") }}
    itemCount={products.length}
+   slidesPerView={2}
   >
    {products.map((product, index) => (
     <HomeShowcaseSlide key={product.id}>
      <ProductCard
       product={product}
-      priority={index < 3}
+      variant="featured"
+      priority={index < 2}
       showFavoriteButton
      />
     </HomeShowcaseSlide>
