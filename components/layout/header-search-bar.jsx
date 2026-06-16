@@ -20,6 +20,9 @@ import {
 import { containerPremiumClass } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 
+const searchResultsBackdropTopClass =
+ "top-[calc(var(--header-height-mobile)+4.75rem)] sm:mobile-layout:top-[calc(var(--header-height-mobile-sm)+4.75rem)] desktop:top-[calc(var(--header-height-desktop)+4.75rem)]";
+
 function SearchProductCard({ product, onNavigate, dictionary }) {
  const imageUrl = getPrimaryImageUrl(product);
  const categoryLabel = getCategoryLabelForProduct(product, dictionary);
@@ -84,7 +87,9 @@ export function HeaderSearchBar({ open, onClose }) {
    return;
   }
 
-  const timer = window.setTimeout(() => inputRef.current?.focus(), 80);
+  const timer = window.setTimeout(() => {
+   inputRef.current?.focus({ preventScroll: true });
+  }, 80);
   return () => window.clearTimeout(timer);
  }, [open]);
 
@@ -278,7 +283,7 @@ export function HeaderSearchBar({ open, onClose }) {
    {open ? (
     <div
      className={cn(
-      "header-search-shell relative z-2 pb-4 mobile-layout:mt-3",
+      "header-search-shell absolute inset-x-0 top-full z-50 pb-4 pt-3",
       containerPremiumClass
      )}
      role={showResultsPanel ? "dialog" : undefined}
@@ -294,7 +299,10 @@ export function HeaderSearchBar({ open, onClose }) {
     ? createPortal(
      <button
       type="button"
-      className="search-results-backdrop fixed right-0 bottom-0 left-0 z-40 cursor-pointer border-0 bg-[oklch(0.99_0.006_88/55%)] [backdrop-filter:blur(14px)_saturate(120%)] [-webkit-backdrop-filter:blur(14px)_saturate(120%)] top-[calc(var(--header-height-mobile)+var(--search-bar-height))] sm:mobile-layout:top-[calc(var(--header-height-mobile-sm)+var(--search-bar-height))] desktop:top-[calc(var(--header-height-desktop)+var(--search-bar-height))]"
+      className={cn(
+       "search-results-backdrop fixed right-0 bottom-0 left-0 z-40 cursor-pointer border-0 bg-[oklch(0.99_0.006_88/55%)] [backdrop-filter:blur(14px)_saturate(120%)] [-webkit-backdrop-filter:blur(14px)_saturate(120%)]",
+       searchResultsBackdropTopClass
+      )}
       onClick={onClose}
       aria-label={t("common.closeSearch")}
      />,

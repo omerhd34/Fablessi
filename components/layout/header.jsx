@@ -151,24 +151,6 @@ export function Header() {
  }, [pathname]);
 
  useEffect(() => {
-  document.documentElement.style.setProperty(
-   "--search-bar-height",
-   searchOpen ? "4.75rem" : "0rem"
-  );
-
-  if (searchOpen) {
-   document.documentElement.dataset.searchOpen = "true";
-  } else {
-   delete document.documentElement.dataset.searchOpen;
-  }
-
-  return () => {
-   document.documentElement.style.setProperty("--search-bar-height", "0rem");
-   delete document.documentElement.dataset.searchOpen;
-  };
- }, [searchOpen]);
-
- useEffect(() => {
   if (!searchOpen && !productsMenuOpen) return;
 
   const onKeyDown = (event) => {
@@ -193,16 +175,18 @@ export function Header() {
     headerHidden && "pointer-events-none -translate-y-full opacity-0"
    )}
   >
-   <Navbar
-    searchOpen={searchOpen}
-    productsMenuOpen={productsMenuOpen}
-    menuOpen={menuOpen}
-    onMenuOpenChange={setMenuOpen}
-    onProductsMenuOpenChange={setProductsMenuOpen}
-    onSearchToggle={toggleSearch}
-    onSearchClose={() => setSearchOpen(false)}
-   />
-   <HeaderSearchBar open={searchOpen} onClose={() => setSearchOpen(false)} />
+   <div className="relative">
+    <Navbar
+     searchOpen={searchOpen}
+     productsMenuOpen={productsMenuOpen}
+     menuOpen={menuOpen}
+     onMenuOpenChange={setMenuOpen}
+     onProductsMenuOpenChange={setProductsMenuOpen}
+     onSearchToggle={toggleSearch}
+     onSearchClose={() => setSearchOpen(false)}
+    />
+    <HeaderSearchBar open={searchOpen} onClose={() => setSearchOpen(false)} />
+   </div>
   </header>
  );
 }
