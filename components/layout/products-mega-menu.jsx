@@ -73,7 +73,8 @@ function handleMegaMenuWheel(event) {
  event.stopPropagation();
 }
 
-const megaMenuProductGridClass = "grid grid-cols-2 gap-2.5 md:gap-3";
+const megaMenuProductGridClass =
+ "grid grid-cols-2 gap-2.5 max-[48rem]:grid-cols-1 md:gap-3";
 
 const viewAllLinkClass = cn(
  "products-mega-menu-view-all inline-flex shrink-0 items-center gap-1 rounded-full border border-white/18 bg-white/10 px-3 py-1.5 text-[0.8125rem] font-semibold text-white/92 shadow-[0_4px_18px_rgb(0_0_0/12%)] backdrop-blur-sm transition-[color,background-color,border-color,scale] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03] hover:border-white/28 hover:bg-white/18 hover:text-white motion-reduce:duration-150",

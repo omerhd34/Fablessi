@@ -19,13 +19,13 @@ export function MobileProductsCategoryGrid({ onClose }) {
  );
 
  return (
-  <div className="grid grid-cols-2 gap-3 pb-2">
+  <div className="grid grid-cols-2 gap-3 pb-2 max-[48rem]:grid-cols-1">
    {menuCategories.map((category) => (
     <Link
      key={category.slug}
      href={category.href}
      onClick={onClose}
-     className="group relative block aspect-4/5 overflow-hidden rounded-2xl bg-cream/60 md:aspect-auto md:h-52"
+     className="group relative block aspect-3/2 overflow-hidden rounded-2xl bg-cream/60 min-[49rem]:aspect-auto min-[49rem]:h-52"
     >
      {category.image ? (
       <>
@@ -33,7 +33,7 @@ export function MobileProductsCategoryGrid({ onClose }) {
         src={category.image}
         alt={category.label}
         fill
-        sizes="45vw"
+        sizes="(max-width: 48rem) 100vw, 45vw"
         className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
        />
        <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/45 via-black/5 to-transparent" />
