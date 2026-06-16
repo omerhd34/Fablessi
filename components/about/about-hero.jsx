@@ -8,9 +8,11 @@ import { cn } from "@/lib/utils";
 
 const ABOUT_HERO_IMAGES = {
  sm: "/about-visual/mobile.png",
+ sm2x: "/about-visual/mobile-2x.png",
  md: "/about-visual/tablet.png",
  lg: "/about-visual/laptop.png",
  xl: "/about-visual/genis-ekran.png",
+ xl2x: "/about-visual/genis-ekran-2x.png",
 };
 
 function getSiteHeaderHeight() {
@@ -50,9 +52,17 @@ export function AboutHero() {
   >
    <div className="relative min-h-[min(42vh,400px)] w-full sm:min-h-[min(48vh,480px)] md:min-h-[min(52vh,560px)] lg:min-h-[min(48vh,520px)]">
     <picture className="absolute inset-0 block h-full w-full">
+     <source
+      media="(min-width: 96rem) and (min-resolution: 2dppx)"
+      srcSet={ABOUT_HERO_IMAGES.xl2x}
+     />
      <source media="(min-width: 96rem)" srcSet={ABOUT_HERO_IMAGES.xl} />
      <source media="(min-width: 64rem)" srcSet={ABOUT_HERO_IMAGES.lg} />
      <source media="(min-width: 48rem)" srcSet={ABOUT_HERO_IMAGES.md} />
+     <source
+      media="(max-width: 47.99rem) and (min-resolution: 2dppx)"
+      srcSet={ABOUT_HERO_IMAGES.sm2x}
+     />
      <Image
       src={ABOUT_HERO_IMAGES.sm}
       alt={about.visualTitleLines.join(" ")}

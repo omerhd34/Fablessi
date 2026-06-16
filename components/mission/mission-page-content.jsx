@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { DynamicReactIcon } from "@/components/ui/dynamic-react-icon";
 import { useTranslations } from "@/contexts/locale-provider";
@@ -11,12 +10,10 @@ import {
  missionCommitmentItemClass,
  missionCtaClass,
  missionSectionHeaderClass,
- missionIntroClass,
  missionStatementClass,
  missionStatementsClass,
  missionValueClass,
  missionValueIconClass,
- missionVisualImageClass,
  pageSectionIntroClass,
  pageSectionTitleClass,
 } from "@/lib/layout/page-styles";
@@ -24,18 +21,8 @@ import {
  containerPremiumClass,
  sectionPaddingSmClass,
 } from "@/lib/layout/shared-styles";
-import { MOBILE_LAYOUT_MAX } from "@/lib/layout/breakpoints";
 import { cn } from "@/lib/utils";
 import { formatMissionValueTitle } from "@/lib/i18n/format-display-text";
-
-const MISSION_VALUES_IMAGES = {
- sm: "/mission-values/mobile.png",
- sm2x: "/mission-values/mobile-2x.png",
- md: "/mission-values/tablet.png",
- lg: "/mission-values/laptop.png",
- xl: "/mission-values/genis-ekran.png",
- xl2x: "/mission-values/genis-ekran-2x.png",
-};
 
 function MissionSectionHeader({ title, intro, headingId }) {
  return (
@@ -56,22 +43,15 @@ export function MissionPageContent() {
  return (
   <>
    <section
-    className={cn(
-     "mission-intro bg-background pb-12 pt-10 md:pb-14 md:pt-14",
-     missionIntroClass
-    )}
-   >
-    <div className={containerPremiumClass}>
-     <p className="mx-auto max-w-3xl text-center font-body text-sm leading-relaxed text-charcoal/75 md:text-[0.95rem]">
-      {missionVision.intro}
-     </p>
-    </div>
-   </section>
-
-   <section
     className={cn("mission-statements", sectionPaddingSmClass, missionStatementsClass)}
    >
     <div className={containerPremiumClass}>
+     {missionVision.intro ? (
+      <p className="mx-auto mb-10 max-w-3xl text-center font-body text-sm leading-relaxed text-charcoal/75 md:mb-12 md:text-[0.95rem]">
+       {missionVision.intro}
+      </p>
+     ) : null}
+
      <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
       <article
        className={cn(
@@ -105,11 +85,14 @@ export function MissionPageContent() {
    </section>
 
    <section
-    className={cn("mission-values bg-cream/35", sectionPaddingSmClass)}
+    className={cn("mission-values border-t border-charcoal/8 bg-cream/35", sectionPaddingSmClass)}
     aria-labelledby="mission-values-heading"
    >
     <div className={containerPremiumClass}>
-     <MissionSectionHeader title={missionVision.valuesTitle} />
+     <MissionSectionHeader
+      title={missionVision.valuesTitle}
+      headingId="mission-values-heading"
+     />
 
      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
       {missionVision.values.map((value) => (
@@ -141,7 +124,7 @@ export function MissionPageContent() {
    </section>
 
    <section
-    className={cn("mission-commitments", sectionPaddingSmClass)}
+    className={cn("mission-commitments border-t border-charcoal/8", sectionPaddingSmClass)}
     aria-labelledby="mission-commitments-heading"
    >
     <div className={containerPremiumClass}>
@@ -168,39 +151,7 @@ export function MissionPageContent() {
     </div>
    </section>
 
-   <section className="mission-values-visual pb-4 pt-2 md:pb-6 md:pt-4" aria-hidden>
-    <div className={containerPremiumClass}>
-     <div
-      className={cn(
-       "header-logo-light-zone relative aspect-video overflow-hidden rounded-2xl sm:aspect-21/9",
-       missionVisualImageClass
-      )}
-     >
-      <picture className="absolute inset-0 block h-full w-full">
-       <source
-        media="(min-width: 96rem) and (min-resolution: 2dppx)"
-        srcSet={MISSION_VALUES_IMAGES.xl2x}
-       />
-       <source media="(min-width: 96rem)" srcSet={MISSION_VALUES_IMAGES.xl} />
-       <source media="(min-width: 64rem)" srcSet={MISSION_VALUES_IMAGES.lg} />
-       <source media="(min-width: 48rem)" srcSet={MISSION_VALUES_IMAGES.md} />
-       <source
-        media="(max-width: 47.99rem) and (min-resolution: 2dppx)"
-        srcSet={MISSION_VALUES_IMAGES.sm2x}
-       />
-       <Image
-        src={MISSION_VALUES_IMAGES.sm}
-        alt=""
-        fill
-        sizes={`(max-width: ${MOBILE_LAYOUT_MAX}) 100vw, ${MOBILE_LAYOUT_MAX}`}
-        className="object-cover object-center"
-       />
-      </picture>
-     </div>
-    </div>
-   </section>
-
-   <section className={cn(containerPremiumClass, "pb-20 md:pb-28")}>
+   <section className={cn(containerPremiumClass, "pb-20 pt-10 md:pb-28 md:pt-14")}>
     <div
      className={cn(
       "mission-cta rounded-2xl px-6 py-10 text-center text-white md:px-10 md:py-12",

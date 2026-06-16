@@ -46,15 +46,6 @@ export function AboutPageContent() {
 
      <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
       <Link
-       href="/urunler"
-       className={cn(
-        visualCtaClass,
-        "border border-charcoal/15 bg-white text-charcoal hover:border-charcoal/25 hover:bg-cream/60"
-       )}
-      >
-       {about.visualCta}
-      </Link>
-      <Link
        href="/misyon-vizyon"
        className={cn(
         visualCtaClass,
@@ -62,6 +53,15 @@ export function AboutPageContent() {
        )}
       >
        {missionVision.pageTitle}
+      </Link>
+      <Link
+       href="/urunler"
+       className={cn(
+        visualCtaClass,
+        "border border-charcoal/15 bg-white text-charcoal hover:border-charcoal/25 hover:bg-cream/60"
+       )}
+      >
+       {about.visualCta}
       </Link>
      </div>
     </div>
