@@ -6,7 +6,7 @@ import {
 } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 
-export const generateMetadata = createPageMetadata("favorites");
+export const generateMetadata = createPageMetadata("favorites", { index: false });
 
 export default function FavorilerPage() {
  return (
