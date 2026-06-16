@@ -22,6 +22,15 @@ import { MOBILE_LAYOUT_MAX } from "@/lib/layout/breakpoints";
 import { cn } from "@/lib/utils";
 import { formatMissionValueTitle } from "@/lib/i18n/format-display-text";
 
+const MISSION_VALUES_IMAGES = {
+ sm: "/mission-values/mobile.png",
+ sm2x: "/mission-values/mobile-2x.png",
+ md: "/mission-values/tablet.png",
+ lg: "/mission-values/laptop.png",
+ xl: "/mission-values/genis-ekran.png",
+ xl2x: "/mission-values/genis-ekran-2x.png",
+};
+
 export function MissionPageContent() {
  const { dictionary, locale } = useTranslations();
  const { missionVision } = dictionary;
@@ -66,23 +75,6 @@ export function MissionPageContent() {
    </section>
 
    <section
-    className={cn("mission-visual", sectionPaddingSmClass)}
-    aria-hidden
-   >
-    <div className={containerPremiumClass}>
-     <div className={cn("relative aspect-video overflow-hidden rounded-2xl sm:aspect-21/9", missionVisualImageClass)}>
-      <Image
-       src="https://res.cloudinary.com/dbo6puh1c/image/upload/v1781205876/fablessi/velar-oturma/01.jpg"
-       alt=""
-       fill
-       sizes={`(max-width: ${MOBILE_LAYOUT_MAX}) 100vw, ${MOBILE_LAYOUT_MAX}`}
-       className="object-cover object-center"
-      />
-     </div>
-    </div>
-   </section>
-
-   <section
     className={cn("mission-values", sectionPaddingSmClass)}
     aria-labelledby="mission-values-heading"
    >
@@ -93,6 +85,29 @@ export function MissionPageContent() {
      >
       {missionVision.valuesTitle}
      </h2>
+
+     <div className={cn("relative mt-10 aspect-video overflow-hidden rounded-2xl sm:aspect-21/9", missionVisualImageClass)}>
+      <picture className="absolute inset-0 block h-full w-full">
+       <source
+        media="(min-width: 96rem) and (min-resolution: 2dppx)"
+        srcSet={MISSION_VALUES_IMAGES.xl2x}
+       />
+       <source media="(min-width: 96rem)" srcSet={MISSION_VALUES_IMAGES.xl} />
+       <source media="(min-width: 64rem)" srcSet={MISSION_VALUES_IMAGES.lg} />
+       <source media="(min-width: 48rem)" srcSet={MISSION_VALUES_IMAGES.md} />
+       <source
+        media="(max-width: 47.99rem) and (min-resolution: 2dppx)"
+        srcSet={MISSION_VALUES_IMAGES.sm2x}
+       />
+       <Image
+        src={MISSION_VALUES_IMAGES.sm}
+        alt=""
+        fill
+        sizes={`(max-width: ${MOBILE_LAYOUT_MAX}) 100vw, ${MOBILE_LAYOUT_MAX}`}
+        className="object-cover object-center"
+       />
+      </picture>
+     </div>
 
      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
       {missionVision.values.map((value) => (

@@ -11,9 +11,11 @@ import { cn } from "@/lib/utils";
 
 const BRAND_EXPERIENCE_IMAGES = {
  sm: "/brand-experience/mobile.png",
+ sm2x: "/brand-experience/mobile-2x.png",
  md: "/brand-experience/tablet.png",
  lg: "/brand-experience/laptop.png",
  xl: "/brand-experience/genis-ekran.png",
+ xl2x: "/brand-experience/genis-ekran-2x.png",
 };
 
 export function BrandExperienceBanner() {
@@ -25,15 +27,23 @@ export function BrandExperienceBanner() {
  return (
   <section className="relative min-h-[360px] overflow-hidden sm:min-h-[400px] lg:min-h-[520px]">
    <picture className="absolute inset-0 block h-full w-full">
+    <source
+     media="(min-width: 96rem) and (min-resolution: 2dppx)"
+     srcSet={BRAND_EXPERIENCE_IMAGES.xl2x}
+    />
     <source media="(min-width: 96rem)" srcSet={BRAND_EXPERIENCE_IMAGES.xl} />
     <source media="(min-width: 64rem)" srcSet={BRAND_EXPERIENCE_IMAGES.lg} />
     <source media="(min-width: 48rem)" srcSet={BRAND_EXPERIENCE_IMAGES.md} />
+    <source
+     media="(max-width: 47.99rem) and (min-resolution: 2dppx)"
+     srcSet={BRAND_EXPERIENCE_IMAGES.sm2x}
+    />
     <Image
      src={BRAND_EXPERIENCE_IMAGES.sm}
      alt={alt}
      fill
      sizes="100vw"
-     className="object-cover"
+     className="object-cover object-center"
     />
    </picture>
    <div className="absolute inset-0 bg-black/45" />
@@ -41,7 +51,7 @@ export function BrandExperienceBanner() {
     <div className="flex w-full max-w-md shrink-0 flex-col items-center gap-3 sm:max-w-xl sm:gap-4 lg:max-w-2xl lg:gap-5">
      <h2
       className={cn(
-       "flex w-full flex-col items-center gap-1.5 sm:gap-2 lg:gap-3",
+       "flex w-full flex-col items-center gap-3 sm:gap-4 lg:gap-5",
        visualHeroTitleShadowClass
       )}
      >
@@ -56,7 +66,7 @@ export function BrandExperienceBanner() {
       <span
        className={cn(
         visualHeroTitleLineClass.emphasis,
-        "flex flex-col items-center leading-[1.02] lg:block lg:whitespace-nowrap"
+        "flex flex-col items-center gap-2.5 leading-[1.02] sm:gap-3 md:gap-3.5 lg:block lg:gap-0 lg:whitespace-nowrap"
        )}
       >
        <span className="max-lg:block lg:inline">{brandExperienceTitleLines[1]} </span>
@@ -65,7 +75,7 @@ export function BrandExperienceBanner() {
        </span>
       </span>
      </h2>
-     <p className="text-sm leading-relaxed text-white/85 drop-shadow-[0_2px_10px_rgb(0_0_0/35%)] sm:text-base">
+     <p className="hidden text-sm leading-relaxed text-white/85 drop-shadow-[0_2px_10px_rgb(0_0_0/35%)] sm:text-base xl:block">
       {brandExperienceDescription}
      </p>
     </div>
