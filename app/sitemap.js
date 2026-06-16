@@ -1,12 +1,15 @@
-import { getSitelinkSitemapEntries } from "@/lib/seo/sitelinks";
+import { buildSitemapUrl, getAllSitemapEntries } from "@/lib/seo/sitemap-entries";
 import { resolveSiteUrl } from "@/lib/site-metadata";
 
-export default function sitemap() {
- const baseUrl = resolveSiteUrl();
+export const revalidate = 3600;
 
- return getSitelinkSitemapEntries().map(({ path, changeFrequency, priority }) => ({
-  url: path === "/" ? baseUrl : `${baseUrl}/${path}`,
-  lastModified: new Date(),
+export default async function sitemap() {
+ const baseUrl = resolveSiteUrl();
+ const entries = await getAllSitemapEntries();
+
+ return entries.map(({ path, changeFrequency, priority, lastModified }) => ({
+  url: buildSitemapUrl(baseUrl, path),
+  lastModified: lastModified ?? new Date(),
   changeFrequency,
   priority,
  }));
