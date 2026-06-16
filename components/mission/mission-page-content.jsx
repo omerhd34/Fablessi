@@ -20,16 +20,22 @@ import {
 } from "@/lib/layout/shared-styles";
 import { MOBILE_LAYOUT_MAX } from "@/lib/layout/breakpoints";
 import { cn } from "@/lib/utils";
+import { formatMissionValueTitle } from "@/lib/i18n/format-display-text";
 
 export function MissionPageContent() {
- const { dictionary } = useTranslations();
+ const { dictionary, locale } = useTranslations();
  const { missionVision } = dictionary;
 
  return (
   <>
-   <section className={cn("mission-intro pb-12 md:pb-14", missionIntroClass)}>
+   <section
+    className={cn(
+     "mission-intro bg-background pb-12 pt-10 md:pb-14 md:pt-14",
+     missionIntroClass
+    )}
+   >
     <div className={containerPremiumClass}>
-     <p className="mx-auto max-w-2xl text-center font-body text-sm leading-relaxed text-charcoal/75 md:text-[0.95rem]">
+     <p className="mx-auto max-w-3xl text-center font-body text-sm leading-relaxed text-charcoal/75 md:text-[0.95rem]">
       {missionVision.intro}
      </p>
     </div>
@@ -100,8 +106,13 @@ export function MissionPageContent() {
           className="size-6 text-charcoal/70"
          />
         </div>
-        <h3 className="mt-5 font-display text-[0.72rem] tracking-[0.24em] text-charcoal uppercase">
-         {value.title}
+        <h3
+         className={cn(
+          "mt-5 font-display text-[0.72rem] tracking-[0.24em] text-charcoal",
+          locale === "en" && "uppercase"
+         )}
+        >
+         {formatMissionValueTitle(value.title, locale)}
         </h3>
         <p className="mt-4 font-body text-sm leading-relaxed text-charcoal/72">
          {value.description}
