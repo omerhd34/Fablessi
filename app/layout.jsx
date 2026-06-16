@@ -67,6 +67,7 @@ export default async function RootLayout({ children }) {
  return (
   <html
    lang={locale}
+   data-scroll-behavior="smooth"
    className={`${montserrat.variable} ${poppins.variable} h-full antialiased`}
   >
    <body className="min-h-full flex flex-col font-sans">
