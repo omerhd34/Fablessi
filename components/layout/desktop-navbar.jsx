@@ -242,7 +242,11 @@ export function DesktopNavbar({
     </nav>
    </div>
 
-   <ProductsMegaMenu open={productsMenuOpen} panelRef={megaMenuPanelRef} />
+   <ProductsMegaMenu
+    open={productsMenuOpen}
+    panelRef={megaMenuPanelRef}
+    onClose={closeProductsMenu}
+   />
   </div>
  );
 }
