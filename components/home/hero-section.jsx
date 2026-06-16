@@ -168,7 +168,7 @@ export function HeroSection() {
     <div className="flex">
      {heroSlides.map((slide, index) => (
       <div key={slide.key} className="relative min-w-0 flex-[0_0_100%]">
-       <div className="relative min-h-dvh w-full sm:min-h-svh">
+       <div className="relative min-h-dvh w-full">
         <HeroSlideImage
          slide={slide}
          priority={index === 0}
@@ -187,7 +187,7 @@ export function HeroSection() {
     aria-label={t("hero.prevSlide")}
    >
     <HeroChevronLeft
-     className="size-[1.375rem] text-current md:size-[1.875rem]"
+     className="size-5.5 text-current md:size-7.5"
      strokeWidth={3.5}
      aria-hidden
     />
@@ -199,7 +199,7 @@ export function HeroSection() {
     aria-label={t("hero.nextSlide")}
    >
     <HeroChevronRight
-     className="size-[1.375rem] text-current md:size-[1.875rem]"
+     className="size-5.5 text-current md:size-7.5"
      strokeWidth={3.5}
      aria-hidden
     />

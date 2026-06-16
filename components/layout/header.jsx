@@ -7,8 +7,16 @@ import { Navbar } from "@/components/layout/navbar";
 import { HeaderSearchBar } from "@/components/layout/header-search-bar";
 import { cn } from "@/lib/utils";
 
-const SCROLL_THRESHOLD = 48;
-const HERO_SELECTORS = ".page-header-bleed, .faq-hero";
+const HERO_SELECTORS = ".hero-carousel, .page-header-bleed, .faq-hero";
+
+function getHeaderHideThreshold() {
+ const header = document.querySelector(".site-header");
+ const headerHeight = header
+  ? Math.ceil(header.getBoundingClientRect().height)
+  : 0;
+
+ return Math.max(80, headerHeight + 16);
+}
 
 function isLogoOverHero() {
  const hero = document.querySelector(HERO_SELECTORS);
@@ -56,19 +64,48 @@ export function Header() {
   });
  };
 
+ useLayoutEffect(() => {
+  if (!isHome) {
+   setScrolled(false);
+   return;
+  }
+
+  setScrolled(false);
+
+  const resetScroll = () => {
+   window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  };
+
+  resetScroll();
+  requestAnimationFrame(resetScroll);
+ }, [isHome, pathname]);
+
  useEffect(() => {
+  if (!isHome) return;
+
   const onScroll = () => {
-   const next = window.scrollY > SCROLL_THRESHOLD;
+   const next = window.scrollY > getHeaderHideThreshold();
    setScrolled(next);
    if (next) {
     setMenuOpen(false);
    }
   };
 
+  const onPageShow = (event) => {
+   if (!event.persisted) return;
+   window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+   setScrolled(false);
+  };
+
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
-  return () => window.removeEventListener("scroll", onScroll);
- }, []);
+  window.addEventListener("pageshow", onPageShow);
+
+  return () => {
+   window.removeEventListener("scroll", onScroll);
+   window.removeEventListener("pageshow", onPageShow);
+  };
+ }, [isHome, pathname]);
 
  useLayoutEffect(() => {
   if (isProductsPage) {
