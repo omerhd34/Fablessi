@@ -40,9 +40,6 @@ export async function generateMetadata() {
   },
   description,
   keywords: dictionary.metadata.keywords ?? siteMetadata.keywords,
-  alternates: {
-   canonical: "/",
-  },
   openGraph: {
    ...siteMetadata.openGraph,
    title,
