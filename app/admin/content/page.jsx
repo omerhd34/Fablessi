@@ -4,6 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const sections = [
  {
+  href: "/admin/content/home",
+  title: "Anasayfa",
+  description: "Hero slayt görselleri ve marka deneyimi bölümü.",
+ },
+ {
   href: "/admin/content/about",
   title: "Hakkımızda",
   description: "Sayfa görseli, hikâye, giriş metni ve içerikler.",
