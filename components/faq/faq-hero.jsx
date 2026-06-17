@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { PageHeroPicture } from "@/components/ui/page-hero-picture";
 import { useTranslations } from "@/contexts/locale-provider";
-import { resolvePageHeroImage } from "@/lib/content/page-hero-images";
+import { resolvePageHeroImages } from "@/lib/content/page-hero-images";
 import { cn } from "@/lib/utils";
 
 function getSiteHeaderHeight() {
@@ -18,7 +18,7 @@ export function FaqHero() {
   ([id, label]) => ({ id, label })
  );
  const [headerOffset, setHeaderOffset] = useState(0);
- const heroImage = resolvePageHeroImage("faq", dictionary.faq);
+ const heroImages = resolvePageHeroImages("faq", dictionary.faq);
 
  useEffect(() => {
   const update = () => setHeaderOffset(getSiteHeaderHeight());
@@ -49,7 +49,7 @@ export function FaqHero() {
    style={{ "--faq-hero-header-offset": `${headerOffset}px` }}
   >
    <div className="relative min-h-[min(42vh,400px)] w-full sm:min-h-[min(48vh,480px)] md:min-h-[min(52vh,560px)] lg:min-h-[min(48vh,520px)]">
-    <PageHeroPicture src={heroImage} alt="" />
+    <PageHeroPicture images={heroImages} alt="" />
     <div className="absolute inset-0 bg-black/30" aria-hidden />
 
     <div
