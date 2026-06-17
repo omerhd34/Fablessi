@@ -9,7 +9,7 @@ export default async function AdminAboutContentPage() {
 
  return (
   <div className="space-y-6">
-   <AdminPageHeader title="Hakkımızda" description="Hakkımızda sayfası içeriklerini düzenleyin.">
+   <AdminPageHeader title="Hakkımızda" description="Sayfa görselini, hikâye ve metin içeriklerini güncelleyin.">
     <Button variant="outline" size="sm" className="cursor-pointer" asChild>
      <Link href="/admin/content">Geri</Link>
     </Button>

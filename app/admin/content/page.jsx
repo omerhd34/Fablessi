@@ -6,17 +6,17 @@ const sections = [
  {
   href: "/admin/content/about",
   title: "Hakkımızda",
-  description: "Marka hikayesi, karşılama metni ve sayfa paragrafları.",
+  description: "Sayfa görseli, hikâye, giriş metni ve içerikler.",
  },
  {
   href: "/admin/content/mission",
   title: "Misyon & Vizyon",
-  description: "Misyon, vizyon, değerler, taahhütler ve CTA metinleri.",
+  description: "Sayfa görseli, misyon, vizyon, değerler ve taahhütler.",
  },
  {
   href: "/admin/content/faq",
   title: "Sıkça Sorulan Sorular",
-  description: "SSS kategorileri, sorular ve cevaplar.",
+  description: "Sayfa görseli, kategoriler, sorular ve yanıtlar.",
  },
 ];
 
@@ -25,7 +25,7 @@ export default function AdminContentPage() {
   <div className="space-y-6">
    <AdminPageHeader
     title="Site İçeriği"
-    description="Hakkımızda, misyon-vizyon ve SSS içeriklerini buradan düzenleyin."
+    description="Marka sayfalarınızın metinlerini, görsellerini ve yardım merkezi içeriklerini tek merkezden düzenleyin."
    />
 
    <div className="grid gap-4 md:grid-cols-2">

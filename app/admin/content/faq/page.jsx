@@ -14,7 +14,7 @@ export default async function AdminFaqContentPage() {
   <div className="space-y-6">
    <AdminPageHeader
     title="Sıkça Sorulan Sorular"
-    description="SSS kategorileri ve soru-cevaplarını yönetin."
+    description="Sayfa görselini, soru kategorilerini ve yanıtları yönetin."
    >
     <Button variant="outline" size="sm" className="cursor-pointer gap-1.5" asChild>
      <Link href="/admin/content">

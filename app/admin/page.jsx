@@ -63,7 +63,7 @@ const quickActions = [
  },
  {
   title: "Site içeriği",
-  description: "Hakkımızda, misyon-vizyon ve SSS içeriklerini düzenleyin.",
+  description: "Marka sayfalarının metinlerini, görsellerini ve yardım merkezi içeriklerini düzenleyin.",
   href: "/admin/content",
   cta: "İçerik yönetimi",
   icon: MdArticle,
