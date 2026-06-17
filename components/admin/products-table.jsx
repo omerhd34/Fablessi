@@ -41,10 +41,6 @@ const SORT_COLUMNS = {
   getValue: (product) =>
    getProductPriceTotal(product) ?? Number.POSITIVE_INFINITY,
  },
- images: {
-  label: "Görsel",
-  getValue: (product) => product._count.images,
- },
  status: {
   label: "Durum",
   getValue: (product) =>
@@ -348,7 +344,7 @@ export function ProductsTable({ products }) {
     <TableBody>
      {pageItems.length === 0 ? (
       <TableRow className="hover:bg-transparent">
-       <TableCell colSpan={7} className="px-4 py-12 text-center text-muted-foreground">
+       <TableCell colSpan={6} className="px-4 py-12 text-center text-muted-foreground">
         Filtrelere uygun ürün bulunamadı.
        </TableCell>
       </TableRow>
@@ -373,9 +369,6 @@ export function ProductsTable({ products }) {
          </TableCell>
          <TableCell className="px-4 py-3 tabular-nums" title={priceLabel ?? undefined}>
           {truncateTableText(priceLabel) ?? "—"}
-         </TableCell>
-         <TableCell className="px-4 py-3 tabular-nums">
-          {product._count.images}
          </TableCell>
          <TableCell className="px-4 py-3">
           <div className="flex flex-wrap items-center gap-1">
