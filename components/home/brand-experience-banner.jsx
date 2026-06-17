@@ -9,37 +9,34 @@ import {
 } from "@/lib/layout/page-styles";
 import { cn } from "@/lib/utils";
 
-const BRAND_EXPERIENCE_IMAGES = {
- sm: "/brand-experience/mobile.png",
- sm2x: "/brand-experience/mobile-2x.png",
- md: "/brand-experience/tablet.png",
- lg: "/brand-experience/laptop.png",
- xl: "/brand-experience/genis-ekran.png",
- xl2x: "/brand-experience/genis-ekran-2x.png",
-};
-
 export function BrandExperienceBanner() {
  const { dictionary } = useLocale();
- const { brandExperienceTitleLines, brandExperienceDescription, brandExperienceCta } =
-  dictionary.home;
- const alt = brandExperienceTitleLines.join(" ");
+ const {
+  brandExperienceTitleLines,
+  brandExperienceDescription,
+  brandExperienceCta,
+  brandExperienceAlt,
+  brandExperienceImages,
+ } = dictionary.home;
+ const images = brandExperienceImages;
+ const alt = brandExperienceAlt || brandExperienceTitleLines.join(" ");
 
  return (
   <section className="header-logo-light-zone relative min-h-[360px] overflow-hidden sm:min-h-[400px] lg:min-h-[520px]">
    <picture className="absolute inset-0 block h-full w-full">
     <source
      media="(min-width: 96rem) and (min-resolution: 2dppx)"
-     srcSet={BRAND_EXPERIENCE_IMAGES.xl2x}
+     srcSet={images.xl2x}
     />
-    <source media="(min-width: 96rem)" srcSet={BRAND_EXPERIENCE_IMAGES.xl} />
-    <source media="(min-width: 64rem)" srcSet={BRAND_EXPERIENCE_IMAGES.lg} />
-    <source media="(min-width: 48rem)" srcSet={BRAND_EXPERIENCE_IMAGES.md} />
+    <source media="(min-width: 96rem)" srcSet={images.xl} />
+    <source media="(min-width: 64rem)" srcSet={images.lg} />
+    <source media="(min-width: 48rem)" srcSet={images.md} />
     <source
      media="(max-width: 47.99rem) and (min-resolution: 2dppx)"
-     srcSet={BRAND_EXPERIENCE_IMAGES.sm2x}
+     srcSet={images.sm2x}
     />
     <Image
-     src={BRAND_EXPERIENCE_IMAGES.sm}
+     src={images.sm}
      alt={alt}
      fill
      sizes="100vw"
