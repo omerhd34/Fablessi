@@ -2,15 +2,10 @@
 
 import { useState } from "react";
 import { MdAdd, MdDeleteOutline, MdSave } from "react-icons/md";
-import { toast } from "sonner";
-import { AdminImageUpload } from "@/components/admin/admin-image-upload";
+import { AdminPageHeroImages } from "@/components/admin/admin-page-hero-images";
 import { handleContentSave } from "@/components/admin/content-block-save";
-import {
- getAboutHeroImageRequirements,
- getAboutHeroImageSummary,
-} from "@/lib/admin/image-specs";
-import { validateImageUploadFile } from "@/lib/admin/image-upload";
-import { PAGE_HERO_DEFAULT_PREVIEW } from "@/lib/content/page-hero-defaults";
+import { normalizeAboutHeroImages } from "@/lib/content/about-hero-images";
+import { PAGE_HERO_DEFAULT_IMAGE } from "@/lib/content/page-hero-images";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -26,53 +21,24 @@ function updateParagraphs(content, index, value) {
 }
 
 function stripLockedFields(content) {
- const { heroEyebrow, pageTitle, ...editable } = content;
+ const { heroEyebrow, pageTitle, heroImages, ...editable } = content;
  return editable;
 }
 
+function normalizeInitialForm(initial) {
+ return {
+  ...initial,
+  contentTr: normalizeAboutHeroImages(initial.contentTr),
+  contentEn: normalizeAboutHeroImages(initial.contentEn),
+ };
+}
+
 export function AboutContentForm({ initial }) {
- const [form, setForm] = useState(initial);
+ const [form, setForm] = useState(() => normalizeInitialForm(initial));
  const [loading, setLoading] = useState(false);
  const [uploadingHero, setUploadingHero] = useState(false);
 
  const heroImage = form.contentTr.heroImage ?? "";
-
- function updateHeroImage(url) {
-  setForm((current) => ({
-   ...current,
-   contentTr: { ...current.contentTr, heroImage: url },
-   contentEn: { ...current.contentEn, heroImage: url },
-  }));
- }
-
- async function uploadHeroImage(file) {
-  const fileTypeError = validateImageUploadFile(file);
-  if (fileTypeError) {
-   toast.error(fileTypeError);
-   return;
-  }
-
-  setUploadingHero(true);
-  try {
-   const body = new FormData();
-   body.append("file", file);
-   body.append("folder", ABOUT_HERO_UPLOAD_FOLDER);
-
-   const response = await fetch("/api/admin/upload", {
-    method: "POST",
-    body,
-   });
-   const data = await response.json();
-   if (!response.ok) throw new Error(data.error || "Yükleme başarısız");
-
-   updateHeroImage(data.url);
-   toast.success("Başlık arkaplan görseli yüklendi");
-  } catch (error) {
-   toast.error(error.message);
-  } finally {
-   setUploadingHero(false);
-  }
- }
 
  function updateLocale(locale, updater) {
   setForm((current) => ({
@@ -131,16 +97,19 @@ export function AboutContentForm({ initial }) {
      <CardTitle>Hakkımızda Sayfası</CardTitle>
     </CardHeader>
     <CardContent className="space-y-6">
-     <AdminImageUpload
-      label="Başlık arkaplan görseli"
-      value={heroImage}
-      defaultPreview={PAGE_HERO_DEFAULT_PREVIEW.about}
-      onChange={updateHeroImage}
-      onUpload={uploadHeroImage}
+     <AdminPageHeroImages
+      heroImage={heroImage}
+      defaultImage={PAGE_HERO_DEFAULT_IMAGE.about}
+      uploadFolder={ABOUT_HERO_UPLOAD_FOLDER}
+      contentKey="about"
+      getContentTr={() => form.contentTr}
+      getContentEn={() => form.contentEn}
+      stripContent={stripLockedFields}
+      onFormSync={({ contentTr, contentEn }) =>
+       setForm((current) => ({ ...current, contentTr, contentEn }))
+      }
       uploading={uploadingHero}
-      hint={getAboutHeroImageSummary()}
-      dropzoneHint={getAboutHeroImageRequirements()}
-      previewAspectClass="aspect-3/1"
+      onUploadingChange={setUploadingHero}
      />
 
      <div className="grid gap-4 md:grid-cols-2">

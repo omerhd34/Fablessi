@@ -49,7 +49,7 @@ export async function POST(request) {
 
   const result = await uploadImageBuffer(buffer, {
    folder,
-   publicId: sanitizePublicId(file.name),
+   publicId: `${sanitizePublicId(file.name)}-${Date.now()}`,
   });
 
   return Response.json({ url: result.secure_url });

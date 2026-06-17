@@ -1,16 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { PageHeroPicture } from "@/components/ui/page-hero-picture";
 import { useTranslations } from "@/contexts/locale-provider";
+import { resolvePageHeroImage } from "@/lib/content/page-hero-images";
 import { cn } from "@/lib/utils";
-
-const FAQ_HERO_IMAGES = {
- sm: "/about-visual/mobile.png",
- md: "/about-visual/tablet.png",
- lg: "/about-visual/laptop.png",
- xl: "/about-visual/genis-ekran.png",
-};
 
 function getSiteHeaderHeight() {
  const header = document.querySelector(".site-header");
@@ -18,31 +12,13 @@ function getSiteHeaderHeight() {
  return Math.ceil(header.getBoundingClientRect().height);
 }
 
-function FaqHeroPicture() {
- return (
-  <picture className="absolute inset-0 block h-full w-full">
-   <source media="(min-width: 96rem)" srcSet={FAQ_HERO_IMAGES.xl} />
-   <source media="(min-width: 64rem)" srcSet={FAQ_HERO_IMAGES.lg} />
-   <source media="(min-width: 48rem)" srcSet={FAQ_HERO_IMAGES.md} />
-   <Image
-    src={FAQ_HERO_IMAGES.sm}
-    alt=""
-    fill
-    priority
-    sizes="100vw"
-    className="object-cover object-center"
-   />
-  </picture>
- );
-}
-
 export function FaqHero() {
  const { dictionary, t } = useTranslations();
- const heroImage = dictionary.faq.heroImage?.trim();
  const faqCategoryTabs = Object.entries(dictionary.faq.tabs).map(
   ([id, label]) => ({ id, label })
  );
  const [headerOffset, setHeaderOffset] = useState(0);
+ const heroImage = resolvePageHeroImage("faq", dictionary.faq);
 
  useEffect(() => {
   const update = () => setHeaderOffset(getSiteHeaderHeight());
@@ -73,18 +49,7 @@ export function FaqHero() {
    style={{ "--faq-hero-header-offset": `${headerOffset}px` }}
   >
    <div className="relative min-h-[min(42vh,400px)] w-full sm:min-h-[min(48vh,480px)] md:min-h-[min(52vh,560px)] lg:min-h-[min(48vh,520px)]">
-    {heroImage ? (
-     <Image
-      src={heroImage}
-      alt=""
-      fill
-      priority
-      sizes="100vw"
-      className="object-cover object-center"
-     />
-    ) : (
-     <FaqHeroPicture />
-    )}
+    <PageHeroPicture src={heroImage} alt="" />
     <div className="absolute inset-0 bg-black/30" aria-hidden />
 
     <div

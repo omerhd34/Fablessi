@@ -19,7 +19,7 @@ export function LocaleFlagIcon({ locale, className, variant = "menu" }) {
     height={22}
     unoptimized
     className={cn(
-     "size-[1.375rem] rounded-full object-cover lg:size-[1.45rem]",
+     "size-5.5 rounded-full object-cover lg:size-[1.45rem]",
      className
     )}
     aria-hidden

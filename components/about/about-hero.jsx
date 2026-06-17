@@ -1,19 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { PageHeroPicture } from "@/components/ui/page-hero-picture";
 import { useTranslations } from "@/contexts/locale-provider";
+import { resolvePageHeroImage } from "@/lib/content/page-hero-images";
 import { visualHeroTitleShadowClass } from "@/lib/layout/page-styles";
 import { cn } from "@/lib/utils";
-
-const ABOUT_HERO_IMAGES = {
- sm: "/about-visual/mobile.png",
- sm2x: "/about-visual/mobile-2x.png",
- md: "/about-visual/tablet.png",
- lg: "/about-visual/laptop.png",
- xl: "/about-visual/genis-ekran.png",
- xl2x: "/about-visual/genis-ekran-2x.png",
-};
 
 function getSiteHeaderHeight() {
  const header = document.querySelector(".site-header");
@@ -21,38 +13,12 @@ function getSiteHeaderHeight() {
  return Math.ceil(header.getBoundingClientRect().height);
 }
 
-function AboutHeroPicture({ alt }) {
- return (
-  <picture className="absolute inset-0 block h-full w-full">
-   <source
-    media="(min-width: 96rem) and (min-resolution: 2dppx)"
-    srcSet={ABOUT_HERO_IMAGES.xl2x}
-   />
-   <source media="(min-width: 96rem)" srcSet={ABOUT_HERO_IMAGES.xl} />
-   <source media="(min-width: 64rem)" srcSet={ABOUT_HERO_IMAGES.lg} />
-   <source media="(min-width: 48rem)" srcSet={ABOUT_HERO_IMAGES.md} />
-   <source
-    media="(max-width: 47.99rem) and (min-resolution: 2dppx)"
-    srcSet={ABOUT_HERO_IMAGES.sm2x}
-   />
-   <Image
-    src={ABOUT_HERO_IMAGES.sm}
-    alt={alt}
-    fill
-    priority
-    sizes="100vw"
-    className="object-cover object-center"
-   />
-  </picture>
- );
-}
-
 export function AboutHero() {
  const { dictionary, t } = useTranslations();
  const { about } = dictionary;
- const heroImage = about.heroImage?.trim();
  const heroAlt = about.visualTitleLines.join(" ");
  const [headerOffset, setHeaderOffset] = useState(0);
+ const heroImage = resolvePageHeroImage("about", about);
 
  useEffect(() => {
   const update = () => setHeaderOffset(getSiteHeaderHeight());
@@ -79,18 +45,7 @@ export function AboutHero() {
    style={{ "--about-hero-header-offset": `${headerOffset}px` }}
   >
    <div className="relative min-h-[min(42vh,400px)] w-full sm:min-h-[min(48vh,480px)] md:min-h-[min(52vh,560px)] lg:min-h-[min(48vh,520px)]">
-    {heroImage ? (
-     <Image
-      src={heroImage}
-      alt={heroAlt}
-      fill
-      priority
-      sizes="100vw"
-      className="object-cover object-center"
-     />
-    ) : (
-     <AboutHeroPicture alt={heroAlt} />
-    )}
+    <PageHeroPicture src={heroImage} alt={heroAlt} />
     <div className="absolute inset-0 bg-black/30" aria-hidden />
 
     <div

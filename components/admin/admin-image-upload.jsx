@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useId, useRef, useState } from "react";
+import { useRef } from "react";
 import { MdCloudUpload, MdDeleteOutline, MdImage } from "react-icons/md";
 import { toast } from "sonner";
-import { validateImageUploadFile } from "@/lib/admin/image-upload";
+import { IMAGE_UPLOAD_MAX_SIZE_LABEL, validateImageUploadFile } from "@/lib/admin/image-upload";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
@@ -32,14 +32,16 @@ export function AdminImageUpload({
  onUpload,
  uploading = false,
  disabled = false,
- hint = "JPG, PNG veya WebP · Maks. 10 MB",
+ hint = `JPG, PNG veya WebP - Maks. ${IMAGE_UPLOAD_MAX_SIZE_LABEL}`,
  dropzoneHint,
  previewAspectClass = "aspect-16/10",
+ previewHeightClass = "",
+ hintMinHeightClass = "",
+ stretch = false,
+ fullWidth = false,
  className,
 }) {
- const inputId = useId();
  const inputRef = useRef(null);
- const [dragOver, setDragOver] = useState(false);
  const isDisabled = disabled || uploading;
  const hasCustomImage = Boolean(value);
  const previewSrc = value || defaultPreview;
@@ -67,141 +69,114 @@ export function AdminImageUpload({
   event.target.value = "";
  }
 
- function handleDrop(event) {
-  event.preventDefault();
-  setDragOver(false);
-  void processFile(event.dataTransfer.files?.[0]);
- }
+ const previewClassName = cn(
+  "relative w-full overflow-hidden bg-muted",
+  previewHeightClass || previewAspectClass,
+  !previewHeightClass && "max-h-80"
+ );
 
  return (
-  <div className={cn("space-y-3", className)}>
-   <div className="space-y-1">
-    <Label htmlFor={inputId}>{label}</Label>
-    {hint ? <p className="text-xs text-muted-foreground">{hint}</p> : null}
+  <div className={cn(stretch ? "flex h-full flex-col space-y-3" : "space-y-3", className)}>
+   <div className={cn("space-y-1", hintMinHeightClass)}>
+    <Label>{label}</Label>
+    {hint ? (
+     <p
+      className={cn(
+       "text-[11px] leading-snug text-muted-foreground",
+       fullWidth && "line-clamp-2"
+      )}
+     >
+      {hint}
+     </p>
+    ) : null}
    </div>
 
    <input
     ref={inputRef}
-    id={inputId}
     type="file"
     accept={ACCEPT}
     className="sr-only"
     onChange={handleFileChange}
     disabled={isDisabled}
+    tabIndex={-1}
+    aria-hidden
    />
 
-   {showPreview ? (
-    <div className="mx-auto w-full max-w-2xl overflow-hidden rounded-xl border border-border/70 bg-card shadow-sm">
-     <div className={cn("relative w-full max-h-80 overflow-hidden bg-muted", previewAspectClass)}>
+   <div
+    className={cn(
+     "overflow-hidden rounded-xl border border-border/70 bg-card shadow-sm",
+     fullWidth ? "w-full" : "mx-auto w-full max-w-2xl",
+     stretch && "flex flex-1 flex-col"
+    )}
+   >
+    <div className={cn(previewClassName, "select-none")}>
+     {showPreview ? (
       <Image
        src={previewSrc}
        alt={label}
        fill
-       className="object-cover object-center"
+       unoptimized={Boolean(value)}
+       className="pointer-events-none object-cover object-center"
        sizes="(max-width: 768px) 100vw, 640px"
       />
-      {!hasCustomImage && !uploading ? (
-       <span
-        className="absolute top-3 left-3 z-10 rounded-full border border-white/35 bg-black/45 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm"
-       >
-        Varsayılan görsel
-       </span>
-      ) : null}
-      {hasCustomImage && !uploading ? (
-       <Button
-        type="button"
-        variant="secondary"
-        size="icon"
-        className="absolute top-3 right-3 z-10 size-10 cursor-pointer border-border/70 bg-background/95 text-destructive shadow-md backdrop-blur-sm hover:bg-background hover:text-destructive"
-        disabled={isDisabled}
-        aria-label="Görseli kaldır"
-        onClick={() => onChange("")}
-       >
-        <MdDeleteOutline className="size-5" />
-       </Button>
-      ) : null}
-      {uploading ? (
-       <div className="absolute inset-0 flex items-center justify-center bg-background/75 backdrop-blur-[2px]">
-        <AdminUploadSpinner className="size-9" />
-       </div>
-      ) : null}
-     </div>
+     ) : (
+      <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-2 text-muted-foreground">
+       <MdImage className="size-10 opacity-60" aria-hidden />
+       <p className="text-sm">Henüz görsel yüklenmedi</p>
+      </div>
+     )}
 
-     <div className="flex flex-col items-center gap-3 border-t border-border/70 px-4 py-3 sm:flex-row sm:justify-center">
+     {!hasCustomImage && showPreview && !uploading ? (
+      <span className="pointer-events-none absolute top-3 left-3 z-10 rounded-full border border-white/35 bg-black/45 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+       Varsayılan görsel
+      </span>
+     ) : null}
+
+     {hasCustomImage && !uploading ? (
       <Button
        type="button"
-       variant="outline"
-       size="sm"
-       className="cursor-pointer"
+       variant="secondary"
+       size="icon"
+       className="absolute top-3 right-3 z-10 size-10 cursor-pointer border-border/70 bg-background/95 text-destructive shadow-md backdrop-blur-sm hover:bg-background hover:text-destructive"
        disabled={isDisabled}
-       onClick={openFilePicker}
+       aria-label="Görseli kaldır"
+       onClick={() => onChange("")}
       >
-       <MdCloudUpload className="size-4" />
-       Değiştir
+       <MdDeleteOutline className="size-5" />
       </Button>
-     </div>
+     ) : null}
+
+     {uploading ? (
+      <div className="absolute inset-0 flex items-center justify-center bg-background/75 backdrop-blur-[2px]">
+       <AdminUploadSpinner className="size-9" />
+      </div>
+     ) : null}
     </div>
-   ) : (
-    <button
-     type="button"
-     disabled={isDisabled}
-     onClick={openFilePicker}
-     onDragEnter={(event) => {
-      event.preventDefault();
-      if (!isDisabled) setDragOver(true);
-     }}
-     onDragOver={(event) => {
-      event.preventDefault();
-      if (!isDisabled) setDragOver(true);
-     }}
-     onDragLeave={(event) => {
-      event.preventDefault();
-      setDragOver(false);
-     }}
-     onDrop={handleDrop}
-     aria-busy={uploading}
+
+    <div
      className={cn(
-      "group relative mx-auto flex max-h-80 min-h-48 w-full max-w-2xl flex-col items-center justify-center gap-3 rounded-xl border border-dashed px-6 text-center transition-colors",
-      previewAspectClass,
-      uploading
-       ? "pointer-events-none cursor-default border-border/80 bg-muted/30"
-       : "cursor-pointer border-border/80 bg-muted/20 hover:border-primary/40 hover:bg-muted/40",
-      !uploading &&
-       dragOver &&
-       "border-primary bg-primary/5 shadow-sm",
-      disabled && !uploading && "cursor-not-allowed opacity-60"
+      "flex flex-col items-center gap-3 border-t border-border/70 px-4 py-3 sm:flex-row sm:justify-center",
+      stretch && "mt-auto"
      )}
     >
-     <div
-      className={cn(
-       "flex size-14 shrink-0 items-center justify-center rounded-full border transition-colors",
-       uploading
-        ? "border-charcoal/10 bg-background"
-        : dragOver
-         ? "border-primary/30 bg-primary/10 text-primary"
-         : "border-border/70 bg-background text-muted-foreground group-hover:border-primary/20 group-hover:text-foreground"
-      )}
+     <Button
+      type="button"
+      variant="outline"
+      size="sm"
+      className="cursor-pointer"
+      disabled={isDisabled}
+      onClick={openFilePicker}
      >
-      {uploading ? (
-       <AdminUploadSpinner className="size-7" />
-      ) : (
-       <MdImage className="size-7" />
-      )}
-     </div>
-
-     <div className="space-y-1">
-      <p className="text-sm font-medium text-foreground">
-       {uploading ? "Görsel yükleniyor…" : "Görseli sürükleyip bırakın"}
+      <MdCloudUpload className="size-4" />
+      Değiştir
+     </Button>
+     {!showPreview && dropzoneHint ? (
+      <p className="text-center text-xs text-muted-foreground sm:text-left">
+       {dropzoneHint}
       </p>
-      <p className="text-sm text-muted-foreground">
-       veya bilgisayarınızdan seçmek için tıklayın
-      </p>
-      {dropzoneHint ?? hint ? (
-       <p className="pt-1 text-xs text-muted-foreground">{dropzoneHint ?? hint}</p>
-      ) : null}
-     </div>
-    </button>
-   )}
+     ) : null}
+    </div>
+   </div>
   </div>
  );
 }

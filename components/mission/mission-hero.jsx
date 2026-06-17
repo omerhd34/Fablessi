@@ -1,17 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { PageHeroPicture } from "@/components/ui/page-hero-picture";
 import { useTranslations } from "@/contexts/locale-provider";
+import { resolvePageHeroImage } from "@/lib/content/page-hero-images";
 import { visualHeroTitleShadowClass } from "@/lib/layout/page-styles";
 import { cn } from "@/lib/utils";
-
-const MISSION_HERO_IMAGES = {
- sm: "/mission-hero/mobile.jpeg",
- md: "/mission-hero/tablet.jpeg",
- lg: "/mission-hero/laptop.jpeg",
- xl: "/mission-hero/genis-ekran.jpeg",
-};
 
 function getSiteHeaderHeight() {
  const header = document.querySelector(".site-header");
@@ -19,29 +13,11 @@ function getSiteHeaderHeight() {
  return Math.ceil(header.getBoundingClientRect().height);
 }
 
-function MissionHeroPicture({ alt }) {
- return (
-  <picture className="absolute inset-0 block h-full w-full">
-   <source media="(min-width: 96rem)" srcSet={MISSION_HERO_IMAGES.xl} />
-   <source media="(min-width: 64rem)" srcSet={MISSION_HERO_IMAGES.lg} />
-   <source media="(min-width: 48rem)" srcSet={MISSION_HERO_IMAGES.md} />
-   <Image
-    src={MISSION_HERO_IMAGES.sm}
-    alt={alt}
-    fill
-    priority
-    sizes="100vw"
-    className="object-cover object-center"
-   />
-  </picture>
- );
-}
-
 export function MissionHero() {
  const { dictionary, t } = useTranslations();
- const heroImage = dictionary.missionVision.heroImage?.trim();
  const heroAlt = t("missionVision.heroImageAlt");
  const [headerOffset, setHeaderOffset] = useState(0);
+ const heroImage = resolvePageHeroImage("missionVision", dictionary.missionVision);
 
  useEffect(() => {
   const update = () => setHeaderOffset(getSiteHeaderHeight());
@@ -68,18 +44,7 @@ export function MissionHero() {
    style={{ "--mission-hero-header-offset": `${headerOffset}px` }}
   >
    <div className="relative min-h-[min(42vh,400px)] w-full sm:min-h-[min(48vh,480px)] md:min-h-[min(52vh,560px)] lg:min-h-[min(48vh,520px)]">
-    {heroImage ? (
-     <Image
-      src={heroImage}
-      alt={heroAlt}
-      fill
-      priority
-      sizes="100vw"
-      className="object-cover object-center"
-     />
-    ) : (
-     <MissionHeroPicture alt={heroAlt} />
-    )}
+    <PageHeroPicture src={heroImage} alt={heroAlt} />
     <div className="absolute inset-0 bg-black/30" aria-hidden />
 
     <div

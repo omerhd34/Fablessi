@@ -2,15 +2,9 @@
 
 import { useState } from "react";
 import { MdAdd, MdDeleteOutline, MdSave } from "react-icons/md";
-import { toast } from "sonner";
-import { AdminImageUpload } from "@/components/admin/admin-image-upload";
+import { AdminPageHeroImages } from "@/components/admin/admin-page-hero-images";
 import { handleContentSave } from "@/components/admin/content-block-save";
-import {
- getMissionHeroImageRequirements,
- getMissionHeroImageSummary,
-} from "@/lib/admin/image-specs";
-import { validateImageUploadFile } from "@/lib/admin/image-upload";
-import { PAGE_HERO_DEFAULT_PREVIEW } from "@/lib/content/page-hero-defaults";
+import { normalizePageHeroImages, PAGE_HERO_DEFAULT_IMAGE } from "@/lib/content/page-hero-images";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DynamicReactIcon } from "@/components/ui/dynamic-react-icon";
@@ -41,7 +35,16 @@ function stripLockedFields(content) {
  for (const field of LOCKED_FIELDS) {
   delete editable[field];
  }
+ delete editable.heroImages;
  return editable;
+}
+
+function normalizeInitialForm(initial) {
+ return {
+  ...initial,
+  contentTr: normalizePageHeroImages(initial.contentTr),
+  contentEn: normalizePageHeroImages(initial.contentEn),
+ };
 }
 
 function updateList(content, key, index, value) {
@@ -51,48 +54,11 @@ function updateList(content, key, index, value) {
 }
 
 export function MissionContentForm({ initial }) {
- const [form, setForm] = useState(initial);
+ const [form, setForm] = useState(() => normalizeInitialForm(initial));
  const [loading, setLoading] = useState(false);
  const [uploadingHero, setUploadingHero] = useState(false);
 
  const heroImage = form.contentTr.heroImage ?? "";
-
- function updateHeroImage(url) {
-  setForm((current) => ({
-   ...current,
-   contentTr: { ...current.contentTr, heroImage: url },
-   contentEn: { ...current.contentEn, heroImage: url },
-  }));
- }
-
- async function uploadHeroImage(file) {
-  const fileTypeError = validateImageUploadFile(file);
-  if (fileTypeError) {
-   toast.error(fileTypeError);
-   return;
-  }
-
-  setUploadingHero(true);
-  try {
-   const body = new FormData();
-   body.append("file", file);
-   body.append("folder", MISSION_HERO_UPLOAD_FOLDER);
-
-   const response = await fetch("/api/admin/upload", {
-    method: "POST",
-    body,
-   });
-   const data = await response.json();
-   if (!response.ok) throw new Error(data.error || "Yükleme başarısız");
-
-   updateHeroImage(data.url);
-   toast.success("Başlık arkaplan görseli yüklendi");
-  } catch (error) {
-   toast.error(error.message);
-  } finally {
-   setUploadingHero(false);
-  }
- }
 
  function updateLocale(locale, updater) {
   setForm((current) => ({
@@ -187,16 +153,19 @@ export function MissionContentForm({ initial }) {
      <CardTitle>Misyon & Vizyon</CardTitle>
     </CardHeader>
     <CardContent className="space-y-6">
-     <AdminImageUpload
-      label="Başlık arkaplan görseli"
-      value={heroImage}
-      defaultPreview={PAGE_HERO_DEFAULT_PREVIEW.missionVision}
-      onChange={updateHeroImage}
-      onUpload={uploadHeroImage}
+     <AdminPageHeroImages
+      heroImage={heroImage}
+      defaultImage={PAGE_HERO_DEFAULT_IMAGE.missionVision}
+      uploadFolder={MISSION_HERO_UPLOAD_FOLDER}
+      contentKey="missionVision"
+      getContentTr={() => form.contentTr}
+      getContentEn={() => form.contentEn}
+      stripContent={stripLockedFields}
+      onFormSync={({ contentTr, contentEn }) =>
+       setForm((current) => ({ ...current, contentTr, contentEn }))
+      }
       uploading={uploadingHero}
-      hint={getMissionHeroImageSummary()}
-      dropzoneHint={getMissionHeroImageRequirements()}
-      previewAspectClass="aspect-3/1"
+      onUploadingChange={setUploadingHero}
      />
 
      {[
