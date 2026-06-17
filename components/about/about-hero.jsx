@@ -21,9 +21,37 @@ function getSiteHeaderHeight() {
  return Math.ceil(header.getBoundingClientRect().height);
 }
 
+function AboutHeroPicture({ alt }) {
+ return (
+  <picture className="absolute inset-0 block h-full w-full">
+   <source
+    media="(min-width: 96rem) and (min-resolution: 2dppx)"
+    srcSet={ABOUT_HERO_IMAGES.xl2x}
+   />
+   <source media="(min-width: 96rem)" srcSet={ABOUT_HERO_IMAGES.xl} />
+   <source media="(min-width: 64rem)" srcSet={ABOUT_HERO_IMAGES.lg} />
+   <source media="(min-width: 48rem)" srcSet={ABOUT_HERO_IMAGES.md} />
+   <source
+    media="(max-width: 47.99rem) and (min-resolution: 2dppx)"
+    srcSet={ABOUT_HERO_IMAGES.sm2x}
+   />
+   <Image
+    src={ABOUT_HERO_IMAGES.sm}
+    alt={alt}
+    fill
+    priority
+    sizes="100vw"
+    className="object-cover object-center"
+   />
+  </picture>
+ );
+}
+
 export function AboutHero() {
  const { dictionary, t } = useTranslations();
  const { about } = dictionary;
+ const heroImage = about.heroImage?.trim();
+ const heroAlt = about.visualTitleLines.join(" ");
  const [headerOffset, setHeaderOffset] = useState(0);
 
  useEffect(() => {
@@ -51,27 +79,18 @@ export function AboutHero() {
    style={{ "--about-hero-header-offset": `${headerOffset}px` }}
   >
    <div className="relative min-h-[min(42vh,400px)] w-full sm:min-h-[min(48vh,480px)] md:min-h-[min(52vh,560px)] lg:min-h-[min(48vh,520px)]">
-    <picture className="absolute inset-0 block h-full w-full">
-     <source
-      media="(min-width: 96rem) and (min-resolution: 2dppx)"
-      srcSet={ABOUT_HERO_IMAGES.xl2x}
-     />
-     <source media="(min-width: 96rem)" srcSet={ABOUT_HERO_IMAGES.xl} />
-     <source media="(min-width: 64rem)" srcSet={ABOUT_HERO_IMAGES.lg} />
-     <source media="(min-width: 48rem)" srcSet={ABOUT_HERO_IMAGES.md} />
-     <source
-      media="(max-width: 47.99rem) and (min-resolution: 2dppx)"
-      srcSet={ABOUT_HERO_IMAGES.sm2x}
-     />
+    {heroImage ? (
      <Image
-      src={ABOUT_HERO_IMAGES.sm}
-      alt={about.visualTitleLines.join(" ")}
+      src={heroImage}
+      alt={heroAlt}
       fill
       priority
       sizes="100vw"
       className="object-cover object-center"
      />
-    </picture>
+    ) : (
+     <AboutHeroPicture alt={heroAlt} />
+    )}
     <div className="absolute inset-0 bg-black/30" aria-hidden />
 
     <div

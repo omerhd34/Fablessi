@@ -2,11 +2,13 @@ import Link from "next/link";
 import { MdArrowBack } from "react-icons/md";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
 import { FaqContentForm } from "@/components/admin/faq-content-form";
-import { getAdminFaqCategories } from "@/lib/content/queries";
+import { FaqHeroForm } from "@/components/admin/faq-hero-form";
+import { getAdminContentBlock, getAdminFaqCategories } from "@/lib/content/queries";
 import { Button } from "@/components/ui/button";
 
 export default async function AdminFaqContentPage() {
  const categories = await getAdminFaqCategories();
+ const faqSettings = await getAdminContentBlock("faq");
 
  return (
   <div className="space-y-6">
@@ -22,6 +24,7 @@ export default async function AdminFaqContentPage() {
     </Button>
    </AdminPageHeader>
 
+   <FaqHeroForm initial={faqSettings} />
    <FaqContentForm categories={categories} />
   </div>
  );

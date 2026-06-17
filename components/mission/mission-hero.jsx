@@ -19,8 +19,28 @@ function getSiteHeaderHeight() {
  return Math.ceil(header.getBoundingClientRect().height);
 }
 
+function MissionHeroPicture({ alt }) {
+ return (
+  <picture className="absolute inset-0 block h-full w-full">
+   <source media="(min-width: 96rem)" srcSet={MISSION_HERO_IMAGES.xl} />
+   <source media="(min-width: 64rem)" srcSet={MISSION_HERO_IMAGES.lg} />
+   <source media="(min-width: 48rem)" srcSet={MISSION_HERO_IMAGES.md} />
+   <Image
+    src={MISSION_HERO_IMAGES.sm}
+    alt={alt}
+    fill
+    priority
+    sizes="100vw"
+    className="object-cover object-center"
+   />
+  </picture>
+ );
+}
+
 export function MissionHero() {
- const { t } = useTranslations();
+ const { dictionary, t } = useTranslations();
+ const heroImage = dictionary.missionVision.heroImage?.trim();
+ const heroAlt = t("missionVision.heroImageAlt");
  const [headerOffset, setHeaderOffset] = useState(0);
 
  useEffect(() => {
@@ -48,19 +68,18 @@ export function MissionHero() {
    style={{ "--mission-hero-header-offset": `${headerOffset}px` }}
   >
    <div className="relative min-h-[min(42vh,400px)] w-full sm:min-h-[min(48vh,480px)] md:min-h-[min(52vh,560px)] lg:min-h-[min(48vh,520px)]">
-    <picture className="absolute inset-0 block h-full w-full">
-     <source media="(min-width: 96rem)" srcSet={MISSION_HERO_IMAGES.xl} />
-     <source media="(min-width: 64rem)" srcSet={MISSION_HERO_IMAGES.lg} />
-     <source media="(min-width: 48rem)" srcSet={MISSION_HERO_IMAGES.md} />
+    {heroImage ? (
      <Image
-      src={MISSION_HERO_IMAGES.sm}
-      alt={t("missionVision.heroImageAlt")}
+      src={heroImage}
+      alt={heroAlt}
       fill
       priority
       sizes="100vw"
       className="object-cover object-center"
      />
-    </picture>
+    ) : (
+     <MissionHeroPicture alt={heroAlt} />
+    )}
     <div className="absolute inset-0 bg-black/30" aria-hidden />
 
     <div

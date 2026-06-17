@@ -27,6 +27,7 @@ function AdminUploadSpinner({ className }) {
 export function AdminImageUpload({
  label = "Kapak görseli",
  value = "",
+ defaultPreview = "",
  onChange,
  onUpload,
  uploading = false,
@@ -40,6 +41,9 @@ export function AdminImageUpload({
  const inputRef = useRef(null);
  const [dragOver, setDragOver] = useState(false);
  const isDisabled = disabled || uploading;
+ const hasCustomImage = Boolean(value);
+ const previewSrc = value || defaultPreview;
+ const showPreview = Boolean(previewSrc);
 
  async function processFile(file) {
   if (!file || isDisabled) return;
@@ -86,17 +90,24 @@ export function AdminImageUpload({
     disabled={isDisabled}
    />
 
-   {value ? (
+   {showPreview ? (
     <div className="mx-auto w-full max-w-2xl overflow-hidden rounded-xl border border-border/70 bg-card shadow-sm">
      <div className={cn("relative w-full max-h-80 overflow-hidden bg-muted", previewAspectClass)}>
       <Image
-       src={value}
+       src={previewSrc}
        alt={label}
        fill
        className="object-cover object-center"
        sizes="(max-width: 768px) 100vw, 640px"
       />
-      {!uploading ? (
+      {!hasCustomImage && !uploading ? (
+       <span
+        className="absolute top-3 left-3 z-10 rounded-full border border-white/35 bg-black/45 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm"
+       >
+        Varsayılan görsel
+       </span>
+      ) : null}
+      {hasCustomImage && !uploading ? (
        <Button
         type="button"
         variant="secondary"

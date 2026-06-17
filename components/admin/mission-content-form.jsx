@@ -2,7 +2,15 @@
 
 import { useState } from "react";
 import { MdAdd, MdDeleteOutline, MdSave } from "react-icons/md";
+import { toast } from "sonner";
+import { AdminImageUpload } from "@/components/admin/admin-image-upload";
 import { handleContentSave } from "@/components/admin/content-block-save";
+import {
+ getMissionHeroImageRequirements,
+ getMissionHeroImageSummary,
+} from "@/lib/admin/image-specs";
+import { validateImageUploadFile } from "@/lib/admin/image-upload";
+import { PAGE_HERO_DEFAULT_PREVIEW } from "@/lib/content/page-hero-defaults";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DynamicReactIcon } from "@/components/ui/dynamic-react-icon";
@@ -10,6 +18,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { REACT_ICONS_URL } from "@/lib/react-icon-resolver";
+
+const MISSION_HERO_UPLOAD_FOLDER = "misyon-vizyon";
 
 const DEFAULT_VALUE_ICON = "MdVerifiedUser";
 
@@ -43,6 +53,46 @@ function updateList(content, key, index, value) {
 export function MissionContentForm({ initial }) {
  const [form, setForm] = useState(initial);
  const [loading, setLoading] = useState(false);
+ const [uploadingHero, setUploadingHero] = useState(false);
+
+ const heroImage = form.contentTr.heroImage ?? "";
+
+ function updateHeroImage(url) {
+  setForm((current) => ({
+   ...current,
+   contentTr: { ...current.contentTr, heroImage: url },
+   contentEn: { ...current.contentEn, heroImage: url },
+  }));
+ }
+
+ async function uploadHeroImage(file) {
+  const fileTypeError = validateImageUploadFile(file);
+  if (fileTypeError) {
+   toast.error(fileTypeError);
+   return;
+  }
+
+  setUploadingHero(true);
+  try {
+   const body = new FormData();
+   body.append("file", file);
+   body.append("folder", MISSION_HERO_UPLOAD_FOLDER);
+
+   const response = await fetch("/api/admin/upload", {
+    method: "POST",
+    body,
+   });
+   const data = await response.json();
+   if (!response.ok) throw new Error(data.error || "Yükleme başarısız");
+
+   updateHeroImage(data.url);
+   toast.success("Başlık arkaplan görseli yüklendi");
+  } catch (error) {
+   toast.error(error.message);
+  } finally {
+   setUploadingHero(false);
+  }
+ }
 
  function updateLocale(locale, updater) {
   setForm((current) => ({
@@ -137,6 +187,18 @@ export function MissionContentForm({ initial }) {
      <CardTitle>Misyon & Vizyon</CardTitle>
     </CardHeader>
     <CardContent className="space-y-6">
+     <AdminImageUpload
+      label="Başlık arkaplan görseli"
+      value={heroImage}
+      defaultPreview={PAGE_HERO_DEFAULT_PREVIEW.missionVision}
+      onChange={updateHeroImage}
+      onUpload={uploadHeroImage}
+      uploading={uploadingHero}
+      hint={getMissionHeroImageSummary()}
+      dropzoneHint={getMissionHeroImageRequirements()}
+      previewAspectClass="aspect-3/1"
+     />
+
      {[
       ["intro", "Giriş metni"],
       ["missionText", "Misyon metni"],

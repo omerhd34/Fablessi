@@ -18,8 +18,27 @@ function getSiteHeaderHeight() {
  return Math.ceil(header.getBoundingClientRect().height);
 }
 
+function FaqHeroPicture() {
+ return (
+  <picture className="absolute inset-0 block h-full w-full">
+   <source media="(min-width: 96rem)" srcSet={FAQ_HERO_IMAGES.xl} />
+   <source media="(min-width: 64rem)" srcSet={FAQ_HERO_IMAGES.lg} />
+   <source media="(min-width: 48rem)" srcSet={FAQ_HERO_IMAGES.md} />
+   <Image
+    src={FAQ_HERO_IMAGES.sm}
+    alt=""
+    fill
+    priority
+    sizes="100vw"
+    className="object-cover object-center"
+   />
+  </picture>
+ );
+}
+
 export function FaqHero() {
  const { dictionary, t } = useTranslations();
+ const heroImage = dictionary.faq.heroImage?.trim();
  const faqCategoryTabs = Object.entries(dictionary.faq.tabs).map(
   ([id, label]) => ({ id, label })
  );
@@ -54,19 +73,18 @@ export function FaqHero() {
    style={{ "--faq-hero-header-offset": `${headerOffset}px` }}
   >
    <div className="relative min-h-[min(42vh,400px)] w-full sm:min-h-[min(48vh,480px)] md:min-h-[min(52vh,560px)] lg:min-h-[min(48vh,520px)]">
-    <picture className="absolute inset-0 block h-full w-full">
-     <source media="(min-width: 96rem)" srcSet={FAQ_HERO_IMAGES.xl} />
-     <source media="(min-width: 64rem)" srcSet={FAQ_HERO_IMAGES.lg} />
-     <source media="(min-width: 48rem)" srcSet={FAQ_HERO_IMAGES.md} />
+    {heroImage ? (
      <Image
-      src={FAQ_HERO_IMAGES.sm}
+      src={heroImage}
       alt=""
       fill
       priority
       sizes="100vw"
       className="object-cover object-center"
      />
-    </picture>
+    ) : (
+     <FaqHeroPicture />
+    )}
     <div className="absolute inset-0 bg-black/30" aria-hidden />
 
     <div
