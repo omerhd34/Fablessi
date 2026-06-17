@@ -1,6 +1,6 @@
 # Fablessi — Premium Bahçe Mobilyaları
 
-İnegöl merkezli **Fablessi** markası için geliştirilen kurumsal web sitesi ve dijital ürün kataloğu. Bahçe ve dış mekan mobilyalarını premium, minimalist bir vitrin deneyimiyle sunar; koleksiyonlar, ürün galerileri, iletişim ve konum bilgilerini tek çatı altında toplar.
+İnegöl merkezli **Fablessi** markasının kurumsal web sitesi ve dijital ürün kataloğu. Bahçe ve dış mekan mobilyalarını premium, minimalist bir vitrin deneyimiyle sunar; koleksiyonlar, ürün galerileri, iletişim ve konum bilgilerini tek çatı altında toplar.
 
 **Site:** [www.fablessi.com](https://www.fablessi.com/)
 
@@ -28,7 +28,7 @@ Site; ürün fotoğrafları, teknik ölçüler, malzeme bilgisi ve marka hikâye
 
 ## Öne Çıkan Özellikler
 
-- **Ana sayfa vitrini** — Hero slider, kategori vitrinleri, öne çıkan ürünler carousel, marka deneyimi banner
+- **Ana sayfa vitrini** — Hero slider, kategori vitrinleri, öne çıkan ürünler carousel, marka deneyimi afişi
 - **Çok dilli arayüz (i18n)** — Türkçe / İngilizce sözlükler, cookie tabanlı dil seçimi, veritabanı alanlarında `nameEn` / `descriptionEn` desteği
 - **Ürün kataloğu** — Kategori ve koleksiyon sayfaları, sayfa içi arama, sıralama, ürün detay sayfaları
 - **Ürün mega menüsü** — 6 kategori grubu, 16+ ürün görsel kartlarla hızlı erişim
@@ -86,19 +86,19 @@ Sitede yer alan başlıca ürün grupları:
 
 ---
 
-## Sayfa Durumu
+## Site Sayfaları
 
-| Sayfa | Adres | Durum |
-|-------|-------|-------|
-| Ana sayfa | `/` | Hazır |
-| Ürünler | `/urunler` | Hazır |
-| Ürün detay | `/urunler/[slug]` | Hazır |
-| Favoriler | `/favoriler` | Hazır |
-| Misyon & Vizyon | `/misyon-vizyon` | Hazır |
-| SSS | `/sss` | Hazır |
-| İletişim | `/iletisim` | Hazır |
-| Hakkımızda | `/hakkimizda` | Hazır |
-| KVKK / Gizlilik / Çerez | `/kvkk`, `/gizlilik-politikasi`, `/cerez-politikasi` | Hazır |
+| Sayfa | Adres |
+|-------|-------|
+| Ana sayfa | `/` |
+| Ürünler | `/urunler` |
+| Ürün detay | `/urunler/[slug]` |
+| Favoriler | `/favoriler` |
+| Misyon & Vizyon | `/misyon-vizyon` |
+| SSS | `/sss` |
+| İletişim | `/iletisim` |
+| Hakkımızda | `/hakkimizda` |
+| KVKK / Gizlilik / Çerez | `/kvkk`, `/gizlilik-politikasi`, `/cerez-politikasi` |
 
 ---
 
