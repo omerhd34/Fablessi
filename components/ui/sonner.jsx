@@ -4,10 +4,14 @@ import { Toaster as Sonner } from "sonner";
 
 const favoriteToasterOffset = {
  bottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))",
+ left: "1.5rem",
+ right: "var(--favorite-toast-fab-clearance)",
 };
 
 const favoriteToasterMobileOffset = {
- bottom: "calc(5rem + env(safe-area-inset-bottom, 0px))",
+ bottom: "var(--favorite-toast-mobile-bottom)",
+ left: "1rem",
+ right: "var(--favorite-toast-fab-clearance)",
 };
 
 function Toaster({ offset, mobileOffset, ...props }) {
