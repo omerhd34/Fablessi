@@ -73,7 +73,10 @@ export function ProductCard({
 
      {priceLabel ? (
       <span
-       className={cn(badgeClassName, "absolute top-3 right-3 z-10 shrink-0")}
+       className={cn(
+        badgeClassName,
+        "absolute top-3 right-3 z-10 shrink-0 sm:top-auto sm:bottom-3"
+       )}
       >
        {priceLabel}
       </span>

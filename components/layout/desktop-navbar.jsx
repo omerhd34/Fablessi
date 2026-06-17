@@ -4,7 +4,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Collections, MapPin, Search, SupportAgent, ViewModule, Work } from "@/lib/icons";
+import { Collections, MailOutline, MapPin, Search, ViewModule, Work } from "@/lib/icons";
 import { FavoritesLink } from "@/components/favorites/favorites-link";
 import { BrandLogoLink, brandLogoDesktopNavWrapperClass } from "@/components/layout/brand-logo";
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
@@ -31,7 +31,7 @@ const desktopNavIconMap = {
  collections: Collections,
  projects: Work,
  stores: MapPin,
- contact: SupportAgent,
+ contact: MailOutline,
 };
 
 const navDesktopLinkClass =

@@ -13,8 +13,8 @@ import {
  HelpOutline,
  Home,
  MapPin,
+ MailOutline,
  MissionVision,
- SupportAgent,
  ViewModule,
  Work,
 } from "@/lib/icons";
@@ -46,7 +46,7 @@ const mobileNavIconMap = {
  stores: MapPin,
  mission: MissionVision,
  faq: HelpOutline,
- contact: SupportAgent,
+ contact: MailOutline,
 };
 
 const mobileNavSheetClass =

@@ -739,8 +739,8 @@ const CATEGORY_GROUP_LABELS = {
  "oturma-gruplari": { name: "Oturma Grupları", nameEn: "Seating Sets" },
  "kose-gruplari": { name: "Köşe Grupları", nameEn: "Corner Sets" },
  masalar: { name: "Masa Grupları", nameEn: "Table Sets" },
- salincak: { name: "Salıncak", nameEn: "Swings" },
- sezlong: { name: "Şezlong", nameEn: "Sun Loungers" },
+ salincak: { name: "Salıncaklar", nameEn: "Swings" },
+ sezlong: { name: "Şezlonglar", nameEn: "Sun Loungers" },
  sandalyeler: { name: "Sandalyeler", nameEn: "Chairs" },
 };
 
