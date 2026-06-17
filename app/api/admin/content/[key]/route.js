@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { CONTENT_BLOCK_KEYS } from "@/lib/content/keys";
 import { getAdminContentBlock } from "@/lib/content/queries";
 import { prisma } from "@/lib/prisma";
@@ -49,6 +50,8 @@ export async function PUT(request, { params }) {
     contentEn: body.contentEn,
    },
   });
+
+  revalidatePath("/", "layout");
 
   return Response.json(block);
  } catch (error) {
