@@ -52,7 +52,7 @@ export function ProductsMobileCatalogControls({
     ) : null}
    </form>
 
-   <ProductsSortMenu sort={sort} onSortChange={onSortChange} compact />
+   <ProductsSortMenu sort={sort} onSortChange={onSortChange} />
   </div>
  );
 }

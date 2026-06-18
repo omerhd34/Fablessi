@@ -17,7 +17,6 @@ export function ProductsCatalogToolbar({
  onSearchChange,
  sort,
  onSortChange,
- resultCount,
 }) {
  const { t } = useTranslations();
 
@@ -50,10 +49,6 @@ export function ProductsCatalogToolbar({
     </form>
 
     <ProductsSortMenu sort={sort} onSortChange={onSortChange} />
-
-    <p className="text-muted-foreground text-sm lg:sr-only">
-     {t("catalog.productsCount", { count: resultCount })}
-    </p>
    </div>
   </>
  );

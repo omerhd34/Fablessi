@@ -18,7 +18,6 @@ const sortMenuHoverClass =
 export function ProductsSortMenu({
  sort,
  onSortChange,
- compact = false,
  sortOptions: sortOptionsProp,
 }) {
  const { t, dictionary } = useTranslations();
@@ -27,9 +26,6 @@ export function ProductsSortMenu({
   () => sortOptionsProp ?? getSortOptions(dictionary),
   [dictionary, sortOptionsProp]
  );
- const activeOption =
-  sortOptions.find((option) => option.value === sort) ?? sortOptions[0];
-
  return (
   <div className="shrink-0 lg:self-auto">
    <DropdownMenu modal={false} open={open} onOpenChange={setOpen}>
@@ -42,9 +38,7 @@ export function ProductsSortMenu({
        "flex h-11 min-w-0 cursor-pointer items-center justify-between gap-2 rounded-full border border-charcoal/12 bg-white py-0 pr-3 pl-3.5 text-sm font-medium text-charcoal shadow-[0_1px_2px_rgb(0_0_0/4%)] outline-none transition hover:border-charcoal/20 hover:shadow-[0_2px_8px_rgb(0_0_0/6%)] focus-visible:border-charcoal/25 focus-visible:ring-2 focus-visible:ring-charcoal/10 data-[state=open]:border-charcoal/20 data-[state=open]:shadow-[0_4px_16px_rgb(0_0_0/8%)] lg:h-14 lg:min-w-38 lg:gap-3 lg:pr-3.5 lg:pl-4"
       )}
      >
-      <span>
-       {compact ? t("catalog.sort") : activeOption.triggerLabel}
-      </span>
+      <span>{t("catalog.sort")}</span>
       <ChevronDownIcon
        className={cn(
         "size-4 shrink-0 text-charcoal/65 transition-transform duration-200",

@@ -23,6 +23,8 @@ function compareByPrice(a, b, ascending) {
 }
 
 function sortProducts(products, sort) {
+ if (!sort) return products;
+
  const list = [...products];
 
  switch (sort) {
@@ -47,7 +49,7 @@ export function ProductsCatalogShell({
 }) {
  const { t, dictionary } = useLocale();
  const [search, setSearch] = useState("");
- const [sort, setSort] = useState("newest");
+ const [sort, setSort] = useState(null);
 
  const isCategoryLanding = !categorySlug && !collectionSlug;
 
@@ -93,9 +95,6 @@ export function ProductsCatalogShell({
        ? activeGroup.label
        : t("catalog.allProductsTitle")}
     </h1>
-    <p className="text-muted-foreground mt-2 hidden text-sm lg:block">
-     {t("catalog.listing", { count: filteredProducts.length })}
-    </p>
    </div>
 
    <ProductsCatalogToolbar
@@ -103,7 +102,6 @@ export function ProductsCatalogShell({
     onSearchChange={setSearch}
     sort={sort}
     onSortChange={setSort}
-    resultCount={filteredProducts.length}
    />
 
    {filteredProducts.length > 0 ? (
