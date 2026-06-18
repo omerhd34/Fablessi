@@ -1,4 +1,5 @@
 import { AdminShell } from "@/components/admin/admin-shell";
+import { AdminToastLayout } from "@/components/admin/admin-toast-layout";
 
 export const metadata = {
  title: "Admin",
@@ -6,5 +7,10 @@ export const metadata = {
 };
 
 export default function AdminLayout({ children }) {
- return <AdminShell>{children}</AdminShell>;
+ return (
+  <>
+   <AdminToastLayout />
+   <AdminShell>{children}</AdminShell>
+  </>
+ );
 }

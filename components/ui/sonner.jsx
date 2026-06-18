@@ -3,18 +3,16 @@
 import { Toaster as Sonner } from "sonner";
 
 const favoriteToasterOffset = {
- bottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))",
- left: "1.5rem",
- right: "var(--favorite-toast-fab-clearance)",
+ bottom: "var(--contact-float-bottom)",
 };
 
 const favoriteToasterMobileOffset = {
- bottom: "var(--favorite-toast-mobile-bottom)",
+ bottom: "var(--contact-float-bottom)",
  left: "1rem",
  right: "var(--favorite-toast-fab-clearance)",
 };
 
-function Toaster({ offset, mobileOffset, ...props }) {
+function Toaster({ offset, mobileOffset, style, ...props }) {
  return (
   <Sonner
    theme="light"
@@ -25,6 +23,7 @@ function Toaster({ offset, mobileOffset, ...props }) {
     "--normal-text": "var(--popover-foreground)",
     "--normal-border": "var(--border)",
     "--border-radius": "var(--radius)",
+    ...style,
    }}
    toastOptions={{
     classNames: {

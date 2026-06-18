@@ -2,7 +2,7 @@ import { Montserrat, Poppins } from "next/font/google";
 import "@/app/styles/base.css";
 import { MainShell } from "@/components/layout/main-shell";
 import { SiteChrome } from "@/components/layout/site-chrome";
-import { Toaster } from "@/components/ui/sonner";
+import { AppToaster } from "@/components/ui/app-toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { FavoritesProvider } from "@/contexts/favorites-provider";
 import { LocaleProvider } from "@/contexts/locale-provider";
@@ -65,6 +65,7 @@ export default async function RootLayout({ children }) {
   <html
    lang={locale}
    data-scroll-behavior="smooth"
+   data-toast-layout="fab"
    className={`${montserrat.variable} ${poppins.variable} h-full antialiased`}
   >
    <body className="min-h-full flex flex-col font-sans">
@@ -81,7 +82,7 @@ export default async function RootLayout({ children }) {
       <TooltipProvider>
        <MainShell>{children}</MainShell>
        <SiteChrome />
-       <Toaster position="bottom-center" gap={10} visibleToasts={1} />
+       <AppToaster />
       </TooltipProvider>
      </FavoritesProvider>
     </LocaleProvider>

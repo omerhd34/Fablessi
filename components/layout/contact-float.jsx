@@ -46,7 +46,7 @@ export function ContactFloat() {
  if (!whatsAppHref && !phoneHref) return null;
 
  return (
-  <div className="pointer-events-none fixed inset-x-auto right-5 bottom-[max(1.25rem,env(safe-area-inset-bottom))] z-50">
+  <div className="pointer-events-none fixed inset-x-auto right-5 bottom-(--contact-float-bottom) z-50">
    <div className="pointer-events-auto flex flex-col items-center gap-3">
     {showBackToTop ? (
      <button
