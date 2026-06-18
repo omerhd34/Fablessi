@@ -42,7 +42,6 @@ export function FavoritesMobileControls({
  onSearchChange,
  sort,
  onSortChange,
- resultCount,
  categories,
  collections,
  selectedCategory,
@@ -64,9 +63,6 @@ export function FavoritesMobileControls({
  const activeCategoryLabel = categories.find(
   (category) => category.slug === selectedCategory
  )?.label;
- const activeSortOption = sortOptions.find((option) => option.value === sort);
- const activeSortLabel =
-  activeSortOption?.triggerLabel ?? t("favorites.sortRecentlyAdded");
 
  return (
   <div className="space-y-3 lg:hidden">
@@ -90,7 +86,6 @@ export function FavoritesMobileControls({
      sort={sort}
      onSortChange={onSortChange}
      sortOptions={sortOptions}
-     compact
     />
    </div>
 
@@ -156,13 +151,6 @@ export function FavoritesMobileControls({
      </button>
     </div>
    )}
-
-   <p className="text-muted-foreground text-sm">
-    {t("catalog.productsCount", { count: resultCount })}
-    {sort !== "recent" ? (
-     <span className="text-charcoal/40"> · {activeSortLabel}</span>
-    ) : null}
-   </p>
 
    <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
     <SheetContent
@@ -245,7 +233,7 @@ export function FavoritesMobileControls({
        onClick={() => setFilterOpen(false)}
        className="h-11 flex-1 cursor-pointer rounded-full bg-charcoal text-sm font-medium text-white transition hover:bg-charcoal/90"
       >
-       {t("catalog.showProducts", { count: resultCount })}
+       {t("catalog.showProducts")}
       </button>
      </div>
     </SheetContent>

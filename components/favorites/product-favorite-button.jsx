@@ -22,6 +22,9 @@ export function ProductFavoriteButton({ product, className }) {
   showFavoriteToast({
    added: !wasFavorited,
    title: wasFavorited ? t("favorites.removedToast") : t("favorites.addedToast"),
+   titleShort: wasFavorited
+    ? t("favorites.removedToastShort")
+    : t("favorites.addedToastShort"),
    description: getProductFavoriteToastLabel(product, dictionary),
    closeLabel: t("common.close"),
   });

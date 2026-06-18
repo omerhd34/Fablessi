@@ -18,7 +18,6 @@ export function FavoritesToolbar({
  onSearchChange,
  sort,
  onSortChange,
- resultCount,
  categories,
  collections,
  selectedCategory,
@@ -36,7 +35,6 @@ export function FavoritesToolbar({
     onSearchChange={onSearchChange}
     sort={sort}
     onSortChange={onSortChange}
-    resultCount={resultCount}
     categories={categories}
     collections={collections}
     selectedCategory={selectedCategory}
@@ -70,10 +68,6 @@ export function FavoritesToolbar({
      onSortChange={onSortChange}
      sortOptions={sortOptions}
     />
-
-    <p className="text-muted-foreground text-sm lg:sr-only">
-     {t("catalog.productsCount", { count: resultCount })}
-    </p>
    </div>
   </>
  );

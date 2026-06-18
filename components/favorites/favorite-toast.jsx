@@ -52,6 +52,7 @@ function FavoriteToastContent({
  id,
  added,
  title,
+ titleShort,
  description,
  closeLabel,
 }) {
@@ -64,7 +65,7 @@ function FavoriteToastContent({
    role="status"
    aria-live="polite"
    className={cn(
-    "pointer-events-auto flex w-full max-w-88 items-center gap-2 rounded-2xl border p-2.5 shadow-(--glass-float-shadow) transition-[background-color,border-color,backdrop-filter] duration-300 sm:max-w-none sm:items-start sm:gap-3 sm:p-3.5",
+    "pointer-events-auto flex w-full max-w-88 items-center gap-2 rounded-2xl border p-2.5 shadow-(--glass-float-shadow) transition-[background-color,border-color,backdrop-filter] duration-300 sm:mx-auto sm:w-auto sm:max-w-md sm:items-start sm:gap-3 sm:p-3.5",
     overImage
      ? "border-white/18 bg-charcoal/95 text-white backdrop-blur-none"
      : "border-(--glass-hero-border) bg-(--glass-hero-icon-surface) [backdrop-filter:var(--glass-hero-blur)] [-webkit-backdrop-filter:var(--glass-hero-blur)]"
@@ -93,7 +94,8 @@ function FavoriteToastContent({
       overImage ? "text-white" : "text-charcoal"
      )}
     >
-     {title}
+     <span className="sm:hidden">{titleShort ?? title}</span>
+     <span className="hidden sm:inline">{title}</span>
     </p>
     {description ? (
      <p
@@ -124,13 +126,20 @@ function FavoriteToastContent({
  );
 }
 
-export function showFavoriteToast({ added, title, description, closeLabel }) {
+export function showFavoriteToast({
+ added,
+ title,
+ titleShort,
+ description,
+ closeLabel,
+}) {
  toast.custom(
   (id) => (
    <FavoriteToastContent
     id={id}
     added={added}
     title={title}
+    titleShort={titleShort}
     description={description}
     closeLabel={closeLabel}
    />
@@ -142,7 +151,7 @@ export function showFavoriteToast({ added, title, description, closeLabel }) {
    closeButton: false,
    classNames: {
     toast:
-     "!min-h-0 !gap-0 !border-0 !bg-transparent !p-0 !shadow-none !backdrop-blur-none",
+     "max-sm:!absolute max-sm:!bottom-0 max-sm:!left-0 max-sm:!right-0 !min-h-0 !gap-0 !border-0 !bg-transparent !p-0 !shadow-none !backdrop-blur-none",
    },
   }
  );

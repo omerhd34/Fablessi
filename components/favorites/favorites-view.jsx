@@ -7,7 +7,7 @@ import { FavoritesFiltersSidebar } from "@/components/favorites/favorites-filter
 import { FavoritesToolbar } from "@/components/favorites/favorites-toolbar";
 import { useFavorites } from "@/contexts/favorites-provider";
 import { useLocale } from "@/contexts/locale-provider";
-import { favoriteToProductCard } from "@/lib/favorites";
+import { favoriteToProductCard, enrichFavoriteForDisplay } from "@/lib/favorites";
 import {
  filterFavorites,
  getAvailableFavoriteCategories,
@@ -17,25 +17,30 @@ import {
 import { headingDisplayClass } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 
-export function FavoritesView() {
+export function FavoritesView({ productMetaBySlug = {} }) {
  const { favorites, hydrated } = useFavorites();
  const { t, dictionary } = useLocale();
  const [search, setSearch] = useState("");
- const [sort, setSort] = useState("recent");
+ const [sort, setSort] = useState(null);
  const [selectedCategory, setSelectedCategory] = useState(null);
  const [selectedCollection, setSelectedCollection] = useState(null);
 
+ const displayFavorites = useMemo(
+  () => favorites.map((favorite) => enrichFavoriteForDisplay(favorite, productMetaBySlug)),
+  [favorites, productMetaBySlug]
+ );
+
  const categories = useMemo(
-  () => getAvailableFavoriteCategories(favorites, dictionary),
-  [favorites, dictionary]
+  () => getAvailableFavoriteCategories(displayFavorites, dictionary),
+  [displayFavorites, dictionary]
  );
  const collections = useMemo(
-  () => getAvailableFavoriteCollections(favorites),
-  [favorites]
+  () => getAvailableFavoriteCollections(displayFavorites),
+  [displayFavorites]
  );
 
  const filteredFavorites = useMemo(() => {
-  const filtered = filterFavorites(favorites, {
+  const filtered = filterFavorites(displayFavorites, {
    search,
    categorySlug: selectedCategory,
    collectionName: selectedCollection,
@@ -43,7 +48,7 @@ export function FavoritesView() {
   });
 
   return sortFavorites(filtered, sort);
- }, [favorites, search, selectedCategory, selectedCollection, sort, dictionary]);
+ }, [displayFavorites, search, selectedCategory, selectedCollection, sort, dictionary]);
 
  if (!hydrated) {
   return (
@@ -83,8 +88,8 @@ export function FavoritesView() {
    <div className="min-w-0 flex-1 space-y-6 md:space-y-8">
     <div>
      <h1 className={cn(headingDisplayClass, "text-charcoal")}>{t("favorites.title")}</h1>
-     <p className="text-muted-foreground mt-2 hidden text-sm lg:block">
-      {t("catalog.listing", { count: filteredFavorites.length })}
+     <p className="text-muted-foreground mt-2 text-sm">
+      {t("favorites.listing", { count: filteredFavorites.length })}
      </p>
     </div>
 
@@ -93,7 +98,6 @@ export function FavoritesView() {
      onSearchChange={setSearch}
      sort={sort}
      onSortChange={setSort}
-     resultCount={filteredFavorites.length}
      categories={categories}
      collections={collections}
      selectedCategory={selectedCategory}
