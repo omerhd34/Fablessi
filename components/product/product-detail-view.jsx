@@ -1,12 +1,17 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ProductDetailCenter } from "@/components/product/product-detail-center";
 import { ProductDetailLeft } from "@/components/product/product-detail-left";
 import { ProductDetailRight } from "@/components/product/product-detail-right";
 import { ProductImageLightbox } from "@/components/product/product-image-lightbox";
 import { LG_MQ } from "@/lib/layout/breakpoints";
 import { productDetailScrollClass } from "@/lib/layout/product-styles";
+import {
+ filterImagesByColorPrefix,
+ getDefaultColorPrefix,
+ getProductColorVariants,
+} from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
 export function ProductDetailView({
@@ -19,8 +24,33 @@ export function ProductDetailView({
 }) {
  const [lightbox, setLightbox] = useState({ images: [], index: null });
  const [openDimensions, setOpenDimensions] = useState(false);
+ const [openProductInfo, setOpenProductInfo] = useState(false);
  const centerScrollRef = useRef(null);
- const visibleImages = product.images ?? [];
+ const allImages = product.images ?? [];
+ const colorVariants = useMemo(
+  () => getProductColorVariants(allImages, product.slug),
+  [allImages, product.slug]
+ );
+ const defaultColorPrefix = useMemo(
+  () => getDefaultColorPrefix(allImages, colorVariants),
+  [allImages, colorVariants]
+ );
+ const [selectedColorPrefix, setSelectedColorPrefix] = useState(defaultColorPrefix);
+
+ useEffect(() => {
+  setSelectedColorPrefix(defaultColorPrefix);
+ }, [product.slug, defaultColorPrefix]);
+
+ const visibleImages = useMemo(() => {
+  if (!colorVariants || !selectedColorPrefix) return allImages;
+
+  return filterImagesByColorPrefix(allImages, selectedColorPrefix, product.slug);
+ }, [allImages, colorVariants, selectedColorPrefix, product.slug]);
+
+ const handleColorSelect = useCallback((prefix) => {
+  setSelectedColorPrefix(prefix);
+  setLightbox({ images: [], index: null });
+ }, []);
 
  const openLightbox = (images, index) => {
   if (!images.length) return;
@@ -37,6 +67,33 @@ export function ProductDetailView({
   window.setTimeout(() => {
    const container = centerScrollRef.current;
    const target = container?.querySelector("[data-product-dimensions]");
+
+   if (!target) return;
+
+   if (isContainedScroll && container) {
+    const offset =
+     target.getBoundingClientRect().top -
+     container.getBoundingClientRect().top +
+     container.scrollTop;
+
+    container.scrollTo({
+     top: Math.max(0, offset - 24),
+     behavior: "smooth",
+    });
+   } else {
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+   }
+  }, 350);
+ }, []);
+
+ const handleViewProductInfo = useCallback(() => {
+  const isContainedScroll = window.matchMedia(LG_MQ).matches;
+
+  setOpenProductInfo(true);
+
+  window.setTimeout(() => {
+   const container = centerScrollRef.current;
+   const target = container?.querySelector("[data-product-info]");
 
    if (!target) return;
 
@@ -75,6 +132,10 @@ export function ProductDetailView({
      categoryLabel={categoryLabel}
      categoryHref={categoryHref}
      onViewDimensions={handleViewDimensions}
+     onViewProductInfo={handleViewProductInfo}
+     colorVariants={colorVariants}
+     selectedColorPrefix={selectedColorPrefix}
+     onColorSelect={handleColorSelect}
      section="header"
      className="lg:hidden"
     />
@@ -83,13 +144,17 @@ export function ProductDetailView({
      categoryLabel={categoryLabel}
      categoryHref={categoryHref}
      onViewDimensions={handleViewDimensions}
+     onViewProductInfo={handleViewProductInfo}
+     colorVariants={colorVariants}
+     selectedColorPrefix={selectedColorPrefix}
+     onColorSelect={handleColorSelect}
      className="hidden min-w-0 lg:flex lg:shrink-0"
     />
 
     <section
      ref={centerScrollRef}
      className={cn(
-      "min-h-0 lg:max-h-[calc(100dvh-var(--header-height-desktop)-2rem)] lg:overflow-y-auto lg:pr-1 lg:pb-6",
+      "min-h-0 lg:max-h-[calc(100dvh-var(--header-height-desktop)-2rem)] lg:overflow-y-auto lg:pr-2 lg:pb-6",
       productDetailScrollClass
      )}
     >
@@ -98,6 +163,7 @@ export function ProductDetailView({
       images={visibleImages}
       onImageClick={(index) => openLightbox(visibleImages, index)}
       openDimensions={openDimensions}
+      openProductInfo={openProductInfo}
       className="pb-0 lg:pb-6"
       belowGallery={
        <ProductDetailLeft
@@ -105,6 +171,10 @@ export function ProductDetailView({
         categoryLabel={categoryLabel}
         categoryHref={categoryHref}
         onViewDimensions={handleViewDimensions}
+        onViewProductInfo={handleViewProductInfo}
+        colorVariants={colorVariants}
+        selectedColorPrefix={selectedColorPrefix}
+        onColorSelect={handleColorSelect}
         section="controls"
         className="lg:hidden"
        />

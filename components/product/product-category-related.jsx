@@ -11,10 +11,10 @@ import {
 } from "@/components/ui/accordion";
 import { getPrimaryImageUrl } from "@/lib/product-utils";
 import {
+ productDetailAccordionItemClass,
+ productDetailAccordionTriggerClass,
  productRelatedItemClass,
  productRelatedItemThumbClass,
- productRelatedPanelClass,
- productRelatedPanelHeaderClass,
 } from "@/lib/layout/product-styles";
 import { cn } from "@/lib/utils";
 
@@ -28,13 +28,13 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
    type="multiple"
    value={open}
    onValueChange={setOpen}
-   className={cn("flex shrink-0 flex-col overflow-hidden rounded-3xl", productRelatedPanelClass)}
+   className="w-full"
   >
-   <AccordionItem value="related-panel" className="border-b-0">
-    <AccordionTrigger className={cn("shrink-0 cursor-pointer justify-center px-4 py-3.5 text-sm font-semibold text-charcoal hover:no-underline", productRelatedPanelHeaderClass)}>
-     <span className="flex-1 text-center">{categoryLabel}</span>
+   <AccordionItem value="related-panel" className={productDetailAccordionItemClass}>
+    <AccordionTrigger className={productDetailAccordionTriggerClass}>
+     {categoryLabel}
     </AccordionTrigger>
-    <AccordionContent className="p-3 [&_a]:no-underline">
+    <AccordionContent className="pb-5 [&_a]:no-underline">
      <div className="space-y-3">
       {products.map((product) => {
        const imageUrl = getPrimaryImageUrl(product);
@@ -46,7 +46,7 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
          className={cn(
           "group flex cursor-pointer items-center gap-3 rounded-2xl p-2.5 no-underline",
           productRelatedItemClass,
-          "origin-center scale-100 transition-[scale,border-color,background-color,box-shadow] duration-[2000ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.02] motion-reduce:duration-150"
+          "origin-center scale-100 transition-[scale,border-color,background-color,box-shadow] duration-2000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.02] motion-reduce:duration-150"
          )}
         >
          <div className={cn("relative size-16 shrink-0 overflow-hidden rounded-xl", productRelatedItemThumbClass)}>

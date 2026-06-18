@@ -4,7 +4,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { showFavoriteToast } from "@/components/favorites/favorite-toast";
+import { ProductColorSelector } from "@/components/product/product-color-selector";
 import { ProductDimensionsScrollButton } from "@/components/product/product-dimensions-scroll-button";
+import { ProductInfoScrollButton } from "@/components/product/product-info-scroll-button";
 import {
  Accordion,
  AccordionContent,
@@ -12,12 +14,14 @@ import {
  AccordionTrigger,
 } from "@/components/ui/accordion";
 import { LG_MQ } from "@/lib/layout/breakpoints";
+import { productDetailActionButtonClass } from "@/lib/layout/product-styles";
 import { useLocale } from "@/contexts/locale-provider";
 import { Heart, HeartFilled, Payments } from "@/lib/icons";
 import {
+ getDisplayPriceItems,
  getFormattedProductPriceParts,
+ getPriceItemDisplayAmount,
  getPriceItemLabel,
- getPriceItemLineTotal,
  getPriceItems,
  getProductDisplayPrice,
  getProductFavoriteToastLabel,
@@ -40,7 +44,7 @@ const productBreadcrumbCategoryLinkClass = cn(
 );
 
 function ProductDetailPriceBody({
- priceItems,
+ displayPriceItems,
  locale,
  isSingleItem,
  amount,
@@ -49,10 +53,10 @@ function ProductDetailPriceBody({
  showLabel = true,
 }) {
  if (isSingleItem) {
-  const item = priceItems[0];
+  const item = displayPriceItems[0];
   const itemLabel = getPriceItemLabel(item);
   const { amount: itemAmount } = getFormattedProductPriceParts(
-   getPriceItemLineTotal(item),
+   getPriceItemDisplayAmount(item),
    locale
   );
 
@@ -97,16 +101,16 @@ function ProductDetailPriceBody({
     </span>
    ) : null}
    <ul className="flex flex-col gap-2">
-    {priceItems.map((item, index) => {
+    {displayPriceItems.map((item) => {
      const itemLabel = getPriceItemLabel(item);
      const { amount: itemAmount } = getFormattedProductPriceParts(
-      getPriceItemLineTotal(item),
+      getPriceItemDisplayAmount(item),
       locale
      );
 
      return (
       <li
-       key={`${item.name}-${index}`}
+       key={item._displayKey}
        className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 text-sm text-charcoal"
       >
        <span className="font-medium wrap-break-word">{itemLabel ?? "—"}</span>
@@ -147,7 +151,8 @@ function ProductDetailPrice({ product, locale, className }) {
  if (priceItems.length === 0 || total == null) return null;
 
  const { amount, currency } = getFormattedProductPriceParts(total, locale);
- const isSingleItem = priceItems.length === 1;
+ const displayPriceItems = getDisplayPriceItems(priceItems);
+ const isSingleItem = displayPriceItems.length === 1;
  const isOpen = open === "price";
 
  return (
@@ -177,7 +182,7 @@ function ProductDetailPrice({ product, locale, className }) {
     </AccordionTrigger>
     <AccordionContent className="pb-6">
      <ProductDetailPriceBody
-      priceItems={priceItems}
+      displayPriceItems={displayPriceItems}
       locale={locale}
       isSingleItem={isSingleItem}
       amount={amount}
@@ -196,20 +201,41 @@ function ActionButton({
  children,
  onClick,
  className,
+ iconPosition = "start",
  "aria-pressed": ariaPressed,
 }) {
+ const iconEl = (
+  <Icon
+   className={cn(
+    "shrink-0 text-black",
+    iconPosition === "end" ? "size-4" : "size-5"
+   )}
+   aria-hidden
+  />
+ );
+
  return (
   <button
    type="button"
    onClick={onClick}
    aria-pressed={ariaPressed}
    className={cn(
-    "flex w-full cursor-pointer items-center gap-3 rounded-3xl border border-charcoal/12 bg-white px-5 py-4 text-left text-sm font-medium text-charcoal shadow-[0_1px_3px_rgb(0_0_0/4%)] transition hover:border-charcoal/18 hover:shadow-[0_4px_16px_rgb(0_0_0/6%)]",
+    productDetailActionButtonClass,
+    iconPosition === "end" && "justify-between gap-0",
     className
    )}
   >
-   <Icon className="size-5 shrink-0 text-black" aria-hidden />
-   <span>{children}</span>
+   {iconPosition === "end" ? (
+    <>
+     <span>{children}</span>
+     {iconEl}
+    </>
+   ) : (
+    <>
+     {iconEl}
+     <span>{children}</span>
+    </>
+   )}
   </button>
  );
 }
@@ -219,6 +245,10 @@ export function ProductDetailLeft({
  categoryLabel,
  categoryHref,
  onViewDimensions,
+ onViewProductInfo,
+ colorVariants,
+ selectedColorPrefix,
+ onColorSelect,
  section = "all",
  className,
 }) {
@@ -233,6 +263,9 @@ export function ProductDetailLeft({
   showFavoriteToast({
    added: !wasFavorited,
    title: wasFavorited ? t("favorites.removedToast") : t("favorites.addedToast"),
+   titleShort: wasFavorited
+    ? t("favorites.removedToastShort")
+    : t("favorites.addedToastShort"),
    description: getProductFavoriteToastLabel(product, dictionary),
    closeLabel: t("common.close"),
   });
@@ -278,6 +311,12 @@ export function ProductDetailLeft({
   <div className="flex flex-col gap-4">
    <ProductDetailPrice product={product} locale={locale} />
 
+   <ProductColorSelector
+    variants={colorVariants}
+    selectedPrefix={selectedColorPrefix}
+    onSelect={onColorSelect}
+   />
+
    <ActionButton
     icon={favorited ? HeartFilled : Heart}
     onClick={handleToggleFavorite}
@@ -288,12 +327,18 @@ export function ProductDetailLeft({
    </ActionButton>
 
    {section === "all" ? (
-    <ProductDimensionsScrollButton
-     product={product}
-     t={t}
-     onClick={onViewDimensions}
-     className="rounded-3xl border-charcoal/12 px-5 py-4"
-    />
+    <>
+     <ProductInfoScrollButton
+      product={product}
+      t={t}
+      onClick={onViewProductInfo}
+     />
+     <ProductDimensionsScrollButton
+      product={product}
+      t={t}
+      onClick={onViewDimensions}
+     />
+    </>
    ) : null}
   </div>
  ) : null;

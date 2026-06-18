@@ -17,9 +17,12 @@ import {
 } from "@/components/ui/carousel";
 import { ProductDimensionsTable } from "@/components/product/product-dimensions-table";
 import { useLocale } from "@/contexts/locale-provider";
+import { FiInfo, Ruler } from "@/lib/icons";
 import { getDimensionItems } from "@/lib/product-utils";
 import { LG_MQ } from "@/lib/layout/breakpoints";
 import {
+ productDetailAccordionItemClass,
+ productDetailAccordionTriggerClass,
  productGalleryFrameClass,
  productGalleryMobileCarouselClass,
 } from "@/lib/layout/product-styles";
@@ -133,6 +136,7 @@ export function ProductDetailCenter({
  onImageClick,
  className,
  openDimensions = false,
+ openProductInfo = false,
  belowGallery,
 }) {
  const { t } = useLocale();
@@ -153,6 +157,14 @@ export function ProductDetailCenter({
   );
  }, [openDimensions]);
 
+ useEffect(() => {
+  if (!openProductInfo) return;
+
+  setAccordionValue((current) =>
+   current.includes("product-info") ? current : [...current, "product-info"]
+  );
+ }, [openProductInfo]);
+
  return (
   <div className={cn("flex flex-col gap-4 md:gap-10", className)}>
    <ProductGallery images={images} onImageClick={onImageClick} t={t} />
@@ -167,10 +179,12 @@ export function ProductDetailCenter({
    >
     <AccordionItem
      value="product-info"
-     className="overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)]"
+     data-product-info=""
+     className={cn(productDetailAccordionItemClass)}
     >
-     <AccordionTrigger className="cursor-pointer py-4 text-base font-semibold text-charcoal hover:no-underline">
-      {t("product.productInfo")}
+     <AccordionTrigger className={productDetailAccordionTriggerClass}>
+      <FiInfo className="size-5 shrink-0 text-black" aria-hidden />
+      <span className="min-w-0 flex-1">{t("product.productInfo")}</span>
      </AccordionTrigger>
      <AccordionContent className="pb-6 text-sm leading-relaxed text-charcoal/75">
       {product.description ? (
@@ -183,10 +197,13 @@ export function ProductDetailCenter({
      <AccordionItem
       value="dimensions"
       data-product-dimensions=""
-      className="scroll-mt-6 overflow-hidden rounded-3xl border border-charcoal/12 bg-white px-5 shadow-[0_1px_3px_rgb(0_0_0/4%)]"
+      className={cn(productDetailAccordionItemClass)}
      >
-      <AccordionTrigger className="cursor-pointer py-4 text-base font-semibold text-charcoal hover:no-underline">
-       {t("product.dimensionsTableTitle")} ({t("product.dimensionUnit")})
+      <AccordionTrigger className={productDetailAccordionTriggerClass}>
+       <Ruler className="size-5 shrink-0 text-black" aria-hidden />
+       <span className="min-w-0 flex-1">
+        {t("product.dimensionsTableTitle")} ({t("product.dimensionUnit")})
+       </span>
       </AccordionTrigger>
       <AccordionContent className="pb-5">
        <ProductDimensionsTable product={product} t={t} />
