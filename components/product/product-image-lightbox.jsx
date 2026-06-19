@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { useLocale } from "@/contexts/locale-provider";
-import { ChevronLeft, ChevronRight, Loader2Icon, X } from "@/lib/icons";
+import { ChevronLeft, ChevronRight, FullscreenExitIcon, FullscreenIcon, Loader2Icon, X } from "@/lib/icons";
 import {
  lightboxFlipEnterNextClass,
  lightboxFlipEnterPrevClass,
@@ -21,18 +21,46 @@ import { cn } from "@/lib/utils";
 const SWIPE_THRESHOLD = 48;
 const SLIDE_DURATION_MS = 750;
 
-function LightboxImage({ image, alt }) {
+function LightboxImage({
+ image,
+ alt,
+ isFullscreen = false,
+ onToggleFullscreen,
+ toggleLabel,
+ interactive = true,
+}) {
+ const frameClassName = cn(
+  lightboxImageFrameClass,
+  interactive &&
+  "block h-full w-full cursor-zoom-in text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40",
+  isFullscreen && "rounded-none border-0 bg-black shadow-none",
+  isFullscreen && interactive && "cursor-zoom-out"
+ );
+
+ const imageElement = (
+  <Image
+   src={image.url}
+   alt={alt}
+   fill
+   sizes={isFullscreen ? "100vw" : "(max-width: 1024px) 100vw, 90vw"}
+   className="object-cover object-center transition-[object-fit] duration-300"
+   priority
+  />
+ );
+
+ if (!interactive) {
+  return <div className={frameClassName}>{imageElement}</div>;
+ }
+
  return (
-  <div className={lightboxImageFrameClass}>
-   <Image
-    src={image.url}
-    alt={alt}
-    fill
-    sizes="(max-width: 1024px) 100vw, 90vw"
-    className="object-cover object-center"
-    priority
-   />
-  </div>
+  <button
+   type="button"
+   onClick={onToggleFullscreen}
+   className={frameClassName}
+   aria-label={toggleLabel}
+  >
+   {imageElement}
+  </button>
  );
 }
 
@@ -91,6 +119,8 @@ export function ProductImageLightbox({
  const [visibleIndex, setVisibleIndex] = useState(index ?? 0);
  const [transition, setTransition] = useState(null);
  const [showOpenAnimation, setShowOpenAnimation] = useState(false);
+ const [isFullscreen, setIsFullscreen] = useState(false);
+ const overlayRef = useRef(null);
  const touchStartX = useRef(null);
  const isTransitioningRef = useRef(false);
  const skipTransitionRef = useRef(true);
@@ -112,6 +142,7 @@ export function ProductImageLightbox({
  useEffect(() => {
   if (!open) {
    setShowOpenAnimation(false);
+   setIsFullscreen(false);
    return;
   }
 
@@ -176,6 +207,63 @@ export function ProductImageLightbox({
   if (hasNext) startSlide(index + 1);
  }, [hasNext, index, startSlide]);
 
+ const toggleFullscreen = useCallback(async () => {
+  if (isTransitioningRef.current) return;
+
+  const overlay = overlayRef.current;
+
+  try {
+   if (document.fullscreenElement === overlay) {
+    await document.exitFullscreen();
+    return;
+   }
+
+   if (overlay?.requestFullscreen) {
+    await overlay.requestFullscreen();
+    return;
+   }
+  } catch {
+   // Tarayıcı tam ekranı desteklemiyorsa CSS moduna düş.
+  }
+
+  setIsFullscreen((current) => !current);
+ }, []);
+
+ useEffect(() => {
+  const onFullscreenChange = () => {
+   setIsFullscreen(document.fullscreenElement === overlayRef.current);
+  };
+
+  document.addEventListener("fullscreenchange", onFullscreenChange);
+  return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
+ }, []);
+
+ useEffect(() => {
+  if (open) return;
+
+  if (document.fullscreenElement === overlayRef.current) {
+   document.exitFullscreen?.().catch(() => {});
+  }
+ }, [open]);
+
+ const handleBackdropClick = useCallback(async () => {
+  if (document.fullscreenElement === overlayRef.current) {
+   try {
+    await document.exitFullscreen();
+   } catch {
+    setIsFullscreen(false);
+   }
+   return;
+  }
+
+  if (isFullscreen) {
+   setIsFullscreen(false);
+   return;
+  }
+
+  onClose();
+ }, [isFullscreen, onClose]);
+
  useEffect(() => {
   if (!open) return undefined;
 
@@ -183,7 +271,16 @@ export function ProductImageLightbox({
   document.body.style.overflow = "hidden";
 
   const onKeyDown = (event) => {
-   if (event.key === "Escape") onClose();
+   if (event.key === "Escape") {
+    if (document.fullscreenElement === overlayRef.current) return;
+
+    if (isFullscreen) {
+     setIsFullscreen(false);
+     return;
+    }
+
+    onClose();
+   }
    if (event.key === "ArrowLeft") goPrev();
    if (event.key === "ArrowRight") goNext();
   };
@@ -194,7 +291,7 @@ export function ProductImageLightbox({
    document.body.style.overflow = previousOverflow;
    window.removeEventListener("keydown", onKeyDown);
   };
- }, [open, goPrev, goNext, onClose]);
+ }, [open, goPrev, goNext, onClose, isFullscreen]);
 
  const handleTouchStart = (event) => {
   touchStartX.current = event.touches[0]?.clientX ?? null;
@@ -216,6 +313,9 @@ export function ProductImageLightbox({
 
  const isTransitioning = transition !== null;
  const activeImage = images[visibleIndex] ?? current;
+ const fullscreenToggleLabel = isFullscreen
+  ? t("product.exitFullscreen")
+  : t("product.enterFullscreen");
 
  if (!open || !current || !activeImage || typeof document === "undefined") {
   return null;
@@ -223,15 +323,30 @@ export function ProductImageLightbox({
 
  return createPortal(
   <div
-   className="fixed inset-0 z-100 h-dvh min-h-dvh w-full animate-in bg-black/78 duration-300 fade-in-0 supports-backdrop-filter:backdrop-blur-md"
-   onClick={onClose}
+   ref={overlayRef}
+   className={cn(
+    "fixed inset-0 z-100 h-dvh min-h-dvh w-full animate-in duration-300 fade-in-0",
+    isFullscreen
+     ? "bg-black"
+     : "bg-black/78 supports-backdrop-filter:backdrop-blur-md"
+   )}
+   onClick={handleBackdropClick}
    role="dialog"
    aria-modal="true"
    aria-label={current.alt ?? t("product.productImage")}
   >
-   <div className="absolute inset-0 flex h-full w-full items-center justify-center px-14 pt-14 pb-4 md:px-20 md:pt-16 lg:px-24 lg:pt-20 lg:pb-8">
+   <div
+    className={cn(
+     isFullscreen
+      ? "fixed inset-0 z-10 h-dvh w-full"
+      : "absolute inset-0 flex h-full w-full items-center justify-center px-14 pt-14 pb-4 md:px-20 md:pt-16 lg:px-24 lg:pt-20 lg:pb-8"
+    )}
+   >
     <div
-     className={lightboxStageClass}
+     className={cn(
+      lightboxStageClass,
+      isFullscreen && "h-dvh w-full max-w-none"
+     )}
      onClick={(event) => event.stopPropagation()}
      onTouchStart={handleTouchStart}
      onTouchEnd={handleTouchEnd}
@@ -250,6 +365,8 @@ export function ProductImageLightbox({
         alt={
          images[transition.from].alt ?? t("product.productImage")
         }
+        isFullscreen={isFullscreen}
+        interactive={false}
        />
       </div>
      ) : null}
@@ -269,13 +386,19 @@ export function ProductImageLightbox({
       <LightboxImage
        image={activeImage}
        alt={activeImage.alt ?? t("product.productImage")}
+       isFullscreen={isFullscreen}
+       onToggleFullscreen={toggleFullscreen}
+       toggleLabel={fullscreenToggleLabel}
       />
      </div>
     </div>
    </div>
 
    <header
-    className="absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-4 px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-2 md:px-8 md:pt-6"
+    className={cn(
+     "absolute inset-x-0 top-0 z-20 flex items-center justify-between gap-4 px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-2 md:px-8 md:pt-6",
+     isFullscreen && "pointer-events-none [&_button]:pointer-events-auto [&_p]:pointer-events-auto"
+    )}
     onClick={(event) => event.stopPropagation()}
    >
     {images.length > 1 ? (
@@ -288,14 +411,29 @@ export function ProductImageLightbox({
      <span aria-hidden="true" />
     )}
 
-    <LightboxControlButton
-     variant="dark"
-     onClick={onClose}
-     className="size-11"
-     aria-label={t("common.close")}
-    >
-     <X className="size-5" />
-    </LightboxControlButton>
+    <div className="ml-auto flex items-center gap-2">
+     <LightboxControlButton
+      variant="dark"
+      onClick={toggleFullscreen}
+      className="size-11"
+      aria-label={fullscreenToggleLabel}
+     >
+      {isFullscreen ? (
+       <FullscreenExitIcon className="size-5" />
+      ) : (
+       <FullscreenIcon className="size-5" />
+      )}
+     </LightboxControlButton>
+
+     <LightboxControlButton
+      variant="dark"
+      onClick={onClose}
+      className="size-11"
+      aria-label={t("common.close")}
+     >
+      <X className="size-5" />
+     </LightboxControlButton>
+    </div>
    </header>
 
    {hasPrev ? (
