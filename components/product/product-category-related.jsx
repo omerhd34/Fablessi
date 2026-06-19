@@ -9,7 +9,9 @@ import {
  AccordionItem,
  AccordionTrigger,
 } from "@/components/ui/accordion";
-import { getPrimaryImageUrl } from "@/lib/product-utils";
+import { useLocale, useTranslations } from "@/contexts/locale-provider";
+import { getCategoryLabelForProduct } from "@/lib/product-category";
+import { getPrimaryImageUrl, getProductCardBottomLabel } from "@/lib/product-utils";
 import {
  productDetailAccordionItemClass,
  productDetailAccordionTriggerClass,
@@ -18,7 +20,9 @@ import {
 } from "@/lib/layout/product-styles";
 import { cn } from "@/lib/utils";
 
-export function ProductCategoryRelated({ products, categoryLabel }) {
+export function ProductCategoryRelated({ products, categoryLabel, variant = "category" }) {
+ const { locale } = useLocale();
+ const { dictionary } = useTranslations();
  const [open, setOpen] = useState(["related-panel"]);
 
  if (products.length === 0) return null;
@@ -38,15 +42,19 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
      <div className="space-y-3">
       {products.map((product) => {
        const imageUrl = getPrimaryImageUrl(product);
+       const productLabel =
+        variant === "collection"
+         ? getCategoryLabelForProduct(product, dictionary) ??
+         getProductCardBottomLabel(product, locale)
+         : getProductCardBottomLabel(product, locale);
 
        return (
         <Link
          key={product.id}
          href={`/urunler/${product.slug}`}
          className={cn(
-          "group flex cursor-pointer items-center gap-3 rounded-2xl p-2.5 no-underline",
-          productRelatedItemClass,
-          "origin-center scale-100 transition-[scale,border-color,background-color,box-shadow] duration-2000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.02] motion-reduce:duration-150"
+          "group flex cursor-pointer items-center gap-3 rounded-2xl p-2.5 no-underline transition-[border-color,background-color,box-shadow] duration-200",
+          productRelatedItemClass
          )}
         >
          <div className={cn("relative size-16 shrink-0 overflow-hidden rounded-xl", productRelatedItemThumbClass)}>
@@ -61,7 +69,9 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
           ) : null}
          </div>
          <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold text-charcoal">{product.name}</p>
+          <p className="truncate text-sm font-semibold text-charcoal">
+           {productLabel}
+          </p>
          </div>
         </Link>
        );
