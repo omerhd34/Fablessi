@@ -22,10 +22,26 @@ function compareByPrice(a, b, ascending) {
  return ascending ? priceA - priceB : priceB - priceA;
 }
 
-function sortProducts(products, sort) {
+function sortProducts(products, sort, dictionary, t) {
+ if (!sort && products.length) {
+  const list = [...products];
+  const sortAlphabetical = (a, b) => {
+   const aLabel = getLocalizedCollectionName(a.collection, dictionary) || a.name || "";
+   const bLabel = getLocalizedCollectionName(b.collection, dictionary) || b.name || "";
+   return aLabel.localeCompare(bLabel, t("locale") || "tr");
+  };
+  return list.sort(sortAlphabetical);
+ }
+
  if (!sort) return products;
 
  const list = [...products];
+
+ const sortAlphabetical = (a, b) => {
+  const aLabel = getLocalizedCollectionName(a.collection, dictionary) || a.name || "";
+  const bLabel = getLocalizedCollectionName(b.collection, dictionary) || b.name || "";
+  return aLabel.localeCompare(bLabel, t("locale") || "tr");
+ };
 
  switch (sort) {
   case "price-asc":
@@ -33,10 +49,11 @@ function sortProducts(products, sort) {
   case "price-desc":
    return list.sort((a, b) => compareByPrice(a, b, false));
   case "newest":
-  default:
    return list.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
    );
+  default:
+   return list.sort(sortAlphabetical);
  }
 }
 
@@ -65,8 +82,8 @@ export function ProductsCatalogShell({
    );
   });
 
-  return sortProducts(list, sort);
- }, [products, search, sort]);
+  return sortProducts(list, sort, dictionary, t);
+ }, [products, search, sort, dictionary, t]);
 
  if (isCategoryLanding) {
   return (
