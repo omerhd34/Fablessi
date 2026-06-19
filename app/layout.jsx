@@ -55,6 +55,8 @@ export async function generateMetadata() {
  };
 }
 
+export const revalidate = 0;
+
 export default async function RootLayout({ children }) {
  const { locale, dictionary } = await getServerDictionary();
  const menuGroups = await getCategoryGroupsForMenu(locale);
