@@ -29,6 +29,7 @@ export function ProductDetailRight({
     <ProductCategoryRelated
      products={collectionProducts}
      categoryLabel={collectionLabel}
+     variant="collection"
     />
    ) : null}
   </aside>
