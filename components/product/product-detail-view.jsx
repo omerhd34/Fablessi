@@ -7,11 +7,6 @@ import { ProductDetailRight } from "@/components/product/product-detail-right";
 import { ProductImageLightbox } from "@/components/product/product-image-lightbox";
 import { LG_MQ } from "@/lib/layout/breakpoints";
 import { productDetailScrollClass } from "@/lib/layout/product-styles";
-import {
- filterImagesByColorPrefix,
- getDefaultColorPrefix,
- getProductColorVariants,
-} from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
 export function ProductDetailView({
@@ -26,31 +21,7 @@ export function ProductDetailView({
  const [openDimensions, setOpenDimensions] = useState(false);
  const [openProductInfo, setOpenProductInfo] = useState(false);
  const centerScrollRef = useRef(null);
- const allImages = product.images ?? [];
- const colorVariants = useMemo(
-  () => getProductColorVariants(allImages, product.slug),
-  [allImages, product.slug]
- );
- const defaultColorPrefix = useMemo(
-  () => getDefaultColorPrefix(allImages, colorVariants),
-  [allImages, colorVariants]
- );
- const [selectedColorPrefix, setSelectedColorPrefix] = useState(defaultColorPrefix);
-
- useEffect(() => {
-  setSelectedColorPrefix(defaultColorPrefix);
- }, [product.slug, defaultColorPrefix]);
-
- const visibleImages = useMemo(() => {
-  if (!colorVariants || !selectedColorPrefix) return allImages;
-
-  return filterImagesByColorPrefix(allImages, selectedColorPrefix, product.slug);
- }, [allImages, colorVariants, selectedColorPrefix, product.slug]);
-
- const handleColorSelect = useCallback((prefix) => {
-  setSelectedColorPrefix(prefix);
-  setLightbox({ images: [], index: null });
- }, []);
+ const visibleImages = product.images ?? [];
 
  const openLightbox = (images, index) => {
   if (!images.length) return;
@@ -133,9 +104,6 @@ export function ProductDetailView({
      categoryHref={categoryHref}
      onViewDimensions={handleViewDimensions}
      onViewProductInfo={handleViewProductInfo}
-     colorVariants={colorVariants}
-     selectedColorPrefix={selectedColorPrefix}
-     onColorSelect={handleColorSelect}
      section="header"
      className="lg:hidden"
     />
@@ -145,9 +113,6 @@ export function ProductDetailView({
      categoryHref={categoryHref}
      onViewDimensions={handleViewDimensions}
      onViewProductInfo={handleViewProductInfo}
-     colorVariants={colorVariants}
-     selectedColorPrefix={selectedColorPrefix}
-     onColorSelect={handleColorSelect}
      className="hidden min-w-0 lg:flex lg:shrink-0"
     />
 
@@ -172,9 +137,6 @@ export function ProductDetailView({
         categoryHref={categoryHref}
         onViewDimensions={handleViewDimensions}
         onViewProductInfo={handleViewProductInfo}
-        colorVariants={colorVariants}
-        selectedColorPrefix={selectedColorPrefix}
-        onColorSelect={handleColorSelect}
         section="controls"
         className="lg:hidden"
        />
