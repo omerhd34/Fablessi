@@ -14,7 +14,7 @@ import {
  getPublishedProducts,
 } from "@/lib/queries/products";
 
-export const revalidate = 60;
+export const revalidate = 0;
 
 export async function generateMetadata({ searchParams }) {
  const params = await searchParams;
