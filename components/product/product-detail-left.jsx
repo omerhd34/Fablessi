@@ -4,7 +4,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { showFavoriteToast } from "@/components/favorites/favorite-toast";
-import { ProductColorSelector } from "@/components/product/product-color-selector";
 import { ProductDimensionsScrollButton } from "@/components/product/product-dimensions-scroll-button";
 import { ProductInfoScrollButton } from "@/components/product/product-info-scroll-button";
 import {
@@ -246,9 +245,6 @@ export function ProductDetailLeft({
  categoryHref,
  onViewDimensions,
  onViewProductInfo,
- colorVariants,
- selectedColorPrefix,
- onColorSelect,
  section = "all",
  className,
 }) {
@@ -310,12 +306,6 @@ export function ProductDetailLeft({
  const controls = showControls ? (
   <div className="flex flex-col gap-4">
    <ProductDetailPrice product={product} locale={locale} />
-
-   <ProductColorSelector
-    variants={colorVariants}
-    selectedPrefix={selectedColorPrefix}
-    onSelect={onColorSelect}
-   />
 
    <ActionButton
     icon={favorited ? HeartFilled : Heart}
