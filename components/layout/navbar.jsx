@@ -1,25 +1,25 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { DesktopNavbar } from "@/components/layout/desktop-navbar";
 import { MobileMenuDrawer } from "@/components/layout/mobile-menu-drawer";
 import { MobileNavbar } from "@/components/layout/mobile-navbar";
 import { Sheet } from "@/components/ui/sheet";
 
 export function Navbar({
  searchOpen,
- productsMenuOpen,
  menuOpen,
  onMenuOpenChange,
- onProductsMenuOpenChange,
  onSearchToggle,
  onSearchClose,
+ searchQuery,
+ onSearchQueryChange,
+ onSearchSubmit,
+ onSearchClear,
 }) {
  const pathname = usePathname();
 
  const openMenu = () => {
   onMenuOpenChange(true);
-  onProductsMenuOpenChange?.(false);
   onSearchClose?.();
  };
 
@@ -31,13 +31,10 @@ export function Navbar({
     searchOpen={searchOpen}
     onSearchToggle={onSearchToggle}
     onMenuOpen={openMenu}
-   />
-   <DesktopNavbar
-    searchOpen={searchOpen}
-    productsMenuOpen={productsMenuOpen}
-    onSearchToggle={onSearchToggle}
-    onSearchClose={onSearchClose}
-    onProductsMenuOpenChange={onProductsMenuOpenChange}
+    searchQuery={searchQuery}
+    onSearchQueryChange={onSearchQueryChange}
+    onSearchSubmit={onSearchSubmit}
+    onSearchClear={onSearchClear}
    />
 
    <Sheet open={menuOpen} onOpenChange={onMenuOpenChange}>

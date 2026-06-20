@@ -6,22 +6,17 @@ import { usePathname } from "next/navigation";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
-import { Folder, Search, X } from "@/lib/icons";
+import { Folder, Search } from "@/lib/icons";
+import { HeaderSearchForm } from "@/components/layout/header-search-form";
 import { useTranslations } from "@/contexts/locale-provider";
 import { getLocalizedCollectionName } from "@/lib/i18n/display-names";
 import { getCategoryLabelForProduct } from "@/lib/product-category";
 import { getCollectionProductsHref, getPrimaryImageUrl } from "@/lib/product-utils";
-import {
- catalogSearchFieldClass,
- catalogSearchIconClass,
- catalogSearchInputClass,
- catalogSearchPillClass,
-} from "@/lib/layout/header-styles";
 import { containerPremiumClass } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 
 const searchResultsBackdropTopClass =
- "top-[calc(var(--header-height-mobile)+4.75rem)] sm:mobile-layout:top-[calc(var(--header-height-mobile-sm)+4.75rem)] desktop:top-[calc(var(--header-height-desktop)+4.75rem)]";
+ "top-[calc(var(--header-height-mobile)+4.75rem)] sm:mobile-layout:top-[calc(var(--header-height-mobile-sm)+4.75rem)] lg:top-[calc(var(--header-height-desktop)+4.75rem)]";
 
 function SearchProductCard({ product, onNavigate, dictionary }) {
  const imageUrl = getPrimaryImageUrl(product);
@@ -63,37 +58,40 @@ function SearchProductCard({ product, onNavigate, dictionary }) {
  );
 }
 
-export function HeaderSearchBar({ open, onClose }) {
+export function HeaderSearchBar({
+ open,
+ onClose,
+ inline = false,
+ query,
+ onQueryChange,
+ submittedQuery,
+ onSubmittedQueryChange,
+ onClear,
+}) {
  const { t, dictionary } = useTranslations();
  const pathname = usePathname();
  const isHome = pathname === "/";
  const inputRef = useRef(null);
  const [mounted, setMounted] = useState(false);
- const [query, setQuery] = useState("");
- const [submittedQuery, setSubmittedQuery] = useState("");
  const [loading, setLoading] = useState(false);
  const [results, setResults] = useState({ collections: [], products: [] });
+
+ const showMobilePanel = open;
+ const showDesktopResultsPanel = inline && Boolean(submittedQuery);
+ const showResultsPanel = Boolean(submittedQuery);
 
  useEffect(() => {
   setMounted(true);
  }, []);
 
  useEffect(() => {
-  if (!open) {
-   setQuery("");
-   setSubmittedQuery("");
-   setResults({ collections: [], products: [] });
-   setLoading(false);
-   return;
-  }
+  if (!open) return;
 
   const timer = window.setTimeout(() => {
    inputRef.current?.focus({ preventScroll: true });
   }, 80);
   return () => window.clearTimeout(timer);
  }, [open]);
-
- const showResultsPanel = Boolean(submittedQuery);
 
  useEffect(() => {
   if (!submittedQuery) {
@@ -135,14 +133,11 @@ export function HeaderSearchBar({ open, onClose }) {
 
  const handleSubmit = (event) => {
   event.preventDefault();
-  setSubmittedQuery(query.trim());
+  onSubmittedQueryChange(query.trim());
  };
 
  const handleClear = () => {
-  setQuery("");
-  setSubmittedQuery("");
-  setResults({ collections: [], products: [] });
-  setLoading(false);
+  onClear?.();
   inputRef.current?.focus();
  };
 
@@ -219,68 +214,44 @@ export function HeaderSearchBar({ open, onClose }) {
    </div>
   ) : null;
 
- const searchForm = (
-  <form
-   onSubmit={handleSubmit}
-   className={catalogSearchPillClass}
-   role="search"
-  >
-   <div className={catalogSearchFieldClass}>
-    <input
-     ref={inputRef}
-     type="text"
-     inputMode="search"
-     enterKeyHint="search"
-     autoComplete="off"
-     autoCorrect="off"
-     spellCheck={false}
-     value={query}
-     onChange={(event) => setQuery(event.target.value)}
-     placeholder={t("common.searchPlaceholder")}
-     className={catalogSearchInputClass}
-     aria-label={t("common.searchLabel")}
-    />
-    <div className="flex shrink-0 items-center gap-0.5">
-     {query ? (
-      <button
-       type="button"
-       onClick={handleClear}
-       className="flex size-7 shrink-0 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent text-charcoal/55 transition-opacity duration-150 hover:opacity-65"
-       aria-label={t("common.clearSearch")}
-      >
-       <X className="size-4" aria-hidden />
-      </button>
-     ) : null}
-     <button
-      type="submit"
-      className="flex size-7 shrink-0 scale-100 cursor-pointer items-center justify-center border-0 bg-transparent text-charcoal/78 transition-[scale,opacity] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-125 hover:opacity-65 motion-reduce:duration-150"
-      aria-label={t("common.search")}
-     >
-      <Search className="size-4.5" aria-hidden />
-     </button>
-    </div>
-   </div>
-  </form>
- );
+ const renderBackdrop = (visible) =>
+  mounted && visible
+   ? createPortal(
+    <button
+     type="button"
+     className={cn(
+      "search-backdrop-layer fixed inset-0 z-40 cursor-pointer border-0 bg-black/38 animate-[search-backdrop-in_0.28s_ease-out] [backdrop-filter:blur(3px)] [-webkit-backdrop-filter:blur(3px)]",
+      isHome && "bg-black/45"
+     )}
+     onClick={onClose}
+     aria-label={t("common.closeSearch")}
+    />,
+    document.body
+   )
+   : null;
+
+ const renderResultsBackdrop = (visible) =>
+  mounted && visible && showResultsPanel && !isHome
+   ? createPortal(
+    <button
+     type="button"
+     className={cn(
+      "search-results-backdrop fixed right-0 bottom-0 left-0 z-40 cursor-pointer border-0 bg-[oklch(0.99_0.006_88/55%)] [backdrop-filter:blur(14px)_saturate(120%)] [-webkit-backdrop-filter:blur(14px)_saturate(120%)]",
+      searchResultsBackdropTopClass
+     )}
+     onClick={onClose}
+     aria-label={t("common.closeSearch")}
+    />,
+    document.body
+   )
+   : null;
 
  return (
   <>
-   {mounted && open
-    ? createPortal(
-     <button
-      type="button"
-      className={cn(
-       "search-backdrop-layer fixed inset-0 z-40 cursor-pointer border-0 bg-black/38 animate-[search-backdrop-in_0.28s_ease-out] [backdrop-filter:blur(3px)] [-webkit-backdrop-filter:blur(3px)]",
-       isHome && "bg-black/45"
-      )}
-      onClick={onClose}
-      aria-label={t("common.closeSearch")}
-     />,
-     document.body
-    )
-    : null}
+   {renderBackdrop(showMobilePanel)}
+   {renderBackdrop(showDesktopResultsPanel)}
 
-   {open ? (
+   {showMobilePanel && !inline ? (
     <div
      className={cn(
       "header-search-shell absolute inset-x-0 top-full z-50 pb-4 pt-3",
@@ -290,25 +261,54 @@ export function HeaderSearchBar({ open, onClose }) {
      aria-modal={showResultsPanel ? "true" : undefined}
      aria-label={showResultsPanel ? t("common.searchResults") : undefined}
     >
-     {searchForm}
+     <HeaderSearchForm
+      query={query}
+      onQueryChange={onQueryChange}
+      onSubmit={handleSubmit}
+      onClear={handleClear}
+      inputRef={inputRef}
+     />
      {resultsPanel}
     </div>
    ) : null}
 
-   {mounted && open && showResultsPanel && !isHome
-    ? createPortal(
-     <button
-      type="button"
-      className={cn(
-       "search-results-backdrop fixed right-0 bottom-0 left-0 z-40 cursor-pointer border-0 bg-[oklch(0.99_0.006_88/55%)] [backdrop-filter:blur(14px)_saturate(120%)] [-webkit-backdrop-filter:blur(14px)_saturate(120%)]",
-       searchResultsBackdropTopClass
-      )}
-      onClick={onClose}
-      aria-label={t("common.closeSearch")}
-     />,
-     document.body
-    )
-    : null}
+   {showMobilePanel && inline ? (
+    <div
+     className={cn(
+      "header-search-shell absolute inset-x-0 top-full z-50 pb-4 pt-3 lg:hidden",
+      containerPremiumClass
+     )}
+     role={showResultsPanel ? "dialog" : undefined}
+     aria-modal={showResultsPanel ? "true" : undefined}
+     aria-label={showResultsPanel ? t("common.searchResults") : undefined}
+    >
+     <HeaderSearchForm
+      query={query}
+      onQueryChange={onQueryChange}
+      onSubmit={handleSubmit}
+      onClear={handleClear}
+      inputRef={inputRef}
+     />
+     {resultsPanel}
+    </div>
+   ) : null}
+
+   {showDesktopResultsPanel ? (
+    <div
+     className={cn(
+      "header-search-shell absolute inset-x-0 top-full z-50 hidden pb-4 pt-3 lg:block",
+      containerPremiumClass
+     )}
+     role="dialog"
+     aria-modal="true"
+     aria-label={t("common.searchResults")}
+    >
+     {resultsPanel}
+    </div>
+   ) : null}
+
+   {renderResultsBackdrop(showMobilePanel)}
+   {renderResultsBackdrop(showDesktopResultsPanel)}
   </>
  );
 }

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/layout/navbar";
 import { HeaderSearchBar } from "@/components/layout/header-search-bar";
@@ -58,22 +58,38 @@ export function Header() {
  const pathname = usePathname();
  const [scrolled, setScrolled] = useState(false);
  const [heroOverlay, setHeroOverlay] = useState(undefined);
- const [productsMenuOpen, setProductsMenuOpen] = useState(false);
  const [searchOpen, setSearchOpen] = useState(false);
  const [menuOpen, setMenuOpen] = useState(false);
+ const [searchQuery, setSearchQuery] = useState("");
+ const [submittedQuery, setSubmittedQuery] = useState("");
 
  const isHome = pathname === "/";
  const isProductsPage =
   pathname === "/urunler" || pathname.startsWith("/urunler/");
  const headerHidden =
-  isHome && scrolled && !searchOpen && !menuOpen && !productsMenuOpen;
+  isHome && scrolled && !searchOpen && !menuOpen && !submittedQuery;
+
+ const clearSearch = useCallback(() => {
+  setSearchQuery("");
+  setSubmittedQuery("");
+ }, []);
+
+ const closeSearch = useCallback(() => {
+  setSearchOpen(false);
+  clearSearch();
+ }, [clearSearch]);
 
  const toggleSearch = () => {
   setSearchOpen((prev) => {
    const next = !prev;
-   if (next) setProductsMenuOpen(false);
+   if (!next) clearSearch();
    return next;
   });
+ };
+
+ const handleSearchSubmit = (event) => {
+  event.preventDefault();
+  setSubmittedQuery(searchQuery.trim());
  };
 
  useLayoutEffect(() => {
@@ -156,47 +172,57 @@ export function Header() {
  }, [pathname, isProductsPage]);
 
  useEffect(() => {
-  setProductsMenuOpen(false);
   setSearchOpen(false);
   setMenuOpen(false);
- }, [pathname]);
+  clearSearch();
+ }, [pathname, clearSearch]);
 
  useEffect(() => {
-  if (!searchOpen && !productsMenuOpen) return;
+  if (!searchOpen && !submittedQuery) return;
 
   const onKeyDown = (event) => {
    if (event.key !== "Escape") return;
-   if (searchOpen) setSearchOpen(false);
-   if (productsMenuOpen) setProductsMenuOpen(false);
+   closeSearch();
   };
 
   window.addEventListener("keydown", onKeyDown);
   return () => window.removeEventListener("keydown", onKeyDown);
- }, [searchOpen, productsMenuOpen]);
+ }, [searchOpen, submittedQuery, closeSearch]);
 
  return (
   <header
    data-home={isHome ? "true" : "false"}
    data-hero-overlay={heroOverlay ? "true" : "false"}
-   data-search-open={searchOpen ? "true" : "false"}
-   data-menu-open={productsMenuOpen || menuOpen || searchOpen ? "true" : "false"}
+   data-search-open={searchOpen || submittedQuery ? "true" : "false"}
+   data-menu-open={menuOpen || searchOpen || submittedQuery ? "true" : "false"}
    data-hidden={headerHidden ? "true" : "false"}
    className={cn(
-    "site-header group/header pointer-events-none fixed inset-x-0 top-0 z-50 bg-transparent transition-[transform,opacity] duration-300 ease-out [&_.header-search-shell]:pointer-events-auto [&_.products-mega-menu-root[data-open=true]_.products-mega-menu-panel]:pointer-events-auto **:[[role=search]]:pointer-events-auto [&_a]:pointer-events-auto [&_button]:pointer-events-auto [&_form]:pointer-events-auto [&_input]:pointer-events-auto",
+    "site-header group/header pointer-events-none fixed inset-x-0 top-0 z-50 bg-transparent transition-[transform,opacity] duration-300 ease-out [&_.header-search-shell]:pointer-events-auto **:[[role=search]]:pointer-events-auto [&_a]:pointer-events-auto [&_button]:pointer-events-auto [&_form]:pointer-events-auto [&_input]:pointer-events-auto",
     headerHidden && "pointer-events-none -translate-y-full opacity-0"
    )}
   >
    <div className="relative">
     <Navbar
      searchOpen={searchOpen}
-     productsMenuOpen={productsMenuOpen}
      menuOpen={menuOpen}
      onMenuOpenChange={setMenuOpen}
-     onProductsMenuOpenChange={setProductsMenuOpen}
      onSearchToggle={toggleSearch}
-     onSearchClose={() => setSearchOpen(false)}
+     onSearchClose={closeSearch}
+     searchQuery={searchQuery}
+     onSearchQueryChange={setSearchQuery}
+     onSearchSubmit={handleSearchSubmit}
+     onSearchClear={clearSearch}
     />
-    <HeaderSearchBar open={searchOpen} onClose={() => setSearchOpen(false)} />
+    <HeaderSearchBar
+     open={searchOpen}
+     onClose={closeSearch}
+     inline
+     query={searchQuery}
+     onQueryChange={setSearchQuery}
+     submittedQuery={submittedQuery}
+     onSubmittedQueryChange={setSubmittedQuery}
+     onClear={clearSearch}
+    />
    </div>
   </header>
  );
