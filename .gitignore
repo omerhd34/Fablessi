@@ -42,6 +42,8 @@ next-env.d.ts
 
 # cursor rules
 cursorrules.md
+.cursorignore
+.cursor
 
 # büyük medya — git dışında tutulur (public/video/ yerel deploy için)
 /public/video
@@ -51,4 +53,3 @@ cursorrules.md
 *.MOV
 /public/video/
 
-.cursorignore
