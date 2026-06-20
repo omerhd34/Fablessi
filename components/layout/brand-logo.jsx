@@ -18,10 +18,10 @@ const logoHeightClasses = {
 };
 
 export const brandLogoMobileNavWrapperClass =
- "[&_.brand-logo-image]:h-9! sm:max-lg:[&_.brand-logo-image]:h-10! lg:[&_.brand-logo-image]:h-14!";
+ "[&_.brand-logo-image]:h-9! sm:max-lg:[&_.brand-logo-image]:h-10! lg:[&_.brand-logo-image]:h-14! xl:[&_.brand-logo-image]:h-[3.5rem]!";
 
 export const brandLogoMobileNavHomeWrapperClass =
- "[&_.brand-logo-image]:h-9.5! sm:max-lg:[&_.brand-logo-image]:h-10.5! lg:[&_.brand-logo-image]:h-14!";
+ "[&_.brand-logo-image]:h-9.5! sm:max-lg:[&_.brand-logo-image]:h-10.5! lg:[&_.brand-logo-image]:h-14! xl:[&_.brand-logo-image]:h-[3.75rem]!";
 
 export const brandLogoDesktopNavWrapperClass = "[&_.brand-logo-image]:h-14!";
 
