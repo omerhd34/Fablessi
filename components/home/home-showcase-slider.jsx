@@ -34,6 +34,12 @@ const navButtonClassName = cn(
  "hidden size-11 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12 lg:inline-flex [&_svg]:size-5 md:[&_svg]:size-[1.375rem] [&_svg]:[stroke-width:3.5]"
 );
 
+const navOutsideClassName =
+ "absolute top-1/2 z-10 -translate-y-1/2 lg:-left-14 xl:-left-[4.75rem]";
+
+const navOutsideNextClassName =
+ "absolute top-1/2 z-10 -translate-y-1/2 lg:-right-14 xl:-right-[4.75rem]";
+
 function useShowcaseAutoplay(api, enabled) {
  const autoplayTimerRef = useRef(null);
  const autoplayRemainingRef = useRef(SHOWCASE_AUTOPLAY_MS);
@@ -113,7 +119,7 @@ function useShowcaseAutoplay(api, enabled) {
  }, [pauseAutoplay, resumeAutoplay]);
 }
 
-function HomeShowcaseNav({ direction }) {
+function HomeShowcaseNav({ direction, className }) {
  const { scrollPrev, scrollNext, canScrollNext } = useCarousel();
  const isPrev = direction === "prev";
  const disabled = isPrev ? false : !canScrollNext;
@@ -124,7 +130,11 @@ function HomeShowcaseNav({ direction }) {
    type="button"
    onClick={isPrev ? scrollPrev : scrollNext}
    disabled={disabled}
-   className={navButtonClassName}
+   className={cn(
+    navButtonClassName,
+    isPrev ? navOutsideClassName : navOutsideNextClassName,
+    className
+   )}
    aria-label={isPrev ? "Önceki slayt" : "Sonraki slayt"}
   >
    <Icon strokeWidth={3.5} aria-hidden />
@@ -134,11 +144,9 @@ function HomeShowcaseNav({ direction }) {
 
 function HomeShowcaseTrack({ children }) {
  return (
-  <div className="mx-auto w-full max-w-site-shell px-4 sm:px-5 md:px-6 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center lg:gap-6 lg:px-8 xl:gap-8 xl:px-10">
+  <div className={cn(containerPremiumClass, "relative")}>
+   <CarouselContent className="sm:-ml-5">{children}</CarouselContent>
    <HomeShowcaseNav direction="prev" />
-   <div className="min-w-0">
-    <CarouselContent className="sm:-ml-5">{children}</CarouselContent>
-   </div>
    <HomeShowcaseNav direction="next" />
   </div>
  );
