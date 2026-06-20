@@ -8,11 +8,11 @@ module.exports = {
  ],
  theme: {
   screens: {
-   sm: "40rem",
-   md: "48rem",
-   lg: "64rem",
-   xl: "90rem",
-   "2xl": "96rem",
+   sm: "640px",
+   md: "768px",
+   lg: "1024px",
+   xl: "1440px",
+   "2xl": "1536px",
   },
   extend: {
    fontFamily: {
@@ -34,7 +34,7 @@ module.exports = {
     container: "1.25rem",
    },
    maxWidth: {
-    site: "90rem",
+    site: "1440px",
     "site-shell": "96rem",
    },
    colors: {

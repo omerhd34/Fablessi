@@ -27,7 +27,7 @@ function HeroSlideImage({ slide, priority, className }) {
  return (
   <picture className="absolute inset-0 block h-full w-full">
    <source media="(min-width: 96rem)" srcSet={images["2xl"]} />
-   <source media="(min-width: 90rem)" srcSet={images.xl} />
+   <source media="(min-width: 1440px)" srcSet={images.xl} />
    <source media="(min-width: 64rem)" srcSet={images.lg} />
    <source media="(min-width: 48rem)" srcSet={images.md} />
    <Image

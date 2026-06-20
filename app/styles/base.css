@@ -2,7 +2,11 @@
 @config "../../tailwind.config.js";
 
 @theme {
-  --breakpoint-xl: 90rem;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1440px;
+  --breakpoint-2xl: 1536px;
 }
 
 @custom-variant mobile-layout (@media (width <= 1440px));
@@ -131,12 +135,14 @@
   --glass-float-shadow: 0 12px 32px oklch(0 0 0 / 17.6%);
   --glass-float-size: 3.125rem;
   --glass-float-icon-size: 1.375rem;
-  --favorite-toast-fab-clearance: calc(1.25rem + var(--glass-float-size) + 0.75rem);
+  --favorite-toast-fab-clearance: calc(
+    1.25rem + var(--glass-float-size) + 0.75rem
+  );
   --contact-float-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
   --product-card-bg: oklch(0.935 0.006 90);
 }
 
-@media (min-width: 48rem) and (max-width: 90rem) {
+@media (min-width: 48rem) and (max-width: 1440px) {
   :root {
     --glass-mobile-btn-size: 4rem;
     --glass-mobile-icon-size: 1.75rem;
@@ -439,7 +445,8 @@ html[dir="rtl"] [data-sonner-toast][data-styled="true"] [data-close-button] {
     transform: none !important;
   }
 
-  html[data-toast-layout="fab"] [data-sonner-toaster][data-y-position="bottom"] {
+  html[data-toast-layout="fab"]
+    [data-sonner-toaster][data-y-position="bottom"] {
     --offset-left: 1rem !important;
     --mobile-offset-left: 1rem !important;
     --offset-right: var(--favorite-toast-fab-clearance) !important;
