@@ -28,7 +28,7 @@ export async function generateMetadata({ searchParams }) {
   description: googleDescription ?? page.description,
   keywords: page.keywords ?? dictionary.metadata.keywords,
   robots: {
-   index: true,
+   index: false,
    follow: true,
   },
  };

@@ -40,6 +40,10 @@ export async function generateMetadata() {
   },
   description,
   keywords: dictionary.metadata.keywords ?? siteMetadata.keywords,
+  robots: {
+   index: false,
+   follow: true,
+  },
   openGraph: {
    ...siteMetadata.openGraph,
    title,
