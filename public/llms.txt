@@ -1,0 +1,30 @@
+# Fablessi Outdoor Living
+
+> İnegöl üretimi premium bahçe ve balkon mobilyaları. Oturma grupları, köşe takımları, masa grupları, salıncak, şezlong ve sandalye koleksiyonları.
+
+Fablessi, dış mekân yaşam alanları için tasarlanmış dayanıklı ve şık outdoor mobilya koleksiyonları sunar. Ürün sayfalarında teknik özellikler, renk seçenekleri ve görseller yer alır.
+
+## Ana Sayfalar
+
+- [Ana Sayfa](https://www.fablessi.com/): Bahçe ve balkon mobilyası koleksiyonları, öne çıkan ürünler
+- [Ürünler](https://www.fablessi.com/urunler): Tüm ürün kataloğu ve kategori filtreleri
+- [Hakkımızda](https://www.fablessi.com/hakkimizda): Marka hikayesi ve üretim yaklaşımı
+- [Misyon & Vizyon](https://www.fablessi.com/misyon-vizyon): Kurumsal değerler ve hedefler
+- [İletişim](https://www.fablessi.com/iletisim): İletişim bilgileri ve ulaşım
+- [Sıkça Sorulan Sorular](https://www.fablessi.com/sss): Ürün ve sipariş hakkında SSS
+
+## Ürün Kategorileri
+
+- [Oturma Grupları](https://www.fablessi.com/urunler?kategori=oturma-gruplari): Açelya, Aston, Begonia, Tesla, Velar oturma koleksiyonları
+- [Köşe Grupları](https://www.fablessi.com/urunler?kategori=kose-gruplari): Tesla ve Velar köşe takımları
+- [Masa Grupları](https://www.fablessi.com/urunler?kategori=masalar): Tesla ve Velar bahçe masaları
+- [Salıncak](https://www.fablessi.com/urunler?kategori=salincak): Tesla ve Velar salıncak modelleri
+- [Şezlong](https://www.fablessi.com/urunler?kategori=sezlong): Velar şezlong koleksiyonu
+- [Sandalyeler](https://www.fablessi.com/urunler?kategori=sandalyeler): Trend sandalye serisi
+
+## Optional
+
+- [Gizlilik Politikası](https://www.fablessi.com/gizlilik-politikasi): Kişisel verilerin korunması
+- [KVKK Aydınlatma Metni](https://www.fablessi.com/kvkk): Kişisel verilerin işlenmesi
+- [Çerez Politikası](https://www.fablessi.com/cerez-politikasi): Çerez kullanım bilgileri
+- [Site Haritası](https://www.fablessi.com/sitemap.xml): Tüm dizinlenebilir sayfalar

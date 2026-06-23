@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+ productionBrowserSourceMaps: true,
  reactCompiler: true,
+ experimental: {
+  optimizePackageImports: ["embla-carousel-react", "react-icons"],
+ },
  async rewrites() {
   return [
    {

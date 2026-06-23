@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "@/contexts/locale-provider";
@@ -21,22 +21,46 @@ const heroNavButtonClass = cn(
  "absolute top-1/2 z-20 hidden desktop:inline-flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-white/96 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/45 active:scale-100 sm:size-[3.25rem] desktop:size-[3.75rem] [&_svg]:size-[1.375rem] md:[&_svg]:size-[1.875rem] [&_svg]:[stroke-width:3.5]"
 );
 
+const HERO_IMAGE_BREAKPOINTS = [
+ { media: "(min-width: 96rem)", key: "2xl", width: 3840, height: 2560 },
+ { media: "(min-width: 1440px)", key: "xl", width: 3200, height: 2133 },
+ { media: "(min-width: 64rem)", key: "lg", width: 2560, height: 1707 },
+ { media: "(min-width: 48rem)", key: "md", width: 1440, height: 2560 },
+];
+
 function HeroSlideImage({ slide, priority, className }) {
  const { images, alt } = slide;
+ const imageSizes = "100vw";
+ const shared = { alt, sizes: imageSizes, priority };
+
+ const sources = HERO_IMAGE_BREAKPOINTS.map(({ media, key, width, height }) => {
+  const { props } = getImageProps({
+   ...shared,
+   src: images[key],
+   width,
+   height,
+  });
+
+  return <source key={key} media={media} srcSet={props.srcSet} />;
+ });
+
+ const {
+  props: { srcSet: _mobileSrcSet, ...imgProps },
+ } = getImageProps({
+  ...shared,
+  src: images.sm,
+  width: 1080,
+  height: 1920,
+ });
 
  return (
   <picture className="absolute inset-0 block h-full w-full">
-   <source media="(min-width: 96rem)" srcSet={images["2xl"]} />
-   <source media="(min-width: 1440px)" srcSet={images.xl} />
-   <source media="(min-width: 64rem)" srcSet={images.lg} />
-   <source media="(min-width: 48rem)" srcSet={images.md} />
-   <Image
-    src={images.sm}
+   {sources}
+   <img
+    {...imgProps}
     alt={alt}
-    fill
-    priority={priority}
-    sizes="100vw"
-    className={className}
+    className={cn("h-full w-full", className)}
+    decoding={priority ? "sync" : "async"}
    />
   </picture>
  );
