@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { MdSave } from "react-icons/md";
 import { toast } from "sonner";
 import { DeleteButton } from "@/components/admin/delete-button";
-import { AdminImageUpload } from "@/components/admin/admin-image-upload";
 import {
  ADMIN_COLLECTION_NAME_FIELDS_HINT,
  applyAdminCollectionNameLimits,
@@ -14,15 +13,7 @@ import {
  validateAdminCollectionName,
  validateAdminCollectionNameEn,
 } from "@/lib/admin/field-limits";
-import {
- ADMIN_DRAFT_UPLOAD_FOLDER,
- validateImageUploadFile,
-} from "@/lib/admin/image-upload";
 import { slugify } from "@/lib/admin/slug";
-import {
- getCollectionCoverImageRequirements,
- getCollectionCoverImageSummary,
-} from "@/lib/admin/image-specs";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -33,7 +24,6 @@ const emptyCollection = {
  name: "",
  nameEn: "",
  slug: "",
- coverImage: "",
  sortOrder: 0,
  isPublished: true,
 };
@@ -44,17 +34,7 @@ export function CollectionForm({ collection = null }) {
   collection ? applyAdminCollectionNameLimits(collection) : emptyCollection
  );
  const [loading, setLoading] = useState(false);
- const [uploading, setUploading] = useState(false);
  const isEdit = Boolean(collection?.id);
-
- function getCoverUploadFolder(currentForm) {
-  if (currentForm.coverImage) {
-   const parts = currentForm.coverImage.split("/").filter(Boolean);
-   if (parts.length >= 2) return parts[0];
-  }
-
-  return slugify(currentForm.name) || ADMIN_DRAFT_UPLOAD_FOLDER;
- }
 
  function updateField(field, value) {
   setForm((current) => {
@@ -66,37 +46,6 @@ export function CollectionForm({ collection = null }) {
    }
    return next;
   });
- }
-
- async function uploadCoverImage(file) {
-  const fileTypeError = validateImageUploadFile(file);
-  if (fileTypeError) {
-   toast.error(fileTypeError);
-   return;
-  }
-
-  const folder = getCoverUploadFolder(form);
-
-  setUploading(true);
-  try {
-   const body = new FormData();
-   body.append("file", file);
-   body.append("folder", folder);
-
-   const response = await fetch("/api/admin/upload", {
-    method: "POST",
-    body,
-   });
-   const data = await response.json();
-   if (!response.ok) throw new Error(data.error || "Yükleme başarısız");
-
-   updateField("coverImage", data.url);
-   toast.success("Kapak görseli yüklendi");
-  } catch (error) {
-   toast.error(error.message);
-  } finally {
-   setUploading(false);
-  }
  }
 
  async function handleSubmit(event) {
@@ -114,11 +63,6 @@ export function CollectionForm({ collection = null }) {
    return;
   }
 
-  if (!form.coverImage?.trim()) {
-   toast.error("Kapak görseli gereklidir.");
-   return;
-  }
-
   setLoading(true);
 
   try {
@@ -127,7 +71,13 @@ export function CollectionForm({ collection = null }) {
     {
      method: isEdit ? "PUT" : "POST",
      headers: { "Content-Type": "application/json" },
-     body: JSON.stringify({ ...form, slug: slugify(form.name) }),
+     body: JSON.stringify({
+      name: form.name,
+      nameEn: form.nameEn,
+      slug: slugify(form.name),
+      sortOrder: form.sortOrder,
+      isPublished: form.isPublished,
+     }),
     }
    );
 
@@ -179,17 +129,7 @@ export function CollectionForm({ collection = null }) {
       />
      </div>
      <p className="text-xs text-muted-foreground md:col-span-8">{ADMIN_COLLECTION_NAME_FIELDS_HINT}</p>
-     <div className="md:col-span-10">
-      <AdminImageUpload
-       value={form.coverImage ?? ""}
-       onChange={(value) => updateField("coverImage", value)}
-       onUpload={uploadCoverImage}
-       uploading={uploading}
-       hint={getCollectionCoverImageSummary()}
-       dropzoneHint={getCollectionCoverImageRequirements()}
-      />
-     </div>
-     <label className="flex cursor-pointer items-center gap-2 md:col-span-3">
+     <label className="flex cursor-pointer items-center gap-2 md:col-span-10">
       <Checkbox
        checked={form.isPublished !== false}
        onCheckedChange={(checked) => updateField("isPublished", Boolean(checked))}
@@ -210,7 +150,7 @@ export function CollectionForm({ collection = null }) {
     ) : (
      <div />
     )}
-    <Button type="submit" className="cursor-pointer gap-2" disabled={loading || uploading}>
+    <Button type="submit" className="cursor-pointer gap-2" disabled={loading}>
      {loading ? (
       "Kaydediliyor…"
      ) : isEdit ? (

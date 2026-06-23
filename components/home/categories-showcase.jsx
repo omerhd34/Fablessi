@@ -10,6 +10,7 @@ import {
  productCardKalifClass,
  sectionPaddingClass,
 } from "@/lib/layout/shared-styles";
+import { getCategoryGroupCoverImage } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
 function CategoryCard({ category }) {
@@ -54,7 +55,7 @@ export function CategoriesShowcase() {
      slug: group.slug,
      label: group.label,
      href: group.href,
-     image: group.items[0]?.image,
+     image: getCategoryGroupCoverImage(group),
     }))
     .filter((category) => category.image),
   [navigation]

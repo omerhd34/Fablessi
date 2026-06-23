@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { MdSave } from "react-icons/md";
 import { toast } from "sonner";
 import { DeleteButton } from "@/components/admin/delete-button";
+import { AdminImageUpload } from "@/components/admin/admin-image-upload";
 import {
  ADMIN_CATEGORY_NAME_FIELDS_HINT,
  applyAdminCategoryNameLimits,
@@ -13,6 +14,14 @@ import {
  validateAdminCategoryName,
  validateAdminCategoryNameEn,
 } from "@/lib/admin/field-limits";
+import {
+ ADMIN_DRAFT_UPLOAD_FOLDER,
+ validateImageUploadFile,
+} from "@/lib/admin/image-upload";
+import {
+ getCategoryCoverImageRequirements,
+ getCategoryCoverImageSummary,
+} from "@/lib/admin/image-specs";
 import { slugify } from "@/lib/admin/slug";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -24,9 +33,17 @@ const emptyCategoryGroup = {
  name: "",
  nameEn: "",
  slug: "",
+ coverImage: "",
  sortOrder: 0,
  isPublished: true,
 };
+
+function getDefaultCoverPreview(categoryGroup) {
+ if (!categoryGroup || categoryGroup.coverImage) return "";
+
+ const firstProduct = categoryGroup.products?.[0];
+ return firstProduct?.images?.[0]?.url ?? "";
+}
 
 export function CategoryGroupForm({ categoryGroup = null }) {
  const router = useRouter();
@@ -34,7 +51,21 @@ export function CategoryGroupForm({ categoryGroup = null }) {
   categoryGroup ? applyAdminCategoryNameLimits(categoryGroup) : emptyCategoryGroup
  );
  const [loading, setLoading] = useState(false);
+ const [uploading, setUploading] = useState(false);
  const isEdit = Boolean(categoryGroup?.id);
+ const defaultCoverPreview = useMemo(
+  () => getDefaultCoverPreview(categoryGroup),
+  [categoryGroup]
+ );
+
+ function getCoverUploadFolder(currentForm) {
+  if (currentForm.coverImage) {
+   const parts = currentForm.coverImage.split("/").filter(Boolean);
+   if (parts.length >= 2) return parts[0];
+  }
+
+  return slugify(currentForm.name) || ADMIN_DRAFT_UPLOAD_FOLDER;
+ }
 
  function updateField(field, value) {
   setForm((current) => {
@@ -46,6 +77,37 @@ export function CategoryGroupForm({ categoryGroup = null }) {
    }
    return next;
   });
+ }
+
+ async function uploadCoverImage(file) {
+  const fileTypeError = validateImageUploadFile(file);
+  if (fileTypeError) {
+   toast.error(fileTypeError);
+   return;
+  }
+
+  const folder = getCoverUploadFolder(form);
+
+  setUploading(true);
+  try {
+   const body = new FormData();
+   body.append("file", file);
+   body.append("folder", folder);
+
+   const response = await fetch("/api/admin/upload", {
+    method: "POST",
+    body,
+   });
+   const data = await response.json();
+   if (!response.ok) throw new Error(data.error || "Yükleme başarısız");
+
+   updateField("coverImage", data.url);
+   toast.success("Kapak görseli yüklendi");
+  } catch (error) {
+   toast.error(error.message);
+  } finally {
+   setUploading(false);
+  }
  }
 
  async function handleSubmit(event) {
@@ -77,6 +139,7 @@ export function CategoryGroupForm({ categoryGroup = null }) {
       name: form.name,
       nameEn: form.nameEn,
       slug: slugify(form.name),
+      coverImage: form.coverImage,
       sortOrder: form.sortOrder,
       isPublished: form.isPublished,
      }),
@@ -87,7 +150,13 @@ export function CategoryGroupForm({ categoryGroup = null }) {
    if (!response.ok) throw new Error(data.error || "Kaydedilemedi");
 
    toast.success(isEdit ? "Kategori grubu güncellendi" : "Kategori grubu oluşturuldu.");
-   router.push(isEdit ? `/admin/categories/${data.id}` : "/admin/categories");
+
+   if (isEdit) {
+    router.push(`/admin/categories/${data.id}`);
+   } else {
+    router.replace("/admin/categories");
+   }
+
    router.refresh();
   } catch (error) {
    toast.error(error.message);
@@ -131,6 +200,17 @@ export function CategoryGroupForm({ categoryGroup = null }) {
       />
      </div>
      <p className="text-xs text-muted-foreground md:col-span-8">{ADMIN_CATEGORY_NAME_FIELDS_HINT}</p>
+     <div className="md:col-span-10">
+      <AdminImageUpload
+       value={form.coverImage ?? ""}
+       defaultPreview={defaultCoverPreview}
+       onChange={(value) => updateField("coverImage", value)}
+       onUpload={uploadCoverImage}
+       uploading={uploading}
+       hint={getCategoryCoverImageSummary()}
+       dropzoneHint={getCategoryCoverImageRequirements()}
+      />
+     </div>
      <label className="flex cursor-pointer items-center gap-2 md:col-span-10">
       <Checkbox
        checked={form.isPublished !== false}
@@ -152,7 +232,7 @@ export function CategoryGroupForm({ categoryGroup = null }) {
     ) : (
      <div />
     )}
-    <Button type="submit" className="cursor-pointer gap-2" disabled={loading}>
+    <Button type="submit" className="cursor-pointer gap-2" disabled={loading || uploading}>
      {loading ? (
       "Kaydediliyor…"
      ) : isEdit ? (

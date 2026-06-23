@@ -45,10 +45,6 @@ export async function PUT(request, { params }) {
   const name = body.name?.trim() ?? existing.name;
   const nameEn =
    body.nameEn !== undefined ? body.nameEn?.trim() || null : existing.nameEn;
-  const coverImage =
-   body.coverImage !== undefined
-    ? body.coverImage?.trim() || null
-    : existing.coverImage;
   const slug = slugify(name) || existing.slug;
 
   const nameError = validateAdminCollectionName(name, "Ad (TR)");
@@ -61,9 +57,6 @@ export async function PUT(request, { params }) {
    return Response.json({ error: nameEnError }, { status: 400 });
   }
 
-  if (!coverImage) {
-   return Response.json({ error: "Kapak görseli gereklidir." }, { status: 400 });
-  }
   if (slug !== existing.slug) {
    const conflict = await prisma.collection.findUnique({ where: { slug } });
    if (conflict) {
@@ -79,7 +72,6 @@ export async function PUT(request, { params }) {
     nameEn,
     description: null,
     descriptionEn: null,
-    coverImage,
     sortOrder: Number(body.sortOrder) ?? existing.sortOrder,
     isPublished: body.isPublished ?? existing.isPublished,
    },

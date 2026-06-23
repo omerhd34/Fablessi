@@ -49,12 +49,14 @@ export async function POST(request) {
    return Response.json({ error: "Bu slug zaten kullanılıyor" }, { status: 409 });
   }
 
+  const coverImage = body.coverImage?.trim() || null;
+
   const group = await prisma.productCategoryGroup.create({
    data: {
     slug,
     name,
     nameEn,
-    coverImage: null,
+    coverImage,
     sortOrder: Number(body.sortOrder) || 0,
     isPublished: body.isPublished !== false,
    },

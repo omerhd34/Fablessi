@@ -8,6 +8,7 @@ import { useTranslations } from "@/contexts/locale-provider";
 import { HeroChevronLeft, HeroChevronRight } from "@/lib/icons";
 import { contactFloatBtnClass } from "@/lib/layout/header-styles";
 import { productCategoryTileClass } from "@/lib/layout/product-styles";
+import { getCategoryGroupCoverImage } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
 const categoryCarouselNavBtnClass = cn(
@@ -23,7 +24,7 @@ export function ProductsCategoryCarousel({ activeSlug, className }) {
     slug: group.slug,
     label: group.label,
     href: group.href,
-    image: group.items[0]?.image,
+    image: getCategoryGroupCoverImage(group),
    })),
   [navigation]
  );

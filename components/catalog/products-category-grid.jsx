@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { useTranslations } from "@/contexts/locale-provider";
 import { productCardKalifClass } from "@/lib/layout/shared-styles";
+import { getCategoryGroupCoverImage } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
 export function ProductsCategoryGrid() {
@@ -16,7 +17,7 @@ export function ProductsCategoryGrid() {
      slug: group.slug,
      label: group.label,
      href: group.href,
-     image: group.coverImage ?? group.items[0]?.image,
+     image: getCategoryGroupCoverImage(group),
     }))
     .filter((category) => category.image),
   [navigation]

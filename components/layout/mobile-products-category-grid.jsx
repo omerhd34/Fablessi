@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 import { useTranslations } from "@/contexts/locale-provider";
+import { getCategoryGroupCoverImage } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
 export function MobileProductsCategoryGrid({ onClose, variant = "default" }) {
@@ -15,7 +16,7 @@ export function MobileProductsCategoryGrid({ onClose, variant = "default" }) {
     slug: group.slug,
     label: group.label,
     href: group.href,
-    image: group.items[0]?.image,
+    image: getCategoryGroupCoverImage(group),
    })),
   [navigation]
  );

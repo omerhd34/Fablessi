@@ -45,6 +45,10 @@ export async function PUT(request, { params }) {
   const name = body.name?.trim() ?? existing.name;
   const nameEn =
    body.nameEn !== undefined ? body.nameEn?.trim() || null : existing.nameEn;
+  const coverImage =
+   body.coverImage !== undefined
+    ? body.coverImage?.trim() || null
+    : existing.coverImage;
   const slug = slugify(name) || existing.slug;
 
   const nameError = validateAdminCategoryName(name, "Ad (TR)");
@@ -69,7 +73,7 @@ export async function PUT(request, { params }) {
     slug,
     name,
     nameEn,
-    coverImage: null,
+    coverImage,
     sortOrder: Number(body.sortOrder) ?? existing.sortOrder,
     isPublished: body.isPublished ?? existing.isPublished,
    },

@@ -28,7 +28,6 @@ export async function POST(request) {
 
   const name = body.name?.trim();
   const nameEn = body.nameEn?.trim();
-  const coverImage = body.coverImage?.trim();
 
   const nameError = validateAdminCollectionName(name, "Ad (TR)");
   if (nameError) {
@@ -45,10 +44,6 @@ export async function POST(request) {
    return Response.json({ error: "Ad gereklidir." }, { status: 400 });
   }
 
-  if (!coverImage) {
-   return Response.json({ error: "Kapak görseli gereklidir." }, { status: 400 });
-  }
-
   const existing = await prisma.collection.findUnique({ where: { slug } });
   if (existing) {
    return Response.json({ error: "Bu slug zaten kullanılıyor" }, { status: 409 });
@@ -61,7 +56,7 @@ export async function POST(request) {
     nameEn,
     description: null,
     descriptionEn: null,
-    coverImage,
+    coverImage: null,
     sortOrder: Number(body.sortOrder) || 0,
     isPublished: body.isPublished !== false,
    },
