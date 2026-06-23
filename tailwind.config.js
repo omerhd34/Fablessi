@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-/** Breakpoint değerleri: lib/layout/breakpoints.js — lg=1024, xl=1440, desktop=1441+ */
 module.exports = {
  content: [
   "./app/**/*.{js,jsx}",
