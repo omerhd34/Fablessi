@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import { PageHeroPicture } from "@/components/ui/page-hero-picture";
 import { useLocale } from "@/contexts/locale-provider";
 import {
  visualHeroTitleLineClass,
@@ -23,26 +23,7 @@ export function BrandExperienceBanner() {
 
  return (
   <section className="header-logo-light-zone relative min-h-[360px] overflow-hidden sm:min-h-[400px] lg:min-h-[520px]">
-   <picture className="absolute inset-0 block h-full w-full">
-    <source
-     media="(min-width: 96rem) and (min-resolution: 2dppx)"
-     srcSet={images.xl2x}
-    />
-    <source media="(min-width: 96rem)" srcSet={images.xl} />
-    <source media="(min-width: 64rem)" srcSet={images.lg} />
-    <source media="(min-width: 48rem)" srcSet={images.md} />
-    <source
-     media="(max-width: 47.99rem) and (min-resolution: 2dppx)"
-     srcSet={images.sm2x}
-    />
-    <Image
-     src={images.sm}
-     alt={alt}
-     fill
-     sizes="100vw"
-     className="object-cover object-center"
-    />
-   </picture>
+   <PageHeroPicture images={images} alt={alt} priority={false} />
    <div className="absolute inset-0 bg-black/45" />
    <div className="absolute inset-0 flex flex-col items-center px-5 py-8 text-center sm:px-8 sm:py-10 lg:px-8 lg:pt-[4%] lg:pb-[8%]">
     <div className="flex w-full max-w-md shrink-0 flex-col items-center gap-3 sm:max-w-xl sm:gap-4 lg:max-w-2xl lg:gap-5">

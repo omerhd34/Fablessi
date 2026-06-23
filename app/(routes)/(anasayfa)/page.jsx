@@ -1,11 +1,27 @@
+import dynamic from "next/dynamic";
 import { preload } from "react-dom";
 import { getImageProps } from "next/image";
-import { BrandExperienceBanner } from "@/components/home/brand-experience-banner";
-import { CategoriesShowcase } from "@/components/home/categories-showcase";
 import { HeroSection } from "@/components/home/hero-section";
-import { FeaturedProductsGrid } from "@/components/home/featured-products-grid";
 import { heroSlidesData } from "@/lib/i18n/hero-slides-data";
 import { getHomePageData } from "@/lib/queries/home";
+
+const CategoriesShowcase = dynamic(() =>
+ import("@/components/home/categories-showcase").then(
+  (module) => module.CategoriesShowcase
+ )
+);
+
+const FeaturedProductsGrid = dynamic(() =>
+ import("@/components/home/featured-products-grid").then(
+  (module) => module.FeaturedProductsGrid
+ )
+);
+
+const BrandExperienceBanner = dynamic(() =>
+ import("@/components/home/brand-experience-banner").then(
+  (module) => module.BrandExperienceBanner
+ )
+);
 
 export const revalidate = 60;
 

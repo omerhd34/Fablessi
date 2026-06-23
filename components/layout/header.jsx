@@ -1,11 +1,17 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
+import dynamic from "next/dynamic";
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Navbar } from "@/components/layout/navbar";
-import { HeaderSearchBar } from "@/components/layout/header-search-bar";
 import { cn } from "@/lib/utils";
+
+const HeaderSearchBar = dynamic(() =>
+ import("@/components/layout/header-search-bar").then(
+  (module) => module.HeaderSearchBar
+ )
+);
 
 const LOGO_LIGHT_ZONE_SELECTORS =
  ".hero-carousel, .page-header-bleed, .faq-hero, .mission-hero, .about-hero, .header-logo-light-zone";
@@ -213,16 +219,18 @@ export function Header() {
      onSearchSubmit={handleSearchSubmit}
      onSearchClear={clearSearch}
     />
-    <HeaderSearchBar
-     open={searchOpen}
-     onClose={closeSearch}
-     inline
-     query={searchQuery}
-     onQueryChange={setSearchQuery}
-     submittedQuery={submittedQuery}
-     onSubmittedQueryChange={setSubmittedQuery}
-     onClear={clearSearch}
-    />
+    {searchOpen || submittedQuery ? (
+     <HeaderSearchBar
+      open={searchOpen}
+      onClose={closeSearch}
+      inline
+      query={searchQuery}
+      onQueryChange={setSearchQuery}
+      submittedQuery={submittedQuery}
+      onSubmittedQueryChange={setSubmittedQuery}
+      onClear={clearSearch}
+     />
+    ) : null}
    </div>
   </header>
  );

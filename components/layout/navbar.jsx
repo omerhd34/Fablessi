@@ -1,9 +1,15 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { MobileMenuDrawer } from "@/components/layout/mobile-menu-drawer";
 import { MobileNavbar } from "@/components/layout/mobile-navbar";
 import { Sheet } from "@/components/ui/sheet";
+
+const MobileMenuDrawer = dynamic(() =>
+ import("@/components/layout/mobile-menu-drawer").then(
+  (module) => module.MobileMenuDrawer
+ )
+);
 
 export function Navbar({
  searchOpen,
@@ -38,7 +44,9 @@ export function Navbar({
    />
 
    <Sheet open={menuOpen} onOpenChange={onMenuOpenChange}>
-    <MobileMenuDrawer pathname={pathname} onClose={closeMenu} />
+    {menuOpen ? (
+     <MobileMenuDrawer pathname={pathname} onClose={closeMenu} />
+    ) : null}
    </Sheet>
   </>
  );

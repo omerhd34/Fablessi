@@ -3,7 +3,16 @@ const nextConfig = {
  productionBrowserSourceMaps: true,
  reactCompiler: true,
  experimental: {
-  optimizePackageImports: ["embla-carousel-react", "react-icons"],
+  inlineCss: true,
+  optimizePackageImports: [
+   "embla-carousel-react",
+   "react-icons",
+   "react-icons/md",
+   "react-icons/fa",
+   "react-icons/lu",
+   "react-icons/tb",
+   "radix-ui",
+  ],
  },
  async rewrites() {
   return [
