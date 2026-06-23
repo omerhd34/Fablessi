@@ -22,23 +22,30 @@ const ShowcaseSlidesContext = createContext(3);
 
 function getSlideClassName(slidesPerView) {
  return cn(
-  "basis-full sm:pl-5",
-  slidesPerView === 2 ? "sm:basis-1/2" : "sm:basis-1/3"
+  "pl-0 sm:pl-5",
+  slidesPerView === 2 ? "basis-full sm:basis-1/2" : "basis-full sm:basis-1/3"
  );
 }
 
 const SHOWCASE_AUTOPLAY_MS = 6000;
 
-const navButtonClassName = cn(
- contactFloatBtnClass,
- "hidden size-11 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-12 lg:inline-flex [&_svg]:size-5 md:[&_svg]:size-[1.375rem] [&_svg]:[stroke-width:3.5]"
+const navOverlayButtonClassName = cn(
+ "inline-flex size-10 touch-manipulation scale-100 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md transition-[scale,background-color,border-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:bg-white/22 motion-reduce:duration-150 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-9",
+ "[&_svg]:size-5.5 sm:[&_svg]:size-5 [&_svg]:[stroke-width:2.5]"
 );
 
-const navOutsideClassName =
- "absolute top-1/2 z-10 -translate-y-1/2 lg:-left-14 xl:-left-[4.75rem]";
+const navFlankButtonClassName = cn(
+ contactFloatBtnClass,
+ "inline-flex size-10 text-white/96 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-11 lg:size-12 [&_svg]:size-5 md:[&_svg]:size-[1.375rem] [&_svg]:[stroke-width:3.5]"
+);
 
-const navOutsideNextClassName =
- "absolute top-1/2 z-10 -translate-y-1/2 lg:-right-14 xl:-right-[4.75rem]";
+const navOverlayPrevClassName =
+ "absolute top-1/2 z-20 -translate-y-1/2 left-3 md:hidden";
+
+const navOverlayNextClassName =
+ "absolute top-1/2 z-20 -translate-y-1/2 right-3 md:hidden";
+
+const navFlankClassName = "hidden shrink-0 md:inline-flex";
 
 function useShowcaseAutoplay(api, enabled) {
  const autoplayTimerRef = useRef(null);
@@ -119,35 +126,47 @@ function useShowcaseAutoplay(api, enabled) {
  }, [pauseAutoplay, resumeAutoplay]);
 }
 
-function HomeShowcaseNav({ direction, className }) {
+function HomeShowcaseNav({ direction, variant = "overlay", className }) {
  const { scrollPrev, scrollNext, canScrollNext } = useCarousel();
  const isPrev = direction === "prev";
  const disabled = isPrev ? false : !canScrollNext;
  const Icon = isPrev ? HeroChevronLeft : HeroChevronRight;
+
+ const variantClassName =
+  variant === "flank"
+   ? cn(navFlankButtonClassName, navFlankClassName)
+   : isPrev
+    ? cn(navOverlayButtonClassName, navOverlayPrevClassName)
+    : cn(navOverlayButtonClassName, navOverlayNextClassName);
 
  return (
   <button
    type="button"
    onClick={isPrev ? scrollPrev : scrollNext}
    disabled={disabled}
-   className={cn(
-    navButtonClassName,
-    isPrev ? navOutsideClassName : navOutsideNextClassName,
-    className
-   )}
+   className={cn(variantClassName, className)}
    aria-label={isPrev ? "Önceki slayt" : "Sonraki slayt"}
   >
-   <Icon strokeWidth={3.5} aria-hidden />
+   <Icon strokeWidth={variant === "flank" ? 3.5 : 2.5} aria-hidden />
   </button>
  );
 }
 
 function HomeShowcaseTrack({ children }) {
  return (
-  <div className={cn(containerPremiumClass, "relative")}>
-   <CarouselContent className="sm:-ml-5">{children}</CarouselContent>
-   <HomeShowcaseNav direction="prev" />
-   <HomeShowcaseNav direction="next" />
+  <div
+   className={cn(
+    containerPremiumClass,
+    "md:grid md:grid-cols-[auto_minmax(0,1fr)_auto] md:items-center md:gap-3 xl:gap-4"
+   )}
+  >
+   <HomeShowcaseNav direction="prev" variant="flank" />
+   <div className="relative min-w-0">
+    <CarouselContent className="ml-0 sm:-ml-5">{children}</CarouselContent>
+    <HomeShowcaseNav direction="prev" variant="overlay" />
+    <HomeShowcaseNav direction="next" variant="overlay" />
+   </div>
+   <HomeShowcaseNav direction="next" variant="flank" />
   </div>
  );
 }

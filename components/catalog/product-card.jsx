@@ -95,7 +95,11 @@ export function ProductCard({
     {showFavoriteButton ? (
      <ProductFavoriteButton
       product={product}
-      className="absolute top-3 left-3 z-20"
+      className={cn(
+       "absolute top-3 left-3 z-20",
+       isFeatured &&
+       "size-10 sm:size-9 [&_svg]:size-5.5 sm:[&_svg]:size-5"
+      )}
      />
     ) : null}
    </div>
