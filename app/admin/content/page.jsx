@@ -39,7 +39,7 @@ export default function AdminContentPage() {
       <CardHeader>
        <CardTitle>{section.title}</CardTitle>
       </CardHeader>
-      <CardContent className="flex items-end justify-between gap-4">
+      <CardContent className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
        <p className="text-sm text-muted-foreground">{section.description}</p>
        <EditButton href={section.href} className="shrink-0" />
       </CardContent>

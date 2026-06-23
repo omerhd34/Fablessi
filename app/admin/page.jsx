@@ -82,7 +82,10 @@ export default async function AdminDashboardPage() {
     {headerActions.map((action) => (
      <Button
       key={action.href}
-      className={cn("cursor-pointer gap-2 border-transparent shadow-none", action.className)}
+      className={cn(
+       "w-full cursor-pointer gap-2 border-transparent shadow-none sm:w-auto",
+       action.className
+      )}
       asChild
      >
       <Link href={action.href}>

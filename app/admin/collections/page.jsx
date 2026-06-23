@@ -11,7 +11,7 @@ export default async function AdminCollectionsPage() {
  return (
   <div className="space-y-6">
    <AdminPageHeader title="Koleksiyonlar" description="Ürün gruplarını yönetin.">
-    <Button className="cursor-pointer gap-2" asChild>
+    <Button className="w-full cursor-pointer gap-2 sm:w-auto" asChild>
      <Link href="/admin/collections/new">
       <MdAdd className="size-4" />
       Yeni koleksiyon

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { AdminMobileList, AdminMobileListItem } from "@/components/admin/admin-mobile-list";
 import { AdminTablePagination } from "@/components/admin/admin-table-pagination";
 import { DeleteButton } from "@/components/admin/delete-button";
 import { EditButton } from "@/components/admin/edit-button";
@@ -64,7 +65,36 @@ export function CategoryGroupsTable({ groups }) {
 
  return (
   <div>
-   <Table>
+   <AdminMobileList>
+    {pageItems.map((group) => (
+     <AdminMobileListItem
+      key={group.id}
+      title={group.name}
+      meta={
+       <>
+        <span className="text-sm text-muted-foreground">{group._count.products} ürün</span>
+        <Badge variant={group.isPublished ? "default" : "secondary"}>
+         {group.isPublished ? "Yayında" : "Taslak"}
+        </Badge>
+       </>
+      }
+      actions={
+       <>
+        <DeleteButton
+         href={`/api/admin/category-groups/${group.id}`}
+         confirmTitle="Kategori grubunu sil?"
+         confirmDescription="Bu gruba bağlı ürünlerin kategori bilgisi kaldırılır."
+         size="icon-sm"
+        />
+        <EditButton href={`/admin/categories/${group.id}`} />
+       </>
+      }
+     />
+    ))}
+   </AdminMobileList>
+
+   <div className="hidden md:block">
+    <Table>
     <TableHeader>
      <TableRow>
       {Object.entries(SORT_COLUMNS).map(([key, column]) => (
@@ -106,6 +136,7 @@ export function CategoryGroupsTable({ groups }) {
      ))}
     </TableBody>
    </Table>
+   </div>
 
    <AdminTablePagination
     page={page}

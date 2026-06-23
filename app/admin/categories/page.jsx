@@ -14,7 +14,7 @@ export default async function AdminCategoriesPage() {
     title="Kategori Grupları"
     description="Oturma grupları, köşe grupları ve benzeri ürün kategorilerini yönetin."
    >
-    <Button className="cursor-pointer gap-2" asChild>
+    <Button className="w-full cursor-pointer gap-2 sm:w-auto" asChild>
      <Link href="/admin/categories/new">
       <MdAdd className="size-4" />
       Yeni kategori

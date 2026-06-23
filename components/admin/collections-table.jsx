@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { AdminMobileList, AdminMobileListItem } from "@/components/admin/admin-mobile-list";
 import { AdminTablePagination } from "@/components/admin/admin-table-pagination";
 import { DeleteButton } from "@/components/admin/delete-button";
 import { EditButton } from "@/components/admin/edit-button";
@@ -64,7 +65,38 @@ export function CollectionsTable({ collections }) {
 
  return (
   <div>
-   <Table>
+   <AdminMobileList>
+    {pageItems.map((collection) => (
+     <AdminMobileListItem
+      key={collection.id}
+      title={collection.name}
+      meta={
+       <>
+        <span className="text-sm text-muted-foreground">
+         {collection._count.products} ürün
+        </span>
+        <Badge variant={collection.isPublished ? "default" : "secondary"}>
+         {collection.isPublished ? "Yayında" : "Taslak"}
+        </Badge>
+       </>
+      }
+      actions={
+       <>
+        <DeleteButton
+         href={`/api/admin/collections/${collection.id}`}
+         confirmTitle="Koleksiyonu sil?"
+         confirmDescription="Koleksiyona bağlı tüm ürünler de silinir."
+         size="icon-sm"
+        />
+        <EditButton href={`/admin/collections/${collection.id}`} />
+       </>
+      }
+     />
+    ))}
+   </AdminMobileList>
+
+   <div className="hidden md:block">
+    <Table>
     <TableHeader>
      <TableRow>
       {Object.entries(SORT_COLUMNS).map(([key, column]) => (
@@ -106,6 +138,7 @@ export function CollectionsTable({ collections }) {
      ))}
     </TableBody>
    </Table>
+   </div>
 
    <AdminTablePagination
     page={page}

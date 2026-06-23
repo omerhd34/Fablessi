@@ -20,7 +20,7 @@ export function AdminTablePagination({
     {rangeStart}–{rangeEnd} / {totalItems} kayıt
    </p>
 
-   <div className="flex items-center gap-1">
+   <div className="flex w-full max-w-full items-center justify-center gap-1 overflow-x-auto pb-0.5 sm:w-auto sm:justify-start">
     <Button
      type="button"
      variant="outline"

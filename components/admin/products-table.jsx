@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { MdSearch } from "react-icons/md";
 import { AdminFormSelect } from "@/components/admin/admin-form-select";
+import { AdminMobileList, AdminMobileListItem } from "@/components/admin/admin-mobile-list";
 import { AdminTablePagination } from "@/components/admin/admin-table-pagination";
 import { DeleteButton } from "@/components/admin/delete-button";
 import { EditButton } from "@/components/admin/edit-button";
@@ -324,6 +325,55 @@ export function ProductsTable({ products }) {
     </div>
    </div>
 
+   <AdminMobileList>
+    {pageItems.length === 0 ? (
+     <p className="px-4 py-10 text-center text-sm text-muted-foreground">
+      Filtrelere uygun ürün bulunamadı.
+     </p>
+    ) : (
+     pageItems.map((product) => {
+      const total = getProductPriceTotal(product);
+      const priceLabel = total != null ? `${total.toLocaleString("tr-TR")} TL` : null;
+
+      return (
+       <AdminMobileListItem
+        key={product.id}
+        title={product.name}
+        meta={
+         <>
+          {product.collection?.name ? (
+           <span className="text-sm text-muted-foreground">{product.collection.name}</span>
+          ) : null}
+          {product.categoryGroup?.name ? (
+           <span className="text-sm text-muted-foreground">{product.categoryGroup.name}</span>
+          ) : null}
+          {priceLabel ? (
+           <span className="text-sm font-medium tabular-nums">{priceLabel}</span>
+          ) : null}
+          <Badge variant={product.isPublished ? "default" : "secondary"}>
+           {product.isPublished ? "Yayında" : "Taslak"}
+          </Badge>
+          {product.isFeatured ? <Badge variant="outline">Vitrin</Badge> : null}
+         </>
+        }
+        actions={
+         <>
+          <DeleteButton
+           href={`/api/admin/products/${product.id}`}
+           confirmTitle="Ürünü sil?"
+           confirmDescription="Bu ürün kalıcı olarak silinir."
+           size="icon-sm"
+          />
+          <EditButton href={`/admin/products/${product.id}`} />
+         </>
+        }
+       />
+      );
+     })
+    )}
+   </AdminMobileList>
+
+   <div className="hidden md:block">
    <Table>
     <TableHeader>
      <TableRow className="bg-muted/20 hover:bg-muted/20">
@@ -395,6 +445,7 @@ export function ProductsTable({ products }) {
      )}
     </TableBody>
    </Table>
+   </div>
 
    <AdminTablePagination
     page={page}

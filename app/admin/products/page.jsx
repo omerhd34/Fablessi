@@ -14,7 +14,7 @@ export default async function AdminProductsPage() {
     title="Ürünler"
     description="Fiyat, ölçü ve görselleri yönetin."
    >
-    <Button className="cursor-pointer gap-2" asChild>
+    <Button className="w-full cursor-pointer gap-2 sm:w-auto" asChild>
      <Link href="/admin/products/new">
       <MdAdd className="size-4" />
       Yeni ürün

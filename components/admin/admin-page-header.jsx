@@ -16,7 +16,11 @@ export function AdminPageHeader({ title, description, children, className }) {
      <p className="max-w-5xl text-sm text-muted-foreground sm:text-base">{description}</p>
     ) : null}
    </div>
-   {children ? <div className="flex shrink-0 flex-wrap gap-2">{children}</div> : null}
+   {children ? (
+    <div className="flex w-full shrink-0 flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
+     {children}
+    </div>
+   ) : null}
   </div>
  );
 }
