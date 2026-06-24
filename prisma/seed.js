@@ -848,7 +848,9 @@ function resolveCoverImage(productData) {
  return images[0];
 }
 
-async function createProduct(collectionId, data) {
+async function createProduct(data) {
+ const name = data.name?.trim();
+ const nameEn = data.nameEn?.trim() || null;
  const imageUrls = resolveProductImages(data);
  if (imageUrls.length === 0) {
   throw new Error(`Görsel bulunamadı: ${data.folder}`);
@@ -857,8 +859,8 @@ async function createProduct(collectionId, data) {
  await prisma.product.create({
   data: {
    slug: data.slug,
-   name: data.name,
-   nameEn: data.nameEn,
+   name,
+   nameEn,
    description: data.description,
    descriptionEn: data.descriptionEn,
    dimensions: data.dimensions ?? null,
@@ -872,13 +874,12 @@ async function createProduct(collectionId, data) {
    material: data.material ?? null,
    materialEn: data.materialEn ?? null,
    sku: data.slug.toUpperCase().replace(/-/g, ""),
-   collectionId,
    images: {
     create: imageUrls.map((url, imageIndex) => ({
      url,
-     alt: imageIndex === 0 ? data.name : `${data.name} — görsel ${imageIndex + 1}`,
+     alt: imageIndex === 0 ? name : `${name} — görsel ${imageIndex + 1}`,
      altEn:
-      imageIndex === 0 ? data.nameEn : `${data.nameEn} — image ${imageIndex + 1}`,
+      imageIndex === 0 ? nameEn ?? name : `${nameEn ?? name} — image ${imageIndex + 1}`,
      sortOrder: imageIndex,
      isPrimary: imageIndex === 0,
     })),
@@ -936,37 +937,23 @@ async function main() {
  await prisma.image.deleteMany();
  await prisma.product.deleteMany();
  await prisma.productCategoryGroup.deleteMany();
- await prisma.collection.deleteMany();
 
- console.log("Koleksiyonlar ve ürünler ekleniyor…");
+ console.log("Ürünler ekleniyor…");
+
+ let productCount = 0;
 
  for (const collectionData of COLLECTIONS) {
-  const coverImage = resolveCoverImage(collectionData.products[0]);
-
-  const collection = await prisma.collection.create({
-   data: {
-    slug: collectionData.slug,
-    name: collectionData.name,
-    nameEn: collectionData.nameEn,
-    description: collectionData.description,
-    descriptionEn: collectionData.descriptionEn,
-    coverImage,
-    sortOrder: collectionData.sortOrder,
-    isPublished: true,
-   },
-  });
-
   for (const productData of collectionData.products) {
-   await createProduct(collection.id, productData);
+   await createProduct(productData);
+   productCount += 1;
   }
 
-  console.log(`  ✓ ${collection.name} (${collectionData.products.length} ürün)`);
+  console.log(`  ✓ ${collectionData.name} (${collectionData.products.length} ürün)`);
  }
 
  await seedCategoryGroups();
 
  const counts = await Promise.all([
-  prisma.collection.count(),
   prisma.productCategoryGroup.count(),
   prisma.product.count(),
   prisma.image.count(),
@@ -982,10 +969,9 @@ async function main() {
  ]);
 
  console.log("\nSeed tamamlandı:");
- console.log(`  Koleksiyon: ${counts[0]}`);
- console.log(`  Kategori grubu: ${counts[1]}`);
- console.log(`  Ürün: ${counts[2]}`);
- console.log(`  Görsel: ${counts[3]}`);
+ console.log(`  Kategori grubu: ${counts[0]}`);
+ console.log(`  Ürün: ${counts[1]}`);
+ console.log(`  Görsel: ${counts[2]}`);
  console.log(`  İçerik bloğu: ${contentCounts[0]}`);
  console.log(`  SSS kategorisi: ${contentCounts[1]}`);
  console.log(`  SSS sorusu: ${contentCounts[2]}`);

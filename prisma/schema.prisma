@@ -25,26 +25,6 @@ model ProductCategoryGroup {
   @@map("product_category_groups")
 }
 
-/// Üst düzey koleksiyon (ör. Oturma Odası, Yatak Odası)
-model Collection {
-  id            String    @id @default(cuid())
-  slug          String    @unique
-  name          String
-  nameEn        String?
-  description   String?   @db.Text
-  descriptionEn String?   @db.Text
-  coverImage  String?
-  sortOrder   Int       @default(0)
-  isPublished Boolean   @default(true)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  products Product[]
-
-  @@index([isPublished, sortOrder])
-  @@map("collections")
-}
-
 /// Katalog ürünü
 model Product {
   id            String   @id @default(cuid())
@@ -68,16 +48,13 @@ model Product {
   material       String?
   materialEn     String?
   sku            String?  @unique
-  collectionId    String
   categoryGroupId String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  collection    Collection            @relation(fields: [collectionId], references: [id], onDelete: Cascade)
   categoryGroup ProductCategoryGroup? @relation(fields: [categoryGroupId], references: [id], onDelete: SetNull)
   images        Image[]
 
-  @@index([collectionId])
   @@index([categoryGroupId])
   @@index([isPublished, sortOrder])
   @@index([isFeatured, featuredOrder])
