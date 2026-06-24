@@ -22,10 +22,9 @@ import {
  getPriceItemDisplayAmount,
  getPriceItemLabel,
  getPriceItems,
- getProductDetailTitle,
+ getProductCardBottomLabel,
  getProductDisplayPrice,
  getProductFavoriteToastLabel,
- getProductShortName,
 } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 import { useFavorites } from "@/contexts/favorites-provider";
@@ -298,16 +297,9 @@ export function ProductDetailLeft({
      ) : null}
     </ol>
    </nav>
-   <div className="min-w-0 space-y-1">
-    {getProductShortName(product) ? (
-     <p className="text-sm font-medium tracking-[0.12em] text-charcoal/50 uppercase md:text-base">
-      {getProductShortName(product)}
-     </p>
-    ) : null}
-    <h1 className="font-heading min-w-0 text-2xl font-semibold tracking-tight wrap-break-word text-charcoal md:text-3xl">
-     {getProductDetailTitle(product)}
-    </h1>
-   </div>
+   <h1 className="font-heading min-w-0 text-xl font-semibold tracking-tight wrap-break-word text-charcoal md:text-2xl">
+    {getProductCardBottomLabel(product, locale)}
+   </h1>
   </div>
  ) : null;
 
