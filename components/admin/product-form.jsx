@@ -61,7 +61,7 @@ const emptyImage = {
  isPrimary: false,
 };
 
-function createEmptyProduct(collectionId = "", categoryGroupId = "") {
+function createEmptyProduct(categoryGroupId = "") {
  return {
   name: "",
   nameEn: "",
@@ -75,7 +75,6 @@ function createEmptyProduct(collectionId = "", categoryGroupId = "") {
   isPublished: true,
   isFeatured: false,
   featuredOrder: 0,
-  collectionId,
   categoryGroupId,
   dimensionItems: [{ ...emptyDimensionItem }],
   images: [],
@@ -84,7 +83,6 @@ function createEmptyProduct(collectionId = "", categoryGroupId = "") {
 
 export function ProductForm({
  product = null,
- collections = [],
  categoryGroups = [],
  featuredCount = 0,
  maxFeatured = MAX_FEATURED_PRODUCTS,
@@ -93,7 +91,7 @@ export function ProductForm({
  const isEdit = Boolean(product?.id);
  const [form, setForm] = useState(() => {
   if (!product) {
-   return createEmptyProduct(collections[0]?.id ?? "", categoryGroups[0]?.id ?? "");
+   return createEmptyProduct(categoryGroups[0]?.id ?? "");
   }
 
   return applyProductTextLimits({
@@ -280,8 +278,8 @@ export function ProductForm({
    return;
   }
 
-  if (!form.collectionId) {
-   toast.error("Koleksiyon seçin.");
+  if (!form.categoryGroupId) {
+   toast.error("Kategori seçin.");
    return;
   }
 
@@ -362,30 +360,16 @@ export function ProductForm({
       </div>
       <p className="text-xs text-muted-foreground">{ADMIN_NAME_FIELDS_HINT}</p>
      </div>
-     <div className="space-y-2">
+     <div className="space-y-2 md:col-span-2">
       <Label htmlFor="categoryGroupId">Kategori</Label>
       <AdminFormSelect
        id="categoryGroupId"
        value={form.categoryGroupId ?? ""}
        onValueChange={(nextValue) => updateField("categoryGroupId", nextValue)}
        placeholder="Kategori seçin"
-       allowEmpty
        options={categoryGroups.map((group) => ({
         value: group.id,
         label: group.name,
-       }))}
-      />
-     </div>
-     <div className="space-y-2">
-      <Label htmlFor="collectionId">Koleksiyon</Label>
-      <AdminFormSelect
-       id="collectionId"
-       value={form.collectionId}
-       onValueChange={(nextValue) => updateField("collectionId", nextValue)}
-       placeholder="Koleksiyon seçin"
-       options={collections.map((collection) => ({
-        value: collection.id,
-        label: collection.name,
        }))}
       />
      </div>

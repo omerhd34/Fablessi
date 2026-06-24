@@ -29,10 +29,6 @@ const SORT_COLUMNS = {
   label: "Ad",
   getValue: (product) => product.name,
  },
- collection: {
-  label: "Koleksiyon",
-  getValue: (product) => product.collection?.name ?? "",
- },
  category: {
   label: "Kategori",
   getValue: (product) => product.categoryGroup?.name ?? "",
@@ -67,7 +63,6 @@ function truncateTableText(value) {
 }
 
 const EMPTY_FILTERS = {
- collectionId: "",
  categoryGroupId: "",
  priceMin: "",
  priceMax: "",
@@ -76,15 +71,11 @@ const EMPTY_FILTERS = {
 };
 
 function buildFilterOptions(products) {
- const collections = new Map();
  const categories = new Map();
  let priceMin = Number.POSITIVE_INFINITY;
  let priceMax = Number.NEGATIVE_INFINITY;
 
  for (const product of products) {
-  if (product.collection) {
-   collections.set(product.collection.id, product.collection.name);
-  }
   if (product.categoryGroup) {
    categories.set(product.categoryGroup.id, product.categoryGroup.name);
   }
@@ -96,9 +87,6 @@ function buildFilterOptions(products) {
  }
 
  return {
-  collections: [...collections.entries()]
-   .map(([value, label]) => ({ value, label }))
-   .sort((a, b) => a.label.localeCompare(b.label, "tr")),
   categories: [...categories.entries()]
    .map(([value, label]) => ({ value, label }))
    .sort((a, b) => a.label.localeCompare(b.label, "tr")),
@@ -111,9 +99,6 @@ function buildFilterOptions(products) {
 }
 
 function matchesFilters(product, filters) {
- if (filters.collectionId && product.collection?.id !== filters.collectionId) {
-  return false;
- }
  if (filters.categoryGroupId && product.categoryGroup?.id !== filters.categoryGroupId) {
   return false;
  }
@@ -246,20 +231,7 @@ export function ProductsTable({ products }) {
      </div>
     </div>
 
-    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.75fr)]">
-     <div className="space-y-1.5">
-      <Label className={filterLabelClass}>Koleksiyon</Label>
-      <AdminFormSelect
-       allowEmpty
-       emptyLabel="Tümü"
-       placeholder="Tümü"
-       value={filters.collectionId}
-       onValueChange={(value) => updateFilter("collectionId", value)}
-       options={filterOptions.collections}
-       className="w-full"
-      />
-     </div>
-
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.75fr)]">
      <div className="space-y-1.5">
       <Label className={filterLabelClass}>Kategori</Label>
       <AdminFormSelect
@@ -341,9 +313,6 @@ export function ProductsTable({ products }) {
         title={product.name}
         meta={
          <>
-          {product.collection?.name ? (
-           <span className="text-sm text-muted-foreground">{product.collection.name}</span>
-          ) : null}
           {product.categoryGroup?.name ? (
            <span className="text-sm text-muted-foreground">{product.categoryGroup.name}</span>
           ) : null}
@@ -394,7 +363,7 @@ export function ProductsTable({ products }) {
     <TableBody>
      {pageItems.length === 0 ? (
       <TableRow className="hover:bg-transparent">
-       <TableCell colSpan={6} className="px-4 py-12 text-center text-muted-foreground">
+       <TableCell colSpan={5} className="px-4 py-12 text-center text-muted-foreground">
         Filtrelere uygun ürün bulunamadı.
        </TableCell>
       </TableRow>
@@ -407,9 +376,6 @@ export function ProductsTable({ products }) {
         <TableRow key={product.id}>
          <TableCell className="px-4 py-3 font-medium" title={product.name}>
           {truncateTableText(product.name)}
-         </TableCell>
-         <TableCell className="px-4 py-3" title={product.collection?.name}>
-          {truncateTableText(product.collection?.name) ?? "—"}
          </TableCell>
          <TableCell
           className="px-4 py-3"

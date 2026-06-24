@@ -4,7 +4,6 @@ import {
  MdAddCircleOutline,
  MdArticle,
  MdCategory,
- MdCollections,
  MdImage,
  MdViewModule,
 } from "react-icons/md";
@@ -21,11 +20,6 @@ const headerActions = [
   className: "bg-neutral-900 text-white hover:bg-neutral-900/85",
  },
  {
-  label: "Yeni koleksiyon",
-  href: "/admin/collections/new",
-  className: "bg-neutral-500 text-white hover:bg-neutral-500/85",
- },
- {
   label: "Yeni kategori",
   href: "/admin/categories/new",
   className: "bg-neutral-300 text-neutral-900 hover:bg-neutral-300/85",
@@ -33,7 +27,6 @@ const headerActions = [
 ];
 
 const statMeta = [
- { key: "collections", label: "Koleksiyon", href: "/admin/collections", icon: MdCollections },
  { key: "categoryGroups", label: "Kategori grubu", href: "/admin/categories", icon: MdCategory },
  { key: "products", label: "Ürün", href: "/admin/products", icon: MdViewModule },
  { key: "images", label: "Görsel", icon: MdImage },
@@ -46,13 +39,6 @@ const quickActions = [
   href: "/admin/products/new",
   cta: "Ürün oluştur",
   icon: MdAddCircleOutline,
- },
- {
-  title: "Koleksiyon yönet",
-  description: "Serileri düzenleyin veya yeni koleksiyon açın.",
-  href: "/admin/collections",
-  cta: "Koleksiyonlar",
-  icon: MdCollections,
  },
  {
   title: "Kategori grupları",
@@ -77,7 +63,7 @@ export default async function AdminDashboardPage() {
   <div className="space-y-8">
    <AdminPageHeader
     title="Yönetim Paneli"
-    description="Koleksiyonları, ürünleri, site içeriklerini ve görselleri tek yerden yönetin."
+    description="Ürünleri, kategorileri, site içeriklerini ve görselleri tek yerden yönetin."
    >
     {headerActions.map((action) => (
      <Button
@@ -96,7 +82,7 @@ export default async function AdminDashboardPage() {
     ))}
    </AdminPageHeader>
 
-   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+   <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {statMeta.map((item) => {
      const Icon = item.icon;
      const value = stats[item.key];

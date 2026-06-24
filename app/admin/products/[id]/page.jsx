@@ -2,19 +2,14 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { MdArrowBack } from "react-icons/md";
 import { ProductForm } from "@/components/admin/product-form";
-import {
- getAdminProduct,
- getCollectionOptions,
- getCategoryGroupOptions,
-} from "@/lib/admin/queries";
+import { getAdminProduct, getCategoryGroupOptions } from "@/lib/admin/queries";
 import { getFeaturedProductCount } from "@/lib/admin/featured-products";
 import { Button } from "@/components/ui/button";
 
 export default async function EditProductPage({ params }) {
  const { id } = await params;
- const [product, collections, categoryGroups, featuredCount] = await Promise.all([
+ const [product, categoryGroups, featuredCount] = await Promise.all([
   getAdminProduct(id),
-  getCollectionOptions(),
   getCategoryGroupOptions(),
   getFeaturedProductCount(),
  ]);
@@ -43,7 +38,6 @@ export default async function EditProductPage({ params }) {
    </div>
    <ProductForm
     product={product}
-    collections={collections}
     categoryGroups={categoryGroups}
     featuredCount={featuredCount}
    />

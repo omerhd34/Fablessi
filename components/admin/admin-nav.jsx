@@ -6,7 +6,6 @@ import { useEffect, useRef } from "react";
 import {
  MdArticle,
  MdCategory,
- MdCollections,
  MdLogout,
  MdOpenInNew,
  MdViewModule,
@@ -16,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const links = [
- { href: "/admin/collections", label: "Koleksiyonlar", icon: MdCollections },
  { href: "/admin/categories", label: "Kategoriler", icon: MdCategory },
  { href: "/admin/products", label: "Ürünler", icon: MdViewModule },
  { href: "/admin/content", label: "İçerik", icon: MdArticle },
