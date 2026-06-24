@@ -14,7 +14,6 @@ import {
 import { requireAdmin, handleAdminError } from "@/lib/admin/require-admin";
 
 const productInclude = {
- collection: { select: { id: true, name: true, slug: true } },
  categoryGroup: { select: { id: true, name: true, slug: true } },
  images: { orderBy: { sortOrder: "asc" } },
 };
@@ -102,13 +101,15 @@ export async function PUT(request, { params }) {
    body.categoryGroupId !== undefined
     ? body.categoryGroupId?.trim() || null
     : existing.categoryGroupId;
-  if (categoryGroupId) {
-   const categoryGroup = await prisma.productCategoryGroup.findUnique({
-    where: { id: categoryGroupId },
-   });
-   if (!categoryGroup) {
-    return Response.json({ error: "Kategori grubu bulunamadı." }, { status: 400 });
-   }
+  if (!categoryGroupId) {
+   return Response.json({ error: "Kategori seçin." }, { status: 400 });
+  }
+
+  const categoryGroup = await prisma.productCategoryGroup.findUnique({
+   where: { id: categoryGroupId },
+  });
+  if (!categoryGroup) {
+   return Response.json({ error: "Kategori grubu bulunamadı." }, { status: 400 });
   }
 
   const isFeatured = body.isFeatured ?? existing.isFeatured;
@@ -140,7 +141,6 @@ export async function PUT(request, { params }) {
      isPublished: body.isPublished ?? existing.isPublished,
      isFeatured,
      featuredOrder: Number(body.featuredOrder) ?? existing.featuredOrder,
-     collectionId: body.collectionId ?? existing.collectionId,
      categoryGroupId,
      sku: media.sku,
      images: media.images,

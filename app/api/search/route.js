@@ -6,7 +6,7 @@ export async function GET(request) {
  const query = searchParams.get("q") ?? "";
 
  if (!query.trim()) {
-  return NextResponse.json({ collections: [], products: [] });
+  return NextResponse.json({ products: [] });
  }
 
  const results = await searchCatalog(query);

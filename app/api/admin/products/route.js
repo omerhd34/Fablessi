@@ -14,7 +14,7 @@ import {
 import { requireAdmin, handleAdminError } from "@/lib/admin/require-admin";
 
 const productInclude = {
- collection: { select: { id: true, name: true, slug: true } },
+ categoryGroup: { select: { id: true, name: true, slug: true } },
  images: { orderBy: { sortOrder: "asc" } },
 };
 
@@ -25,7 +25,7 @@ export async function GET() {
   const products = await prisma.product.findMany({
    orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
    include: {
-    collection: { select: { id: true, name: true, slug: true } },
+    categoryGroup: { select: { id: true, name: true, slug: true } },
     _count: { select: { images: true } },
    },
   });
@@ -55,11 +55,8 @@ export async function POST(request) {
   }
 
   const slug = slugify(name);
-  if (!slug || !body.collectionId) {
-   return Response.json(
-    { error: "Ad ve koleksiyon gereklidir." },
-    { status: 400 }
-   );
+  if (!slug) {
+   return Response.json({ error: "Ad gereklidir." }, { status: 400 });
   }
 
   const existing = await prisma.product.findUnique({ where: { slug } });
@@ -67,21 +64,16 @@ export async function POST(request) {
    return Response.json({ error: "Bu slug zaten kullanılıyor." }, { status: 409 });
   }
 
-  const collection = await prisma.collection.findUnique({
-   where: { id: body.collectionId },
-  });
-  if (!collection) {
-   return Response.json({ error: "Koleksiyon bulunamadı." }, { status: 400 });
+  const categoryGroupId = body.categoryGroupId?.trim() || null;
+  if (!categoryGroupId) {
+   return Response.json({ error: "Kategori seçin." }, { status: 400 });
   }
 
-  const categoryGroupId = body.categoryGroupId?.trim() || null;
-  if (categoryGroupId) {
-   const categoryGroup = await prisma.productCategoryGroup.findUnique({
-    where: { id: categoryGroupId },
-   });
-   if (!categoryGroup) {
-    return Response.json({ error: "Kategori grubu bulunamadı." }, { status: 400 });
-   }
+  const categoryGroup = await prisma.productCategoryGroup.findUnique({
+   where: { id: categoryGroupId },
+  });
+  if (!categoryGroup) {
+   return Response.json({ error: "Kategori grubu bulunamadı." }, { status: 400 });
   }
 
   const imageError = validateProductImages(body.images);
@@ -118,7 +110,6 @@ export async function POST(request) {
     isPublished: body.isPublished !== false,
     isFeatured,
     featuredOrder: Number(body.featuredOrder) || 0,
-    collectionId: body.collectionId,
     categoryGroupId,
     sku: media.sku,
     images: media.images,
