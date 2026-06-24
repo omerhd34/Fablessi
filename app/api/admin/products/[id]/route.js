@@ -66,7 +66,8 @@ export async function PUT(request, { params }) {
   }
 
   const name = body.name?.trim() ?? existing.name;
-  const slug = slugify(name) || existing.slug;
+  const slug =
+   name === existing.name ? existing.slug : slugify(name) || existing.slug;
   if (slug !== existing.slug) {
    const conflict = await prisma.product.findUnique({ where: { slug } });
    if (conflict) {
