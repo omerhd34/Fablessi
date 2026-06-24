@@ -1,10 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import {
- FavoritesCategoryFilter,
- FavoritesCollectionFilter,
-} from "@/components/favorites/favorites-filter-content";
+import { FavoritesCategoryFilter } from "@/components/favorites/favorites-filter-content";
 import { ProductsSortMenu } from "@/components/catalog/products-sort-menu";
 import { useTranslations } from "@/contexts/locale-provider";
 import {
@@ -43,22 +40,14 @@ export function FavoritesMobileControls({
  sort,
  onSortChange,
  categories,
- collections,
  selectedCategory,
  onCategoryChange,
- selectedCollection,
- onCollectionChange,
  sortOptions,
 }) {
  const { t } = useTranslations();
  const [filterOpen, setFilterOpen] = useState(false);
 
- const activeFilterCount = useMemo(() => {
-  let count = 0;
-  if (selectedCategory) count += 1;
-  if (selectedCollection) count += 1;
-  return count;
- }, [selectedCategory, selectedCollection]);
+ const activeFilterCount = selectedCategory ? 1 : 0;
 
  const activeCategoryLabel = categories.find(
   (category) => category.slug === selectedCategory
@@ -115,19 +104,12 @@ export function FavoritesMobileControls({
     ) : null}
    </form>
 
-   {(selectedCategory || selectedCollection || search.trim()) && (
+   {(selectedCategory || search.trim()) && (
     <div className="flex flex-wrap items-center gap-2">
      {selectedCategory && activeCategoryLabel ? (
       <ActiveFilterChip
        label={activeCategoryLabel}
        onRemove={() => onCategoryChange(null)}
-       removeLabel={t("catalog.removeFilter")}
-      />
-     ) : null}
-     {selectedCollection ? (
-      <ActiveFilterChip
-       label={selectedCollection}
-       onRemove={() => onCollectionChange(null)}
        removeLabel={t("catalog.removeFilter")}
       />
      ) : null}
@@ -142,7 +124,6 @@ export function FavoritesMobileControls({
       type="button"
       onClick={() => {
        onCategoryChange(null);
-       onCollectionChange(null);
        onSearchChange("");
       }}
       className="cursor-pointer text-xs font-medium text-charcoal/50 transition hover:text-charcoal"
@@ -196,34 +177,13 @@ export function FavoritesMobileControls({
         </div>
        </section>
       ) : null}
-
-      {collections.length > 1 ? (
-       <section
-        className={cn(categories.length > 0 && "mt-6 border-t border-charcoal/8 pt-6")}
-       >
-        <h3 className="text-xs font-semibold tracking-[0.14em] text-charcoal/45 uppercase">
-         {t("favorites.collection")}
-        </h3>
-        <div className="mt-3">
-         <FavoritesCollectionFilter
-          collections={collections}
-          selectedCollection={selectedCollection}
-          onCollectionChange={onCollectionChange}
-          variant="grid"
-         />
-        </div>
-       </section>
-      ) : null}
      </div>
 
      <div className="flex shrink-0 gap-2.5 border-t border-charcoal/8 px-5 py-4">
       <button
        type="button"
-       onClick={() => {
-        onCategoryChange(null);
-        onCollectionChange(null);
-       }}
-       disabled={!selectedCategory && !selectedCollection}
+       onClick={() => onCategoryChange(null)}
+       disabled={!selectedCategory}
        className="h-11 flex-1 cursor-pointer rounded-full border border-charcoal/12 bg-white text-sm font-medium text-charcoal transition hover:border-charcoal/20 disabled:cursor-not-allowed disabled:opacity-40"
       >
        {t("catalog.clear")}

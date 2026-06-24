@@ -1,10 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
- FavoritesCategoryFilter,
- FavoritesCollectionFilter,
-} from "@/components/favorites/favorites-filter-content";
+import { FavoritesCategoryFilter } from "@/components/favorites/favorites-filter-content";
 import { useLocale } from "@/contexts/locale-provider";
 import { ChevronDownIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
@@ -34,36 +31,23 @@ function FilterSection({ title, defaultOpen = true, children }) {
 
 export function FavoritesFiltersSidebar({
  categories,
- collections,
  selectedCategory,
  onCategoryChange,
- selectedCollection,
- onCollectionChange,
  className,
 }) {
  const { t } = useLocale();
 
+ if (categories.length === 0) return null;
+
  return (
   <aside className={cn("shrink-0 lg:w-56 xl:w-60", className)}>
-   {categories.length > 0 ? (
-    <FilterSection title={t("catalog.category")} defaultOpen>
-     <FavoritesCategoryFilter
-      categories={categories}
-      selectedCategory={selectedCategory}
-      onCategoryChange={onCategoryChange}
-     />
-    </FilterSection>
-   ) : null}
-
-   {collections.length > 1 ? (
-    <FilterSection title={t("favorites.collection")} defaultOpen>
-     <FavoritesCollectionFilter
-      collections={collections}
-      selectedCollection={selectedCollection}
-      onCollectionChange={onCollectionChange}
-     />
-    </FilterSection>
-   ) : null}
+   <FilterSection title={t("catalog.category")} defaultOpen>
+    <FavoritesCategoryFilter
+     categories={categories}
+     selectedCategory={selectedCategory}
+     onCategoryChange={onCategoryChange}
+    />
+   </FilterSection>
   </aside>
  );
 }

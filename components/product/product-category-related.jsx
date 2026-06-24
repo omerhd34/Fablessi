@@ -9,9 +9,8 @@ import {
  AccordionItem,
  AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useLocale, useTranslations } from "@/contexts/locale-provider";
-import { getCategoryLabelForProduct } from "@/lib/product-category";
-import { getPrimaryImageUrl, getProductCardBottomLabel } from "@/lib/product-utils";
+import { useLocale } from "@/contexts/locale-provider";
+import { getProductCardBottomLabel, getPrimaryImageUrl } from "@/lib/product-utils";
 import {
  productDetailAccordionItemClass,
  productDetailAccordionTriggerClass,
@@ -20,9 +19,8 @@ import {
 } from "@/lib/layout/product-styles";
 import { cn } from "@/lib/utils";
 
-export function ProductCategoryRelated({ products, categoryLabel, variant = "category" }) {
+export function ProductCategoryRelated({ products, categoryLabel }) {
  const { locale } = useLocale();
- const { dictionary } = useTranslations();
  const [open, setOpen] = useState(["related-panel"]);
 
  if (products.length === 0) return null;
@@ -42,11 +40,7 @@ export function ProductCategoryRelated({ products, categoryLabel, variant = "cat
      <div className="space-y-3">
       {products.map((product) => {
        const imageUrl = getPrimaryImageUrl(product);
-       const productLabel =
-        variant === "collection"
-         ? getCategoryLabelForProduct(product, dictionary) ??
-         getProductCardBottomLabel(product, locale)
-         : getProductCardBottomLabel(product, locale);
+       const productLabel = getProductCardBottomLabel(product, locale);
 
        return (
         <Link
@@ -69,7 +63,7 @@ export function ProductCategoryRelated({ products, categoryLabel, variant = "cat
           ) : null}
          </div>
          <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold text-charcoal">
+          <p className="line-clamp-2 text-sm font-semibold text-charcoal">
            {productLabel}
           </p>
          </div>

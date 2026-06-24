@@ -11,7 +11,6 @@ import { favoriteToProductCard, enrichFavoriteForDisplay } from "@/lib/favorites
 import {
  filterFavorites,
  getAvailableFavoriteCategories,
- getAvailableFavoriteCollections,
  sortFavorites,
 } from "@/lib/favorites-filters";
 import { headingDisplayClass } from "@/lib/layout/shared-styles";
@@ -23,7 +22,6 @@ export function FavoritesView({ productMetaBySlug = {} }) {
  const [search, setSearch] = useState("");
  const [sort, setSort] = useState(null);
  const [selectedCategory, setSelectedCategory] = useState(null);
- const [selectedCollection, setSelectedCollection] = useState(null);
 
  const displayFavorites = useMemo(
   () => favorites.map((favorite) => enrichFavoriteForDisplay(favorite, productMetaBySlug)),
@@ -34,21 +32,16 @@ export function FavoritesView({ productMetaBySlug = {} }) {
   () => getAvailableFavoriteCategories(displayFavorites, dictionary),
   [displayFavorites, dictionary]
  );
- const collections = useMemo(
-  () => getAvailableFavoriteCollections(displayFavorites),
-  [displayFavorites]
- );
 
  const filteredFavorites = useMemo(() => {
   const filtered = filterFavorites(displayFavorites, {
    search,
    categorySlug: selectedCategory,
-   collectionName: selectedCollection,
    dictionary,
   });
 
   return sortFavorites(filtered, sort);
- }, [displayFavorites, search, selectedCategory, selectedCollection, sort, dictionary]);
+ }, [displayFavorites, search, selectedCategory, sort, dictionary]);
 
  if (!hydrated) {
   return (
@@ -77,11 +70,8 @@ export function FavoritesView({ productMetaBySlug = {} }) {
   <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-12">
    <FavoritesFiltersSidebar
     categories={categories}
-    collections={collections}
     selectedCategory={selectedCategory}
     onCategoryChange={setSelectedCategory}
-    selectedCollection={selectedCollection}
-    onCollectionChange={setSelectedCollection}
     className="hidden lg:block"
    />
 
@@ -99,11 +89,8 @@ export function FavoritesView({ productMetaBySlug = {} }) {
      sort={sort}
      onSortChange={setSort}
      categories={categories}
-     collections={collections}
      selectedCategory={selectedCategory}
      onCategoryChange={setSelectedCategory}
-     selectedCollection={selectedCollection}
-     onCollectionChange={setSelectedCollection}
     />
 
     {filteredFavorites.length > 0 ? (

@@ -6,7 +6,6 @@ import { ProductsCatalogToolbar } from "@/components/catalog/products-catalog-to
 import { ProductsCategoryCarousel } from "@/components/catalog/products-category-carousel";
 import { ProductsCategoryGrid } from "@/components/catalog/products-category-grid";
 import { useLocale } from "@/contexts/locale-provider";
-import { getLocalizedCollectionName } from "@/lib/i18n/display-names";
 import { getProductDisplayPrice } from "@/lib/product-utils";
 import { headingDisplayClass } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
@@ -22,14 +21,11 @@ function compareByPrice(a, b, ascending) {
  return ascending ? priceA - priceB : priceB - priceA;
 }
 
-function sortProducts(products, sort, dictionary, t) {
+function sortProducts(products, sort, t) {
  if (!sort && products.length) {
   const list = [...products];
-  const sortAlphabetical = (a, b) => {
-   const aLabel = getLocalizedCollectionName(a.collection, dictionary) || a.name || "";
-   const bLabel = getLocalizedCollectionName(b.collection, dictionary) || b.name || "";
-   return aLabel.localeCompare(bLabel, t("locale") || "tr");
-  };
+  const sortAlphabetical = (a, b) =>
+   (a.name || "").localeCompare(b.name || "", t("locale") || "tr");
   return list.sort(sortAlphabetical);
  }
 
@@ -37,11 +33,8 @@ function sortProducts(products, sort, dictionary, t) {
 
  const list = [...products];
 
- const sortAlphabetical = (a, b) => {
-  const aLabel = getLocalizedCollectionName(a.collection, dictionary) || a.name || "";
-  const bLabel = getLocalizedCollectionName(b.collection, dictionary) || b.name || "";
-  return aLabel.localeCompare(bLabel, t("locale") || "tr");
- };
+ const sortAlphabetical = (a, b) =>
+  (a.name || "").localeCompare(b.name || "", t("locale") || "tr");
 
  switch (sort) {
   case "price-asc":
@@ -60,15 +53,13 @@ function sortProducts(products, sort, dictionary, t) {
 export function ProductsCatalogShell({
  products,
  activeGroup,
- activeCollection,
  categorySlug,
- collectionSlug,
 }) {
- const { t, dictionary } = useLocale();
+ const { t } = useLocale();
  const [search, setSearch] = useState("");
  const [sort, setSort] = useState(null);
 
- const isCategoryLanding = !categorySlug && !collectionSlug;
+ const isCategoryLanding = !categorySlug;
 
  const filteredProducts = useMemo(() => {
   const query = search.trim().toLowerCase();
@@ -76,14 +67,11 @@ export function ProductsCatalogShell({
   const list = products.filter((product) => {
    if (!query) return true;
 
-   return (
-    product.name.toLowerCase().includes(query) ||
-    product.collection?.name?.toLowerCase().includes(query)
-   );
+   return product.name.toLowerCase().includes(query);
   });
 
-  return sortProducts(list, sort, dictionary, t);
- }, [products, search, sort, dictionary, t]);
+  return sortProducts(list, sort, t);
+ }, [products, search, sort, t]);
 
  if (isCategoryLanding) {
   return (
@@ -105,12 +93,7 @@ export function ProductsCatalogShell({
   <div className="space-y-6 md:space-y-8">
    <div>
     <h1 className={cn(headingDisplayClass, "text-charcoal")}>
-     {activeCollection
-      ? getLocalizedCollectionName(activeCollection, dictionary) ??
-      activeCollection.name
-      : activeGroup
-       ? activeGroup.label
-       : t("catalog.allProductsTitle")}
+     {activeGroup ? activeGroup.label : t("catalog.allProductsTitle")}
     </h1>
    </div>
 

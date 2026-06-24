@@ -6,32 +6,18 @@ import { cn } from "@/lib/utils";
 export function ProductDetailRight({
  categoryLabel,
  categoryProducts,
- collectionLabel,
- collectionProducts,
  className,
 }) {
- const hasCategoryPanel = categoryLabel && categoryProducts.length > 0;
- const hasCollectionPanel = collectionLabel && collectionProducts.length > 0;
-
- if (!hasCategoryPanel && !hasCollectionPanel) {
+ if (!categoryLabel || categoryProducts.length === 0) {
   return null;
  }
 
  return (
   <aside className={cn("flex flex-col gap-4 lg:self-start", className)}>
-   {hasCategoryPanel ? (
-    <ProductCategoryRelated
-     products={categoryProducts}
-     categoryLabel={categoryLabel}
-    />
-   ) : null}
-   {hasCollectionPanel ? (
-    <ProductCategoryRelated
-     products={collectionProducts}
-     categoryLabel={collectionLabel}
-     variant="collection"
-    />
-   ) : null}
+   <ProductCategoryRelated
+    products={categoryProducts}
+    categoryLabel={categoryLabel}
+   />
   </aside>
  );
 }

@@ -14,8 +14,6 @@ export function ProductDetailView({
  categoryLabel,
  categoryHref,
  categoryProducts = [],
- collectionLabel,
- collectionProducts = [],
 }) {
  const [lightbox, setLightbox] = useState({ images: [], index: null });
  const [openDimensions, setOpenDimensions] = useState(false);
@@ -84,9 +82,7 @@ export function ProductDetailView({
   }, 350);
  }, []);
 
- const hasCategoryPanel = categoryLabel && categoryProducts.length > 0;
- const hasCollectionPanel = collectionLabel && collectionProducts.length > 0;
- const hasRightPanel = hasCategoryPanel || hasCollectionPanel;
+ const hasRightPanel = categoryLabel && categoryProducts.length > 0;
 
  return (
   <>
@@ -146,11 +142,8 @@ export function ProductDetailView({
 
     {hasRightPanel ? (
      <ProductDetailRight
-      product={product}
       categoryLabel={categoryLabel}
       categoryProducts={categoryProducts}
-      collectionLabel={collectionLabel}
-      collectionProducts={collectionProducts}
       className="lg:self-start"
      />
     ) : null}

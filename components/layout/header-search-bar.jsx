@@ -6,23 +6,21 @@ import { usePathname } from "next/navigation";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import Link from "next/link";
-import { Folder, Search } from "@/lib/icons";
+import { Search } from "@/lib/icons";
 import { HeaderSearchForm } from "@/components/layout/header-search-form";
 import { useTranslations } from "@/contexts/locale-provider";
-import { getLocalizedCollectionName } from "@/lib/i18n/display-names";
 import { getCategoryLabelForProduct } from "@/lib/product-category";
-import { getCollectionProductsHref, getPrimaryImageUrl } from "@/lib/product-utils";
+import { getPrimaryImageUrl, getProductCardBottomLabel } from "@/lib/product-utils";
 import { containerPremiumClass } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 
 const searchResultsBackdropTopClass =
  "top-[calc(var(--header-height-mobile)+4.75rem)] sm:mobile-layout:top-[calc(var(--header-height-mobile-sm)+4.75rem)] lg:top-[calc(var(--header-height-desktop)+4.75rem)]";
 
-function SearchProductCard({ product, onNavigate, dictionary }) {
+function SearchProductCard({ product, onNavigate, dictionary, locale }) {
  const imageUrl = getPrimaryImageUrl(product);
  const categoryLabel = getCategoryLabelForProduct(product, dictionary);
- const bottomLabel =
-  getLocalizedCollectionName(product.collection, dictionary) ?? product.name;
+ const bottomLabel = getProductCardBottomLabel(product, locale);
 
  return (
   <Link
@@ -68,13 +66,13 @@ export function HeaderSearchBar({
  onSubmittedQueryChange,
  onClear,
 }) {
- const { t, dictionary } = useTranslations();
+ const { t, dictionary, locale } = useTranslations();
  const pathname = usePathname();
  const isHome = pathname === "/";
  const inputRef = useRef(null);
  const [mounted, setMounted] = useState(false);
  const [loading, setLoading] = useState(false);
- const [results, setResults] = useState({ collections: [], products: [] });
+ const [results, setResults] = useState({ products: [] });
 
  const showMobilePanel = open;
  const showDesktopResultsPanel = inline && Boolean(submittedQuery);
@@ -95,7 +93,7 @@ export function HeaderSearchBar({
 
  useEffect(() => {
   if (!submittedQuery) {
-   setResults({ collections: [], products: [] });
+   setResults({ products: [] });
    setLoading(false);
    return;
   }
@@ -112,12 +110,11 @@ export function HeaderSearchBar({
     if (!response.ok) throw new Error("Search failed");
     const data = await response.json();
     setResults({
-     collections: data.collections ?? [],
      products: data.products ?? [],
     });
    } catch (error) {
     if (error.name !== "AbortError") {
-     setResults({ collections: [], products: [] });
+     setResults({ products: [] });
     }
    } finally {
     setLoading(false);
@@ -141,8 +138,7 @@ export function HeaderSearchBar({
   inputRef.current?.focus();
  };
 
- const hasResults =
-  results.collections.length > 0 || results.products.length > 0;
+ const hasResults = results.products.length > 0;
  const showEmpty = submittedQuery && !loading && !hasResults;
 
  const resultsPanel =
@@ -165,31 +161,6 @@ export function HeaderSearchBar({
      </div>
     ) : null}
 
-    {!loading && results.collections.length > 0 ? (
-     <section className="not-first:mt-5 not-first:border-t not-first:border-charcoal/8 not-first:pt-5">
-      <h3 className="mb-3 text-[0.6875rem] font-semibold tracking-[0.12em] text-charcoal/60 uppercase">
-       {t("catalog.collections")}
-      </h3>
-      <ul className="flex flex-wrap gap-2">
-       {results.collections.map((collection) => (
-        <li key={collection.id}>
-         <Link
-          href={getCollectionProductsHref(collection.slug)}
-          onClick={handleNavigate}
-          className="inline-flex items-center gap-2 rounded-full border border-charcoal/12 bg-white/90 px-3.5 py-2 text-sm font-medium text-charcoal transition-[border-color,background-color] duration-200 hover:border-charcoal/22 hover:bg-cream/80"
-         >
-          <Folder
-           className="size-4 shrink-0 text-charcoal/55"
-           aria-hidden
-          />
-          {getLocalizedCollectionName(collection, dictionary) ?? collection.name}
-         </Link>
-        </li>
-       ))}
-      </ul>
-     </section>
-    ) : null}
-
     {!loading && results.products.length > 0 ? (
      <section className="not-first:mt-5 not-first:border-t not-first:border-charcoal/8 not-first:pt-5">
       <h3 className="mb-3 text-[0.6875rem] font-semibold tracking-[0.12em] text-charcoal/60 uppercase">
@@ -201,6 +172,7 @@ export function HeaderSearchBar({
          key={product.id}
          product={product}
          dictionary={dictionary}
+         locale={locale}
          onNavigate={handleNavigate}
         />
        ))}

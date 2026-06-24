@@ -19,11 +19,8 @@ export function FavoritesToolbar({
  sort,
  onSortChange,
  categories,
- collections,
  selectedCategory,
  onCategoryChange,
- selectedCollection,
- onCollectionChange,
 }) {
  const { t, dictionary } = useTranslations();
  const sortOptions = getFavoritesSortOptions(dictionary);
@@ -36,11 +33,8 @@ export function FavoritesToolbar({
     sort={sort}
     onSortChange={onSortChange}
     categories={categories}
-    collections={collections}
     selectedCategory={selectedCategory}
     onCategoryChange={onCategoryChange}
-    selectedCollection={selectedCollection}
-    onCollectionChange={onCollectionChange}
     sortOptions={sortOptions}
    />
 
