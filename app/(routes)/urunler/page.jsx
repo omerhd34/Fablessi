@@ -1,12 +1,13 @@
 import { ProductsCatalogShell } from "@/components/catalog/products-catalog-shell";
 import { buildProductsMegaMenu } from "@/lib/i18n/build-navigation";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
+import { getLocalizedCollectionName } from "@/lib/i18n/display-names";
 import { getLocale, getServerDictionary } from "@/lib/i18n/server";
 import {
  buildUrunlerCatalogHref,
  getGoogleProductsDescription,
  getGoogleSitelinkByHref,
- isSitelinkIndexableHref,
+ isUrunlerCatalogIndexable,
 } from "@/lib/seo/google-snippets";
 import {
  containerPremiumClass,
@@ -21,24 +22,43 @@ import {
 
 export const revalidate = 0;
 
+function buildCollectionPageTitle(collectionName, locale) {
+ if (locale === "en") return `${collectionName} Collection`;
+ return `${collectionName} Koleksiyonu`;
+}
+
 export async function generateMetadata({ searchParams }) {
  const params = await searchParams;
  const categorySlug = params?.kategori ?? null;
  const collectionSlug = params?.koleksiyon ?? null;
+ const collection = collectionSlug ? await getCollectionBySlug(collectionSlug) : null;
  const catalogHref = buildUrunlerCatalogHref(categorySlug, collectionSlug);
  const sitelink = getGoogleSitelinkByHref(catalogHref);
  const { dictionary, locale } = await getServerDictionary();
  const page = dictionary.pages.products;
- const googleDescription =
+
+ let title = sitelink?.name ?? page.title;
+ let description =
   sitelink?.description ??
-  getGoogleProductsDescription(categorySlug, locale);
+  getGoogleProductsDescription(categorySlug, locale) ??
+  page.description;
+
+ if (collection) {
+  const collectionName =
+   getLocalizedCollectionName(collection, dictionary) ?? collection.name;
+
+  title = buildCollectionPageTitle(collectionName, locale);
+  description =
+   collection.description?.trim() ||
+   `${collectionName} — ${page.layoutDescription ?? page.description}`;
+ }
 
  return {
-  title: sitelink?.name ?? page.title,
-  description: googleDescription ?? page.description,
+  title,
+  description,
   keywords: page.keywords ?? dictionary.metadata.keywords,
   robots: {
-   index: isSitelinkIndexableHref(catalogHref),
+   index: isUrunlerCatalogIndexable({ categorySlug, collectionSlug, collection }),
    follow: true,
   },
  };

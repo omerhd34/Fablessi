@@ -40,7 +40,7 @@ export async function generateMetadata({ params }) {
    product.description ??
    `${product.name} — ${seoSuffix}`,
   robots: {
-   index: false,
+   index: true,
    follow: true,
   },
  };
