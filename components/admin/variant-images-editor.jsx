@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 
 export function VariantImagesEditor({
  images = [],
@@ -16,9 +15,7 @@ export function VariantImagesEditor({
 }) {
  return (
   <div className="space-y-3 rounded-lg border border-dashed border-border/70 bg-muted/10 p-3">
-   <div className="space-y-2">
-    <Label>Görseller</Label>
-    <div className="flex min-h-8 items-center gap-3 rounded-lg border border-dashed border-border/70 bg-background/80 px-3 py-2">
+   <div className="flex min-h-8 items-center gap-3 rounded-lg border border-dashed border-border/70 bg-background/80 px-3 py-2">
      <Button
       type="button"
       variant="outline"
@@ -35,7 +32,6 @@ export function VariantImagesEditor({
         ? `${images.length} görsel eklendi.`
         : "JPG, PNG veya WebP seçin.")}
      </p>
-    </div>
    </div>
 
    {images.length === 0 ? (
