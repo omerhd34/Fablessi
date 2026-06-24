@@ -9,7 +9,7 @@ import { LocaleProvider } from "@/contexts/locale-provider";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { brandFullName } from "@/lib/navigation";
-import { buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/lib/seo/json-ld";
+import { buildOrganizationJsonLd } from "@/lib/seo/json-ld";
 import { siteMetadata } from "@/lib/site-metadata";
 
 const montserrat = Montserrat({
@@ -65,7 +65,6 @@ export default async function RootLayout({ children }) {
  const { locale, dictionary } = await getServerDictionary();
  const menuGroups = await getCategoryGroupsForMenu(locale);
  const organizationJsonLd = buildOrganizationJsonLd(locale);
- const webSiteJsonLd = buildWebSiteJsonLd(locale);
 
  return (
   <html
@@ -74,15 +73,13 @@ export default async function RootLayout({ children }) {
    data-toast-layout="fab"
    className={`${montserrat.variable} ${poppins.variable} h-full antialiased`}
   >
-   <body className="min-h-full flex flex-col font-sans">
+   <head>
     <script
      type="application/ld+json"
      dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
     />
-    <script
-     type="application/ld+json"
-     dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
-    />
+   </head>
+   <body className="min-h-full flex flex-col font-sans">
     <LocaleProvider locale={locale} dictionary={dictionary} menuGroups={menuGroups}>
      <FavoritesProvider>
       <TooltipProvider>
