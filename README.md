@@ -1,11 +1,11 @@
 # Fablessi — Premium Bahçe Mobilyaları
 
-İnegöl merkezli **Fablessi** markasının kurumsal web sitesi ve dijital ürün kataloğu. Bahçe ve dış mekan mobilyalarını premium, minimalist bir vitrin deneyimiyle sunar; koleksiyonlar, ürün galerileri, iletişim ve konum bilgilerini tek çatı altında toplar.
+İnegöl merkezli **Fablessi** markasının kurumsal web sitesi ve dijital ürün kataloğu. Bahçe ve dış mekan mobilyalarını premium, minimalist bir vitrin deneyimiyle sunar; kategori grupları, ürün galerileri, iletişim ve konum bilgilerini tek çatı altında toplar.
 
 **Site:** [www.fablessi.com](https://www.fablessi.com/)
 
 <p align="center">
-  <img src="public/slayts/1/2560x1707.jpg" alt="Fablessi bahçe mobilyası — dış mekan oturma koleksiyonu" width="32%" />
+  <img src="public/slayts/1/2560x1707.jpg" alt="Fablessi bahçe mobilyası — dış mekan oturma grubu" width="32%" />
   <img src="public/acelya-oturma/antrasit-01.jpg" alt="Açelya Oturma Grubu" width="32%" />
   <img src="public/velar-oturma/01.jpg" alt="Fablessi üretim deneyimi — bahçe mobilyası atölyesi" width="32%" />
 </p>
@@ -30,22 +30,22 @@ Site; ürün fotoğrafları, teknik ölçüler, malzeme bilgisi ve marka hikâye
 
 - **Ana sayfa vitrini** — Hero slider, kategori vitrinleri, öne çıkan ürünler carousel, marka deneyimi afişi
 - **Çok dilli arayüz (i18n)** — Türkçe / İngilizce sözlükler, cookie tabanlı dil seçimi, veritabanı alanlarında `nameEn` / `descriptionEn` desteği
-- **Ürün kataloğu** — Kategori ve koleksiyon sayfaları, sayfa içi arama, sıralama, ürün detay sayfaları
+- **Ürün kataloğu** — Kategori filtreli ürün listesi, sayfa içi arama, sıralama, ürün detay sayfaları
 - **Ürün mega menüsü** — 6 kategori grubu, 16+ ürün görsel kartlarla hızlı erişim
-- **Canlı arama** — Header arama çubuğu, debounce ile `/api/search` üzerinden koleksiyon ve ürün sonuçları
+- **Canlı arama** — Header arama çubuğu, debounce ile `/api/search` üzerinden kategori ve ürün sonuçları
 - **Ürün detay** — Galeri lightbox, malzeme bilgisi, parça bazlı ölçü tablosu, ilgili ürünler
-- **Favoriler** — localStorage ile ürün kaydetme, kategori / koleksiyon filtreleri, arama ve sıralama
+- **Favoriler** — localStorage ile ürün kaydetme, kategori filtreleri, arama ve sıralama
 - **Misyon & Vizyon** — Marka değerleri, misyon ve vizyon içeriği
 - **SSS (Sıkça Sorulan Sorular)** — Kategorize edilmiş accordion yapısı
 - **İletişim sayfası** — Showroom adresi, çalışma saatleri, telefon / WhatsApp / e-posta / Instagram ve gömülü harita
 - **İletişim araçları** — Sabit WhatsApp / telefon butonları, footer iletişim alanı
-- **Veritabanı destekli katalog** — Koleksiyon → Ürün → Görsel hiyerarşisi (Prisma + MySQL, [TiDB Cloud](https://tidbcloud.com/))
-- **Admin paneli** — Ürün, koleksiyon, kategori grubu ve site içeriklerini yönetme
+- **Veritabanı destekli katalog** — Kategori Grubu → Ürün → Görsel hiyerarşisi (Prisma + MySQL, [TiDB Cloud](https://tidbcloud.com/))
+- **Admin paneli** — Ürün, kategori grubu ve site içeriklerini yönetme
 - **Zengin medya arşivi** — Yüzlerce ürün fotoğrafı ve tanıtım videoları (`public/`)
 
 ---
 
-## Ürün Koleksiyonları
+## Ürün Serileri
 
 Sitede yer alan başlıca ürün grupları:
 
@@ -172,7 +172,7 @@ fablessi/
 │   └── prisma.js               # Prisma istemcisi
 ├── prisma/
 │   ├── schema.prisma           # Veritabanı şeması
-│   └── seed.js                 # Koleksiyon ve ürün verisi
+│   └── seed.js                 # Kategori grubu ve ürün verisi
 └── public/                     # Ürün görselleri, videolar ve marka varlıkları
 ```
 
@@ -232,7 +232,7 @@ CLOUDINARY_API_SECRET=""
 
 ```bash
 npm run db:push      # Şemayı veritabanına uygular
-npm run db:seed      # Koleksiyon ve ürün verisi ekler
+npm run db:seed      # Kategori grubu ve ürün verisi ekler
 ```
 
 ### 5. Geliştirme sunucusunu başlatın
@@ -264,12 +264,12 @@ Tarayıcıda [http://localhost:3000](http://localhost:3000) adresini açın.
 ## Veritabanı Modeli
 
 ```
-Collection (Koleksiyon)
+ProductCategoryGroup (Kategori Grubu)
   └── Product (Ürün)
         └── Image (Galeri görseli)
 ```
 
-Her ürün; slug, ad, açıklama, malzeme (`material`, `materialEn`), ölçü bilgisi (`dimensions`, `dimensionItems` JSON) ve yayın durumu (`isPublished`) ile yönetilir. Görseller doğrudan ürüne bağlanır. Ana sayfa vitrini için `isFeatured` ve `featuredOrder` alanları kullanılır. Koleksiyon, ürün ve görsel kayıtlarında İngilizce karşılıklar (`nameEn`, `descriptionEn`, `altEn` vb.) tutulur.
+Her ürün; slug, ad, açıklama, malzeme (`material`, `materialEn`), ölçü bilgisi (`dimensions`, `dimensionItems` JSON) ve yayın durumu (`isPublished`) ile yönetilir. Görseller doğrudan ürüne bağlanır. Ana sayfa vitrini için `isFeatured` ve `featuredOrder` alanları kullanılır. Kategori grubu, ürün ve görsel kayıtlarında İngilizce karşılıklar (`nameEn`, `descriptionEn`, `altEn` vb.) tutulur.
 
 ---
 
