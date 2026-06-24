@@ -23,6 +23,7 @@ import {
  TableHeader,
  TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 
 const SORT_COLUMNS = {
  name: {
@@ -331,7 +332,6 @@ export function ProductsTable({ products }) {
            href={`/api/admin/products/${product.id}`}
            confirmTitle="Ürünü sil?"
            confirmDescription="Bu ürün kalıcı olarak silinir."
-           size="icon-sm"
           />
           <EditButton href={`/admin/products/${product.id}`} />
          </>
@@ -343,74 +343,76 @@ export function ProductsTable({ products }) {
    </AdminMobileList>
 
    <div className="hidden md:block">
-   <Table>
-    <TableHeader>
-     <TableRow className="bg-muted/20 hover:bg-muted/20">
-      {Object.entries(SORT_COLUMNS).map(([key, column]) => (
-       <TableHead key={key} className="px-4 py-3">
-        <SortableTableHead
-         label={column.label}
-         columnKey={key}
-         sortKey={sort.key}
-         sortDir={sort.dir}
-         onSort={handleSort}
-        />
-       </TableHead>
-      ))}
-      <TableHead className="w-24 px-4 py-3 text-center">İşlem</TableHead>
-     </TableRow>
-    </TableHeader>
-    <TableBody>
-     {pageItems.length === 0 ? (
-      <TableRow className="hover:bg-transparent">
-       <TableCell colSpan={5} className="px-4 py-12 text-center text-muted-foreground">
-        Filtrelere uygun ürün bulunamadı.
-       </TableCell>
+    <Table>
+     <TableHeader>
+      <TableRow className="bg-muted/20 hover:bg-muted/20">
+       {Object.entries(SORT_COLUMNS).map(([key, column]) => (
+        <TableHead
+         key={key}
+         className={cn("px-4 py-3", key === "name" && "min-w-56 w-[40%]")}
+        >
+         <SortableTableHead
+          label={column.label}
+          columnKey={key}
+          sortKey={sort.key}
+          sortDir={sort.dir}
+          onSort={handleSort}
+         />
+        </TableHead>
+       ))}
+       <TableHead className="w-24 px-4 py-3 text-center">İşlem</TableHead>
       </TableRow>
-     ) : (
-      pageItems.map((product) => {
-       const total = getProductPriceTotal(product);
-       const priceLabel = total != null ? total.toLocaleString("tr-TR") : null;
+     </TableHeader>
+     <TableBody>
+      {pageItems.length === 0 ? (
+       <TableRow className="hover:bg-transparent">
+        <TableCell colSpan={5} className="px-4 py-12 text-center text-muted-foreground">
+         Filtrelere uygun ürün bulunamadı.
+        </TableCell>
+       </TableRow>
+      ) : (
+       pageItems.map((product) => {
+        const total = getProductPriceTotal(product);
+        const priceLabel = total != null ? total.toLocaleString("tr-TR") : null;
 
-       return (
-        <TableRow key={product.id}>
-         <TableCell className="px-4 py-3 font-medium" title={product.name}>
-          {truncateTableText(product.name)}
-         </TableCell>
-         <TableCell
-          className="px-4 py-3"
-          title={product.categoryGroup?.name ?? undefined}
-         >
-          {truncateTableText(product.categoryGroup?.name) ?? "—"}
-         </TableCell>
-         <TableCell className="px-4 py-3 tabular-nums" title={priceLabel ?? undefined}>
-          {truncateTableText(priceLabel) ?? "—"}
-         </TableCell>
-         <TableCell className="px-4 py-3">
-          <div className="flex flex-wrap items-center gap-1">
-           <Badge variant={product.isPublished ? "default" : "secondary"}>
-            {product.isPublished ? "Yayında" : "Taslak"}
-           </Badge>
-           {product.isFeatured ? <Badge variant="outline">Vitrin</Badge> : null}
-          </div>
-         </TableCell>
-         <TableCell className="px-4 py-3">
-          <div className="flex items-center justify-center gap-2">
-           <DeleteButton
-            href={`/api/admin/products/${product.id}`}
-            confirmTitle="Ürünü sil?"
-            confirmDescription="Bu ürün kalıcı olarak silinir."
-            size="icon-sm"
-           />
-           <EditButton href={`/admin/products/${product.id}`} />
-          </div>
-         </TableCell>
-        </TableRow>
-       );
-      })
-     )}
-    </TableBody>
-   </Table>
+        return (
+         <TableRow key={product.id}>
+          <TableCell className="min-w-56 w-[40%] px-4 py-3 font-medium">
+           {product.name}
+          </TableCell>
+          <TableCell
+           className="px-4 py-3"
+           title={product.categoryGroup?.name ?? undefined}
+          >
+           {truncateTableText(product.categoryGroup?.name) ?? "—"}
+          </TableCell>
+          <TableCell className="px-4 py-3 tabular-nums" title={priceLabel ?? undefined}>
+           {truncateTableText(priceLabel) ?? "—"}
+          </TableCell>
+          <TableCell className="px-4 py-3">
+           <div className="flex flex-wrap items-center gap-1">
+            <Badge variant={product.isPublished ? "default" : "secondary"}>
+             {product.isPublished ? "Yayında" : "Taslak"}
+            </Badge>
+            {product.isFeatured ? <Badge variant="outline">Vitrin</Badge> : null}
+           </div>
+          </TableCell>
+          <TableCell className="px-4 py-3">
+           <div className="flex items-center justify-center gap-2">
+            <DeleteButton
+             href={`/api/admin/products/${product.id}`}
+             confirmTitle="Ürünü sil?"
+             confirmDescription="Bu ürün kalıcı olarak silinir."
+            />
+            <EditButton href={`/admin/products/${product.id}`} />
+           </div>
+          </TableCell>
+         </TableRow>
+        );
+       })
+      )}
+     </TableBody>
+    </Table>
    </div>
 
    <AdminTablePagination

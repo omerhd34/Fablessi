@@ -17,6 +17,7 @@ import {
  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function DeleteButton({
  href,
@@ -26,6 +27,8 @@ export function DeleteButton({
  redirectTo,
  onDeleted,
  size,
+ iconOnly = true,
+ className,
 }) {
  const router = useRouter();
  const [loading, setLoading] = useState(false);
@@ -51,20 +54,18 @@ export function DeleteButton({
   }
  }
 
- const isIconOnly = label === "Sil";
-
  return (
   <AlertDialog>
    <AlertDialogTrigger asChild>
     <Button
      type="button"
      variant="destructive"
-     size={isIconOnly ? size ?? "icon-lg" : "sm"}
-     className={isIconOnly ? "cursor-pointer" : "cursor-pointer gap-1.5"}
+     size={iconOnly ? size ?? "icon-lg" : "default"}
+     className={cn(iconOnly ? "cursor-pointer" : "cursor-pointer gap-2", className)}
      disabled={loading}
-     aria-label={isIconOnly ? "Sil" : undefined}
+     aria-label={iconOnly ? "Sil" : undefined}
     >
-     {isIconOnly ? (
+     {iconOnly ? (
       <MdDeleteOutline className="size-5" />
      ) : (
       <>

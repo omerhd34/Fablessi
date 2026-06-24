@@ -228,6 +228,7 @@ export function CategoryGroupForm({ categoryGroup = null }) {
       confirmTitle="Kategori grubunu sil?"
       confirmDescription="Bu gruba bağlı ürünlerin kategori bilgisi kaldırılır."
       redirectTo="/admin/categories"
+      iconOnly={false}
      />
     ) : (
      <div />
