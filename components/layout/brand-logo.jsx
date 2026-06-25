@@ -36,7 +36,7 @@ export function BrandLogoLink({ href = "/", size = "md", className }) {
     "group/logo inline-flex h-fit w-fit cursor-pointer items-center rounded-md px-3.5 py-2.5 -mx-3.5 -my-2.5 align-middle leading-none",
     className
    )}
-   aria-label={`${brandFullName} — ${t("common.home")}`}
+   aria-label={`${brandFullName} - ${t("common.home")}`}
   >
    {/* eslint-disable-next-line @next/next/no-img-element */}
    <img

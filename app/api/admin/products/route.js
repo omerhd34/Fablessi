@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { slugify } from "@/lib/admin/slug";
 import { getFeaturedLimitError } from "@/lib/admin/featured-products";
 import {
+ parseCornerStandardFields,
  parseDimensionItems,
  parseProductMedia,
  validateProductImages,
@@ -87,6 +88,7 @@ export async function POST(request) {
   }
 
   const media = parseProductMedia(body, slug, name, nameEn);
+  const cornerStandard = parseCornerStandardFields(body, categoryGroup.slug);
 
   const isFeatured = Boolean(body.isFeatured);
   const featuredLimitError = await getFeaturedLimitError({ isFeatured });
@@ -106,6 +108,7 @@ export async function POST(request) {
     widthCm: body.widthCm != null && body.widthCm !== "" ? Number(body.widthCm) : null,
     depthCm: body.depthCm != null && body.depthCm !== "" ? Number(body.depthCm) : null,
     heightCm: body.heightCm != null && body.heightCm !== "" ? Number(body.heightCm) : null,
+    ...cornerStandard,
     sortOrder: Number(body.sortOrder) || 0,
     isPublished: body.isPublished !== false,
     isFeatured,

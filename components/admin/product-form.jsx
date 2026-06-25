@@ -30,6 +30,7 @@ import {
  parseTurkishAmount,
 } from "@/lib/admin/price-input";
 import { slugify } from "@/lib/admin/slug";
+import { CORNER_CATEGORY_SLUG } from "@/lib/product-category";
 import { Button } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -71,6 +72,8 @@ function createEmptyProduct(categoryGroupId = "") {
   widthCm: "",
   depthCm: "",
   heightCm: "",
+  cornerStandardSideACm: "",
+  cornerStandardSideBCm: "",
   sortOrder: 0,
   isPublished: true,
   isFeatured: false,
@@ -99,6 +102,8 @@ export function ProductForm({
    widthCm: product.widthCm ?? "",
    depthCm: product.depthCm ?? "",
    heightCm: product.heightCm ?? "",
+   cornerStandardSideACm: product.cornerStandardSideACm ?? "",
+   cornerStandardSideBCm: product.cornerStandardSideBCm ?? "",
    dimensionItems:
     product.dimensionItems?.length > 0
      ? product.dimensionItems.map((item) => ({
@@ -129,6 +134,8 @@ export function ProductForm({
  const [uploadStatus, setUploadStatus] = useState("");
  const fileInputRef = useRef(null);
  const canMarkFeatured = Boolean(form.isFeatured) || featuredCount < maxFeatured;
+ const selectedCategory = categoryGroups.find((group) => group.id === form.categoryGroupId);
+ const isCornerCategory = selectedCategory?.slug === CORNER_CATEGORY_SLUG;
 
  const totalPrice = useMemo(() => {
   return form.dimensionItems.reduce((sum, item) => {
@@ -463,6 +470,40 @@ export function ProductForm({
     </CardContent>
    </Card>
 
+   {isCornerCategory ? (
+    <Card>
+     <CardHeader>
+      <CardTitle>Standart Köşe Ölçüsü</CardTitle>
+     </CardHeader>
+     <CardContent className="space-y-4">
+      <p className="text-xs text-muted-foreground">
+       L formundaki iki kol boyu (cm). Genişlik, derinlik veya yükseklik değildir;
+       ürün sayfasında ölçü tablosunun altında ayrı gösterilir.
+      </p>
+      <div className="grid gap-3 md:grid-cols-2">
+       <div className="space-y-1">
+        <Label htmlFor="cornerStandardSideACm">L - uzun (cm)</Label>
+        <Input
+         id="cornerStandardSideACm"
+         type="number"
+         value={form.cornerStandardSideACm}
+         onChange={(e) => updateField("cornerStandardSideACm", e.target.value)}
+        />
+       </div>
+       <div className="space-y-1">
+        <Label htmlFor="cornerStandardSideBCm">L - kısa (cm)</Label>
+        <Input
+         id="cornerStandardSideBCm"
+         type="number"
+         value={form.cornerStandardSideBCm}
+         onChange={(e) => updateField("cornerStandardSideBCm", e.target.value)}
+        />
+       </div>
+      </div>
+     </CardContent>
+    </Card>
+   ) : null}
+
    <Card>
     <CardHeader>
      <CardTitle>Parça Ölçüleri ve Fiyatlar</CardTitle>
@@ -473,7 +514,7 @@ export function ProductForm({
       >
        <span className="text-muted-foreground">Toplam:</span>
        <span className="tabular-nums text-foreground">
-        {totalPrice > 0 ? `${totalPrice.toLocaleString("tr-TR")} TL` : "—"}
+        {totalPrice > 0 ? `${totalPrice.toLocaleString("tr-TR")} TL` : "-"}
        </span>
       </div>
      </CardAction>
@@ -614,19 +655,19 @@ export function ProductForm({
       className="sr-only"
      />
      <VariantImagesEditor
-       images={form.images ?? []}
-       productName={form.name}
-       uploading={uploading}
-       uploadStatus={uploadStatus}
-       onSelectFile={openUpload}
-       onSetPrimary={setPrimaryImage}
-       onMove={moveImage}
-       onRemove={(imageIndex) =>
-        updateImages((images) =>
-         images.filter((_, itemIndex) => itemIndex !== imageIndex)
-        )
-       }
-      />
+      images={form.images ?? []}
+      productName={form.name}
+      uploading={uploading}
+      uploadStatus={uploadStatus}
+      onSelectFile={openUpload}
+      onSetPrimary={setPrimaryImage}
+      onMove={moveImage}
+      onRemove={(imageIndex) =>
+       updateImages((images) =>
+        images.filter((_, itemIndex) => itemIndex !== imageIndex)
+       )
+      }
+     />
     </CardContent>
    </Card>
 

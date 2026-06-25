@@ -49,7 +49,7 @@ export default async function UrunlerPage({ searchParams }) {
  const products = categorySlug ? await getPublishedProducts(categorySlug) : [];
 
  return (
-  <div className={cn(containerPremiumClass, pageContentOffsetClass, "pb-20 md:pb-28")}>
+  <div className={cn(containerPremiumClass, pageContentOffsetClass, "pb-12 md:pb-28")}>
    <ProductsCatalogShell
     products={products}
     activeGroup={activeGroup}

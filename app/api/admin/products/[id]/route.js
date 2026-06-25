@@ -7,6 +7,7 @@ import { prisma } from "@/lib/prisma";
 import { slugify } from "@/lib/admin/slug";
 import { getFeaturedLimitError } from "@/lib/admin/featured-products";
 import {
+ parseCornerStandardFields,
  parseDimensionItems,
  parseProductMedia,
  validateProductImages,
@@ -37,6 +38,14 @@ export async function GET(_request, { params }) {
    widthCm: product.widthCm != null ? Number(product.widthCm) : null,
    heightCm: product.heightCm != null ? Number(product.heightCm) : null,
    depthCm: product.depthCm != null ? Number(product.depthCm) : null,
+   cornerStandardSideACm:
+    product.cornerStandardSideACm != null
+     ? Number(product.cornerStandardSideACm)
+     : null,
+   cornerStandardSideBCm:
+    product.cornerStandardSideBCm != null
+     ? Number(product.cornerStandardSideBCm)
+     : null,
    dimensionItems: Array.isArray(product.dimensionItems)
     ? product.dimensionItems.map((item) => ({
      ...item,
@@ -96,6 +105,7 @@ export async function PUT(request, { params }) {
   }
 
   const media = parseProductMedia(body, slug, name, nameEn);
+  const cornerStandard = parseCornerStandardFields(body, categoryGroup.slug);
 
   const categoryGroupId =
    body.categoryGroupId !== undefined
@@ -137,6 +147,7 @@ export async function PUT(request, { params }) {
      widthCm: body.widthCm != null && body.widthCm !== "" ? Number(body.widthCm) : null,
      depthCm: body.depthCm != null && body.depthCm !== "" ? Number(body.depthCm) : null,
      heightCm: body.heightCm != null && body.heightCm !== "" ? Number(body.heightCm) : null,
+     ...cornerStandard,
      sortOrder: Number(body.sortOrder) ?? existing.sortOrder,
      isPublished: body.isPublished ?? existing.isPublished,
      isFeatured,

@@ -12,7 +12,7 @@ import { getDimensionItems } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
 function formatValue(value) {
- if (value == null) return "—";
+ if (value == null) return "-";
  return String(value);
 }
 
@@ -57,7 +57,7 @@ export function ProductDimensionsTable({ product, t, className }) {
       >
        {hasPieceNames ? (
         <TableCell className="px-2 py-2 font-medium text-charcoal/80">
-         {item.name?.trim() ?? "—"}
+         {item.name?.trim() ?? "-"}
         </TableCell>
        ) : null}
        <TableCell className="px-2 py-2 text-center tabular-nums">

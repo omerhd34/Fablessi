@@ -75,7 +75,7 @@ export function CategoriesShowcase() {
      <h2 className={cn(headingDisplayClass, "text-charcoal")}>
       {t("home.categoriesTitle")}
      </h2>
-     <p className="text-muted-foreground mx-auto mt-3 max-w-2xl text-sm md:text-base">
+     <p className="text-muted-foreground mx-auto mt-3 max-w-4xl text-sm md:text-base">
       {t("home.categoriesDescription")}
      </p>
     </div>

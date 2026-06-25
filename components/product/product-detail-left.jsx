@@ -112,7 +112,7 @@ function ProductDetailPriceBody({
        key={item._displayKey}
        className="grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3 text-sm text-charcoal"
       >
-       <span className="font-medium wrap-break-word">{itemLabel ?? "—"}</span>
+       <span className="font-medium wrap-break-word">{itemLabel ?? "-"}</span>
        <span className="shrink-0 text-right tabular-nums text-charcoal/75">
         {itemAmount} {currency}
        </span>

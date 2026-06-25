@@ -22,13 +22,6 @@ function compareByPrice(a, b, ascending) {
 }
 
 function sortProducts(products, sort, t) {
- if (!sort && products.length) {
-  const list = [...products];
-  const sortAlphabetical = (a, b) =>
-   (a.name || "").localeCompare(b.name || "", t("locale") || "tr");
-  return list.sort(sortAlphabetical);
- }
-
  if (!sort) return products;
 
  const list = [...products];
@@ -86,7 +79,7 @@ export function ProductsCatalogShell({
      <h1 className={cn(headingDisplayClass, "text-charcoal")}>
       {t("home.categoriesTitle")}
      </h1>
-     <p className="text-muted-foreground mx-auto mt-3 max-w-2xl text-sm md:mx-0 md:text-base">
+     <p className="text-muted-foreground mx-auto mt-3 max-w-4xl text-sm md:mx-0 md:text-base">
       {t("home.categoriesDescription")}
      </p>
     </div>
@@ -141,8 +134,15 @@ export function ProductsCatalogShell({
     )}
 
     {categorySlug ? (
-     <div className="border-t border-charcoal/8 pt-8 md:pt-10">
-      <ProductsCategoryCarousel activeSlug={categorySlug} />
+     <div className="mt-8 md:mt-12">
+      <div
+       className="border-t border-charcoal/8"
+       role="separator"
+       aria-hidden="true"
+      />
+      <div className="pt-5 md:pt-8">
+       <ProductsCategoryCarousel activeSlug={categorySlug} />
+      </div>
      </div>
     ) : null}
    </div>

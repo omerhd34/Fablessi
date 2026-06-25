@@ -45,7 +45,7 @@ cursorrules.md
 .cursorignore
 .cursor
 
-# büyük medya — git dışında tutulur (public/video/ yerel deploy için)
+# büyük medya - git dışında tutulur (public/video/ yerel deploy için)
 /public/video
 *.mp4
 *.MP4

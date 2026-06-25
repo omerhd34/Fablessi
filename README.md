@@ -1,13 +1,13 @@
-# Fablessi — Premium Bahçe Mobilyaları
+# Fablessi - Premium Bahçe Mobilyaları
 
 İnegöl merkezli **Fablessi** markasının kurumsal web sitesi ve dijital ürün kataloğu. Bahçe ve dış mekan mobilyalarını premium, minimalist bir vitrin deneyimiyle sunar; kategori grupları, ürün galerileri, iletişim ve konum bilgilerini tek çatı altında toplar.
 
 **Site:** [www.fablessi.com](https://www.fablessi.com/)
 
 <p align="center">
-  <img src="public/slayts/1/2560x1707.jpg" alt="Fablessi bahçe mobilyası — dış mekan oturma grubu" width="32%" />
+  <img src="public/slayts/1/2560x1707.jpg" alt="Fablessi bahçe mobilyası - dış mekan oturma grubu" width="32%" />
   <img src="public/acelya-oturma/antrasit-01.jpg" alt="Açelya Oturma Grubu" width="32%" />
-  <img src="public/velar-oturma/01.jpg" alt="Fablessi üretim deneyimi — bahçe mobilyası atölyesi" width="32%" />
+  <img src="public/velar-oturma/01.jpg" alt="Fablessi üretim deneyimi - bahçe mobilyası atölyesi" width="32%" />
 </p>
 
 ---
@@ -28,21 +28,21 @@ Site; ürün fotoğrafları, teknik ölçüler, malzeme bilgisi ve marka hikâye
 
 ## Öne Çıkan Özellikler
 
-- **Ana sayfa vitrini** — Hero slider, kategori vitrinleri, öne çıkan ürünler carousel, marka deneyimi afişi
-- **Çok dilli arayüz (i18n)** — Türkçe / İngilizce sözlükler, cookie tabanlı dil seçimi, veritabanı alanlarında `nameEn` / `descriptionEn` desteği
-- **Ürün kataloğu** — Kategori filtreli ürün listesi, sayfa içi arama, sıralama, ürün detay sayfaları
-- **Ürün mega menüsü** — 6 kategori grubu, 16+ ürün görsel kartlarla hızlı erişim
-- **Canlı arama** — Header arama çubuğu, debounce ile `/api/search` üzerinden kategori ve ürün sonuçları
-- **Ürün detay** — Galeri lightbox, malzeme bilgisi, parça bazlı ölçü tablosu, ilgili ürünler
-- **Favoriler** — localStorage ile ürün kaydetme, kategori filtreleri, arama ve sıralama
-- **Misyon & Vizyon** — Marka değerleri, misyon ve vizyon içeriği
-- **SSS (Sıkça Sorulan Sorular)** — Kategorize edilmiş accordion yapısı
-- **İletişim sayfası** — Showroom adresi, çalışma saatleri, telefon / WhatsApp / e-posta / Instagram ve gömülü harita
-- **İletişim araçları** — Sabit WhatsApp / telefon butonları, footer iletişim alanı
-- **Veritabanı destekli katalog** — Kategori Grubu → Ürün → Görsel hiyerarşisi (Prisma + MySQL, [TiDB Cloud](https://tidbcloud.com/))
-- **Admin paneli** (`/admin`) — Ürün ve kategori grubu CRUD, Cloudinary görsel yükleme, ana sayfa / hakkımızda / misyon / SSS içerik yönetimi
-- **SEO** — Dinamik metadata, JSON-LD, sitemap, robots.txt, yerel arama odaklı anahtar kelimeler
-- **Zengin medya arşivi** — Yüzlerce ürün fotoğrafı ve tanıtım videoları (`public/` + Cloudinary)
+- **Ana sayfa vitrini** - Hero slider, kategori vitrinleri, öne çıkan ürünler carousel, marka deneyimi afişi
+- **Çok dilli arayüz (i18n)** - Türkçe / İngilizce sözlükler, cookie tabanlı dil seçimi, veritabanı alanlarında `nameEn` / `descriptionEn` desteği
+- **Ürün kataloğu** - Kategori filtreli ürün listesi, sayfa içi arama, sıralama, ürün detay sayfaları
+- **Ürün mega menüsü** - 6 kategori grubu, 16+ ürün görsel kartlarla hızlı erişim
+- **Canlı arama** - Header arama çubuğu, debounce ile `/api/search` üzerinden kategori ve ürün sonuçları
+- **Ürün detay** - Galeri lightbox, malzeme bilgisi, parça bazlı ölçü tablosu, ilgili ürünler
+- **Favoriler** - localStorage ile ürün kaydetme, kategori filtreleri, arama ve sıralama
+- **Misyon & Vizyon** - Marka değerleri, misyon ve vizyon içeriği
+- **SSS (Sıkça Sorulan Sorular)** - Kategorize edilmiş accordion yapısı
+- **İletişim sayfası** - Showroom adresi, çalışma saatleri, telefon / WhatsApp / e-posta / Instagram ve gömülü harita
+- **İletişim araçları** - Sabit WhatsApp / telefon butonları, footer iletişim alanı
+- **Veritabanı destekli katalog** - Kategori Grubu → Ürün → Görsel hiyerarşisi (Prisma + MySQL, [TiDB Cloud](https://tidbcloud.com/))
+- **Admin paneli** (`/admin`) - Ürün ve kategori grubu CRUD, Cloudinary görsel yükleme, ana sayfa / hakkımızda / misyon / SSS içerik yönetimi
+- **SEO** - Dinamik metadata, JSON-LD, sitemap, robots.txt, yerel arama odaklı anahtar kelimeler
+- **Zengin medya arşivi** - Yüzlerce ürün fotoğrafı ve tanıtım videoları (`public/` + Cloudinary)
 
 ---
 
@@ -217,7 +217,7 @@ ProductCategoryGroup (Kategori Grubu)
   └── Product (Ürün)
         └── Image (Galeri görseli)
 
-ContentBlock (Site içerik blokları — ana sayfa, hakkımızda, misyon vb.)
+ContentBlock (Site içerik blokları - ana sayfa, hakkımızda, misyon vb.)
 
 FaqCategory (SSS kategorisi)
   └── FaqItem (SSS sorusu)

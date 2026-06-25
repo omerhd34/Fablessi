@@ -479,6 +479,8 @@ const COLLECTIONS = [
     slug: "tesla-kose",
     name: "Tesla Köşe Grubu",
     nameEn: "Tesla Corner Set",
+    cornerStandardSideACm: 245,
+    cornerStandardSideBCm: 220,
     ...dimItems([
      {
       name: "4'lü Koltuk",
@@ -712,6 +714,8 @@ const COLLECTIONS = [
     slug: "velar-kose",
     name: "Velar Köşe Grubu",
     nameEn: "Velar Corner Set",
+    cornerStandardSideACm: 245,
+    cornerStandardSideBCm: 220,
     ...dimItems([
      {
       name: "4'lü Koltuk",
@@ -1137,6 +1141,8 @@ async function createProduct(data) {
    widthCm: data.widthCm ?? null,
    depthCm: data.depthCm ?? null,
    heightCm: data.heightCm ?? null,
+   cornerStandardSideACm: data.cornerStandardSideACm ?? null,
+   cornerStandardSideBCm: data.cornerStandardSideBCm ?? null,
    sortOrder: data.sortOrder,
    isFeatured: data.isFeatured ?? false,
    featuredOrder: data.featuredOrder ?? 0,
@@ -1144,9 +1150,9 @@ async function createProduct(data) {
    images: {
     create: imageUrls.map((url, imageIndex) => ({
      url,
-     alt: imageIndex === 0 ? name : `${name} — görsel ${imageIndex + 1} `,
+     alt: imageIndex === 0 ? name : `${name} - görsel ${imageIndex + 1} `,
      altEn:
-      imageIndex === 0 ? nameEn ?? name : `${nameEn ?? name} — image ${imageIndex + 1} `,
+      imageIndex === 0 ? nameEn ?? name : `${nameEn ?? name} - image ${imageIndex + 1} `,
      sortOrder: imageIndex,
      isPrimary: imageIndex === 0,
     })),

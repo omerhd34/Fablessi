@@ -384,10 +384,10 @@ export function ProductsTable({ products }) {
            className="px-4 py-3"
            title={product.categoryGroup?.name ?? undefined}
           >
-           {truncateTableText(product.categoryGroup?.name) ?? "—"}
+           {truncateTableText(product.categoryGroup?.name) ?? "-"}
           </TableCell>
           <TableCell className="px-4 py-3 tabular-nums" title={priceLabel ?? undefined}>
-           {truncateTableText(priceLabel) ?? "—"}
+           {truncateTableText(priceLabel) ?? "-"}
           </TableCell>
           <TableCell className="px-4 py-3">
            <div className="flex flex-wrap items-center gap-1">

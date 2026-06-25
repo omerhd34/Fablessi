@@ -15,10 +15,12 @@ import {
  CarouselDots,
  CarouselItem,
 } from "@/components/ui/carousel";
+import { ProductCornerStandardTable } from "@/components/product/product-corner-standard-table";
 import { ProductDimensionsTable } from "@/components/product/product-dimensions-table";
 import { useLocale } from "@/contexts/locale-provider";
 import { FiInfo, Ruler } from "@/lib/icons";
-import { getDimensionItems } from "@/lib/product-utils";
+import { isCornerGroupProduct } from "@/lib/product-category";
+import { getCornerStandardSize, getDimensionItems } from "@/lib/product-utils";
 import { LG_MQ } from "@/lib/layout/breakpoints";
 import {
  productDetailAccordionItemClass,
@@ -141,6 +143,8 @@ export function ProductDetailCenter({
 }) {
  const { t } = useLocale();
  const dimensionItems = getDimensionItems(product);
+ const showCornerStandard =
+  isCornerGroupProduct(product) && getCornerStandardSize(product) != null;
  const [accordionValue, setAccordionValue] = useState([]);
 
  useEffect(() => {
@@ -207,6 +211,9 @@ export function ProductDetailCenter({
       </AccordionTrigger>
       <AccordionContent className="pb-5">
        <ProductDimensionsTable product={product} t={t} />
+       {showCornerStandard ? (
+        <ProductCornerStandardTable product={product} t={t} className="mt-4" />
+       ) : null}
       </AccordionContent>
      </AccordionItem>
     ) : null}

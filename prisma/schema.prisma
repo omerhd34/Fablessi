@@ -40,6 +40,9 @@ model Product {
   widthCm         Decimal? @db.Decimal(8, 2)
   heightCm        Decimal? @db.Decimal(8, 2)
   depthCm         Decimal? @db.Decimal(8, 2)
+  /// Köşe grubu standart L ölçüsü (cm) - iki kol boyu; genişlik/derinlik/yükseklik değil
+  cornerStandardSideACm Decimal? @db.Decimal(8, 2)
+  cornerStandardSideBCm Decimal? @db.Decimal(8, 2)
   sortOrder      Int      @default(0)
   isPublished    Boolean  @default(true)
   /// Anasayfa vitrininde gösterilecek ürünler

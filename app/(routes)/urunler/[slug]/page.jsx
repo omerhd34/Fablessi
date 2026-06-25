@@ -37,7 +37,7 @@ export async function generateMetadata({ params }) {
   title: product.name,
   description:
    product.description ??
-   `${product.name} — ${seoSuffix}`,
+   `${product.name} - ${seoSuffix}`,
   robots: {
    index: true,
    follow: true,
