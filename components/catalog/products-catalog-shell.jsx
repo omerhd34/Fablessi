@@ -54,6 +54,7 @@ export function ProductsCatalogShell({
  products,
  activeGroup,
  categorySlug,
+ seoDescription,
 }) {
  const { t } = useLocale();
  const [search, setSearch] = useState("");
@@ -81,10 +82,12 @@ export function ProductsCatalogShell({
       {t("home.categoriesTitle")}
      </h1>
      <p className="text-muted-foreground mx-auto mt-3 max-w-2xl text-sm md:mx-0 md:text-base">
-      {t("home.categoriesDescription")}
+      {seoDescription ?? t("home.categoriesDescription")}
      </p>
     </div>
-    <ProductsCategoryGrid />
+    <div data-nosnippet>
+     <ProductsCategoryGrid />
+    </div>
    </div>
   );
  }
@@ -95,29 +98,35 @@ export function ProductsCatalogShell({
     <h1 className={cn(headingDisplayClass, "text-charcoal")}>
      {activeGroup ? activeGroup.label : t("catalog.allProductsTitle")}
     </h1>
+    {seoDescription ? (
+     <p className="text-muted-foreground mt-3 max-w-2xl text-sm md:text-base">
+      {seoDescription}
+     </p>
+    ) : null}
    </div>
 
-   <ProductsCatalogToolbar
-    search={search}
-    onSearchChange={setSearch}
-    sort={sort}
-    onSortChange={setSort}
-   />
+   <div data-nosnippet>
+    <ProductsCatalogToolbar
+     search={search}
+     onSearchChange={setSearch}
+     sort={sort}
+     onSortChange={setSort}
+    />
 
-   {filteredProducts.length > 0 ? (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:gap-6">
-     {filteredProducts.map((product, index) => (
-      <ProductCard
-       key={product.id}
-       product={product}
-       priority={index < 2}
-       variant="catalog"
-      />
-     ))}
-    </div>
-   ) : (
-    <div className="rounded-3xl border border-dashed border-charcoal/12 bg-cream/40 px-6 py-20 text-center">
-     <p className="text-sm font-medium text-charcoal">
+    {filteredProducts.length > 0 ? (
+     <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:gap-6 md:mt-8">
+      {filteredProducts.map((product, index) => (
+       <ProductCard
+        key={product.id}
+        product={product}
+        priority={index < 2}
+        variant="catalog"
+       />
+      ))}
+     </div>
+    ) : (
+     <div className="mt-6 rounded-3xl border border-dashed border-charcoal/12 bg-cream/40 px-6 py-20 text-center md:mt-8">
+      <p className="text-sm font-medium text-charcoal">
       {t("catalog.noProducts")}
      </p>
      <p className="text-muted-foreground mt-2 text-sm">
@@ -131,6 +140,7 @@ export function ProductsCatalogShell({
      <ProductsCategoryCarousel activeSlug={categorySlug} />
     </div>
    ) : null}
+   </div>
   </div>
  );
 }

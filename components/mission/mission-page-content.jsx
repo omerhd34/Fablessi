@@ -52,7 +52,7 @@ export function MissionPageContent() {
       </p>
      ) : null}
 
-     <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+     <div className="grid gap-6 lg:grid-cols-2 lg:gap-8" data-nosnippet>
       <article
        className={cn(
         "mission-statement rounded-2xl px-7 py-9 md:px-9 md:py-10",

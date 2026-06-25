@@ -3,9 +3,7 @@ import { buildProductsMegaMenu } from "@/lib/i18n/build-navigation";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { getLocale, getServerDictionary } from "@/lib/i18n/server";
 import {
- buildUrunlerCatalogHref,
- getGoogleProductsDescription,
- getGoogleSitelinkByHref,
+ getGoogleCatalogMetadata,
  isUrunlerCatalogIndexable,
 } from "@/lib/seo/google-snippets";
 import {
@@ -21,21 +19,17 @@ export const revalidate = 0;
 export async function generateMetadata({ searchParams }) {
  const params = await searchParams;
  const categorySlug = params?.kategori ?? null;
- const catalogHref = buildUrunlerCatalogHref(categorySlug);
- const sitelink = getGoogleSitelinkByHref(catalogHref);
  const { dictionary, locale } = await getServerDictionary();
- const page = dictionary.pages.products;
-
- const title = sitelink?.name ?? page.title;
- const description =
-  sitelink?.description ??
-  getGoogleProductsDescription(categorySlug, locale) ??
-  page.description;
+ const { title, description } = getGoogleCatalogMetadata({
+  categorySlug,
+  locale,
+  dictionary,
+ });
 
  return {
   title,
   description,
-  keywords: page.keywords ?? dictionary.metadata.keywords,
+  keywords: dictionary.pages.products.keywords ?? dictionary.metadata.keywords,
   robots: {
    index: isUrunlerCatalogIndexable({ categorySlug }),
    follow: true,
@@ -53,6 +47,11 @@ export default async function UrunlerPage({ searchParams }) {
  const activeGroup =
   productsMegaMenu.groups.find((group) => group.slug === categorySlug) ?? null;
  const products = categorySlug ? await getPublishedProducts(categorySlug) : [];
+ const { description: seoDescription } = getGoogleCatalogMetadata({
+  categorySlug,
+  locale,
+  dictionary,
+ });
 
  return (
   <div className={cn(containerPremiumClass, pageContentOffsetClass, "pb-20 md:pb-28")}>
@@ -60,6 +59,7 @@ export default async function UrunlerPage({ searchParams }) {
     products={products}
     activeGroup={activeGroup}
     categorySlug={categorySlug}
+    seoDescription={seoDescription}
    />
   </div>
  );

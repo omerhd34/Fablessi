@@ -49,11 +49,17 @@ export function StoreShowcase() {
     <h1 className="mt-3 text-2xl font-semibold tracking-tight text-charcoal md:text-3xl">
      {t("contact.title")}
     </h1>
+    <p className="text-muted-foreground mx-auto mt-3 max-w-2xl text-sm md:text-base">
+     {t("contact.seoIntro")}
+    </p>
    </div>
 
    <div className={cn("grid gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-12", storeShowcaseGridClass)}>
     <div className={cn("flex min-w-0 flex-col", storeShowcaseInfoClass)}>
-     <div className="flex flex-1 flex-col text-sm leading-relaxed text-charcoal/85 md:text-[0.95rem]">
+     <div
+      className="flex flex-1 flex-col text-sm leading-relaxed text-charcoal/85 md:text-[0.95rem]"
+      data-nosnippet
+     >
       <div className="space-y-4">
        <h2 className="font-display text-base font-semibold tracking-[0.18em] text-charcoal md:text-lg">
         {store.name}
