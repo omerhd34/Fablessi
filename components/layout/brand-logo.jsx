@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "@/contexts/locale-provider";
-import { brandSlug } from "@/lib/navigation";
+import { brandFullName } from "@/lib/navigation";
 import { brandLogoImageFilterClass } from "@/lib/layout/header-styles";
 import { cn } from "@/lib/utils";
 
@@ -36,12 +36,12 @@ export function BrandLogoLink({ href = "/", size = "md", className }) {
     "group/logo inline-flex h-fit w-fit cursor-pointer items-center rounded-md px-3.5 py-2.5 -mx-3.5 -my-2.5 align-middle leading-none",
     className
    )}
-   aria-label={`${brandSlug} — ${t("common.home")}`}
+   aria-label={`${brandFullName} — ${t("common.home")}`}
   >
    {/* eslint-disable-next-line @next/next/no-img-element */}
    <img
     src="/brand/logo.png"
-    alt={`${brandSlug} logo`}
+    alt={`${brandFullName} logo`}
     width={LOGO_WIDTH}
     height={LOGO_HEIGHT}
     decoding="async"
