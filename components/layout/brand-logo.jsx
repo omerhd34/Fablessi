@@ -1,16 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "@/contexts/locale-provider";
-import {
- LOGO_DISPLAY_HEIGHT,
- LOGO_DISPLAY_WIDTH,
- LOGO_SIZES,
-} from "@/lib/image-config";
 import { brandFullName } from "@/lib/navigation";
 import { brandLogoImageFilterClass } from "@/lib/layout/header-styles";
 import { cn } from "@/lib/utils";
+
+const LOGO_WIDTH = 1168;
+const LOGO_HEIGHT = 268;
 
 const logoHeightClasses = {
  xs: "h-8",
@@ -41,16 +38,15 @@ export function BrandLogoLink({ href = "/", size = "md", className }) {
    )}
    aria-label={`${brandFullName} - ${t("common.home")}`}
   >
-   <Image
+   {/* eslint-disable-next-line @next/next/no-img-element */}
+   <img
     src="/brand/logo.png"
     alt={`${brandFullName} logo`}
-    width={LOGO_DISPLAY_WIDTH}
-    height={LOGO_DISPLAY_HEIGHT}
-    sizes={LOGO_SIZES}
+    width={LOGO_WIDTH}
+    height={LOGO_HEIGHT}
     decoding="async"
-    priority
+    fetchPriority="high"
     draggable={false}
-    style={{ width: "auto", height: "auto" }}
     className={cn(
      "brand-logo-image m-0 block w-auto max-w-none origin-left scale-100 p-0 antialiased transition-[scale,filter] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] font-features-['kern'_1] [text-rendering:geometricPrecision] group-hover/logo:scale-[1.08] group-focus-visible/logo:scale-[1.08] motion-reduce:duration-150",
      logoHeightClass,

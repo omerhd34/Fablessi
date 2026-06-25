@@ -24,6 +24,7 @@ export function FeaturedProductsGrid({ products }) {
      <ProductCard
       product={product}
       variant="featured"
+      priority={index < 2}
       showFavoriteButton
      />
     </HomeShowcaseSlide>

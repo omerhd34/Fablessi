@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProductFavoriteButton } from "@/components/favorites/product-favorite-button";
 import { useLocale } from "@/contexts/locale-provider";
-import { IMAGE_QUALITY } from "@/lib/image-config";
 import {
  formatProductPrice,
  getPrimaryImageUrl,
@@ -64,7 +63,6 @@ export function ProductCard({
           : "(max-width: 768px) 50vw, 25vw"
        }
        className="size-full object-cover transition-transform duration-500 group-hover/card:scale-[1.03]"
-       quality={IMAGE_QUALITY}
        priority={priority}
       />
      ) : (
