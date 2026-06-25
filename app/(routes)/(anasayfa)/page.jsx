@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { preload } from "react-dom";
 import { getImageProps } from "next/image";
 import { HeroSection } from "@/components/home/hero-section";
+import { IMAGE_QUALITY_HERO } from "@/lib/image-config";
 import { heroSlidesData } from "@/lib/i18n/hero-slides-data";
 import { getHomePageData } from "@/lib/queries/home";
 
@@ -34,6 +35,7 @@ function preloadHeroLcpImage() {
   height: 1920,
   sizes: "100vw",
   priority: true,
+  quality: IMAGE_QUALITY_HERO,
  });
 
  preload(props.src, {

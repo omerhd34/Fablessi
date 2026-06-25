@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { getImageProps } from "next/image";
+import { IMAGE_QUALITY_HERO } from "@/lib/image-config";
 import { PAGE_HERO_IMAGE_KEYS } from "@/lib/content/page-hero-images";
 import {
  HERO_SM2X_MQ,
@@ -39,6 +40,7 @@ function buildOptimizedSource({ media, src, width, height, alt, priority }) {
   height,
   sizes: IMAGE_SIZES,
   priority,
+  quality: IMAGE_QUALITY_HERO,
  });
 
  return <source key={media} media={media} srcSet={props.srcSet} />;
@@ -52,6 +54,7 @@ function buildOptimizedImg({ src, width, height, alt, priority, className }) {
   height,
   sizes: IMAGE_SIZES,
   priority,
+  quality: IMAGE_QUALITY_HERO,
  });
 
  return (

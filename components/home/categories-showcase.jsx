@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 import { useTranslations } from "@/contexts/locale-provider";
+import { IMAGE_QUALITY } from "@/lib/image-config";
 import {
  containerPremiumClass,
  headingDisplayClass,
@@ -33,6 +34,7 @@ function CategoryCard({ category }) {
      alt={category.label}
      fill
      sizes="(max-width: 64rem) 50vw, 33vw"
+     quality={IMAGE_QUALITY}
      className="size-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-[1.03] motion-reduce:duration-150"
     />
     <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/45 via-black/5 to-transparent" />
