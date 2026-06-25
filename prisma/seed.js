@@ -33,10 +33,6 @@ const COLLECTIONS = [
   slug: "acelya",
   name: "Açelya",
   nameEn: "Azalea",
-  description:
-   "Zarif hatları ve dayanıklı outdoor kumaşıyla bahçe ve teras alanları için tasarlanmış oturma grubu serisi.",
-  descriptionEn:
-   "A seating set series designed for garden and terrace areas with elegant lines and durable outdoor fabric.",
   sortOrder: 1,
   products: [
    {
@@ -78,10 +74,24 @@ const COLLECTIONS = [
       amount: 2200,
      },
     ]),
-    description:
-     "Geniş oturum alanı ve hava koşullarına dayanıklı örgü detaylarıyla Açelya oturma grubu.",
-    descriptionEn:
-     "Azalea seating set with spacious seating and weather-resistant weave details.",
+    description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir. Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile dış mekân koşullarında uzun ömürlü ve güvenilir bir kullanım sunar.
+
+• Ürün yüzeyinde kullanılan yüksek kaliteli rattan örgü , doğal rattan görünümünü modern üretim teknolojisiyle birleştirerek estetik ve dayanıklı bir yapı oluşturur. UV ışınlarına ve dış hava koşullarına karşı dirençli yapısı sayesinde formunu uzun süre korur.
+
+• Dış mekân kullanımına uygun malzeme ve üretim teknolojisi sayesinde güneş ışınları, nem, yağmur ve değişken hava koşullarına karşı yüksek dayanım gösterir, uzun süre ilk günkü görünümünü muhafaza eder.
+
+• Farklı renk ve doku seçenekleri ile çeşitli dekoratif anlayışlara ve yaşam alanı konseptlerine uyum sağlayarak mekânlarda bütüncül bir estetik görünüm oluşturur.
+
+• Modern tasarım anlayışı, kaliteli malzeme seçimi ve dayanıklı yapısıyla bahçe, teras ve balkon gibi alanlarda uzun ömürlü ve konforlu bir kullanım imkânı sağlar.`,
+    descriptionEn: `• The product frame is made entirely of aluminum. Its lightweight structure provides easy use while offering high durability and long-lasting performance against rust.
+
+• The high-quality rattan weave used on the surface combines natural rattan appearance with modern production technology to create an aesthetic and durable structure. Its resistance to UV rays and outdoor weather conditions allows it to maintain its form for a long time.
+
+• The product made with material and production technology suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+• Different color and texture options allow for various decorative approaches and align with living area concepts, creating a cohesive aesthetic look in spaces.
+
+• Modern design approach, high-quality material selection and durable structure allow for long-lasting and comfortable use in garden, terrace and balcony areas.`,
     folder: "acelya-oturma",
     imagePrefix: "antrasit",
     sortOrder: 1,
@@ -129,10 +139,24 @@ const COLLECTIONS = [
       amount: 2200,
      },
     ]),
-    description:
-     "Geniş oturum alanı ve hava koşullarına dayanıklı örgü detaylarıyla Açelya oturma grubu.",
-    descriptionEn:
-     "Azalea seating set with spacious seating and weather-resistant weave details.",
+    description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir. Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile dış mekân koşullarında uzun ömürlü ve güvenilir bir kullanım sunar.
+
+• Ürün yüzeyinde kullanılan yüksek kaliteli rattan örgü , doğal rattan görünümünü modern üretim teknolojisiyle birleştirerek estetik ve dayanıklı bir yapı oluşturur. UV ışınlarına ve dış hava koşullarına karşı dirençli yapısı sayesinde formunu uzun süre korur.
+
+• Dış mekân kullanımına uygun malzeme ve üretim teknolojisi sayesinde güneş ışınları, nem, yağmur ve değişken hava koşullarına karşı yüksek dayanım gösterir, uzun süre ilk günkü görünümünü muhafaza eder.
+
+• Farklı renk ve doku seçenekleri ile çeşitli dekoratif anlayışlara ve yaşam alanı konseptlerine uyum sağlayarak mekânlarda bütüncül bir estetik görünüm oluşturur.
+
+• Modern tasarım anlayışı, kaliteli malzeme seçimi ve dayanıklı yapısıyla bahçe, teras ve balkon gibi alanlarda uzun ömürlü ve konforlu bir kullanım imkânı sağlar.`,
+    descriptionEn: `• The product frame is made entirely of aluminum. Its lightweight structure provides easy use while offering high durability and long-lasting performance against rust.
+
+• The high-quality rattan weave used on the surface combines natural rattan appearance with modern production technology to create an aesthetic and durable structure. Its resistance to UV rays and outdoor weather conditions allows it to maintain its form for a long time.
+
+• The product made with material and production technology suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+• Different color and texture options allow for various decorative approaches and align with living area concepts, creating a cohesive aesthetic look in spaces.
+
+• Modern design approach, high-quality material selection and durable structure allow for long-lasting and comfortable use in garden, terrace and balcony areas.`,
     folder: "acelya-oturma",
     imagePrefix: "cappuccino",
     sortOrder: 2,
@@ -145,10 +169,6 @@ const COLLECTIONS = [
   slug: "aston",
   name: "Aston",
   nameEn: "Aston",
-  description:
-   "Modern çizgiler ve konforlu oturum deneyimi sunan Aston serisi; villa ve otel projeleri için ideal.",
-  descriptionEn:
-   "The Aston series offers modern lines and comfortable seating; ideal for villa and hotel projects.",
   sortOrder: 2,
   products: [
    {
@@ -191,10 +211,28 @@ const COLLECTIONS = [
       quantity: 2,
      },
     ]),
-    description:
-     "Alüminyum iskelet ve UV dayanımlı kumaş kaplamalı Aston oturma grubu.",
-    descriptionEn:
-     "Aston seating set with aluminum frame and UV-resistant fabric upholstery.",
+    description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir. Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile uzun ömürlü bir performans sunar.
+  
+    • Üst yüzeylerde kullanılan doğal ahşap detaylar, tasarıma sıcak ve doğal bir karakter kazandırırken dayanıklı yapısıyla uzun yıllar estetik görünümünü korur.
+
+    • Özenle uygulanan örgü detayları, ürüne özgün bir tasarım dili kazandırırken estetik ve konforu bir araya getirir.
+
+    • Dış mekân kullanımına uygun malzeme ve yüzey teknolojileriyle üretilen ürün, güneş ışınları, nem, yağmur ve değişken hava koşullarına karşı yüksek dayanım göstererek ilk günkü görünümünü uzun süre muhafaza eder.
+
+    • Kumaş ve alüminyum yüzeylerde sunulan farklı renk seçenekleri sayesinde çeşitli dekorasyon anlayışlarına uyum sağlayabilir.
+    
+    • Modern çizgileri, kaliteli malzeme seçimi ve zamansız tasarım anlayışıyla yaşam alanlarına estetik ve fonksiyonel bir değer katar.`,
+    descriptionEn: `• The product frame is made entirely of aluminum. Its lightweight structure provides easy use while offering high durability and long-lasting performance against rust.
+  
+    • The natural wood details used on the top surfaces add a warm and natural character to the design while maintaining their durable structure for years of aesthetic appearance.
+
+    • The carefully applied weave details add a unique design language to the product while combining aesthetic and comfort.
+
+    • The product made with material and surface technologies suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+    • The different color options available on the fabric and aluminum surfaces allow for various decoration approaches.
+    
+    • Modern lines, high-quality material selection and timeless design approach add aesthetic and functional value to living areas.`,
     folder: "aston-oturma",
     imagePrefix: "antrasit",
     sortOrder: 1,
@@ -241,10 +279,28 @@ const COLLECTIONS = [
       quantity: 2,
      },
     ]),
-    description:
-     "Alüminyum iskelet ve UV dayanımlı kumaş kaplamalı Aston oturma grubu.",
-    descriptionEn:
-     "Aston seating set with aluminum frame and UV-resistant fabric upholstery.",
+    description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir. Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile uzun ömürlü bir performans sunar.
+  
+• Üst yüzeylerde kullanılan doğal ahşap detaylar, tasarıma sıcak ve doğal bir karakter kazandırırken dayanıklı yapısıyla uzun yıllar estetik görünümünü korur.
+
+• Özenle uygulanan örgü detayları, ürüne özgün bir tasarım dili kazandırırken estetik ve konforu bir araya getirir.
+
+• Dış mekân kullanımına uygun malzeme ve yüzey teknolojileriyle üretilen ürün, güneş ışınları, nem, yağmur ve değişken hava koşullarına karşı yüksek dayanım göstererek ilk günkü görünümünü uzun süre muhafaza eder.
+
+• Kumaş ve alüminyum yüzeylerde sunulan farklı renk seçenekleri sayesinde çeşitli dekorasyon anlayışlarına uyum sağlayabilir.
+    
+• Modern çizgileri, kaliteli malzeme seçimi ve zamansız tasarım anlayışıyla yaşam alanlarına estetik ve fonksiyonel bir değer katar.`,
+    descriptionEn: `• The product frame is made entirely of aluminum. Its lightweight structure provides easy use while offering high durability and long-lasting performance against rust.
+  
+• The natural wood details used on the top surfaces add a warm and natural character to the design while maintaining their durable structure for years of aesthetic appearance.
+
+• The carefully applied weave details add a unique design language to the product while combining aesthetic and comfort.
+
+• The product made with material and surface technologies suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+• The different color options available on the fabric and aluminum surfaces allow for various decoration approaches.
+    
+• Modern lines, high-quality material selection and timeless design approach add aesthetic and functional value to living areas.`,
     folder: "aston-oturma",
     imagePrefix: "cappuccino",
     sortOrder: 2,
@@ -257,10 +313,6 @@ const COLLECTIONS = [
   slug: "begonia",
   name: "Begonia",
   nameEn: "Begonia",
-  description:
-   "Begonia serisi; farklı oturum konfigürasyonlarıyla esnek dış mekân çözümleri sunar.",
-  descriptionEn:
-   "The Begonia series offers flexible outdoor solutions with different seating configurations.",
   sortOrder: 3,
   products: [
    {
@@ -277,8 +329,24 @@ const COLLECTIONS = [
       amount: 5000,
      },
     ]),
-    description: "Kompakt alanlar için tasarlanmış Begonia 2'li oturma grubu.",
-    descriptionEn: "Begonia 2-seater set designed for compact spaces.",
+    description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir. Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile dış mekân koşullarında uzun ömürlü ve güvenilir bir kullanım sunar.
+
+• Ürün yüzeyinde kullanılan yüksek kaliteli rattan örgü , doğal rattan görünümünü modern üretim teknolojisiyle birleştirerek estetik ve dayanıklı bir yapı oluşturur. UV ışınlarına ve dış hava koşullarına karşı dirençli yapısı sayesinde formunu uzun süre korur.
+
+• Dış mekân kullanımına uygun malzeme ve üretim teknolojisi sayesinde güneş ışınları, nem, yağmur ve değişken hava koşullarına karşı yüksek dayanım gösterir, uzun süre ilk günkü görünümünü muhafaza eder.
+
+• Farklı renk ve doku seçenekleri ile çeşitli dekoratif anlayışlara ve yaşam alanı konseptlerine uyum sağlayarak mekânlarda bütüncül bir estetik görünüm oluşturur.
+
+• Modern tasarım anlayışı, kaliteli malzeme seçimi ve dayanıklı yapısıyla bahçe, teras ve balkon gibi alanlarda uzun ömürlü ve konforlu bir kullanım imkânı sağlar.`,
+    descriptionEn: `• The product frame is made entirely of aluminum. Its lightweight structure provides easy use while offering high durability and long-lasting performance against rust.
+
+• The high-quality rattan weave used on the surface combines natural rattan appearance with modern production technology to create an aesthetic and durable structure. Its resistance to UV rays and outdoor weather conditions allows it to maintain its form for a long time.
+
+• The product made with material and production technology suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+• Different color and texture options allow for various decorative approaches and align with living area concepts, creating a cohesive aesthetic look in spaces.
+
+• Modern design approach, high-quality material selection and durable structure allow for long-lasting and comfortable use in garden, terrace and balcony areas.`,
     folder: "begonia-2li",
     imagePrefix: "cappuccino",
     sortOrder: 1,
@@ -325,10 +393,24 @@ const COLLECTIONS = [
       quantity: 2,
      },
     ]),
-    description:
-     "Geniş oturum kapasitesi ve dayanıklı dış mekân malzemeleriyle Begonia oturma grubu.",
-    descriptionEn:
-     "Begonia seating set with generous seating capacity and durable outdoor materials.",
+    description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir. Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile dış mekân koşullarında uzun ömürlü ve güvenilir bir kullanım sunar.
+
+• Ürün yüzeyinde kullanılan yüksek kaliteli rattan örgü , doğal rattan görünümünü modern üretim teknolojisiyle birleştirerek estetik ve dayanıklı bir yapı oluşturur. UV ışınlarına ve dış hava koşullarına karşı dirençli yapısı sayesinde formunu uzun süre korur.
+
+• Dış mekân kullanımına uygun malzeme ve üretim teknolojisi sayesinde güneş ışınları, nem, yağmur ve değişken hava koşullarına karşı yüksek dayanım gösterir, uzun süre ilk günkü görünümünü muhafaza eder.
+
+• Farklı renk ve doku seçenekleri ile çeşitli dekoratif anlayışlara ve yaşam alanı konseptlerine uyum sağlayarak mekânlarda bütüncül bir estetik görünüm oluşturur.
+
+• Modern tasarım anlayışı, kaliteli malzeme seçimi ve dayanıklı yapısıyla bahçe, teras ve balkon gibi alanlarda uzun ömürlü ve konforlu bir kullanım imkânı sağlar.`,
+    descriptionEn: `• The product frame is made entirely of aluminum. Its lightweight structure provides easy use while offering high durability and long-lasting performance against rust.
+
+• The high-quality rattan weave used on the surface combines natural rattan appearance with modern production technology to create an aesthetic and durable structure. Its resistance to UV rays and outdoor weather conditions allows it to maintain its form for a long time.
+
+• The product made with material and production technology suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+• Different color and texture options allow for various decorative approaches and align with living area concepts, creating a cohesive aesthetic look in spaces.
+
+• Modern design approach, high-quality material selection and durable structure allow for long-lasting and comfortable use in garden, terrace and balcony areas.`,
     folder: "begonia-oturma",
     imagePrefix: "antrasit",
     sortOrder: 2,
@@ -375,10 +457,24 @@ const COLLECTIONS = [
       quantity: 2,
      },
     ]),
-    description:
-     "Geniş oturum kapasitesi ve dayanıklı dış mekân malzemeleriyle Begonia oturma grubu.",
-    descriptionEn:
-     "Begonia seating set with generous seating capacity and durable outdoor materials.",
+    description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir. Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile dış mekân koşullarında uzun ömürlü ve güvenilir bir kullanım sunar.
+
+• Ürün yüzeyinde kullanılan yüksek kaliteli rattan örgü , doğal rattan görünümünü modern üretim teknolojisiyle birleştirerek estetik ve dayanıklı bir yapı oluşturur. UV ışınlarına ve dış hava koşullarına karşı dirençli yapısı sayesinde formunu uzun süre korur.
+
+• Dış mekân kullanımına uygun malzeme ve üretim teknolojisi sayesinde güneş ışınları, nem, yağmur ve değişken hava koşullarına karşı yüksek dayanım gösterir, uzun süre ilk günkü görünümünü muhafaza eder.
+
+• Farklı renk ve doku seçenekleri ile çeşitli dekoratif anlayışlara ve yaşam alanı konseptlerine uyum sağlayarak mekânlarda bütüncül bir estetik görünüm oluşturur.
+
+• Modern tasarım anlayışı, kaliteli malzeme seçimi ve dayanıklı yapısıyla bahçe, teras ve balkon gibi alanlarda uzun ömürlü ve konforlu bir kullanım imkânı sağlar.`,
+    descriptionEn: `• The product frame is made entirely of aluminum. Its lightweight structure provides easy use while offering high durability and long-lasting performance against rust.
+
+• The high-quality rattan weave used on the surface combines natural rattan appearance with modern production technology to create an aesthetic and durable structure. Its resistance to UV rays and outdoor weather conditions allows it to maintain its form for a long time.
+
+• The product made with material and production technology suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+• Different color and texture options allow for various decorative approaches and align with living area concepts, creating a cohesive aesthetic look in spaces.
+
+• Modern design approach, high-quality material selection and durable structure allow for long-lasting and comfortable use in garden, terrace and balcony areas.`,
     folder: "begonia-oturma",
     imagePrefix: "gri",
     sortOrder: 3,
@@ -391,10 +487,6 @@ const COLLECTIONS = [
   slug: "tesla",
   name: "Tesla",
   nameEn: "Tesla",
-  description:
-   "Tesla serisi; köşe grupları, masa takımları, oturma grupları ve salıncak ile tam bir bahçe yaşam seti sunar.",
-  descriptionEn:
-   "The Tesla series offers a complete garden living set with corner groups, table sets, seating sets and swings.",
   sortOrder: 4,
   products: [
    {
@@ -451,10 +543,24 @@ const COLLECTIONS = [
       amount: 2800,
      },
     ]),
-    description:
-     "Modüler Tesla köşe grubu; L form oturma düzeni.",
-    descriptionEn:
-     "Modular Tesla corner set with L-shaped seating layout.",
+    description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir. Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile uzun ömürlü bir performans sunar.
+
+• Üst yüzeylerde kullanılan doğal ahşap detaylar, tasarıma sıcak ve doğal bir karakter kazandırırken dayanıklı yapısıyla uzun yıllar estetik görünümünü korur.
+
+• Dış mekân kullanımına uygun malzeme ve yüzey teknolojileriyle üretilen ürün, güneş ışınları, nem, yağmur ve değişken hava koşullarına karşı yüksek dayanım göstererek ilk günkü görünümünü uzun süre muhafaza eder.
+
+• Kumaş ve alüminyum yüzeylerde sunulan farklı renk seçenekleri sayesinde çeşitli dekorasyon anlayışlarına uyum sağlayabilir.
+
+• Modern çizgileri, kaliteli malzeme seçimi ve zamansız tasarım anlayışıyla yaşam alanlarına estetik ve fonksiyonel bir değer katar.`,
+    descriptionEn: `• The product frame is made entirely of aluminum. Its lightweight structure provides easy use while offering high durability and long-lasting performance against rust.
+
+• The natural wood details used on the top surfaces add a warm and natural character to the design while maintaining their durable structure for years of aesthetic appearance.
+
+• The product made with material and surface technologies suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+• The different color options available on the fabric and aluminum surfaces allow for various decoration approaches.
+
+• Modern lines, high-quality material selection and timeless design approach add aesthetic and functional value to living areas.`,
     folder: "tesla-kose",
     imagePrefix: "antrasit",
     sortOrder: 1,
@@ -484,10 +590,28 @@ const COLLECTIONS = [
       quantity: 6,
      },
     ]),
-    description:
-     "Tesla masa grubu; dış mekân yemek ve oturma alanları için masa ve sandalye kombinasyonu.",
-    descriptionEn:
-     "Tesla table set; table and chair combination for outdoor dining and seating areas.",
+    description: `• Ürün, alüminyum iskelet ve doğal ahşap detayların bir araya gelmesiyle üretilmiş masa sandalye grubudur. Sağlam yapısı sayesinde dış mekân kullanımına uygun olup uzun ömürlü ve güvenilir bir performans sunar.
+
+• Sandalyelerin iç içe geçebilme özelliği, kullanım sonrası alan tasarrufu sağlayarak depolama ve düzen açısından pratik bir çözüm sunar.
+
+• Alüminyum gövde, paslanmaya karşı yüksek dayanım göstererek dış mekân koşullarında formunu korur ve uzun süreli kullanım imkânı sağlar.
+
+• Ahşap detaylar, tasarıma doğal ve sıcak bir görünüm kazandırırken estetik bütünlüğü destekler ve yaşam alanlarına şık bir karakter katar.
+
+• Dış mekân kullanımına uygun malzeme yapısı sayesinde güneş ışınları, nem, yağmur ve değişken hava koşullarına karşı yüksek dayanım göstererek ilk günkü görünümünü uzun süre muhafaza eder.
+
+• Modern tasarım çizgisi ve fonksiyonel yapısıyla bahçe, teras ve balkon gibi alanlarda hem estetik hem de kullanışlı bir oturma alanı oluşturur.`,
+    descriptionEn: `• The product is made by combining an aluminum frame and natural wood details. Its durable structure makes it suitable for outdoor use and provides long-lasting and reliable performance.
+
+• The collapsible feature of the chairs provides a practical solution for area savings after use, storage and organization.
+
+• The aluminum body withstands high durability against rust and maintains its form in outdoor conditions, providing long-lasting use.
+
+• The wood details add a natural and warm character to the design while supporting the aesthetic integrity and giving a stylish character to living areas.
+
+• The product made with material suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+• Modern design lines and functional structure create an aesthetic and practical seating area in garden, terrace and balcony areas.`,
     folder: "tesla-masa",
     sortOrder: 2,
     material: "Alüminyum & cam",
@@ -533,16 +657,29 @@ const COLLECTIONS = [
       quantity: 2,
      },
     ]),
-    description:
-     "Tesla oturma grubu; geniş teras ve bahçe alanları için konforlu dış mekân mobilyası.",
-    descriptionEn:
-     "Tesla seating set; comfortable outdoor furniture for spacious terrace and garden areas.",
+    description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir.Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile uzun ömürlü bir performans sunar.
+
+• Üst yüzeylerde kullanılan doğal ahşap detaylar, tasarıma sıcak ve doğal bir karakter kazandırırken dayanıklı yapısıyla uzun yıllar estetik görünümünü korur.
+
+• Dış mekân kullanımına uygun malzeme ve yüzey teknolojileriyle üretilen ürün, güneş ışınları, nem, yağmur ve değişken hava koşullarına karşı yüksek dayanım göstererek ilk günkü görünümünü uzun süre muhafaza eder.
+
+• Kumaş ve alüminyum yüzeylerde sunulan farklı renk seçenekleri sayesinde çeşitli dekorasyon anlayışlarına uyum sağlayabilir.
+
+• Modern çizgileri, kaliteli malzeme seçimi ve zamansız tasarım anlayışıyla yaşam alanlarına estetik ve fonksiyonel bir değer katar.`,
+    descriptionEn: `• The product frame is made entirely of aluminum.Its lightweight structure provides easy use while offering high durability and long - lasting performance against rust.
+
+• The natural wood details used on the top surfaces add a warm and natural character to the design while maintaining their durable structure for years of aesthetic appearance.
+
+• The product made with material and surface technologies suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+• The different color options available on the fabric and aluminum surfaces allow for various decoration approaches.
+
+• Modern lines, high - quality material selection and timeless design approach add aesthetic and functional value to living areas.`,
     folder: "tesla-oturma",
     sortOrder: 3,
     material: "Outdoor kumaş",
     materialEn: "Outdoor fabric",
    },
-   //! ÖLÇÜLER YANLIŞ
    {
     slug: "tesla-salincak",
     name: "Tesla Salıncak",
@@ -561,10 +698,32 @@ const COLLECTIONS = [
       amount: 13000,
      },
     ]),
-    description:
-     "Tesla salıncak; bahçe ve terasta dinlenme için tasarlanmış dayanıklı salıncak modeli.",
-    descriptionEn:
-     "Tesla swing; a durable swing model designed for relaxation in the garden and on the terrace.",
+    description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir.Paslanmaya karşı yüksek dayanımı ile dış mekân koşullarında uzun ömürlü ve güvenilir bir performans sunar.
+
+• 250 kg taşıma kapasitesine sahip sağlam gövde yapısı, yüksek mukavemeti sayesinde güvenli ve dengeli bir kullanım sunarak dayanıklılığı ön planda tutar.
+
+• Ürün üzerinde yer alan tente(gölgelik) sistemi, güneş ışınlarını ve hafif yağmur etkisini azaltarak konforlu bir kullanım alanı oluşturur ve dış mekân kullanımını daha keyifli hale getirir.
+
+• Üründe kullanılan doğal ahşap detaylar, tasarıma sıcak ve estetik bir görünüm kazandırırken dış mekân koşullarına uygun yapısıyla uzun yıllar formunu korur.
+
+• Ergonomik oturum yapısı, rahat bir salınım deneyimi sunarken aynı zamanda stabil ve dengeli bir kullanım sağlar.
+
+• Dış mekân koşullarına uygun malzeme seçimi sayesinde güneş ışınları, nem, yağmur ve değişken hava şartlarına karşı yüksek dayanım göstererek uzun süre ilk günkü görünümünü muhafaza eder.
+
+• Modern tasarım çizgisi, ahşap ve alüminyumun uyumlu birleşimiyle yaşam alanlarına estetik, konfor ve fonksiyonelliği bir arada sunar.`,
+    descriptionEn: `• The product frame is made entirely of aluminum.Its lightweight structure provides easy use while offering high durability and long - lasting performance against rust.
+
+• The strong body structure with a 250 kg load capacity provides safe and balanced use while keeping durability in the foreground.
+
+• The tent(shade) system on the product reduces the effect of sunlight and light rain, creating a comfortable use area and making outdoor use more enjoyable.
+
+• The natural wood details used on the product add a warm and aesthetic character to the design while maintaining their durable structure for years of appearance.
+
+• The ergonomic swing structure provides a comfortable swing experience while also providing stable and balanced use.
+
+• The product made with material suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+• Modern design lines, the harmonious combination of wood and aluminum add aesthetic, comfort and functionality to living areas.`,
     folder: "tesla-salincak",
     sortOrder: 4,
     material: "Alüminyum ve örgü",
@@ -576,10 +735,6 @@ const COLLECTIONS = [
   slug: "velar",
   name: "Velar",
   nameEn: "Velar",
-  description:
-   "Velar serisi; oturma, köşe, masa, salıncak ve şezlong modelleriyle kapsamlı dış mekân koleksiyonu.",
-  descriptionEn:
-   "The Velar series is a comprehensive outdoor collection with seating, corner, table, swing and lounger models.",
   sortOrder: 5,
   products: [
    {
@@ -628,10 +783,28 @@ const COLLECTIONS = [
       quantity: 2,
      },
     ]),
-    description:
-     "Geniş oturum alanı ve modüler yapıya sahip Velar köşe grubu.",
-    descriptionEn:
-     "Velar corner set with spacious seating and modular structure.",
+    description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir.Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile uzun ömürlü bir performans sunar.
+  
+    • Üst yüzeylerde kullanılan doğal ahşap detaylar, tasarıma sıcak ve doğal bir karakter kazandırırken dayanıklı yapısıyla uzun yıllar estetik görünümünü korur.
+
+    • Özenle uygulanan örgü detayları, ürüne özgün bir tasarım dili kazandırırken estetik ve konforu bir araya getirir.
+
+    • Dış mekân kullanımına uygun malzeme ve yüzey teknolojileriyle üretilen ürün, güneş ışınları, nem, yağmur ve değişken hava koşullarına karşı yüksek dayanım göstererek ilk günkü görünümünü uzun süre muhafaza eder.
+
+    • Kumaş ve alüminyum yüzeylerde sunulan farklı renk seçenekleri sayesinde çeşitli dekorasyon anlayışlarına uyum sağlayabilir.
+    
+    • Modern çizgileri, kaliteli malzeme seçimi ve zamansız tasarım anlayışıyla yaşam alanlarına estetik ve fonksiyonel bir değer katar.`,
+    descriptionEn: `• The product frame is made entirely of aluminum.Its lightweight structure provides easy use while offering high durability and long - lasting performance against rust.
+  
+    • The natural wood details used on the top surfaces add a warm and natural character to the design while maintaining their durable structure for years of aesthetic appearance.
+
+    • The carefully applied weave details add a unique design language to the product while combining aesthetic and comfort.
+
+    • The product made with material and surface technologies suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+    • The different color options available on the fabric and aluminum surfaces allow for various decoration approaches.
+    
+    • Modern lines, high - quality material selection and timeless design approach add aesthetic and functional value to living areas.`,
     folder: "velar-kose",
     imagePrefix: "cappuccino",
     sortOrder: 1,
@@ -663,10 +836,32 @@ const COLLECTIONS = [
       quantity: 6,
      },
     ]),
-    description:
-     "Velar masa grubu; teras ve bahçe yemek alanları için şık masa takımı.",
-    descriptionEn:
-     "Velar table set; an elegant dining set for terrace and garden dining areas.",
+    description: `• Ürün, alüminyum iskelet ve doğal ahşap detayların bir araya gelmesiyle üretilmiş masa sandalye grubudur. Sağlam yapısı sayesinde dış mekân kullanımına uygun olup uzun ömürlü ve güvenilir bir performans sunar.
+
+• Sandalyelerin iç içe geçebilme özelliği, kullanım sonrası alan tasarrufu sağlayarak depolama ve düzen açısından pratik bir çözüm sunar.
+
+• Alüminyum gövde, paslanmaya karşı yüksek dayanım göstererek dış mekân koşullarında formunu korur ve uzun süreli kullanım imkânı sağlar.
+
+• Özenle uygulanan örgü detayları, ürüne özgün bir tasarım dili kazandırırken estetik ve konforu bir araya getirir.
+
+• Ahşap detaylar, tasarıma doğal ve sıcak bir görünüm kazandırırken estetik bütünlüğü destekler ve yaşam alanlarına şık bir karakter katar.
+
+• Dış mekân kullanımına uygun malzeme yapısı sayesinde güneş ışınları, nem, yağmur ve değişken hava koşullarına karşı yüksek dayanım göstererek ilk günkü görünümünü uzun süre muhafaza eder.
+
+• Modern tasarım çizgisi ve fonksiyonel yapısıyla bahçe, teras ve balkon gibi alanlarda hem estetik hem de kullanışlı bir oturma alanı oluşturur.`,
+    descriptionEn: `• The product is made by combining an aluminum frame and natural wood details. Its durable structure makes it suitable for outdoor use and provides long-lasting and reliable performance.
+
+• The collapsible feature of the chairs provides a practical solution for area savings after use, storage and organization.
+
+• The aluminum body withstands high durability against rust and maintains its form in outdoor conditions, providing long-lasting use.
+
+• The carefully applied weave details add a unique design language to the product while combining aesthetic and comfort.
+
+• The wood details add a natural and warm character to the design while supporting the aesthetic integrity and giving a stylish character to living areas.
+
+• The product made with material suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+• Modern design lines and functional structure create an aesthetic and practical seating area in garden, terrace and balcony areas.`,
     folder: "velar-masa",
     sortOrder: 2,
     material: "Alüminyum & cam",
@@ -712,10 +907,28 @@ const COLLECTIONS = [
       quantity: 2,
      },
     ]),
-    description:
-     "Velar oturma grubu; premium bahçe mobilyası serisinin en çok tercih edilen modellerinden.",
-    descriptionEn:
-     "Velar seating set; one of the most popular models in the premium garden furniture series.",
+    description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir.Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile uzun ömürlü bir performans sunar.
+  
+    • Üst yüzeylerde kullanılan doğal ahşap detaylar, tasarıma sıcak ve doğal bir karakter kazandırırken dayanıklı yapısıyla uzun yıllar estetik görünümünü korur.
+
+    • Özenle uygulanan örgü detayları, ürüne özgün bir tasarım dili kazandırırken estetik ve konforu bir araya getirir.
+
+    • Dış mekân kullanımına uygun malzeme ve yüzey teknolojileriyle üretilen ürün, güneş ışınları, nem, yağmur ve değişken hava koşullarına karşı yüksek dayanım göstererek ilk günkü görünümünü uzun süre muhafaza eder.
+
+    • Kumaş ve alüminyum yüzeylerde sunulan farklı renk seçenekleri sayesinde çeşitli dekorasyon anlayışlarına uyum sağlayabilir.
+    
+    • Modern çizgileri, kaliteli malzeme seçimi ve zamansız tasarım anlayışıyla yaşam alanlarına estetik ve fonksiyonel bir değer katar.`,
+    descriptionEn: `• The product frame is made entirely of aluminum.Its lightweight structure provides easy use while offering high durability and long - lasting performance against rust.
+  
+    • The natural wood details used on the top surfaces add a warm and natural character to the design while maintaining their durable structure for years of aesthetic appearance.
+
+    • The carefully applied weave details add a unique design language to the product while combining aesthetic and comfort.
+
+    • The product made with material and surface technologies suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+    • The different color options available on the fabric and aluminum surfaces allow for various decoration approaches.
+    
+    • Modern lines, high - quality material selection and timeless design approach add aesthetic and functional value to living areas.`,
     folder: "velar-oturma",
     sortOrder: 3,
     material: "Outdoor kumaş",
@@ -740,10 +953,36 @@ const COLLECTIONS = [
       amount: 12800,
      },
     ]),
-    description:
-     "Velar salıncak; havuz kenarı ve teras dinlenme köşeleri için.",
-    descriptionEn:
-     "Velar swing; for poolside and terrace relaxation corners.",
+    description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir.Paslanmaya karşı yüksek dayanımı ile dış mekân koşullarında uzun ömürlü ve güvenilir bir performans sunar.
+
+• 250 kg taşıma kapasitesine sahip sağlam gövde yapısı, yüksek mukavemeti sayesinde güvenli ve dengeli bir kullanım sunarak dayanıklılığı ön planda tutar.
+
+• Ürün üzerinde yer alan tente(gölgelik) sistemi, güneş ışınlarını ve hafif yağmur etkisini azaltarak konforlu bir kullanım alanı oluşturur ve dış mekân kullanımını daha keyifli hale getirir.
+
+• Üründe kullanılan doğal ahşap detaylar, tasarıma sıcak ve estetik bir görünüm kazandırırken dış mekân koşullarına uygun yapısıyla uzun yıllar formunu korur.
+
+• Özenle uygulanan örgü detayları, ürüne özgün bir tasarım dili kazandırırken estetik ve konforu bir araya getirir.
+
+• Ergonomik oturum yapısı, rahat bir salınım deneyimi sunarken aynı zamanda stabil ve dengeli bir kullanım sağlar.
+
+• Dış mekân koşullarına uygun malzeme seçimi sayesinde güneş ışınları, nem, yağmur ve değişken hava şartlarına karşı yüksek dayanım göstererek uzun süre ilk günkü görünümünü muhafaza eder.
+
+• Modern tasarım çizgisi, ahşap ve alüminyumun uyumlu birleşimiyle yaşam alanlarına estetik, konfor ve fonksiyonelliği bir arada sunar.`,
+    descriptionEn: `• The product frame is made entirely of aluminum.Its lightweight structure provides easy use while offering high durability and long - lasting performance against rust.
+
+• The strong body structure with a 250 kg load capacity provides safe and balanced use while keeping durability in the foreground.
+
+• The tent(shade) system on the product reduces the effect of sunlight and light rain, creating a comfortable use area and making outdoor use more enjoyable.
+
+• The natural wood details used on the product add a warm and aesthetic character to the design while maintaining their durable structure for years of appearance.
+
+• The carefully applied weave details add a unique design language to the product while combining aesthetic and comfort.
+
+• The ergonomic swing structure provides a comfortable swing experience while also providing stable and balanced use.
+
+• The product made with material suitable for outdoor use withstands high durability against sunlight, humidity, rain and variable weather conditions, preserving its original appearance for a long time.
+
+• Modern design lines, the harmonious combination of wood and aluminum add aesthetic, comfort and functionality to living areas.`,
     folder: "velar-salincak",
     sortOrder: 4,
     isFeatured: true,
@@ -773,10 +1012,24 @@ const COLLECTIONS = [
       amount: 2400,
      },
     ]),
-    description:
-     "Velar şezlong; ayarlanabilir sırtlı yapısıyla havuz ve güneş terası kullanımına uygun.",
-    descriptionEn:
-     "Velar sun lounger with adjustable backrest; suitable for pool and sun terrace use.",
+    description: `• Ürün, alüminyum iskelet ve doğal ahşap detayların birleşimiyle üretilmiş dış mekân şezlongudur. Sağlam yapısı sayesinde uzun ömürlü ve güvenilir kullanım sunar.
+
+• Alüminyum gövde, paslanmaya karşı yüksek dayanım göstererek dış mekân koşullarında formunu korur ve dayanıklılık sağlar.
+
+• Ahşap detaylar tasarıma doğal ve sıcak bir görünüm kazandırırken estetik bütünlüğü destekler.
+
+• Dış mekân kullanımına uygun yapısı sayesinde güneş, nem ve yağmur gibi hava koşullarına karşı yüksek direnç gösterir.
+
+• Minderli yapısı, konforlu bir oturum ve uzun süreli rahat kullanım imkânı sunar.
+
+• Modern tasarımıyla havuz kenarı, bahçe ve teras gibi alanlarda şık ve kullanışlı bir kullanım alanı oluşturur.`,
+    descriptionEn: `• The product is made by combining an aluminum frame and natural wood details. Its durable structure makes it suitable for outdoor use and provides long-lasting and reliable performance.
+
+• The aluminum body withstands high durability against rust and maintains its form in outdoor conditions.
+
+• The wood details add a natural, warm and aesthetic character to the design.
+
+• The product made with material suitable for outdoor use withstands high durability against sunlight, humidity and rain.`,
     folder: "velar-sezlong",
     sortOrder: 5,
     material: "Alüminyum",
@@ -788,10 +1041,6 @@ const COLLECTIONS = [
   slug: "trend",
   name: "Trend",
   nameEn: "Trend",
-  description:
-   "Trend serisi; sallanır sandalye modeliyle bahçe ve balkon alanlarına hareket katar.",
-  descriptionEn:
-   "The Trend series adds movement to garden and balcony areas with its rocking chair model.",
   sortOrder: 6,
   products: [
    {
@@ -816,10 +1065,26 @@ const COLLECTIONS = [
       amount: 2600,
      },
     ]),
-    description:
-     "Trend sallanır sandalye; rahat oturum ve salınım hareketiyle teras ve bahçe keyfi.",
-    descriptionEn:
-     "Trend rocking chair; terrace and garden enjoyment with comfortable seating and gentle rocking motion.",
+    description: `• Ürün, alüminyum iskelet ve doğal ahşap detayların birleşimiyle üretilmiş sallanır sandalye modelidir. Sağlam yapısı sayesinde dış mekân kullanımına uygun ve uzun ömürlüdür.
+
+• Alüminyum gövde, paslanmaya karşı yüksek dayanım göstererek dış ortam koşullarında formunu korur.
+
+• Ahşap detaylar tasarıma doğal, sıcak ve estetik bir görünüm kazandırır.
+
+• Sallanır yapısı sayesinde konforlu ve rahatlatıcı bir oturum deneyimi sunar.
+
+• Dış mekân kullanımına uygun malzemesi ile güneş, nem ve yağmur gibi etkenlere karşı dayanıklıdır.
+
+• Modern tasarımıyla bahçe, teras ve balkon gibi alanlarda hem şık hem de keyifli bir kullanım sağlar.`,
+    descriptionEn: `• The product is made by combining an aluminum frame and natural wood details. Its durable structure makes it suitable for outdoor use and provides long-lasting and reliable performance.
+
+• The aluminum body withstands high durability against rust and maintains its form in outdoor conditions.
+
+• The wood details add a natural, warm and aesthetic character to the design.
+
+• The rocking structure provides a comfortable and relaxing seating experience.
+
+• The product made with material suitable for outdoor use withstands high durability against sunlight, humidity and rain.`,
     folder: "trend-sandalye",
     sortOrder: 1,
     isFeatured: true,
@@ -842,7 +1107,7 @@ function resolveProductImages(productData) {
 function resolveCoverImage(productData) {
  const images = resolveProductImages(productData);
  if (images.length === 0) {
-  throw new Error(`Kapak görseli bulunamadı: ${productData.folder}`);
+  throw new Error(`Kapak görseli bulunamadı: ${productData.folder} `);
  }
 
  return images[0];
@@ -853,7 +1118,7 @@ async function createProduct(data) {
  const nameEn = data.nameEn?.trim() || null;
  const imageUrls = resolveProductImages(data);
  if (imageUrls.length === 0) {
-  throw new Error(`Görsel bulunamadı: ${data.folder}`);
+  throw new Error(`Görsel bulunamadı: ${data.folder} `);
  }
 
  await prisma.product.create({
@@ -877,9 +1142,9 @@ async function createProduct(data) {
    images: {
     create: imageUrls.map((url, imageIndex) => ({
      url,
-     alt: imageIndex === 0 ? name : `${name} — görsel ${imageIndex + 1}`,
+     alt: imageIndex === 0 ? name : `${name} — görsel ${imageIndex + 1} `,
      altEn:
-      imageIndex === 0 ? nameEn ?? name : `${nameEn ?? name} — image ${imageIndex + 1}`,
+      imageIndex === 0 ? nameEn ?? name : `${nameEn ?? name} — image ${imageIndex + 1} `,
      sortOrder: imageIndex,
      isPrimary: imageIndex === 0,
     })),
@@ -969,12 +1234,12 @@ async function main() {
  ]);
 
  console.log("\nSeed tamamlandı:");
- console.log(`  Kategori grubu: ${counts[0]}`);
- console.log(`  Ürün: ${counts[1]}`);
- console.log(`  Görsel: ${counts[2]}`);
- console.log(`  İçerik bloğu: ${contentCounts[0]}`);
- console.log(`  SSS kategorisi: ${contentCounts[1]}`);
- console.log(`  SSS sorusu: ${contentCounts[2]}`);
+ console.log(`  Kategori grubu: ${counts[0]} `);
+ console.log(`  Ürün: ${counts[1]} `);
+ console.log(`  Görsel: ${counts[2]} `);
+ console.log(`  İçerik bloğu: ${contentCounts[0]} `);
+ console.log(`  SSS kategorisi: ${contentCounts[1]} `);
+ console.log(`  SSS sorusu: ${contentCounts[2]} `);
 }
 
 main()
