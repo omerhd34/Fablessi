@@ -37,8 +37,8 @@ const COLLECTIONS = [
   products: [
    {
     slug: "acelya-oturma-antrasit",
-    name: "Açelya Oturma Grubu",
-    nameEn: "Azalea Seating Set",
+    name: "Açelya Antrasit Oturma Grubu",
+    nameEn: "Azalea Anthracite Seating Set",
     ...dimItems([
      {
       name: "3'lü Koltuk",
@@ -102,8 +102,8 @@ const COLLECTIONS = [
    },
    {
     slug: "acelya-oturma-cappuccino",
-    name: "Açelya Oturma Grubu",
-    nameEn: "Azalea Seating Set",
+    name: "Açelya Cappuccino Oturma Grubu",
+    nameEn: "Azalea Cappuccino Seating Set",
     ...dimItems([
      {
       name: "3'lü Koltuk",
@@ -173,8 +173,8 @@ const COLLECTIONS = [
   products: [
    {
     slug: "aston-oturma-antrasit",
-    name: "Aston Oturma Grubu",
-    nameEn: "Aston Seating Set",
+    name: "Aston Antrasit Oturma Grubu",
+    nameEn: "Aston Anthracite Seating Set",
     ...dimItems([
      {
       name: "3'lü Koltuk",
@@ -241,8 +241,8 @@ const COLLECTIONS = [
    },
    {
     slug: "aston-oturma-cappuccino",
-    name: "Aston Oturma Grubu",
-    nameEn: "Aston Seating Set",
+    name: "Aston Cappuccino Oturma Grubu",
+    nameEn: "Aston Cappuccino Seating Set",
     ...dimItems([
      {
       name: "3'lü Koltuk",
@@ -317,8 +317,8 @@ const COLLECTIONS = [
   products: [
    {
     slug: "begonia-2li",
-    name: "Begonia 2'li Oturma Grubu",
-    nameEn: "Begonia 2-Seater Set",
+    name: "Begonia Cappuccino Oturma Grubu",
+    nameEn: "Begonia Cappuccino Seating Set",
     ...dimItems([
      {
       name: "2'li Koltuk",
@@ -355,8 +355,8 @@ const COLLECTIONS = [
    },
    {
     slug: "begonia-oturma-antrasit",
-    name: "Begonia Oturma Grubu",
-    nameEn: "Begonia Seating Set",
+    name: "Begonia Antrasit Oturma Grubu",
+    nameEn: "Begonia Anthracite Seating Set",
     ...dimItems([
      {
       name: "3'lü Koltuk",
@@ -419,8 +419,8 @@ const COLLECTIONS = [
    },
    {
     slug: "begonia-oturma-gri",
-    name: "Begonia Oturma Grubu",
-    nameEn: "Begonia Seating Set",
+    name: "Begonia Gri Oturma Grubu",
+    nameEn: "Begonia Grey Seating Set",
     ...dimItems([
      {
       name: "3'lü Koltuk",
@@ -495,13 +495,6 @@ const COLLECTIONS = [
     nameEn: "Tesla Corner Set",
     ...dimItems([
      {
-      name: "Köşe",
-      nameEn: "Corner",
-      widthCm: 220,
-      depthCm: 245,
-      amount: 11000,
-     },
-     {
       name: "4'lü Koltuk",
       nameEn: "4-Seater Sofa",
       widthCm: 245,
@@ -535,8 +528,8 @@ const COLLECTIONS = [
       quantity: 2,
      },
      {
-      name: "Sehpa",
-      nameEn: "Coffee Table",
+      name: "Kol Sehpası",
+      nameEn: "Arm Side Table",
       widthCm: 40,
       depthCm: 40,
       heightCm: 43,
@@ -743,13 +736,6 @@ const COLLECTIONS = [
     nameEn: "Velar Corner Set",
     ...dimItems([
      {
-      name: "Köşe",
-      nameEn: "Corner",
-      widthCm: 220,
-      depthCm: 245,
-      amount: 12500,
-     },
-     {
       name: "4'lü Koltuk",
       nameEn: "4-Seater Sofa",
       widthCm: 245,
@@ -781,6 +767,14 @@ const COLLECTIONS = [
       heightCm: 43,
       amount: 2000,
       quantity: 2,
+     },
+     {
+      name: "Kol Sehpası",
+      nameEn: "Arm Side Table",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 43,
+      amount: 2800,
      },
     ]),
     description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir.Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile uzun ömürlü bir performans sunar.
@@ -1044,9 +1038,9 @@ const COLLECTIONS = [
   sortOrder: 6,
   products: [
    {
-    slug: "trend-sandalye",
-    name: "Trend Sallanır Sandalye",
-    nameEn: "Trend Rocking Chair",
+    slug: "trend-sandalye-cappuccino",
+    name: "Trend Cappuccino Sallanır Sandalye",
+    nameEn: "Trend Cappuccino Rocking Chair",
     ...dimItems([
      {
       name: "Sandalye",
@@ -1086,9 +1080,58 @@ const COLLECTIONS = [
 
 • The product made with material suitable for outdoor use withstands high durability against sunlight, humidity and rain.`,
     folder: "trend-sandalye",
+    imageFiles: ["01.jpg", "02.jpg", "03.jpg", "04.jpg"],
     sortOrder: 1,
     isFeatured: true,
     featuredOrder: 3,
+    material: "Alüminyum ve örgü",
+    materialEn: "Aluminum and weave",
+   },
+   {
+    slug: "trend-sandalye-antrasit",
+    name: "Trend Antrasit Sallanır Sandalye",
+    nameEn: "Trend Anthracite Rocking Chair",
+    ...dimItems([
+     {
+      name: "Sandalye",
+      nameEn: "Chair",
+      widthCm: 65,
+      depthCm: 100,
+      heightCm: 90,
+      amount: 4200,
+     },
+     {
+      name: "Sehpa",
+      nameEn: "Coffee Table",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 55,
+      amount: 2600,
+     },
+    ]),
+    description: `• Ürün, alüminyum iskelet ve doğal ahşap detayların birleşimiyle üretilmiş sallanır sandalye modelidir. Sağlam yapısı sayesinde dış mekân kullanımına uygun ve uzun ömürlüdür.
+
+• Alüminyum gövde, paslanmaya karşı yüksek dayanım göstererek dış ortam koşullarında formunu korur.
+
+• Ahşap detaylar tasarıma doğal, sıcak ve estetik bir görünüm kazandırır.
+
+• Sallanır yapısı sayesinde konforlu ve rahatlatıcı bir oturum deneyimi sunar.
+
+• Dış mekân kullanımına uygun malzemesi ile güneş, nem ve yağmur gibi etkenlere karşı dayanıklıdır.
+
+• Modern tasarımıyla bahçe, teras ve balkon gibi alanlarda hem şık hem de keyifli bir kullanım sağlar.`,
+    descriptionEn: `• The product is made by combining an aluminum frame and natural wood details. Its durable structure makes it suitable for outdoor use and provides long-lasting and reliable performance.
+
+• The aluminum body withstands high durability against rust and maintains its form in outdoor conditions.
+
+• The wood details add a natural, warm and aesthetic character to the design.
+
+• The rocking structure provides a comfortable and relaxing seating experience.
+
+• The product made with material suitable for outdoor use withstands high durability against sunlight, humidity and rain.`,
+    folder: "trend-sandalye",
+    imageFiles: ["05.jpg", "06.jpg", "07.jpg", "08.jpg"],
+    sortOrder: 2,
     material: "Alüminyum ve örgü",
     materialEn: "Aluminum and weave",
    },
@@ -1097,6 +1140,12 @@ const COLLECTIONS = [
 ];
 
 function resolveProductImages(productData) {
+ if (productData.imageFiles?.length) {
+  return productData.imageFiles.map((file) =>
+   resolveMediaUrl(`/${productData.folder}/${file}`)
+  );
+ }
+
  if (productData.imagePrefix) {
   return publicImages(productData.folder, productData.imagePrefix);
  }
