@@ -46,7 +46,7 @@ const COLLECTIONS = [
       widthCm: 185,
       depthCm: 75,
       heightCm: 80,
-      amount: 6500,
+      amount: 27900,
      },
      {
       name: "Tekli Koltuk",
@@ -54,7 +54,7 @@ const COLLECTIONS = [
       widthCm: 75,
       depthCm: 75,
       heightCm: 80,
-      amount: 3800,
+      amount: 13125,
       quantity: 2,
      },
      {
@@ -63,7 +63,7 @@ const COLLECTIONS = [
       widthCm: 80,
       depthCm: 140,
       heightCm: 70,
-      amount: 5200,
+      amount: 7500,
      },
      {
       name: "Benç",
@@ -71,7 +71,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 43,
-      amount: 2200,
+      amount: 6750,
      },
     ]),
     description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir. Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile dış mekân koşullarında uzun ömürlü ve güvenilir bir kullanım sunar.
@@ -109,7 +109,7 @@ const COLLECTIONS = [
       widthCm: 185,
       depthCm: 75,
       heightCm: 80,
-      amount: 6500,
+      amount: 27900,
      },
      {
       name: "Tekli Koltuk",
@@ -117,7 +117,7 @@ const COLLECTIONS = [
       widthCm: 75,
       depthCm: 75,
       heightCm: 80,
-      amount: 3800,
+      amount: 13125,
       quantity: 2,
      },
      {
@@ -126,7 +126,7 @@ const COLLECTIONS = [
       widthCm: 80,
       depthCm: 140,
       heightCm: 70,
-      amount: 5200,
+      amount: 7500,
      },
      {
       name: "Benç",
@@ -134,7 +134,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 43,
-      amount: 2200,
+      amount: 6750,
      },
     ]),
     description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir. Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile dış mekân koşullarında uzun ömürlü ve güvenilir bir kullanım sunar.
@@ -178,7 +178,7 @@ const COLLECTIONS = [
       widthCm: 185,
       depthCm: 85,
       heightCm: 80,
-      amount: 5500,
+      amount: 23400,
      },
      {
       name: "Tekli Koltuk",
@@ -186,7 +186,7 @@ const COLLECTIONS = [
       widthCm: 70,
       depthCm: 85,
       heightCm: 80,
-      amount: 3500,
+      amount: 12150,
       quantity: 2,
      },
      {
@@ -195,7 +195,7 @@ const COLLECTIONS = [
       widthCm: 80,
       depthCm: 140,
       heightCm: 70,
-      amount: 5000,
+      amount: 9000,
      },
      {
       name: "Puf",
@@ -203,7 +203,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 43,
-      amount: 2000,
+      amount: 3450,
       quantity: 2,
      },
     ]),
@@ -244,7 +244,7 @@ const COLLECTIONS = [
       widthCm: 185,
       depthCm: 85,
       heightCm: 80,
-      amount: 5500,
+      amount: 23400,
      },
      {
       name: "Tekli Koltuk",
@@ -252,7 +252,7 @@ const COLLECTIONS = [
       widthCm: 70,
       depthCm: 85,
       heightCm: 80,
-      amount: 3500,
+      amount: 12150,
       quantity: 2,
      },
      {
@@ -261,7 +261,7 @@ const COLLECTIONS = [
       widthCm: 80,
       depthCm: 140,
       heightCm: 70,
-      amount: 5000,
+      amount: 9000,
      },
      {
       name: "Puf",
@@ -269,7 +269,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 43,
-      amount: 2000,
+      amount: 3450,
       quantity: 2,
      },
     ]),
@@ -308,17 +308,43 @@ const COLLECTIONS = [
   sortOrder: 3,
   products: [
    {
-    slug: "begonia-2li",
+    slug: "begonia-oturma-cappuccino",
     name: "Begonia Cappuccino Oturma Grubu",
     nameEn: "Begonia Cappuccino Seating Set",
     ...dimItems([
      {
       name: "2'li Koltuk",
       nameEn: "2-Seater Sofa",
-      widthCm: 125,
+      widthCm: 185,
       depthCm: 75,
       heightCm: 80,
-      amount: 5000,
+      amount: 16100,
+     },
+     {
+      name: "Tekli Koltuk",
+      nameEn: "Armchair",
+      widthCm: 70,
+      depthCm: 75,
+      heightCm: 80,
+      amount: 9000,
+      quantity: 2,
+     },
+     {
+      name: "Masa",
+      nameEn: "Table",
+      widthCm: 80,
+      depthCm: 140,
+      heightCm: 70,
+      amount: 9300,
+     },
+     {
+      name: "Puf",
+      nameEn: "Pouf",
+      widthCm: 40,
+      depthCm: 40,
+      heightCm: 43,
+      amount: 2300,
+      quantity: 2,
      },
     ]),
     description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir. Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile dış mekân koşullarında uzun ömürlü ve güvenilir bir kullanım sunar.
@@ -340,7 +366,18 @@ const COLLECTIONS = [
 
 • Modern design approach, high-quality material selection and durable structure allow for long-lasting and comfortable use in garden, terrace and balcony areas.`,
     folder: "begonia-2li",
-    imagePrefix: "cappuccino",
+    imageFiles: [
+     "cappuccino-01.jpg",
+     "cappuccino-02.jpg",
+     "cappuccino-03.jpg",
+     "cappuccino-04.jpg",
+     "cappuccino-05.jpg",
+     "cappuccino-06.jpg",
+     "cappuccino-07.jpg",
+     "cappuccino-08.jpg",
+     "cappuccino-09.jpg",
+     "cappuccino-10.jpg",
+    ],
     sortOrder: 9,
    },
    {
@@ -349,12 +386,12 @@ const COLLECTIONS = [
     nameEn: "Begonia Anthracite Seating Set",
     ...dimItems([
      {
-      name: "3'lü Koltuk",
+      name: "2'lü Koltuk",
       nameEn: "3-Seater Sofa",
-      widthCm: 185,
+      widthCm: 125,
       depthCm: 75,
       heightCm: 80,
-      amount: 6200,
+      amount: 19100,
      },
      {
       name: "Tekli Koltuk",
@@ -362,7 +399,7 @@ const COLLECTIONS = [
       widthCm: 70,
       depthCm: 75,
       heightCm: 80,
-      amount: 3400,
+      amount: 9000,
       quantity: 2,
      },
      {
@@ -371,7 +408,7 @@ const COLLECTIONS = [
       widthCm: 80,
       depthCm: 140,
       heightCm: 70,
-      amount: 5100,
+      amount: 9300,
      },
      {
       name: "Puf",
@@ -379,7 +416,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 43,
-      amount: 1900,
+      amount: 2300,
       quantity: 2,
      },
     ]),
@@ -416,7 +453,7 @@ const COLLECTIONS = [
       widthCm: 185,
       depthCm: 75,
       heightCm: 80,
-      amount: 6200,
+      amount: 19100,
      },
      {
       name: "Tekli Koltuk",
@@ -424,7 +461,7 @@ const COLLECTIONS = [
       widthCm: 70,
       depthCm: 75,
       heightCm: 80,
-      amount: 3400,
+      amount: 9000,
       quantity: 2,
      },
      {
@@ -433,7 +470,7 @@ const COLLECTIONS = [
       widthCm: 80,
       depthCm: 140,
       heightCm: 70,
-      amount: 5100,
+      amount: 9300,
      },
      {
       name: "Puf",
@@ -441,7 +478,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 43,
-      amount: 1900,
+      amount: 2300,
       quantity: 2,
      },
     ]),
@@ -488,7 +525,7 @@ const COLLECTIONS = [
       widthCm: 245,
       depthCm: 75,
       heightCm: 80,
-      amount: 7800,
+      amount: 33600,
      },
      {
       name: "2'li Koltuk",
@@ -496,7 +533,7 @@ const COLLECTIONS = [
       widthCm: 120,
       depthCm: 75,
       heightCm: 80,
-      amount: 5000,
+      amount: 16350,
      },
      {
       name: "Masa",
@@ -504,7 +541,7 @@ const COLLECTIONS = [
       widthCm: 80,
       depthCm: 140,
       heightCm: 70,
-      amount: 5400,
+      amount: 8850,
      },
      {
       name: "Puf",
@@ -512,7 +549,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 43,
-      amount: 2100,
+      amount: 3450,
       quantity: 2,
      },
      {
@@ -521,7 +558,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 43,
-      amount: 2800,
+      amount: 7500,
      },
     ]),
     description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir. Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile uzun ömürlü bir performans sunar.
@@ -557,7 +594,7 @@ const COLLECTIONS = [
       widthCm: 160,
       depthCm: 90,
       heightCm: 75,
-      amount: 6500,
+      amount: 27900,
      },
      {
       name: "Sandalye",
@@ -565,7 +602,7 @@ const COLLECTIONS = [
       widthCm: 57,
       depthCm: 60,
       heightCm: 85,
-      amount: 1250,
+      amount: 6750,
       quantity: 6,
      },
     ]),
@@ -605,7 +642,7 @@ const COLLECTIONS = [
       widthCm: 185,
       depthCm: 75,
       heightCm: 80,
-      amount: 6800,
+      amount: 28200,
      },
      {
       name: "Tekli Koltuk",
@@ -613,7 +650,7 @@ const COLLECTIONS = [
       widthCm: 75,
       depthCm: 75,
       heightCm: 80,
-      amount: 3600,
+      amount: 13250,
       quantity: 2,
      },
      {
@@ -622,7 +659,7 @@ const COLLECTIONS = [
       widthCm: 80,
       depthCm: 140,
       heightCm: 70,
-      amount: 5300,
+      amount: 8000,
      },
      {
       name: "Puf",
@@ -630,7 +667,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 43,
-      amount: 2000,
+      amount: 3450,
       quantity: 2,
      },
     ]),
@@ -670,7 +707,7 @@ const COLLECTIONS = [
       widthCm: 220,
       depthCm: 125,
       heightCm: 205,
-      amount: 13000,
+      amount: 1,
      },
     ]),
     description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir.Paslanmaya karşı yüksek dayanımı ile dış mekân koşullarında uzun ömürlü ve güvenilir bir performans sunar.
@@ -723,7 +760,7 @@ const COLLECTIONS = [
       widthCm: 245,
       depthCm: 75,
       heightCm: 80,
-      amount: 8200,
+      amount: 36750,
      },
      {
       name: "2'li Koltuk",
@@ -731,7 +768,7 @@ const COLLECTIONS = [
       widthCm: 120,
       depthCm: 75,
       heightCm: 80,
-      amount: 5000,
+      amount: 18600,
      },
      {
       name: "Masa",
@@ -739,7 +776,7 @@ const COLLECTIONS = [
       widthCm: 80,
       depthCm: 140,
       heightCm: 70,
-      amount: 5600,
+      amount: 9750,
      },
      {
       name: "Puf",
@@ -747,7 +784,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 43,
-      amount: 2000,
+      amount: 3450,
       quantity: 2,
      },
      {
@@ -756,7 +793,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 43,
-      amount: 2800,
+      amount: 8400,
      },
     ]),
     description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir.Hafif yapısı sayesinde kullanım kolaylığı sağlarken, paslanmaya karşı yüksek dayanımı ile uzun ömürlü bir performans sunar.
@@ -798,7 +835,7 @@ const COLLECTIONS = [
       widthCm: 190,
       depthCm: 90,
       heightCm: 75,
-      amount: 7200,
+      amount: 30300,
      },
      {
       name: "Sandalye",
@@ -806,7 +843,7 @@ const COLLECTIONS = [
       widthCm: 57,
       depthCm: 60,
       heightCm: 85,
-      amount: 3400,
+      amount: 6750,
       quantity: 6,
      },
     ]),
@@ -850,7 +887,7 @@ const COLLECTIONS = [
       widthCm: 185,
       depthCm: 75,
       heightCm: 80,
-      amount: 7000,
+      amount: 30900,
      },
      {
       name: "Tekli Koltuk",
@@ -858,7 +895,7 @@ const COLLECTIONS = [
       widthCm: 75,
       depthCm: 75,
       heightCm: 80,
-      amount: 3700,
+      amount: 14625,
       quantity: 2,
      },
      {
@@ -867,7 +904,7 @@ const COLLECTIONS = [
       widthCm: 80,
       depthCm: 140,
       heightCm: 70,
-      amount: 5500,
+      amount: 9750,
      },
      {
       name: "Puf",
@@ -875,7 +912,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 43,
-      amount: 2100,
+      amount: 3450,
       quantity: 2,
      },
     ]),
@@ -969,7 +1006,7 @@ const COLLECTIONS = [
       widthCm: 75,
       depthCm: 195,
       heightCm: 85,
-      amount: 6800,
+      amount: 21600,
      },
      {
       name: "Sehpa",
@@ -977,7 +1014,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 40,
-      amount: 2400,
+      amount: 6000,
      },
     ]),
     description: `• Ürün, alüminyum iskelet ve doğal ahşap detayların birleşimiyle üretilmiş dış mekân şezlongudur. Sağlam yapısı sayesinde uzun ömürlü ve güvenilir kullanım sunar.
@@ -1020,7 +1057,7 @@ const COLLECTIONS = [
       widthCm: 65,
       depthCm: 100,
       heightCm: 90,
-      amount: 4200,
+      amount: 13500,
      },
      {
       name: "Sehpa",
@@ -1028,7 +1065,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 55,
-      amount: 2600,
+      amount: 6000,
      },
     ]),
     description: `• Ürün, alüminyum iskelet ve doğal ahşap detayların birleşimiyle üretilmiş sallanır sandalye modelidir. Sağlam yapısı sayesinde dış mekân kullanımına uygun ve uzun ömürlüdür.
@@ -1066,7 +1103,7 @@ const COLLECTIONS = [
       widthCm: 65,
       depthCm: 100,
       heightCm: 90,
-      amount: 4200,
+      amount: 13500,
      },
      {
       name: "Sehpa",
@@ -1074,7 +1111,7 @@ const COLLECTIONS = [
       widthCm: 40,
       depthCm: 40,
       heightCm: 55,
-      amount: 2600,
+      amount: 6000,
      },
     ]),
     description: `• Ürün, alüminyum iskelet ve doğal ahşap detayların birleşimiyle üretilmiş sallanır sandalye modelidir. Sağlam yapısı sayesinde dış mekân kullanımına uygun ve uzun ömürlüdür.
