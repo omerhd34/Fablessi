@@ -16,6 +16,7 @@ import { buildNavigation, getProductCategoryGroupFromMenu } from "@/lib/i18n/bui
 import {
  getCategoryRelatedProducts,
  getProductBySlug,
+ getProductDetailSecondaryCategoryGroup,
 } from "@/lib/queries/products";
 
 export const revalidate = 60;
@@ -62,6 +63,11 @@ export default async function UrunDetayPage({ params }) {
   navigation.productsMegaMenu
  );
  const categoryProducts = await getCategoryRelatedProducts(slug);
+ const secondaryCategoryGroup = await getProductDetailSecondaryCategoryGroup(
+  slug,
+  categoryGroup?.slug,
+  categoryProducts.length
+ );
 
  return (
   <div className={cn(pageContentOffsetClass, "pb-10 md:pb-14")}>
@@ -71,6 +77,7 @@ export default async function UrunDetayPage({ params }) {
      categoryLabel={categoryGroup?.label ?? null}
      categoryHref={categoryGroup?.href ?? null}
      categoryProducts={categoryProducts}
+     secondaryCategoryGroup={secondaryCategoryGroup}
     />
    </div>
   </div>

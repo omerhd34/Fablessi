@@ -14,6 +14,7 @@ export function ProductDetailView({
  categoryLabel,
  categoryHref,
  categoryProducts = [],
+ secondaryCategoryGroup = null,
 }) {
  const [lightbox, setLightbox] = useState({ images: [], index: null });
  const [openDimensions, setOpenDimensions] = useState(false);
@@ -82,7 +83,9 @@ export function ProductDetailView({
   }, 350);
  }, []);
 
- const hasRightPanel = categoryLabel && categoryProducts.length > 0;
+ const hasRightPanel =
+  (categoryLabel && categoryProducts.length > 0) ||
+  (secondaryCategoryGroup?.products?.length ?? 0) > 0;
 
  return (
   <>
@@ -144,6 +147,7 @@ export function ProductDetailView({
      <ProductDetailRight
       categoryLabel={categoryLabel}
       categoryProducts={categoryProducts}
+      secondaryCategoryGroup={secondaryCategoryGroup}
       className="lg:self-start"
      />
     ) : null}

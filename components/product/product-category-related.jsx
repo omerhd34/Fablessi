@@ -19,9 +19,13 @@ import {
 } from "@/lib/layout/product-styles";
 import { cn } from "@/lib/utils";
 
-export function ProductCategoryRelated({ products, categoryLabel }) {
+export function ProductCategoryRelated({
+ products,
+ categoryLabel,
+ panelId = "related-panel",
+}) {
  const { locale } = useLocale();
- const [open, setOpen] = useState(["related-panel"]);
+ const [open, setOpen] = useState([panelId]);
 
  if (products.length === 0) return null;
 
@@ -32,7 +36,7 @@ export function ProductCategoryRelated({ products, categoryLabel }) {
    onValueChange={setOpen}
    className="w-full"
   >
-   <AccordionItem value="related-panel" className={productDetailAccordionItemClass}>
+   <AccordionItem value={panelId} className={productDetailAccordionItemClass}>
     <AccordionTrigger className={productDetailAccordionTriggerClass}>
      {categoryLabel}
     </AccordionTrigger>
