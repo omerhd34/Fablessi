@@ -25,6 +25,7 @@ import {
  lightMegaMenuViewAllClass,
 } from "@/lib/layout/header-styles";
 import { containerPremiumClass, productCardKalifClass } from "@/lib/layout/shared-styles";
+import { getCategoryGroupCoverImage } from "@/lib/product-utils";
 import { cn } from "@/lib/utils";
 
 function ProductMenuCard({ item, onNavigate }) {
@@ -81,7 +82,7 @@ const viewAllLinkClass = cn(
 );
 
 function CategoryNavItem({ group, isActive, index, onSelect, menuOpen }) {
- const previewImage = group.items[0]?.image;
+ const previewImage = getCategoryGroupCoverImage(group);
 
  return (
   <button
@@ -166,7 +167,7 @@ export function ProductsMegaMenu({ open, panelRef, onClose }) {
  const [activeSlug, setActiveSlug] = useState(groups[0]?.slug ?? null);
 
  const activeGroup = groups.find((group) => group.slug === activeSlug) ?? groups[0];
- const featuredImage = activeGroup?.items[0]?.image;
+ const featuredImage = activeGroup ? getCategoryGroupCoverImage(activeGroup) : null;
 
  useEffect(() => {
   if (!open) return;

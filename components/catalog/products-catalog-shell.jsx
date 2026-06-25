@@ -54,13 +54,18 @@ export function ProductsCatalogShell({
  products,
  activeGroup,
  categorySlug,
- seoDescription,
 }) {
  const { t } = useLocale();
  const [search, setSearch] = useState("");
  const [sort, setSort] = useState(null);
 
  const isCategoryLanding = !categorySlug;
+ const categoryDescription = categorySlug
+  ? t(`catalog.categoryDescriptions.${categorySlug}`)
+  : null;
+ const hasCategoryDescription =
+  categoryDescription &&
+  categoryDescription !== `catalog.categoryDescriptions.${categorySlug}`;
 
  const filteredProducts = useMemo(() => {
   const query = search.trim().toLowerCase();
@@ -82,7 +87,7 @@ export function ProductsCatalogShell({
       {t("home.categoriesTitle")}
      </h1>
      <p className="text-muted-foreground mx-auto mt-3 max-w-2xl text-sm md:mx-0 md:text-base">
-      {seoDescription ?? t("home.categoriesDescription")}
+      {t("home.categoriesDescription")}
      </p>
     </div>
     <div data-nosnippet>
@@ -98,9 +103,9 @@ export function ProductsCatalogShell({
     <h1 className={cn(headingDisplayClass, "text-charcoal")}>
      {activeGroup ? activeGroup.label : t("catalog.allProductsTitle")}
     </h1>
-    {seoDescription ? (
-     <p className="text-muted-foreground mt-3 max-w-2xl text-sm md:text-base">
-      {seoDescription}
+    {hasCategoryDescription ? (
+     <p className="text-muted-foreground mt-3 max-w-4xl text-sm md:text-base">
+      {categoryDescription}
      </p>
     ) : null}
    </div>
@@ -127,19 +132,19 @@ export function ProductsCatalogShell({
     ) : (
      <div className="mt-6 rounded-3xl border border-dashed border-charcoal/12 bg-cream/40 px-6 py-20 text-center md:mt-8">
       <p className="text-sm font-medium text-charcoal">
-      {t("catalog.noProducts")}
-     </p>
-     <p className="text-muted-foreground mt-2 text-sm">
-      {t("catalog.tryAgain")}
-     </p>
-    </div>
-   )}
+       {t("catalog.noProducts")}
+      </p>
+      <p className="text-muted-foreground mt-2 text-sm">
+       {t("catalog.tryAgain")}
+      </p>
+     </div>
+    )}
 
-   {categorySlug ? (
-    <div className="border-t border-charcoal/8 pt-8 md:pt-10">
-     <ProductsCategoryCarousel activeSlug={categorySlug} />
-    </div>
-   ) : null}
+    {categorySlug ? (
+     <div className="border-t border-charcoal/8 pt-8 md:pt-10">
+      <ProductsCategoryCarousel activeSlug={categorySlug} />
+     </div>
+    ) : null}
    </div>
   </div>
  );

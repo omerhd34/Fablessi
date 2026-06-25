@@ -47,11 +47,6 @@ export default async function UrunlerPage({ searchParams }) {
  const activeGroup =
   productsMegaMenu.groups.find((group) => group.slug === categorySlug) ?? null;
  const products = categorySlug ? await getPublishedProducts(categorySlug) : [];
- const { description: seoDescription } = getGoogleCatalogMetadata({
-  categorySlug,
-  locale,
-  dictionary,
- });
 
  return (
   <div className={cn(containerPremiumClass, pageContentOffsetClass, "pb-20 md:pb-28")}>
@@ -59,7 +54,6 @@ export default async function UrunlerPage({ searchParams }) {
     products={products}
     activeGroup={activeGroup}
     categorySlug={categorySlug}
-    seoDescription={seoDescription}
    />
   </div>
  );

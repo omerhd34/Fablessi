@@ -97,8 +97,6 @@ const COLLECTIONS = [
     sortOrder: 1,
     isFeatured: true,
     featuredOrder: 1,
-    material: "Outdoor kumaş",
-    materialEn: "Outdoor fabric",
    },
    {
     slug: "acelya-oturma-cappuccino",
@@ -160,8 +158,6 @@ const COLLECTIONS = [
     folder: "acelya-oturma",
     imagePrefix: "cappuccino",
     sortOrder: 7,
-    material: "Outdoor kumaş",
-    materialEn: "Outdoor fabric",
    },
   ],
  },
@@ -236,8 +232,6 @@ const COLLECTIONS = [
     folder: "aston-oturma",
     imagePrefix: "antrasit",
     sortOrder: 8,
-    material: "Outdoor kumaş",
-    materialEn: "Outdoor fabric",
    },
    {
     slug: "aston-oturma-cappuccino",
@@ -304,8 +298,6 @@ const COLLECTIONS = [
     folder: "aston-oturma",
     imagePrefix: "cappuccino",
     sortOrder: 4,
-    material: "Outdoor kumaş",
-    materialEn: "Outdoor fabric",
    },
   ],
  },
@@ -350,8 +342,6 @@ const COLLECTIONS = [
     folder: "begonia-2li",
     imagePrefix: "cappuccino",
     sortOrder: 9,
-    material: "Outdoor kumaş",
-    materialEn: "Outdoor fabric",
    },
    {
     slug: "begonia-oturma-antrasit",
@@ -414,8 +404,6 @@ const COLLECTIONS = [
     folder: "begonia-oturma",
     imagePrefix: "antrasit",
     sortOrder: 5,
-    material: "Outdoor kumaş",
-    materialEn: "Outdoor fabric",
    },
    {
     slug: "begonia-oturma-gri",
@@ -478,8 +466,6 @@ const COLLECTIONS = [
     folder: "begonia-oturma",
     imagePrefix: "gri",
     sortOrder: 3,
-    material: "Outdoor kumaş",
-    materialEn: "Outdoor fabric",
    },
   ],
  },
@@ -557,8 +543,6 @@ const COLLECTIONS = [
     folder: "tesla-kose",
     imagePrefix: "antrasit",
     sortOrder: 1,
-    material: "Outdoor kumaş",
-    materialEn: "Outdoor fabric",
    },
    {
     slug: "tesla-masa",
@@ -607,8 +591,6 @@ const COLLECTIONS = [
 • Modern design lines and functional structure create an aesthetic and practical seating area in garden, terrace and balcony areas.`,
     folder: "tesla-masa",
     sortOrder: 2,
-    material: "Alüminyum & cam",
-    materialEn: "Aluminum & glass",
    },
    {
     slug: "tesla-oturma",
@@ -670,8 +652,6 @@ const COLLECTIONS = [
 • Modern lines, high - quality material selection and timeless design approach add aesthetic and functional value to living areas.`,
     folder: "tesla-oturma",
     sortOrder: 6,
-    material: "Outdoor kumaş",
-    materialEn: "Outdoor fabric",
    },
    {
     slug: "tesla-salincak",
@@ -719,8 +699,6 @@ const COLLECTIONS = [
 • Modern design lines, the harmonious combination of wood and aluminum add aesthetic, comfort and functionality to living areas.`,
     folder: "tesla-salincak",
     sortOrder: 4,
-    material: "Alüminyum ve örgü",
-    materialEn: "Aluminum and weave",
    },
   ],
  },
@@ -804,8 +782,6 @@ const COLLECTIONS = [
     sortOrder: 1,
     isFeatured: true,
     featuredOrder: 2,
-    material: "Outdoor kumaş",
-    materialEn: "Outdoor fabric",
    },
    {
     slug: "velar-masa",
@@ -858,8 +834,6 @@ const COLLECTIONS = [
 • Modern design lines and functional structure create an aesthetic and practical seating area in garden, terrace and balcony areas.`,
     folder: "velar-masa",
     sortOrder: 2,
-    material: "Alüminyum & cam",
-    materialEn: "Aluminum & glass",
    },
    {
     slug: "velar-oturma",
@@ -925,8 +899,6 @@ const COLLECTIONS = [
     • Modern lines, high - quality material selection and timeless design approach add aesthetic and functional value to living areas.`,
     folder: "velar-oturma",
     sortOrder: 2,
-    material: "Outdoor kumaş",
-    materialEn: "Outdoor fabric",
    },
    //! ÖLÇÜLER YANLIŞ
    {
@@ -981,8 +953,6 @@ const COLLECTIONS = [
     sortOrder: 4,
     isFeatured: true,
     featuredOrder: 4,
-    material: "Alüminyum ve örgü",
-    materialEn: "Aluminum and weave",
    },
    {
     slug: "velar-sezlong",
@@ -1026,8 +996,6 @@ const COLLECTIONS = [
 • The product made with material suitable for outdoor use withstands high durability against sunlight, humidity and rain.`,
     folder: "velar-sezlong",
     sortOrder: 5,
-    material: "Alüminyum",
-    materialEn: "Aluminum",
    },
   ],
  },
@@ -1080,12 +1048,8 @@ const COLLECTIONS = [
 
 • The product made with material suitable for outdoor use withstands high durability against sunlight, humidity and rain.`,
     folder: "trend-sandalye",
-    imageFiles: ["01.jpg", "02.jpg", "03.jpg", "04.jpg"],
+    imageFiles: ["06.jpg", "07.jpg", "08.jpg"],
     sortOrder: 1,
-    isFeatured: true,
-    featuredOrder: 3,
-    material: "Alüminyum ve örgü",
-    materialEn: "Aluminum and weave",
    },
    {
     slug: "trend-sandalye-antrasit",
@@ -1130,10 +1094,10 @@ const COLLECTIONS = [
 
 • The product made with material suitable for outdoor use withstands high durability against sunlight, humidity and rain.`,
     folder: "trend-sandalye",
-    imageFiles: ["05.jpg", "06.jpg", "07.jpg", "08.jpg"],
+    isFeatured: true,
+    featuredOrder: 3,
+    imageFiles: ["01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg"],
     sortOrder: 2,
-    material: "Alüminyum ve örgü",
-    materialEn: "Aluminum and weave",
    },
   ],
  },
@@ -1151,15 +1115,6 @@ function resolveProductImages(productData) {
  }
 
  return publicImages(productData.folder);
-}
-
-function resolveCoverImage(productData) {
- const images = resolveProductImages(productData);
- if (images.length === 0) {
-  throw new Error(`Kapak görseli bulunamadı: ${productData.folder} `);
- }
-
- return images[0];
 }
 
 async function createProduct(data) {
@@ -1185,8 +1140,6 @@ async function createProduct(data) {
    sortOrder: data.sortOrder,
    isFeatured: data.isFeatured ?? false,
    featuredOrder: data.featuredOrder ?? 0,
-   material: data.material ?? null,
-   materialEn: data.materialEn ?? null,
    sku: data.slug.toUpperCase().replace(/-/g, ""),
    images: {
     create: imageUrls.map((url, imageIndex) => ({
@@ -1227,7 +1180,7 @@ async function seedCategoryGroups() {
     slug: group.slug,
     name: labels.name,
     nameEn: labels.nameEn,
-    coverImage: resolveMediaUrl(group.items[0]?.image ?? null),
+    coverImage: resolveMediaUrl(group.coverImage ?? group.items[0]?.image ?? null),
     sortOrder: index + 1,
     isPublished: true,
    },
