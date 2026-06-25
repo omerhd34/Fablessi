@@ -209,11 +209,11 @@ export function ProductDetailCenter({
         {t("product.dimensionsTableTitle")} ({t("product.dimensionUnit")})
        </span>
       </AccordionTrigger>
-      <AccordionContent className="pb-5">
-       <ProductDimensionsTable product={product} t={t} />
+      <AccordionContent className="space-y-4 pb-5">
        {showCornerStandard ? (
-        <ProductCornerStandardTable product={product} t={t} className="mt-4" />
+        <ProductCornerStandardTable product={product} t={t} />
        ) : null}
+       <ProductDimensionsTable product={product} t={t} />
       </AccordionContent>
      </AccordionItem>
     ) : null}

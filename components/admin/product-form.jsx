@@ -477,7 +477,7 @@ export function ProductForm({
      </CardHeader>
      <CardContent className="space-y-4">
       <p className="text-xs text-muted-foreground">
-       L formundaki iki kol boyu (cm). Genişlik, derinlik veya yükseklik değildir;
+       L formundaki iki kol boyu. Genişlik, derinlik veya yükseklik değildir;
        ürün sayfasında ölçü tablosunun altında ayrı gösterilir.
       </p>
       <div className="grid gap-3 md:grid-cols-2">
@@ -678,6 +678,7 @@ export function ProductForm({
       confirmTitle="Ürünü sil?"
       confirmDescription="Bu ürün kalıcı olarak silinir."
       redirectTo="/admin/products"
+      iconOnly={false}
      />
     ) : (
      <div />

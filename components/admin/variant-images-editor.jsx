@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { MdDeleteOutline } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 
 export function VariantImagesEditor({
@@ -82,10 +83,11 @@ export function VariantImagesEditor({
         <Button
          type="button"
          size="sm"
-         variant="ghost"
-         className="cursor-pointer"
+         variant="outline"
+         className="cursor-pointer border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
          onClick={() => onRemove(imageIndex)}
         >
+         <MdDeleteOutline aria-hidden />
          Kaldır
         </Button>
        </div>
