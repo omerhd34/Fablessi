@@ -40,8 +40,9 @@ Site; ürün fotoğrafları, teknik ölçüler, malzeme bilgisi ve marka hikâye
 - **İletişim sayfası** — Showroom adresi, çalışma saatleri, telefon / WhatsApp / e-posta / Instagram ve gömülü harita
 - **İletişim araçları** — Sabit WhatsApp / telefon butonları, footer iletişim alanı
 - **Veritabanı destekli katalog** — Kategori Grubu → Ürün → Görsel hiyerarşisi (Prisma + MySQL, [TiDB Cloud](https://tidbcloud.com/))
-- **Admin paneli** — Ürün, kategori grubu ve site içeriklerini yönetme
-- **Zengin medya arşivi** — Yüzlerce ürün fotoğrafı ve tanıtım videoları (`public/`)
+- **Admin paneli** (`/admin`) — Ürün ve kategori grubu CRUD, Cloudinary görsel yükleme, ana sayfa / hakkımızda / misyon / SSS içerik yönetimi
+- **SEO** — Dinamik metadata, JSON-LD, sitemap, robots.txt, yerel arama odaklı anahtar kelimeler
+- **Zengin medya arşivi** — Yüzlerce ürün fotoğrafı ve tanıtım videoları (`public/` + Cloudinary)
 
 ---
 
@@ -134,10 +135,14 @@ fablessi/
 │   │   ├── kvkk/               # KVKK
 │   │   ├── gizlilik-politikasi/ # Gizlilik politikası
 │   │   └── cerez-politikasi/   # Çerez politikası
+│   ├── admin/                  # Yönetim paneli (ürün, kategori, içerik)
 │   ├── api/
+│   │   ├── admin/              # Admin API (auth, ürün, kategori, içerik, yükleme)
 │   │   ├── locale/             # Dil tercihi (cookie)
 │   │   └── search/             # Katalog arama
 │   ├── styles/                 # Global ve layout stilleri
+│   ├── robots.js               # robots.txt
+│   ├── sitemap.js              # Dinamik sitemap
 │   ├── layout.jsx              # Kök layout
 │   ├── error.jsx               # Hata sınırı
 │   ├── loading.jsx             # Genel yükleme durumu
@@ -145,6 +150,7 @@ fablessi/
 │   └── global-error.jsx        # Kök hata sayfası
 ├── components/
 │   ├── about/                  # Hakkımızda bileşenleri
+│   ├── admin/                  # Admin panel bileşenleri
 │   ├── catalog/                # Ürün kataloğu bileşenleri
 │   ├── faq/                    # SSS bileşenleri
 │   ├── favorites/              # Favori ürünler bileşenleri
@@ -161,13 +167,20 @@ fablessi/
 │   └── favorites-provider.jsx  # Favori ürünler bağlamı
 ├── hooks/                      # Özel React hook'ları
 ├── lib/
+│   ├── admin/                  # Admin oturum, form ve tablo yardımcıları
+│   ├── content/                # CMS içerik blokları ve varsayılanlar
 │   ├── i18n/                   # Sözlükler, navigasyon, çeviri yardımcıları
+│   ├── layout/                 # Header, sayfa ve ürün stil sabitleri
+│   ├── media/                  # Cloudinary URL eşlemeleri
 │   ├── queries/                # Veritabanı sorguları (ürün, ana sayfa, arama)
+│   ├── seo/                    # Metadata, JSON-LD, sitemap girdileri
 │   ├── navigation.js           # Menü ve marka sabitleri
 │   ├── site-contact.js         # Telefon, e-posta, sosyal medya
+│   ├── site-metadata.js        # OG görseli ve site URL çözümleme
 │   ├── stores.js               # Showroom ve harita bilgileri
 │   ├── favorites.js            # Favori ürünler (localStorage)
 │   ├── product-utils.js        # Ürün serileştirme ve fiyat yardımcıları
+│   ├── cloudinary.js           # Cloudinary istemci yapılandırması
 │   ├── axios.js                # API istemci yapılandırması
 │   └── prisma.js               # Prisma istemcisi
 ├── prisma/
@@ -175,73 +188,6 @@ fablessi/
 │   └── seed.js                 # Kategori grubu ve ürün verisi
 └── public/                     # Ürün görselleri, videolar ve marka varlıkları
 ```
-
----
-
-## Kurulum (Geliştiriciler İçin)
-
-### Gereksinimler
-
-- Node.js 20+
-- MySQL veritabanı — production ortamında [TiDB Cloud](https://tidbcloud.com/) Serverless; yerel geliştirme için TiDB Cloud bağlantısı veya yerel MySQL
-
-### 1. Depoyu klonlayın
-
-```bash
-git clone https://github.com/omerhd34/fablessi.git
-cd fablessi
-```
-
-### 2. Bağımlılıkları yükleyin
-
-```bash
-npm install
-```
-
-### 3. Ortam değişkenlerini ayarlayın
-
-Proje kökünde `.env` dosyası oluşturun (`.env.example` dosyasını referans alabilirsiniz):
-
-```env
-# Veritabanı (zorunlu) — TiDB Cloud bağlantı dizesi (Connect → General)
-DATABASE_URL="mysql://KULLANICI:SIFRE@gateway01.REGION.prod.aws.tidbcloud.com:4000/fablessi?sslaccept=strict"
-
-# Dahili API tabanı (Axios — arama vb.)
-NEXT_PUBLIC_API_BASE_URL="http://localhost:3000/api"
-
-# Uygulama kök URL — OG/sosyal paylaşım görselleri için www ile eşleşmeli
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-# Üretim (Vercel): NEXT_PUBLIC_APP_URL="https://www.fablessi.com"
-
-# İletişim bilgileri (isteğe bağlı — footer ve iletişim bileşenleri)
-NEXT_PUBLIC_SITE_PHONE="0XXX XXX XX XX"
-NEXT_PUBLIC_SITE_PHONE_HREF="tel:+90XXXXXXXXXX"
-NEXT_PUBLIC_SITE_EMAIL="info@fablessi.com"
-NEXT_PUBLIC_WHATSAPP_NUMBER="90XXXXXXXXXX"
-
-# Sosyal medya (isteğe bağlı)
-NEXT_PUBLIC_INSTAGRAM_URL=""
-
-# Cloudinary — admin panelinden görsel yükleme (zorunlu, üretim)
-CLOUDINARY_CLOUD_NAME=""
-CLOUDINARY_API_KEY=""
-CLOUDINARY_API_SECRET=""
-```
-
-### 4. Veritabanını hazırlayın
-
-```bash
-npm run db:push      # Şemayı veritabanına uygular
-npm run db:seed      # Kategori grubu ve ürün verisi ekler
-```
-
-### 5. Geliştirme sunucusunu başlatın
-
-```bash
-npm run dev
-```
-
-Tarayıcıda [http://localhost:3000](http://localhost:3000) adresini açın.
 
 ---
 
@@ -256,8 +202,11 @@ Tarayıcıda [http://localhost:3000](http://localhost:3000) adresini açın.
 | `npm run db:generate` | Prisma client üretir |
 | `npm run db:push` | Prisma şemasını DB'ye uygular |
 | `npm run db:migrate` | Geliştirme migrasyonu oluşturur / uygular |
-| `npm run db:seed` | Örnek veri yükler |
+| `npm run db:seed` | Kategori grubu ve ürün verisi yükler |
+| `npm run db:seed:cms` | Yalnızca CMS içerik bloklarını yükler |
 | `npm run db:studio` | Prisma Studio arayüzü |
+| `npm run media:migrate:cloudinary` | `public/` görsellerini Cloudinary'ye taşır |
+| `npm run media:migrate:cloudinary:dry-run` | Cloudinary migrasyonunu simüle eder |
 
 ---
 
@@ -267,9 +216,14 @@ Tarayıcıda [http://localhost:3000](http://localhost:3000) adresini açın.
 ProductCategoryGroup (Kategori Grubu)
   └── Product (Ürün)
         └── Image (Galeri görseli)
+
+ContentBlock (Site içerik blokları — ana sayfa, hakkımızda, misyon vb.)
+
+FaqCategory (SSS kategorisi)
+  └── FaqItem (SSS sorusu)
 ```
 
-Her ürün; slug, ad, açıklama, malzeme (`material`, `materialEn`), ölçü bilgisi (`dimensions`, `dimensionItems` JSON) ve yayın durumu (`isPublished`) ile yönetilir. Görseller doğrudan ürüne bağlanır. Ana sayfa vitrini için `isFeatured` ve `featuredOrder` alanları kullanılır. Kategori grubu, ürün ve görsel kayıtlarında İngilizce karşılıklar (`nameEn`, `descriptionEn`, `altEn` vb.) tutulur.
+Her ürün; slug, ad, açıklama, ölçü bilgisi (`dimensions`, `dimensionItems` JSON) ve yayın durumu (`isPublished`) ile yönetilir. Görseller doğrudan ürüne bağlanır. Ana sayfa vitrini için `isFeatured` ve `featuredOrder` alanları kullanılır. Kategori grubu, ürün ve görsel kayıtlarında İngilizce karşılıklar (`nameEn`, `descriptionEn`, `altEn` vb.) tutulur. Sayfa metinleri `ContentBlock` kayıtlarında TR/EN JSON olarak saklanır; SSS içeriği `FaqCategory` / `FaqItem` modelleriyle yönetilir.
 
 ---
 
