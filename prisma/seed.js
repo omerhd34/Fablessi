@@ -844,7 +844,7 @@ const COLLECTIONS = [
       depthCm: 60,
       heightCm: 85,
       amount: 6750,
-      quantity: 6,
+      quantity: 8,
      },
     ]),
     description: `• Ürün, alüminyum iskelet ve doğal ahşap detayların bir araya gelmesiyle üretilmiş masa sandalye grubudur. Sağlam yapısı sayesinde dış mekân kullanımına uygun olup uzun ömürlü ve güvenilir bir performans sunar.
