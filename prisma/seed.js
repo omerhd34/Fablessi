@@ -707,7 +707,7 @@ const COLLECTIONS = [
       widthCm: 220,
       depthCm: 125,
       heightCm: 205,
-      amount: 1,
+      amount: 79000,
      },
     ]),
     description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir.Paslanmaya karşı yüksek dayanımı ile dış mekân koşullarında uzun ömürlü ve güvenilir bir performans sunar.
@@ -957,7 +957,7 @@ const COLLECTIONS = [
       widthCm: 215,
       depthCm: 120,
       heightCm: 200,
-      amount: 12800,
+      amount: 85600,
      },
     ]),
     description: `• Ürün iskeleti tamamen alüminyumdan üretilmiştir.Paslanmaya karşı yüksek dayanımı ile dış mekân koşullarında uzun ömürlü ve güvenilir bir performans sunar.
