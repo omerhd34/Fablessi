@@ -104,9 +104,6 @@ export async function PUT(request, { params }) {
    return Response.json({ error: dimensionItemsError }, { status: 400 });
   }
 
-  const media = parseProductMedia(body, slug, name, nameEn);
-  const cornerStandard = parseCornerStandardFields(body, categoryGroup.slug);
-
   const categoryGroupId =
    body.categoryGroupId !== undefined
     ? body.categoryGroupId?.trim() || null
@@ -121,6 +118,9 @@ export async function PUT(request, { params }) {
   if (!categoryGroup) {
    return Response.json({ error: "Kategori grubu bulunamadı." }, { status: 400 });
   }
+
+  const media = parseProductMedia(body, slug, name, nameEn);
+  const cornerStandard = parseCornerStandardFields(body, categoryGroup.slug);
 
   const isFeatured = body.isFeatured ?? existing.isFeatured;
   const featuredLimitError = await getFeaturedLimitError({

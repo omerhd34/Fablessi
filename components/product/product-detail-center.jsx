@@ -23,10 +23,12 @@ import { isCornerGroupProduct } from "@/lib/product-category";
 import { getCornerStandardSize, getDimensionItems } from "@/lib/product-utils";
 import { LG_MQ } from "@/lib/layout/breakpoints";
 import {
+ preventImageSaveInteraction,
  productDetailAccordionItemClass,
  productDetailAccordionTriggerClass,
  productGalleryFrameClass,
  productGalleryMobileCarouselClass,
+ productProtectedImageClass,
 } from "@/lib/layout/product-styles";
 import { cn } from "@/lib/utils";
 
@@ -56,13 +58,26 @@ function ProductGalleryImage({
    alt={image.alt ?? t("product.productImage")}
    fill
    sizes="(max-width: 1151px) 100vw, 60vw"
-   className="object-cover scale-100 transition-[scale] duration-1500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/gallery-image:scale-[1.03] motion-reduce:duration-150"
+   draggable={false}
+   className={cn(
+    "object-cover scale-100 transition-[scale] duration-1500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/gallery-image:scale-[1.03] motion-reduce:duration-150",
+    productProtectedImageClass
+   )}
    priority={index === 0}
   />
  );
 
+ const saveGuardProps = {
+  onContextMenu: preventImageSaveInteraction,
+  onDragStart: preventImageSaveInteraction,
+ };
+
  if (isSlide) {
-  return <div className={wrapperClassName}>{imageElement}</div>;
+  return (
+   <div className={wrapperClassName} {...saveGuardProps}>
+    {imageElement}
+   </div>
+  );
  }
 
  return (
@@ -73,6 +88,7 @@ function ProductGalleryImage({
    aria-label={t("product.enlargeImage", {
     alt: image.alt ?? t("product.productImage"),
    })}
+   {...saveGuardProps}
   >
    {imageElement}
   </button>

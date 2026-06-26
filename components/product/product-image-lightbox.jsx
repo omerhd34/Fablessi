@@ -16,6 +16,10 @@ import {
  lightboxSlideOpenClass,
  lightboxStageClass,
 } from "@/lib/layout/shared-styles";
+import {
+ preventImageSaveInteraction,
+ productProtectedImageClass,
+} from "@/lib/layout/product-styles";
 import { cn } from "@/lib/utils";
 
 const SWIPE_THRESHOLD = 48;
@@ -37,19 +41,32 @@ function LightboxImage({
   isFullscreen && interactive && "cursor-zoom-out"
  );
 
+ const saveGuardProps = {
+  onContextMenu: preventImageSaveInteraction,
+  onDragStart: preventImageSaveInteraction,
+ };
+
  const imageElement = (
   <Image
    src={image.url}
    alt={alt}
    fill
    sizes={isFullscreen ? "100vw" : "(max-width: 1024px) 100vw, 90vw"}
-   className="object-cover object-center transition-[object-fit] duration-300"
+   draggable={false}
+   className={cn(
+    "object-cover object-center transition-[object-fit] duration-300",
+    productProtectedImageClass
+   )}
    priority
   />
  );
 
  if (!interactive) {
-  return <div className={frameClassName}>{imageElement}</div>;
+  return (
+   <div className={frameClassName} {...saveGuardProps}>
+    {imageElement}
+   </div>
+  );
  }
 
  return (
@@ -58,6 +75,7 @@ function LightboxImage({
    onClick={onToggleFullscreen}
    className={frameClassName}
    aria-label={toggleLabel}
+   {...saveGuardProps}
   >
    {imageElement}
   </button>
