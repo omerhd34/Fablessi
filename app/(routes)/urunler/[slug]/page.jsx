@@ -11,6 +11,7 @@ import {
  trProductSeoDescriptionSuffix,
  enProductSeoDescriptionSuffix,
 } from "@/lib/seo/local";
+import { siteNameMetadata } from "@/lib/site-metadata";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { buildNavigation, getProductCategoryGroupFromMenu } from "@/lib/i18n/build-navigation";
 import {
@@ -35,6 +36,7 @@ export async function generateMetadata({ params }) {
   locale === "en" ? enProductSeoDescriptionSuffix : trProductSeoDescriptionSuffix;
 
  return {
+  ...siteNameMetadata,
   title: product.name,
   description:
    product.description ??

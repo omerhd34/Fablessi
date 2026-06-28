@@ -6,6 +6,7 @@ import {
  getGoogleCatalogMetadata,
  isUrunlerCatalogIndexable,
 } from "@/lib/seo/google-snippets";
+import { siteNameMetadata } from "@/lib/site-metadata";
 import {
  containerPremiumClass,
  pageContentOffsetClass,
@@ -27,6 +28,7 @@ export async function generateMetadata({ searchParams }) {
  });
 
  return {
+  ...siteNameMetadata,
   title,
   description,
   keywords: dictionary.pages.products.keywords ?? dictionary.metadata.keywords,
