@@ -9,7 +9,7 @@ import { LocaleProvider } from "@/contexts/locale-provider";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { brandFullName } from "@/lib/navigation";
-import { buildSiteStructuredDataGraph } from "@/lib/seo/json-ld";
+import { buildOrganizationJsonLd } from "@/lib/seo/json-ld";
 import { siteMetadata } from "@/lib/site-metadata";
 
 const montserrat = Montserrat({
@@ -64,7 +64,7 @@ export const revalidate = 0;
 export default async function RootLayout({ children }) {
  const { locale, dictionary } = await getServerDictionary();
  const menuGroups = await getCategoryGroupsForMenu(locale);
- const siteStructuredDataGraph = buildSiteStructuredDataGraph(locale);
+ const organizationJsonLd = buildOrganizationJsonLd(locale);
 
  return (
   <html
@@ -76,7 +76,7 @@ export default async function RootLayout({ children }) {
    <head>
     <script
      type="application/ld+json"
-     dangerouslySetInnerHTML={{ __html: JSON.stringify(siteStructuredDataGraph) }}
+     dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
     />
    </head>
    <body className="min-h-full flex flex-col font-sans">
