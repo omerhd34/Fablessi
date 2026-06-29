@@ -14,6 +14,28 @@ const nextConfig = {
    "radix-ui",
   ],
  },
+ async headers() {
+  return [
+   {
+    source: "/og-image.jpg",
+    headers: [
+     {
+      key: "X-Robots-Tag",
+      value: "noindex",
+     },
+    ],
+   },
+   {
+    source: "/slayts/:path*",
+    headers: [
+     {
+      key: "X-Robots-Tag",
+      value: "noindex",
+     },
+    ],
+   },
+  ];
+ },
  async rewrites() {
   return [
    {
