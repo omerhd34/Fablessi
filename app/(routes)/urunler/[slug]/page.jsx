@@ -11,7 +11,9 @@ import {
  trProductSeoDescriptionSuffix,
  enProductSeoDescriptionSuffix,
 } from "@/lib/seo/local";
-import { siteNameMetadata } from "@/lib/site-metadata";
+import { buildProductJsonLd } from "@/lib/seo/json-ld";
+import { buildSeoPageTitle, formatSeoTitle, siteNameMetadata } from "@/lib/site-metadata";
+import { getPrimaryImageUrl } from "@/lib/product-utils";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { buildNavigation, getProductCategoryGroupFromMenu } from "@/lib/i18n/build-navigation";
 import {
@@ -29,18 +31,34 @@ export async function generateMetadata({ params }) {
  const product = await getProductBySlug(slug);
 
  if (!product) {
-  return { title: dictionary.product.notFound ?? "Product Not Found" };
+  return {
+   title: buildSeoPageTitle(dictionary.product.notFound ?? "Product Not Found"),
+  };
  }
 
  const seoSuffix =
   locale === "en" ? enProductSeoDescriptionSuffix : trProductSeoDescriptionSuffix;
+ const seoTitle = formatSeoTitle(product.name);
+ const description =
+  product.description ?? `${product.name} - ${seoSuffix}`;
+ const primaryImageUrl = getPrimaryImageUrl(product);
+ const primaryImageAlt = product.images?.[0]?.alt ?? product.name;
 
  return {
   ...siteNameMetadata,
-  title: product.name,
-  description:
-   product.description ??
-   `${product.name} - ${seoSuffix}`,
+  title: buildSeoPageTitle(product.name),
+  description,
+  openGraph: {
+   title: seoTitle,
+   ...(primaryImageUrl
+    ? { images: [{ url: primaryImageUrl, alt: primaryImageAlt }] }
+    : {}),
+  },
+  twitter: {
+   card: "summary_large_image",
+   title: seoTitle,
+   ...(primaryImageUrl ? { images: [primaryImageUrl] } : {}),
+  },
   robots: {
    index: true,
    follow: true,
@@ -70,9 +88,17 @@ export default async function UrunDetayPage({ params }) {
   categoryGroup?.slug,
   categoryProducts.length
  );
+ const productJsonLd = buildProductJsonLd(product, locale);
 
  return (
-  <div className={cn(pageContentOffsetClass, "pb-10 md:pb-14")}>
+  <>
+   {productJsonLd ? (
+    <script
+     type="application/ld+json"
+     dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }}
+    />
+   ) : null}
+   <div className={cn(pageContentOffsetClass, "pb-10 md:pb-14")}>
    <div className={containerPremiumClass}>
     <ProductDetailView
      product={product}
@@ -83,5 +109,6 @@ export default async function UrunDetayPage({ params }) {
     />
    </div>
   </div>
+  </>
  );
 }
