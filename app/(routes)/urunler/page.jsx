@@ -6,13 +6,13 @@ import {
  getGoogleCatalogMetadata,
  isUrunlerCatalogIndexable,
 } from "@/lib/seo/google-snippets";
-import { siteNameMetadata } from "@/lib/site-metadata";
+import { buildSeoPageTitle, siteNameMetadata } from "@/lib/site-metadata";
 import {
  containerPremiumClass,
  pageContentOffsetClass,
 } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
-import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
+import { getCategoryGroupBySlug, getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getPublishedProducts } from "@/lib/queries/products";
 
 export const revalidate = 0;
@@ -21,15 +21,19 @@ export async function generateMetadata({ searchParams }) {
  const params = await searchParams;
  const categorySlug = params?.kategori ?? null;
  const { dictionary, locale } = await getServerDictionary();
+ const categoryGroup = categorySlug
+  ? await getCategoryGroupBySlug(categorySlug, locale)
+  : null;
  const { title, description } = getGoogleCatalogMetadata({
   categorySlug,
   locale,
   dictionary,
+  categoryLabel: categoryGroup?.label ?? null,
  });
 
  return {
   ...siteNameMetadata,
-  title,
+  title: buildSeoPageTitle(title),
   description,
   keywords: dictionary.pages.products.keywords ?? dictionary.metadata.keywords,
   robots: {
