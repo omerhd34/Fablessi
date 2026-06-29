@@ -29,9 +29,9 @@ const HERO_IMAGE_BREAKPOINTS = [
 ];
 
 function HeroSlideImage({ slide, priority, className }) {
- const { images, alt } = slide;
+ const { images } = slide;
  const imageSizes = "100vw";
- const shared = { alt, sizes: imageSizes, priority };
+ const shared = { alt: "", sizes: imageSizes, priority };
 
  const sources = HERO_IMAGE_BREAKPOINTS.map(({ media, key, width, height }) => {
   const { props } = getImageProps({
@@ -58,7 +58,8 @@ function HeroSlideImage({ slide, priority, className }) {
    {sources}
    <img
     {...imgProps}
-    alt={alt}
+    alt=""
+    aria-hidden="true"
     className={cn("h-full w-full", className)}
     decoding={priority ? "sync" : "async"}
    />
@@ -175,7 +176,11 @@ export function HeroSection() {
  }, [pauseAutoplay, resumeAutoplay]);
 
  return (
-  <section className="hero-carousel relative w-full touch-pan-y">
+  <section
+   className="hero-carousel relative w-full touch-pan-y"
+   data-nosnippet
+   aria-label={t("hero.carouselLabel")}
+  >
    <div
     className="overflow-hidden select-none cursor-grab touch-pan-y pinch-zoom active:cursor-grabbing desktop:cursor-default desktop:touch-auto"
     ref={emblaRef}
