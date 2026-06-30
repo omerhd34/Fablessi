@@ -12,7 +12,7 @@ import {
  enProductSeoDescriptionSuffix,
 } from "@/lib/seo/local";
 import { buildProductJsonLd } from "@/lib/seo/json-ld";
-import { buildSeoPageTitle, formatSeoTitle, siteNameMetadata } from "@/lib/site-metadata";
+import { buildSeoPageTitle, buildSiteOpenGraph, formatSeoTitle, siteNameMetadata } from "@/lib/site-metadata";
 import { getPrimaryImageUrl } from "@/lib/product-utils";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { buildNavigation, getProductCategoryGroupFromMenu } from "@/lib/i18n/build-navigation";
@@ -48,12 +48,12 @@ export async function generateMetadata({ params }) {
   ...siteNameMetadata,
   title: buildSeoPageTitle(product.name),
   description,
-  openGraph: {
+  openGraph: buildSiteOpenGraph({
    title: seoTitle,
    ...(primaryImageUrl
     ? { images: [{ url: primaryImageUrl, alt: primaryImageAlt }] }
     : {}),
-  },
+  }),
   twitter: {
    card: "summary_large_image",
    title: seoTitle,
@@ -99,16 +99,16 @@ export default async function UrunDetayPage({ params }) {
     />
    ) : null}
    <div className={cn(pageContentOffsetClass, "pb-10 md:pb-14")}>
-   <div className={containerPremiumClass}>
-    <ProductDetailView
-     product={product}
-     categoryLabel={categoryGroup?.label ?? null}
-     categoryHref={categoryGroup?.href ?? null}
-     categoryProducts={categoryProducts}
-     secondaryCategoryGroup={secondaryCategoryGroup}
-    />
+    <div className={containerPremiumClass}>
+     <ProductDetailView
+      product={product}
+      categoryLabel={categoryGroup?.label ?? null}
+      categoryHref={categoryGroup?.href ?? null}
+      categoryProducts={categoryProducts}
+      secondaryCategoryGroup={secondaryCategoryGroup}
+     />
+    </div>
    </div>
-  </div>
   </>
  );
 }
