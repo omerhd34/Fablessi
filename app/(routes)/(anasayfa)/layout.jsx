@@ -5,16 +5,29 @@ import {
 } from "@/lib/seo/json-ld";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { brandFullName } from "@/lib/navigation";
-import { siteNameMetadata } from "@/lib/site-metadata";
+import { buildSiteOpenGraph, siteNameMetadata } from "@/lib/site-metadata";
 import { getProductsForSeo } from "@/lib/queries/products-seo";
 
-export const metadata = {
- ...siteNameMetadata,
- robots: {
-  index: true,
-  follow: true,
- },
-};
+export async function generateMetadata() {
+ const { dictionary } = await getServerDictionary();
+ const title = `${brandFullName} | ${dictionary.metadata.title}`;
+ const description = dictionary.metadata.description;
+
+ return {
+  ...siteNameMetadata,
+  title,
+  description,
+  openGraph: buildSiteOpenGraph({
+   title,
+   description,
+   url: "/",
+  }),
+  robots: {
+   index: true,
+   follow: true,
+  },
+ };
+}
 
 export default async function AnasayfaLayout({ children }) {
  const { locale } = await getServerDictionary();

@@ -6,7 +6,7 @@ import {
  getGoogleCatalogMetadata,
  isUrunlerCatalogIndexable,
 } from "@/lib/seo/google-snippets";
-import { buildSeoPageTitle, siteNameMetadata } from "@/lib/site-metadata";
+import { buildSeoPageTitle, buildSiteOpenGraph, formatSeoTitle, siteNameMetadata } from "@/lib/site-metadata";
 import {
  containerPremiumClass,
  pageContentOffsetClass,
@@ -35,6 +35,10 @@ export async function generateMetadata({ searchParams }) {
   ...siteNameMetadata,
   title: buildSeoPageTitle(title),
   description,
+  openGraph: buildSiteOpenGraph({
+   title: formatSeoTitle(title),
+   description,
+  }),
   keywords: dictionary.pages.products.keywords ?? dictionary.metadata.keywords,
   robots: {
    index: isUrunlerCatalogIndexable({ categorySlug }),

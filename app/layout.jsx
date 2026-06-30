@@ -10,7 +10,7 @@ import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { brandFullName } from "@/lib/navigation";
 import { buildSiteStructuredDataGraph } from "@/lib/seo/json-ld";
-import { siteMetadata } from "@/lib/site-metadata";
+import { siteMetadata, buildSiteOpenGraph } from "@/lib/site-metadata";
 
 const montserrat = Montserrat({
  variable: "--font-montserrat",
@@ -44,14 +44,13 @@ export async function generateMetadata() {
    index: false,
    follow: true,
   },
-  openGraph: {
+  openGraph: buildSiteOpenGraph({
    ...siteMetadata.openGraph,
-   siteName: brandFullName,
    title,
    description,
    locale: openGraphLocale,
    url: "/",
-  },
+  }),
   twitter: {
    ...siteMetadata.twitter,
    title,
