@@ -37,19 +37,19 @@ export function MobileProductsCategoryGrid({ onClose, variant = "default" }) {
       "group relative block overflow-hidden rounded-2xl bg-charcoal/20",
       !isDrawer && "aspect-3/2 bg-cream/60 min-[49rem]:aspect-auto min-[49rem]:h-52",
       isDrawer &&
-      "aspect-3/2 lg:flex lg:aspect-auto lg:flex-col lg:rounded-xl lg:border lg:border-(--glass-hero-border) lg:bg-charcoal/20 lg:shadow-[0_8px_24px_rgb(0_0_0/18%)] lg:transition-[border-color,box-shadow] lg:duration-300 lg:hover:border-(--glass-hero-border) lg:hover:shadow-[0_10px_28px_rgb(0_0_0/24%)]"
+      "aspect-3/2 lg:flex lg:aspect-auto lg:flex-col lg:rounded-xl lg:border lg:border-(--glass-hero-border) lg:bg-transparent lg:shadow-[0_8px_24px_rgb(0_0_0/18%)] lg:transition-[border-color,box-shadow] lg:duration-300 lg:hover:border-(--glass-hero-border) lg:hover:shadow-[0_10px_28px_rgb(0_0_0/24%)]"
      )}
     >
      {category.image ? (
       isDrawer ? (
        <>
-        <div className="relative aspect-3/2 w-full overflow-hidden lg:aspect-4/3 lg:shrink-0">
+        <div className="relative aspect-3/2 w-full overflow-hidden rounded-t-2xl bg-charcoal/30 lg:aspect-4/3 lg:shrink-0 lg:rounded-t-xl lg:bg-charcoal/35">
          <Image
           src={category.image}
           alt={category.label}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1440px) 45vw, 240px"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02] lg:group-hover:scale-[1.015]"
+          className="object-cover transition-transform duration-700 ease-out scale-[1.03] group-hover:scale-[1.05] lg:scale-[1.04] lg:group-hover:scale-[1.06]"
          />
          <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/50 via-black/10 to-black/5 lg:from-black/40 lg:via-transparent lg:to-transparent" />
          <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/12 lg:group-hover:bg-black/8" />
@@ -57,9 +57,9 @@ export function MobileProductsCategoryGrid({ onClose, variant = "default" }) {
           {category.label}
          </span>
         </div>
-        <span className="hidden px-3 py-2.5 text-[0.8125rem] font-semibold leading-snug text-white/92 lg:block lg:border-t lg:border-(--glass-hero-border) lg:bg-white/8 lg:backdrop-blur-sm">
+        <span className="hidden w-full shrink-0 rounded-b-xl px-3 py-2.5 text-[0.8125rem] font-semibold leading-snug text-white/92 lg:block lg:border-t lg:border-(--glass-hero-border) lg:bg-charcoal/35 lg:backdrop-blur-sm">
          {category.label}
-        </span>
+         </span>
        </>
       ) : (
        <>
