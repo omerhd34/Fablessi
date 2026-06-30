@@ -153,7 +153,10 @@ export function Footer() {
      </FooterColumn>
     </div>
 
-    <div className="mt-20 border-t border-charcoal/8 pt-8 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:mt-14 lg:mt-16 lg:pt-10">
+    <div
+     className="mt-20 border-t border-charcoal/8 pt-8 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:mt-14 lg:mt-16 lg:pt-10"
+     data-nosnippet
+    >
      <div className="flex min-h-(--glass-float-size) pr-[calc(1.25rem+var(--glass-float-size)+0.75rem)] max-sm:flex-col max-sm:justify-end max-sm:gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
       <p className="font-body text-[12px] text-charcoal/55">
        {year} © {brandName}
