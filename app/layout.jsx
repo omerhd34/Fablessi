@@ -8,8 +8,8 @@ import { FavoritesProvider } from "@/contexts/favorites-provider";
 import { LocaleProvider } from "@/contexts/locale-provider";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getServerDictionary } from "@/lib/i18n/server";
-import { brandFullName } from "@/lib/navigation";
 import { buildSiteStructuredDataGraph } from "@/lib/seo/json-ld";
+import { buildPageSeoMetadata } from "@/lib/seo/page-metadata-builders";
 import { siteMetadata, buildSiteOpenGraph } from "@/lib/site-metadata";
 
 const montserrat = Montserrat({
@@ -28,17 +28,16 @@ const poppins = Poppins({
 
 export async function generateMetadata() {
  const { dictionary, locale } = await getServerDictionary();
- const title = `${brandFullName} | ${dictionary.metadata.title}`;
- const description = dictionary.metadata.description;
+ const seo = buildPageSeoMetadata("home", locale);
  const openGraphLocale = locale === "en" ? "en_US" : "tr_TR";
 
  return {
   ...siteMetadata,
   title: {
-   default: title,
+   default: seo.openGraphTitle,
    template: siteMetadata.title.template,
   },
-  description,
+  description: seo.description,
   keywords: dictionary.metadata.keywords ?? siteMetadata.keywords,
   robots: {
    index: false,
@@ -46,15 +45,15 @@ export async function generateMetadata() {
   },
   openGraph: buildSiteOpenGraph({
    ...siteMetadata.openGraph,
-   title,
-   description,
+   title: seo.openGraphTitle,
+   description: seo.description,
    locale: openGraphLocale,
    url: "/",
   }),
   twitter: {
    ...siteMetadata.twitter,
-   title,
-   description,
+   title: seo.openGraphTitle,
+   description: seo.description,
   },
  };
 }

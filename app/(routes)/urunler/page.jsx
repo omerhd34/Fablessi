@@ -2,17 +2,16 @@ import { ProductsCatalogShell } from "@/components/catalog/products-catalog-shel
 import { buildProductsMegaMenu } from "@/lib/i18n/build-navigation";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { getLocale, getServerDictionary } from "@/lib/i18n/server";
-import {
- getGoogleCatalogMetadata,
- isUrunlerCatalogIndexable,
-} from "@/lib/seo/google-snippets";
-import { buildSeoPageTitle, buildSiteOpenGraph, formatSeoTitle, siteNameMetadata } from "@/lib/site-metadata";
+import { isUrunlerCatalogIndexable } from "@/lib/seo/google-snippets";
+import { buildCatalogWebPageJsonLd } from "@/lib/seo/json-ld";
+import { buildCatalogSeoMetadata } from "@/lib/seo/page-metadata-builders";
+import { buildSiteOpenGraph, siteNameMetadata } from "@/lib/site-metadata";
 import {
  containerPremiumClass,
  pageContentOffsetClass,
 } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
-import { getCategoryGroupBySlug, getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
+import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getPublishedProducts } from "@/lib/queries/products";
 
 export const revalidate = 0;
@@ -21,24 +20,25 @@ export async function generateMetadata({ searchParams }) {
  const params = await searchParams;
  const categorySlug = params?.kategori ?? null;
  const { dictionary, locale } = await getServerDictionary();
- const categoryGroup = categorySlug
-  ? await getCategoryGroupBySlug(categorySlug, locale)
-  : null;
- const { title, description } = getGoogleCatalogMetadata({
-  categorySlug,
-  locale,
-  dictionary,
-  categoryLabel: categoryGroup?.label ?? null,
- });
+ const seo = buildCatalogSeoMetadata(categorySlug, locale);
+ const catalogPath = categorySlug
+  ? `/urunler?kategori=${categorySlug}`
+  : "/urunler";
 
  return {
   ...siteNameMetadata,
-  title: buildSeoPageTitle(title),
-  description,
+  title: seo.title,
+  description: seo.description,
   openGraph: buildSiteOpenGraph({
-   title: formatSeoTitle(title),
-   description,
+   title: seo.openGraphTitle,
+   description: seo.description,
+   url: catalogPath,
   }),
+  twitter: {
+   card: "summary_large_image",
+   title: seo.openGraphTitle,
+   description: seo.description,
+  },
   keywords: dictionary.pages.products.keywords ?? dictionary.metadata.keywords,
   robots: {
    index: isUrunlerCatalogIndexable({ categorySlug }),
@@ -57,14 +57,21 @@ export default async function UrunlerPage({ searchParams }) {
  const activeGroup =
   productsMegaMenu.groups.find((group) => group.slug === categorySlug) ?? null;
  const products = categorySlug ? await getPublishedProducts(categorySlug) : [];
+ const catalogWebPageJsonLd = buildCatalogWebPageJsonLd({ categorySlug, locale });
 
  return (
-  <div className={cn(containerPremiumClass, pageContentOffsetClass, "pb-12 md:pb-28")}>
-   <ProductsCatalogShell
-    products={products}
-    activeGroup={activeGroup}
-    categorySlug={categorySlug}
+  <>
+   <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(catalogWebPageJsonLd) }}
    />
-  </div>
+   <div className={cn(containerPremiumClass, pageContentOffsetClass, "pb-12 md:pb-28")}>
+    <ProductsCatalogShell
+     products={products}
+     activeGroup={activeGroup}
+     categorySlug={categorySlug}
+    />
+   </div>
+  </>
  );
 }
