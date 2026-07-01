@@ -77,7 +77,7 @@ export function ProductsCatalogShell({
    <div className="space-y-6 md:space-y-8">
     <div className="text-center md:text-left">
      <h1 className={cn(headingDisplayClass, "text-charcoal")}>
-      {t("home.categoriesTitle")}
+      {t("pages.products.title")}
      </h1>
      <p className="text-muted-foreground mx-auto mt-3 max-w-4xl text-sm md:mx-0 md:text-base">
       {t("home.categoriesDescription")}
