@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="public/brand/fablessi-logo.png" alt="Fablessi logo" width="220" />
+</p>
+
 # Fablessi - Premium Bahçe Mobilyaları
 
 İnegöl merkezli **Fablessi** markasının kurumsal web sitesi ve dijital ürün kataloğu. Bahçe ve dış mekan mobilyalarını premium, minimalist bir vitrin deneyimiyle sunar; kategori grupları, ürün galerileri, iletişim ve konum bilgilerini tek çatı altında toplar.
@@ -7,7 +11,7 @@
 <p align="center">
   <img src="public/slayts/1/2560x1707.jpg" alt="Fablessi bahçe mobilyası - dış mekan oturma grubu" width="32%" />
   <img src="public/acelya-oturma/antrasit-01.jpg" alt="Açelya Oturma Grubu" width="32%" />
-  <img src="public/velar-oturma/01.jpg" alt="Fablessi üretim deneyimi - bahçe mobilyası atölyesi" width="32%" />
+  <img src="public/velar-oturma/01.jpg" alt="Velar Oturma Grubu" width="32%" />
 </p>
 
 ---
@@ -44,6 +48,11 @@ Site; ürün fotoğrafları, teknik ölçüler, malzeme bilgisi ve marka hikâye
 - **SEO** - Dinamik metadata, JSON-LD, sitemap, robots.txt, yerel arama odaklı anahtar kelimeler
 - **Zengin medya arşivi** - Yüzlerce ürün fotoğrafı ve tanıtım videoları (`public/` + Cloudinary)
 
+<p align="center">
+  <img src="public/brand-experience/genis-ekran.png" alt="Ana sayfa marka deneyimi afişi" width="48%" />
+  <img src="public/tesla-kose/antrasit-01.jpg" alt="Tesla köşe oturma grubu" width="48%" />
+</p>
+
 ---
 
 ## Ürün Serileri
@@ -53,37 +62,51 @@ Sitede yer alan başlıca ürün grupları:
 <table>
   <thead>
     <tr>
+      <th align="left" width="1%" nowrap>Görsel</th>
       <th align="left" width="1%" nowrap>Seri</th>
       <th align="left">Ürünler</th>
     </tr>
   </thead>
   <tbody>
     <tr>
+      <td><img src="public/acelya-oturma/antrasit-01.jpg" alt="Açelya Oturma Grubu" width="140" /></td>
       <td align="left" width="1%" nowrap><strong>Açelya</strong></td>
       <td>Oturma grubu</td>
     </tr>
     <tr>
+      <td><img src="public/aston-oturma/antrasit-01.jpg" alt="Aston Oturma Grubu" width="140" /></td>
       <td align="left" width="1%" nowrap><strong>Aston</strong></td>
       <td>Oturma grubu</td>
     </tr>
     <tr>
+      <td><img src="public/begonia-oturma/antrasit-01.jpg" alt="Begonia Oturma Grubu" width="140" /></td>
       <td align="left" width="1%" nowrap><strong>Begonia</strong></td>
       <td>Oturma grubu, 2'li oturma grubu</td>
     </tr>
     <tr>
+      <td><img src="public/tesla-oturma/01.jpg" alt="Tesla Oturma Grubu" width="140" /></td>
       <td align="left" width="1%" nowrap><strong>Tesla</strong></td>
-      <td>Oturma grubu - Köşe grubu - Masa grubu - Salıncak</td>
+      <td>Oturma grubu · Köşe grubu · Masa grubu · Salıncak</td>
     </tr>
     <tr>
+      <td><img src="public/velar-oturma/01.jpg" alt="Velar Oturma Grubu" width="140" /></td>
       <td align="left" width="1%" nowrap><strong>Velar</strong></td>
-      <td>Oturma grubu - Köşe grubu - Masa grubu - Salıncak - Şezlong</td>
+      <td>Oturma grubu · Köşe grubu · Masa grubu · Salıncak · Şezlong</td>
     </tr>
     <tr>
+      <td><img src="public/trend-sandalye/01.jpg" alt="Trend Sallanır Sandalye" width="140" /></td>
       <td align="left" width="1%" nowrap><strong>Trend</strong></td>
       <td>Sallanır sandalye</td>
     </tr>
   </tbody>
 </table>
+
+<p align="center">
+  <img src="public/tesla-kose/antrasit-01.jpg" alt="Tesla köşe grubu" width="24%" />
+  <img src="public/tesla-masa/01.jpg" alt="Tesla masa grubu" width="24%" />
+  <img src="public/velar-salincak/01.jpeg" alt="Velar salıncak" width="24%" />
+  <img src="public/velar-sezlong/01.jpg" alt="Velar şezlong" width="24%" />
+</p>
 
 ---
 
@@ -100,6 +123,13 @@ Sitede yer alan başlıca ürün grupları:
 | İletişim | `/iletisim` |
 | Hakkımızda | `/hakkimizda` |
 | KVKK / Gizlilik / Çerez | `/kvkk`, `/gizlilik-politikasi`, `/cerez-politikasi` |
+
+<p align="center">
+  <img src="public/about-visual/genis-ekran.png" alt="Hakkımızda sayfası hero görseli" width="24%" />
+  <img src="public/mission-hero/genis-ekran.jpeg" alt="Misyon ve Vizyon sayfası hero görseli" width="24%" />
+  <img src="public/faq-hero/genis-ekran.png" alt="SSS sayfası hero görseli" width="24%" />
+  <img src="public/begonia-2li/cappuccino-01.jpg" alt="Begonia 2'li oturma grubu" width="24%" />
+</p>
 
 ---
 
@@ -181,7 +211,6 @@ fablessi/
 │   ├── favorites.js            # Favori ürünler (localStorage)
 │   ├── product-utils.js        # Ürün serileştirme ve fiyat yardımcıları
 │   ├── cloudinary.js           # Cloudinary istemci yapılandırması
-│   ├── axios.js                # API istemci yapılandırması
 │   └── prisma.js               # Prisma istemcisi
 ├── prisma/
 │   ├── schema.prisma           # Veritabanı şeması
@@ -256,6 +285,14 @@ Proje [Vercel](https://vercel.com), [Railway](https://railway.app) veya herhangi
 Ürün fotoğrafları `public/` altında kategorilere göre düzenlenmiştir:
 
 - `public/acelya-oturma/`, `public/aston-oturma/`, `public/begonia-oturma/` …
+
+<p align="center">
+  <img src="public/aston-oturma/antrasit-01.jpg" alt="Aston oturma grubu" width="19%" />
+  <img src="public/begonia-2li/cappuccino-01.jpg" alt="Begonia 2'li oturma" width="19%" />
+  <img src="public/velar-kose/cappuccino-01.jpg" alt="Velar köşe grubu" width="19%" />
+  <img src="public/velar-masa/01.jpg" alt="Velar masa grubu" width="19%" />
+  <img src="public/tesla-salincak/01.jpeg" alt="Tesla salıncak" width="19%" />
+</p>
 
 Yeni ürün eklerken admin panelinden görseller [Cloudinary](https://cloudinary.com/) üzerine yüklenir; veritabanında tam URL (`https://res.cloudinary.com/...`) saklanır. Seed verisi için görseller `public/` altına konur ve `prisma/seed.js` ile `lib/i18n/navigation-data.js` güncellenir. Aynı modelin farklı renkleri ayrı ürün kaydı olarak eklenir.
 
