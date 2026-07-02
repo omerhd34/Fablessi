@@ -1,4 +1,5 @@
 import { StoreShowcase } from "@/components/stores/store-showcase";
+import { SeoPageJsonLd } from "@/components/seo/seo-page-json-ld";
 import { createPageMetadata } from "@/lib/i18n/page-metadata";
 import { containerPremiumClass } from "@/lib/layout/shared-styles";
 import { storePageClass } from "@/lib/layout/page-styles";
@@ -8,12 +9,15 @@ export const generateMetadata = createPageMetadata("contact", { index: true });
 
 export default function IletisimPage() {
  return (
-  <div className="bg-background">
-   <section className={storePageClass}>
-    <div className={containerPremiumClass}>
-     <StoreShowcase />
-    </div>
-   </section>
-  </div>
+  <>
+   <SeoPageJsonLd pageKey="contact" />
+   <div className="bg-background">
+    <section className={storePageClass}>
+     <div className={containerPremiumClass}>
+      <StoreShowcase />
+     </div>
+    </section>
+   </div>
+  </>
  );
 }
