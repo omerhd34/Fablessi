@@ -13,7 +13,6 @@ import {
  storeShowcaseInfoClass,
 } from "@/lib/layout/page-styles";
 import { cn } from "@/lib/utils";
-import { brandFullNameUppercase } from "@/lib/navigation";
 import { getFlagshipStore } from "@/lib/stores";
 
 function getInstagramLabel(href) {
@@ -43,10 +42,7 @@ export function StoreShowcase() {
  return (
   <div className="space-y-10 md:space-y-12">
    <div className="text-center">
-    <p className="text-[0.68rem] font-semibold tracking-[0.38em] text-charcoal/50">
-     {brandFullNameUppercase}
-    </p>
-    <h1 className="mt-3 text-2xl font-semibold tracking-tight text-charcoal md:text-3xl">
+    <h1 className="text-2xl font-semibold tracking-tight text-charcoal md:text-3xl">
      {t("contact.title")}
     </h1>
     <p className="text-muted-foreground mx-auto mt-3 max-w-2xl text-sm md:text-base">
