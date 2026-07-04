@@ -8,8 +8,9 @@ import {
 } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 import { buildProductSeoMetadata } from "@/lib/seo/product-description";
-import { buildProductJsonLd } from "@/lib/seo/json-ld";
-import { buildSiteOpenGraph, buildSeoPageTitle, siteNameMetadata } from "@/lib/site-metadata";
+import { buildProductJsonLd, buildProductWebPageJsonLd } from "@/lib/seo/json-ld";
+import { buildSeoMetadataOutput } from "@/lib/seo/metadata-output";
+import { buildSeoPageTitle } from "@/lib/site-metadata";
 import { getPrimaryImageUrl } from "@/lib/product-utils";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { buildNavigation, getProductCategoryGroupFromMenu } from "@/lib/i18n/build-navigation";
@@ -33,35 +34,25 @@ export async function generateMetadata({ params }) {
   };
  }
 
- const { title, openGraphTitle, description } = buildProductSeoMetadata({
+ const seo = buildProductSeoMetadata({
   name: product.name,
   nameEn: product.nameEn,
   locale,
  });
  const primaryImageUrl = getPrimaryImageUrl(product);
  const primaryImageAlt = product.images?.[0]?.alt ?? product.name;
+ const productPath = `/urunler/${slug}`;
 
- return {
-  ...siteNameMetadata,
-  title,
-  description: description ?? "",
-  openGraph: buildSiteOpenGraph({
-   title: openGraphTitle,
-   description: description ?? "",
-   ...(primaryImageUrl
-    ? { images: [{ url: primaryImageUrl, alt: primaryImageAlt }] }
-    : {}),
-  }),
-  twitter: {
-   card: "summary_large_image",
-   title: openGraphTitle,
-   ...(primaryImageUrl ? { images: [primaryImageUrl] } : {}),
-  },
-  robots: {
-   index: true,
-   follow: true,
-  },
- };
+ return buildSeoMetadataOutput({
+  metaTitle: seo.metaTitle,
+  description: seo.description ?? "",
+  path: productPath,
+  index: true,
+  openGraph: primaryImageUrl
+   ? { images: [{ url: primaryImageUrl, alt: primaryImageAlt }] }
+   : {},
+  twitter: primaryImageUrl ? { images: [primaryImageUrl] } : {},
+ });
 }
 
 export default async function UrunDetayPage({ params }) {
@@ -87,9 +78,16 @@ export default async function UrunDetayPage({ params }) {
   categoryProducts.length
  );
  const productJsonLd = buildProductJsonLd(product, locale);
+ const productWebPageJsonLd = buildProductWebPageJsonLd(product, locale);
 
  return (
   <>
+   {productWebPageJsonLd ? (
+    <script
+     type="application/ld+json"
+     dangerouslySetInnerHTML={{ __html: JSON.stringify(productWebPageJsonLd) }}
+    />
+   ) : null}
    {productJsonLd ? (
     <script
      type="application/ld+json"

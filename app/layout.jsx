@@ -10,6 +10,7 @@ import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { buildSiteStructuredDataGraph } from "@/lib/seo/json-ld";
 import { buildPageSeoMetadata } from "@/lib/seo/page-metadata-builders";
+import { seoSiteName } from "@/lib/seo/pages";
 import { siteMetadata, buildSiteOpenGraph } from "@/lib/site-metadata";
 
 const montserrat = Montserrat({
@@ -35,7 +36,6 @@ export async function generateMetadata() {
   ...siteMetadata,
   title: {
    default: seo.openGraphTitle,
-   template: siteMetadata.title.template,
   },
   description: seo.description,
   keywords: dictionary.metadata.keywords ?? siteMetadata.keywords,
@@ -47,6 +47,7 @@ export async function generateMetadata() {
    ...siteMetadata.openGraph,
    title: seo.openGraphTitle,
    description: seo.description,
+   siteName: seoSiteName,
    locale: openGraphLocale,
    url: "/",
   }),

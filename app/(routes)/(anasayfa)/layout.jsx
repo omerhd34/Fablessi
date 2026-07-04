@@ -1,36 +1,31 @@
+import { SeoPageJsonLd } from "@/components/seo/seo-page-json-ld";
 import {
  buildFeaturedSectionJsonLd,
  buildProductsItemListJsonLd,
  buildSiteNavigationJsonLd,
 } from "@/lib/seo/json-ld";
 import { buildPageSeoMetadata } from "@/lib/seo/page-metadata-builders";
+import { buildSeoMetadataOutput } from "@/lib/seo/metadata-output";
 import { getServerDictionary } from "@/lib/i18n/server";
-import { brandFullName } from "@/lib/navigation";
-import { buildSiteOpenGraph, siteNameMetadata } from "@/lib/site-metadata";
 import { getProductsForSeo } from "@/lib/queries/products-seo";
 
 export async function generateMetadata() {
  const { locale } = await getServerDictionary();
  const seo = buildPageSeoMetadata("home", locale);
+ const openGraphLocale = locale === "en" ? "en_US" : "tr_TR";
 
- return {
-  ...siteNameMetadata,
-  title: seo.title,
+ return buildSeoMetadataOutput({
+  metaTitle: seo.metaTitle,
   description: seo.description,
-  openGraph: buildSiteOpenGraph({
-   title: seo.openGraphTitle,
-   description: seo.description,
-   url: "/",
-  }),
-  robots: {
-   index: true,
-   follow: true,
-  },
- };
+  path: "/",
+  index: true,
+  openGraph: { locale: openGraphLocale },
+ });
 }
 
 export default async function AnasayfaLayout({ children }) {
  const { locale } = await getServerDictionary();
+ const seo = buildPageSeoMetadata("home", locale);
  const products = await getProductsForSeo();
  const productsJsonLd = buildProductsItemListJsonLd({ products, locale });
  const siteNavigationJsonLd = buildSiteNavigationJsonLd(locale);
@@ -38,7 +33,8 @@ export default async function AnasayfaLayout({ children }) {
 
  return (
   <>
-   <h1 className="sr-only">{brandFullName}</h1>
+   <SeoPageJsonLd pageKey="home" />
+   <h1 className="sr-only">{seo.metaTitle}</h1>
    {productsJsonLd ? (
     <script
      type="application/ld+json"
