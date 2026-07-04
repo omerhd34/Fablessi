@@ -18,7 +18,7 @@ import { containerPremiumClass } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 
 const footerContactIconLinkClass =
- "inline-flex scale-100 text-charcoal/70 transition-[scale,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:text-charcoal motion-reduce:duration-150";
+ "inline-flex scale-100 text-charcoal/70 touch-manipulation transition-[scale,color] duration-200 ease-out hover:scale-110 hover:text-charcoal active:scale-95 active:duration-75 motion-reduce:transition-none";
 
 function FooterColumn({ title, titleHref, children, className }) {
  const titleClassName =
@@ -45,7 +45,7 @@ function FooterLinkList({ links }) {
     <li key={item.href}>
      <Link
       href={item.href}
-      className="font-body text-[13px] leading-relaxed text-charcoal/75 transition-colors hover:text-charcoal"
+      className="font-body text-[13px] leading-relaxed text-charcoal/75 transition-[color,transform] duration-200 hover:text-charcoal active:scale-[0.98] active:opacity-80 active:duration-75"
      >
       {item.label}
      </Link>

@@ -98,7 +98,7 @@ function LightboxControlButton({
     onClick?.(event);
    }}
    className={cn(
-    "flex scale-100 items-center justify-center rounded-full backdrop-blur-md transition-[scale,background-color,border-color,opacity] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] focus-visible:outline-none focus-visible:ring-2 motion-reduce:duration-150",
+    "flex scale-100 items-center justify-center rounded-full backdrop-blur-md transition-[scale,background-color,border-color,opacity] duration-200 ease-out active:duration-75 focus-visible:outline-none focus-visible:ring-2 motion-reduce:duration-150",
     isInactive
      ? "cursor-default scale-95 opacity-80"
      : "cursor-pointer opacity-100 hover:scale-110 active:scale-105",

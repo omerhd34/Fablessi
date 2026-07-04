@@ -58,7 +58,7 @@ export function FavoritesView({ productMetaBySlug = {} }) {
     </p>
     <Link
      href="/urunler"
-     className="mt-8 inline-flex scale-100 rounded-full bg-charcoal px-6 py-3 text-sm font-medium text-white transition-[scale,background-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:bg-charcoal/90 motion-reduce:duration-150"
+     className="mt-8 inline-flex scale-100 rounded-full bg-charcoal px-6 py-3 text-sm font-medium text-white transition-[scale,background-color] duration-200 ease-out active:duration-75 hover:scale-110 hover:bg-charcoal/90 motion-reduce:duration-150"
     >
      {t("favorites.browseProducts")}
     </Link>

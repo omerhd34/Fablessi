@@ -35,10 +35,10 @@ const desktopNavIconMap = {
 };
 
 const navDesktopLinkClass =
- "nav-desktop-link group/nav-link inline-flex items-center gap-[0.4375rem] px-3 py-2 text-sm font-medium whitespace-nowrap transition-[opacity,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:opacity-65 xl:gap-2 xl:px-[1.125rem] xl:py-2.5 xl:text-base motion-reduce:duration-150";
+ "nav-desktop-link group/nav-link inline-flex items-center gap-[0.4375rem] px-3 py-2 text-sm font-medium whitespace-nowrap touch-manipulation transition-[opacity,color,transform] duration-200 ease-out hover:opacity-65 active:scale-[0.98] active:opacity-50 active:duration-75 xl:gap-2 xl:px-[1.125rem] xl:py-2.5 xl:text-base motion-reduce:transition-none";
 
 const navDesktopLinkIconClass =
- "nav-desktop-link__icon size-[1.0625rem] shrink-0 scale-100 text-charcoal/60 transition-[scale,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/nav-link:scale-110 xl:size-[1.125rem] motion-reduce:duration-150";
+ "nav-desktop-link__icon size-[1.0625rem] shrink-0 scale-100 text-charcoal/60 transition-[scale,color] duration-200 ease-out active:duration-75 group-hover/nav-link:scale-110 xl:size-[1.125rem] motion-reduce:duration-150";
 
 function DesktopNavItem({
  item,

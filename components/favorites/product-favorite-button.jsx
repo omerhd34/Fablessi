@@ -5,6 +5,7 @@ import { useFavorites } from "@/contexts/favorites-provider";
 import { useLocale } from "@/contexts/locale-provider";
 import { Heart, HeartFilled } from "@/lib/icons";
 import { getProductFavoriteToastLabel } from "@/lib/product-utils";
+import { interactiveMotionClass } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
 
 export function ProductFavoriteButton({ product, className }) {
@@ -44,7 +45,8 @@ export function ProductFavoriteButton({ product, className }) {
    }
    aria-pressed={favorited}
    className={cn(
-    "relative z-30 inline-flex size-9 touch-manipulation scale-100 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md transition-[scale,background-color,border-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:bg-white/22 motion-reduce:duration-150",
+    "relative z-30 inline-flex size-9 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md hover:scale-110 hover:bg-white/22",
+    interactiveMotionClass,
     favorited && "text-red-400",
     className
    )}

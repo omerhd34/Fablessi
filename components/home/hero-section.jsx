@@ -18,7 +18,7 @@ function isHeroDesktopViewport() {
 
 const heroNavButtonClass = cn(
  headerGlassBtnClass,
- "absolute top-1/2 z-20 hidden desktop:inline-flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-white/96 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/45 active:scale-100 sm:size-[3.25rem] desktop:size-[3.75rem] [&_svg]:size-[1.375rem] md:[&_svg]:size-[1.875rem] [&_svg]:[stroke-width:3.5]"
+ "absolute top-1/2 z-20 hidden desktop:inline-flex size-11 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full text-white/96 hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/45 active:scale-95 active:duration-75 sm:size-[3.25rem] desktop:size-[3.75rem] [&_svg]:size-[1.375rem] md:[&_svg]:size-[1.875rem] [&_svg]:[stroke-width:3.5]"
 );
 
 const HERO_IMAGE_BREAKPOINTS = [

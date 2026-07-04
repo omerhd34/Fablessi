@@ -17,7 +17,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const legalContactIconClass =
- "inline-flex scale-100 text-charcoal/70 transition-[scale,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:text-charcoal motion-reduce:duration-150";
+ "inline-flex scale-100 text-charcoal/70 transition-[scale,color] duration-200 ease-out active:duration-75 hover:scale-110 hover:text-charcoal motion-reduce:duration-150";
 
 export function LegalPageContent({ contentKey }) {
  const { dictionary, t } = useTranslations();

@@ -56,7 +56,7 @@ function HeaderLocaleSwitcher({ className }) {
   <button
    type="button"
    className={cn(
-    "relative inline-flex size-10 shrink-0 scale-100 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 shadow-none transition-[scale,opacity] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:opacity-82 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal/35 data-[state=open]:opacity-100 motion-reduce:duration-150 lg:size-11 xl:size-12",
+    "relative inline-flex size-10 shrink-0 scale-100 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 shadow-none transition-[scale,opacity] duration-200 ease-out active:duration-75 hover:scale-110 hover:opacity-82 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal/35 data-[state=open]:opacity-100 motion-reduce:duration-150 lg:size-11 xl:size-12",
     className
    )}
    aria-label={t("common.switchTo", {

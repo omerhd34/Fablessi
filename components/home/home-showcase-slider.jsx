@@ -7,6 +7,7 @@ import { contactFloatBtnClass } from "@/lib/layout/header-styles";
 import {
  containerPremiumClass,
  headingDisplayClass,
+ interactiveMotionClass,
  sectionPaddingClass,
 } from "@/lib/layout/shared-styles";
 import { cn } from "@/lib/utils";
@@ -30,7 +31,8 @@ function getSlideClassName(slidesPerView) {
 const SHOWCASE_AUTOPLAY_MS = 6000;
 
 const navOverlayButtonClassName = cn(
- "inline-flex size-10 touch-manipulation scale-100 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md transition-[scale,background-color,border-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:bg-white/22 motion-reduce:duration-150 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-9",
+ "inline-flex size-10 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md hover:scale-110 hover:bg-white/22 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-25 sm:size-9",
+ interactiveMotionClass,
  "[&_svg]:size-5.5 sm:[&_svg]:size-5 [&_svg]:[stroke-width:2.5]"
 );
 
@@ -213,7 +215,10 @@ export function HomeShowcaseSlider({
      {action ? (
       <Link
        href={action.href}
-       className="mt-4 inline-flex scale-100 origin-center items-center gap-1 text-sm font-semibold text-charcoal/70 transition-[scale,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105 hover:text-charcoal motion-reduce:duration-150"
+       className={cn(
+        "mt-4 inline-flex origin-center items-center gap-1 text-sm font-semibold text-charcoal/70 hover:scale-105 hover:text-charcoal",
+        interactiveMotionClass
+       )}
       >
        {action.label}
        <ChevronRight className="size-4 shrink-0" aria-hidden />

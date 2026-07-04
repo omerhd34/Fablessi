@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 function CategoryCard({ category }) {
  const labelClassName =
-  "scale-100 origin-left transition-[scale] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-105 motion-reduce:duration-150";
+  "scale-100 origin-left transition-[scale] duration-200 ease-out active:duration-75 group-hover/card:scale-105 motion-reduce:duration-150";
 
  const badgeClassName =
   "inline-flex rounded-full border border-white/20 bg-white/15 font-semibold text-white shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md";
@@ -33,7 +33,7 @@ function CategoryCard({ category }) {
      alt={category.label}
      fill
      sizes="(max-width: 64rem) 50vw, 33vw"
-     className="size-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/card:scale-[1.03] motion-reduce:duration-150"
+     className="size-full object-cover transition-transform duration-200 ease-out active:duration-75 group-hover/card:scale-[1.03] motion-reduce:duration-150"
     />
     <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/45 via-black/5 to-transparent" />
     <div className="absolute right-3 bottom-3 left-3">

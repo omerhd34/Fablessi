@@ -29,7 +29,7 @@ export function ProductCard({
  const displayPrice = getProductDisplayPrice(product);
  const priceLabel = formatProductPrice(displayPrice, locale);
  const badgeClassName = cn(
-  "inline-flex scale-100 rounded-full border border-white/20 bg-white/15 font-medium text-white shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md transition-[scale] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.08] motion-reduce:duration-150",
+  "inline-flex scale-100 rounded-full border border-white/20 bg-white/15 font-medium text-white shadow-[0_4px_16px_rgb(0_0_0/18%)] backdrop-blur-md transition-[scale] duration-200 ease-out active:duration-75 hover:scale-[1.08] motion-reduce:duration-150",
   isCatalog ? "px-3 py-1.5 text-xs" : "px-2.5 py-1 text-[0.65rem]"
  );
 
@@ -48,7 +48,7 @@ export function ProductCard({
    >
     <Link
      href={`/urunler/${product.slug}`}
-     className="absolute inset-0 block cursor-pointer"
+     className="absolute inset-0 block cursor-pointer touch-manipulation transition-transform duration-75 active:scale-[0.98] motion-reduce:active:scale-100"
     >
      {imageUrl ? (
       <Image

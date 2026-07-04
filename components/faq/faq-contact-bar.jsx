@@ -11,7 +11,7 @@ import {
 } from "@/lib/site-contact";
 
 const faqContactIconLinkClass =
- "inline-flex scale-100 items-center justify-center text-charcoal/70 transition-[scale,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 hover:text-charcoal motion-reduce:duration-150";
+ "inline-flex scale-100 items-center justify-center text-charcoal/70 transition-[scale,color] duration-200 ease-out active:duration-75 hover:scale-110 hover:text-charcoal motion-reduce:duration-150";
 
 export function FaqContactBar() {
  const { t } = useTranslations();

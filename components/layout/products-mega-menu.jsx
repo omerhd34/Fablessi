@@ -42,11 +42,11 @@ function ProductMenuCard({ item, onNavigate }) {
      alt={item.label}
      fill
      sizes="(max-width: 768px) 50vw, (max-width: 1280px) 28vw, 22vw"
-     className="object-cover transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] motion-reduce:duration-150"
+     className="object-cover transition-transform duration-200 ease-out active:duration-75 group-hover:scale-[1.04] motion-reduce:duration-150"
     />
     <div className="absolute inset-0 bg-linear-to-t from-black/52 via-black/8 to-transparent" />
     <div className="absolute right-3 bottom-3 left-3">
-     <span className="inline-flex max-w-full truncate rounded-full border border-white/22 bg-white/16 px-3 py-1 text-xs font-semibold text-white shadow-[0_4px_16px_rgb(0_0_0/22%)] backdrop-blur-md transition-[scale,background-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] group-hover:bg-white/24 motion-reduce:duration-150">
+     <span className="inline-flex max-w-full truncate rounded-full border border-white/22 bg-white/16 px-3 py-1 text-xs font-semibold text-white shadow-[0_4px_16px_rgb(0_0_0/22%)] backdrop-blur-md transition-[scale,background-color] duration-200 ease-out active:duration-75 group-hover:scale-[1.03] group-hover:bg-white/24 motion-reduce:duration-150">
       {item.label}
      </span>
     </div>
@@ -77,7 +77,7 @@ function handleMegaMenuWheel(event) {
 const megaMenuProductGridClass = "grid grid-cols-2 gap-2.5 md:gap-3";
 
 const viewAllLinkClass = cn(
- "products-mega-menu-view-all inline-flex shrink-0 items-center gap-1 rounded-full border border-white/18 bg-white/10 px-3 py-1.5 text-[0.8125rem] font-semibold text-white/92 shadow-[0_4px_18px_rgb(0_0_0/12%)] backdrop-blur-sm transition-[color,background-color,border-color,scale] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03] hover:border-white/28 hover:bg-white/18 hover:text-white motion-reduce:duration-150",
+ "products-mega-menu-view-all inline-flex shrink-0 items-center gap-1 rounded-full border border-white/18 bg-white/10 px-3 py-1.5 text-[0.8125rem] font-semibold text-white/92 shadow-[0_4px_18px_rgb(0_0_0/12%)] backdrop-blur-sm transition-[color,background-color,border-color,scale] duration-200 ease-out active:duration-75 hover:scale-[1.03] hover:border-white/28 hover:bg-white/18 hover:text-white motion-reduce:duration-150",
  lightMegaMenuViewAllClass
 );
 

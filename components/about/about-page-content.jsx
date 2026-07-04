@@ -14,7 +14,7 @@ export function AboutPageContent() {
  const { about, missionVision } = dictionary;
 
  const visualCtaClass =
-  "inline-flex h-11 scale-100 items-center justify-center rounded-full px-8 text-sm font-semibold tracking-[0.06em] uppercase transition-[scale,background-color,border-color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-105 motion-reduce:duration-150";
+  "inline-flex h-11 scale-100 items-center justify-center rounded-full px-8 text-sm font-semibold tracking-[0.06em] uppercase transition-[scale,background-color,border-color] duration-200 ease-out active:duration-75 hover:scale-105 motion-reduce:duration-150";
 
  return (
   <section className="about-content pb-12 pt-10 md:pb-16 md:pt-14">

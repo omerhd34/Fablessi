@@ -13,7 +13,7 @@ import { getSortOptions } from "@/lib/i18n/catalog";
 import { cn } from "@/lib/utils";
 
 const sortMenuHoverClass =
- "scale-100 transition-[scale,background-color,color] duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:duration-150";
+ "scale-100 transition-[scale,background-color,color] duration-200 ease-out active:duration-75 motion-reduce:duration-150";
 
 export function ProductsSortMenu({
  sort,
