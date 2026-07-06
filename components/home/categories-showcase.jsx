@@ -69,6 +69,7 @@ export function CategoriesShowcase() {
   <section
    className={cn(sectionPaddingClass, "bg-white")}
    aria-label={t("categories.categoriesAria")}
+   data-nosnippet
   >
    <div className={containerPremiumClass}>
     <div className="mb-8 text-center sm:mb-10 md:mb-14">
