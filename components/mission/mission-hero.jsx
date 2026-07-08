@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { PageHeroPicture } from "@/components/ui/page-hero-picture";
+import { SeoH1 } from "@/components/seo/seo-h1";
 import { useTranslations } from "@/contexts/locale-provider";
+import { formatSeoTitle } from "@/lib/site-metadata";
 import { resolvePageHeroImage } from "@/lib/content/page-hero-images";
 import { visualHeroTitleShadowClass } from "@/lib/layout/page-styles";
 import { cn } from "@/lib/utils";
@@ -51,14 +53,15 @@ export function MissionHero() {
      className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 pb-6 text-center text-white sm:pb-10"
      style={{ paddingTop: "var(--mission-hero-header-offset, 0px)" }}
     >
-     <h1
+     <SeoH1
+      title={formatSeoTitle(t("missionVision.pageTitle"))}
       className={cn(
        "text-2xl font-semibold tracking-tight md:text-[2rem] lg:text-[2.25rem]",
        visualHeroTitleShadowClass
       )}
      >
       {t("missionVision.pageTitle")}
-     </h1>
+     </SeoH1>
     </div>
    </div>
   </section>

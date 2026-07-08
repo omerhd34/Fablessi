@@ -10,8 +10,8 @@ import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { buildSiteStructuredDataGraph } from "@/lib/seo/json-ld";
 import { buildPageSeoMetadata } from "@/lib/seo/page-metadata-builders";
-import { seoSiteName } from "@/lib/seo/pages";
-import { siteMetadata, buildSiteOpenGraph } from "@/lib/site-metadata";
+import { buildSeoMetadataOutput } from "@/lib/seo/metadata-output";
+import { siteMetadata } from "@/lib/site-metadata";
 
 const montserrat = Montserrat({
  variable: "--font-montserrat",
@@ -31,30 +31,25 @@ export async function generateMetadata() {
  const { dictionary, locale } = await getServerDictionary();
  const seo = buildPageSeoMetadata("home", locale);
  const openGraphLocale = locale === "en" ? "en_US" : "tr_TR";
+ const seoOutput = buildSeoMetadataOutput({
+  metaTitle: seo.metaTitle,
+  description: seo.description,
+  path: "/",
+  keywords: dictionary.metadata.keywords ?? siteMetadata.keywords,
+  index: true,
+  openGraph: { locale: openGraphLocale },
+ });
 
  return {
   ...siteMetadata,
-  title: {
-   default: seo.openGraphTitle,
-  },
-  description: seo.description,
-  keywords: dictionary.metadata.keywords ?? siteMetadata.keywords,
-  robots: {
-   index: false,
-   follow: true,
-  },
-  openGraph: buildSiteOpenGraph({
+  ...seoOutput,
+  openGraph: {
    ...siteMetadata.openGraph,
-   title: seo.openGraphTitle,
-   description: seo.description,
-   siteName: seoSiteName,
-   locale: openGraphLocale,
-   url: "/",
-  }),
+   ...seoOutput.openGraph,
+  },
   twitter: {
    ...siteMetadata.twitter,
-   title: seo.openGraphTitle,
-   description: seo.description,
+   ...seoOutput.twitter,
   },
  };
 }

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { SocialIcon } from "@/components/layout/social-icon";
+import { SeoH1 } from "@/components/seo/seo-h1";
 import { FaLocationArrow, FaWhatsapp, Mail, Phone } from "@/lib/icons";
 import { getWhatsAppHref, socialLinks } from "@/lib/site-contact";
 import { useMemo } from "react";
@@ -14,6 +15,7 @@ import {
 } from "@/lib/layout/page-styles";
 import { cn } from "@/lib/utils";
 import { getFlagshipStore } from "@/lib/stores";
+import { formatSeoTitle } from "@/lib/site-metadata";
 
 function getInstagramLabel(href) {
  if (!href) return "Instagram";
@@ -42,9 +44,12 @@ export function StoreShowcase() {
  return (
   <div className="space-y-10 md:space-y-12">
    <div className="text-center">
-    <h1 className="text-2xl font-semibold tracking-tight text-charcoal md:text-3xl">
+    <SeoH1
+     title={formatSeoTitle(t("contact.title"))}
+     className="text-2xl font-semibold tracking-tight text-charcoal md:text-3xl"
+    >
      {t("contact.title")}
-    </h1>
+    </SeoH1>
     <p className="text-muted-foreground mx-auto mt-3 max-w-2xl text-sm md:text-base">
      {t("contact.seoIntro")}
     </p>

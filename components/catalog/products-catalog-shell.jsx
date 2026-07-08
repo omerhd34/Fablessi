@@ -5,9 +5,11 @@ import { ProductCard } from "@/components/catalog/product-card";
 import { ProductsCatalogToolbar } from "@/components/catalog/products-catalog-toolbar";
 import { ProductsCategoryCarousel } from "@/components/catalog/products-category-carousel";
 import { ProductsCategoryGrid } from "@/components/catalog/products-category-grid";
+import { SeoH1 } from "@/components/seo/seo-h1";
 import { useLocale } from "@/contexts/locale-provider";
 import { getProductDisplayPrice } from "@/lib/product-utils";
 import { headingDisplayClass } from "@/lib/layout/shared-styles";
+import { formatSeoTitle } from "@/lib/site-metadata";
 import { cn } from "@/lib/utils";
 
 function compareByPrice(a, b, ascending) {
@@ -76,9 +78,12 @@ export function ProductsCatalogShell({
   return (
    <div className="space-y-6 md:space-y-8">
     <div className="text-center md:text-left">
-     <h1 className={cn(headingDisplayClass, "text-charcoal")}>
+     <SeoH1
+      title={formatSeoTitle(t("pages.products.title"))}
+      className={cn(headingDisplayClass, "text-charcoal")}
+     >
       {t("pages.products.title")}
-     </h1>
+     </SeoH1>
      <p className="text-muted-foreground mx-auto mt-3 max-w-4xl text-sm md:mx-0 md:text-base">
       {t("home.categoriesDescription")}
      </p>
@@ -93,9 +98,14 @@ export function ProductsCatalogShell({
  return (
   <div className="space-y-6 md:space-y-8">
    <div>
-    <h1 className={cn(headingDisplayClass, "text-charcoal")}>
+    <SeoH1
+     title={formatSeoTitle(
+      activeGroup ? activeGroup.label : t("catalog.allProductsTitle")
+     )}
+     className={cn(headingDisplayClass, "text-charcoal")}
+    >
      {activeGroup ? activeGroup.label : t("catalog.allProductsTitle")}
-    </h1>
+    </SeoH1>
     {hasCategoryDescription ? (
      <p className="text-muted-foreground mt-3 max-w-4xl text-sm md:text-base">
       {categoryDescription}

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { showFavoriteToast } from "@/components/favorites/favorite-toast";
 import { ProductDimensionsScrollButton } from "@/components/product/product-dimensions-scroll-button";
 import { ProductInfoScrollButton } from "@/components/product/product-info-scroll-button";
+import { SeoH1 } from "@/components/seo/seo-h1";
 import {
  Accordion,
  AccordionContent,
@@ -26,6 +27,7 @@ import {
  getProductDisplayPrice,
  getProductFavoriteToastLabel,
 } from "@/lib/product-utils";
+import { formatSeoTitle } from "@/lib/site-metadata";
 import { cn } from "@/lib/utils";
 import { useFavorites } from "@/contexts/favorites-provider";
 
@@ -297,9 +299,12 @@ export function ProductDetailLeft({
      ) : null}
     </ol>
    </nav>
-   <h1 className="font-heading min-w-0 text-xl font-semibold tracking-tight wrap-break-word text-charcoal md:text-2xl">
+   <SeoH1
+    title={formatSeoTitle(getProductCardBottomLabel(product, locale))}
+    className="font-heading min-w-0 text-xl font-semibold tracking-tight wrap-break-word text-charcoal md:text-2xl"
+   >
     {getProductCardBottomLabel(product, locale)}
-   </h1>
+   </SeoH1>
   </div>
  ) : null;
 

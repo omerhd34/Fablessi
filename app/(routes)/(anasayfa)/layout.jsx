@@ -4,8 +4,8 @@ import {
  buildProductsItemListJsonLd,
  buildSiteNavigationJsonLd,
 } from "@/lib/seo/json-ld";
-import { buildPageSeoMetadata } from "@/lib/seo/page-metadata-builders";
 import { buildSeoMetadataOutput } from "@/lib/seo/metadata-output";
+import { buildPageSeoMetadata } from "@/lib/seo/page-metadata-builders";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { getProductsForSeo } from "@/lib/queries/products-seo";
 

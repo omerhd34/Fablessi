@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { PageHeroPicture } from "@/components/ui/page-hero-picture";
+import { SeoH1 } from "@/components/seo/seo-h1";
 import { useTranslations } from "@/contexts/locale-provider";
+import { formatSeoTitle } from "@/lib/site-metadata";
 import { resolvePageHeroImages } from "@/lib/content/page-hero-images";
 import { cn } from "@/lib/utils";
 
@@ -56,9 +58,12 @@ export function FaqHero() {
      className="absolute inset-0 z-10 flex flex-col items-center justify-center px-6 pb-6 text-center text-white sm:pb-10"
      style={{ paddingTop: "var(--faq-hero-header-offset, 0px)" }}
     >
-     <h1 className="text-2xl font-semibold tracking-tight md:text-[2rem] lg:text-[2.25rem]">
+     <SeoH1
+      title={formatSeoTitle(t("faq.pageTitle"))}
+      className="text-2xl font-semibold tracking-tight md:text-[2rem] lg:text-[2.25rem]"
+     >
       {t("faq.pageTitle")}
-     </h1>
+     </SeoH1>
 
      <nav
       className="mx-auto mt-5 flex w-full flex-nowrap items-center justify-center gap-x-2 sm:mt-8 sm:gap-x-4 md:gap-x-8"
