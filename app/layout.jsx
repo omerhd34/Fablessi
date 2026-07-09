@@ -8,9 +8,10 @@ import { FavoritesProvider } from "@/contexts/favorites-provider";
 import { LocaleProvider } from "@/contexts/locale-provider";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getServerDictionary } from "@/lib/i18n/server";
-import { buildSiteStructuredDataGraph } from "@/lib/seo/json-ld";
+import { buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/lib/seo/json-ld";
 import { buildPageSeoMetadata } from "@/lib/seo/page-metadata-builders";
 import { buildSeoMetadataOutput } from "@/lib/seo/metadata-output";
+import { brandFullName } from "@/lib/navigation";
 import { siteMetadata } from "@/lib/site-metadata";
 
 const montserrat = Montserrat({
@@ -59,7 +60,8 @@ export const revalidate = 0;
 export default async function RootLayout({ children }) {
  const { locale, dictionary } = await getServerDictionary();
  const menuGroups = await getCategoryGroupsForMenu(locale);
- const siteStructuredDataGraph = buildSiteStructuredDataGraph(locale);
+ const siteWebSiteJsonLd = buildWebSiteJsonLd();
+ const siteOrganizationJsonLd = buildOrganizationJsonLd(locale);
 
  return (
   <html
@@ -71,10 +73,15 @@ export default async function RootLayout({ children }) {
    <head>
     <script
      type="application/ld+json"
-     dangerouslySetInnerHTML={{ __html: JSON.stringify(siteStructuredDataGraph) }}
+     dangerouslySetInnerHTML={{ __html: JSON.stringify(siteWebSiteJsonLd) }}
+    />
+    <script
+     type="application/ld+json"
+     dangerouslySetInnerHTML={{ __html: JSON.stringify(siteOrganizationJsonLd) }}
     />
    </head>
    <body className="min-h-full flex flex-col font-sans">
+    <span className="sr-only">{brandFullName}</span>
     <LocaleProvider locale={locale} dictionary={dictionary} menuGroups={menuGroups}>
      <FavoritesProvider>
       <TooltipProvider>

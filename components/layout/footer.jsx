@@ -5,7 +5,7 @@ import { FaWhatsapp, Mail, MapPin, Phone } from "@/lib/icons";
 import { flagshipStore } from "@/lib/stores";
 import { SocialIcon } from "@/components/layout/social-icon";
 import { useTranslations } from "@/contexts/locale-provider";
-import { brandName } from "@/lib/navigation";
+import { brandFullName } from "@/lib/navigation";
 import {
  getSiteWorkingHours,
  getWhatsAppHref,
@@ -159,7 +159,7 @@ export function Footer() {
     >
      <div className="flex min-h-(--glass-float-size) pr-[calc(1.25rem+var(--glass-float-size)+0.75rem)] max-sm:flex-col max-sm:justify-end max-sm:gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">
       <p className="font-body text-[12px] text-charcoal/55">
-       {year} © {brandName}
+       {year} © {brandFullName}
       </p>
       <p className="font-body text-[12px] text-charcoal/55 sm:text-right">
        {t("footer.siteDeveloper")}{" "}

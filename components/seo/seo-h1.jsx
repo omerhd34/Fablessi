@@ -3,14 +3,28 @@ import { cn } from "@/lib/utils";
 
 const brandSuffix = ` | ${brandFullName}`;
 
+function splitSeoTitle(pageTitle) {
+ const trimmed = pageTitle.trim();
+
+ if (trimmed.endsWith(brandSuffix)) {
+  return {
+   primary: trimmed.slice(0, -brandSuffix.length),
+   suffix: brandSuffix,
+  };
+ }
+
+ return { primary: trimmed, suffix: null };
+}
+
+/** Görünür H1 kısa kalır; tam SERP başlığı yalnızca sr-only ile DOM'da tutulur. */
 export function SeoH1({ title, className, children, ...props }) {
  const pageTitle = title?.trim() ?? "";
- const showBrandSuffix = pageTitle && !pageTitle.endsWith(brandSuffix);
+ const { primary, suffix } = splitSeoTitle(pageTitle);
 
  return (
   <h1 className={cn(className)} {...props}>
-   {children ?? pageTitle}
-   {showBrandSuffix ? <span className="sr-only">{brandSuffix}</span> : null}
+   {children ?? primary}
+   {suffix ? <span className="sr-only">{suffix}</span> : null}
   </h1>
  );
 }
