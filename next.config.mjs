@@ -45,6 +45,7 @@ const nextConfig = {
   ];
  },
  images: {
+  deviceSizes: [320, 384, 420, 480, 560, 640, 750, 828, 1080, 1200, 1600, 1920, 2560],
   qualities: [75, 92],
   remotePatterns: [
    {

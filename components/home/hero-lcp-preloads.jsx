@@ -1,12 +1,9 @@
-import {
- HERO_IMAGE_BREAKPOINTS,
- HERO_LCP_PRELOAD_MEDIA,
- HERO_MOBILE_IMAGE,
-} from "@/lib/content/hero-image-settings";
+import { HERO_LCP_PRELOAD_MEDIA } from "@/lib/content/hero-image-settings";
 
-function buildPreloadLink({ href, media }) {
+function buildPreloadLink({ imageKey, href, media }) {
  return (
   <link
+   key={imageKey}
    rel="preload"
    as="image"
    href={href}
@@ -17,20 +14,15 @@ function buildPreloadLink({ href, media }) {
 }
 
 export function HeroLcpPreloads({ images }) {
- const desktopBreakpoint =
-  HERO_IMAGE_BREAKPOINTS.find(({ key }) => key === "xl") ??
-  HERO_IMAGE_BREAKPOINTS[1];
-
  return (
   <>
-   {buildPreloadLink({
-    href: images[HERO_MOBILE_IMAGE.key],
-    media: HERO_LCP_PRELOAD_MEDIA.mobile,
-   })}
-   {buildPreloadLink({
-    href: images[desktopBreakpoint.key],
-    media: HERO_LCP_PRELOAD_MEDIA.desktop,
-   })}
+   {Object.entries(HERO_LCP_PRELOAD_MEDIA).map(([imageKey, media]) =>
+    buildPreloadLink({
+     imageKey,
+     href: images[imageKey],
+     media,
+    })
+   )}
   </>
  );
 }

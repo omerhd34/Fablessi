@@ -1,13 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "@/contexts/locale-provider";
 import { brandFullName } from "@/lib/navigation";
 import { brandLogoImageFilterClass } from "@/lib/layout/header-styles";
 import { cn } from "@/lib/utils";
 
-const LOGO_WIDTH = 1168;
-const LOGO_HEIGHT = 268;
+const LOGO_WIDTH = 244;
+const LOGO_HEIGHT = 56;
 
 const logoHeightClasses = {
  xs: "h-8",
@@ -38,12 +39,12 @@ export function BrandLogoLink({ href = "/", size = "md", className }) {
    )}
    aria-label={`${brandFullName} - ${t("common.home")}`}
   >
-   {/* eslint-disable-next-line @next/next/no-img-element */}
-   <img
+   <Image
     src="/brand/logo.png"
     alt={`${brandFullName} logo`}
     width={LOGO_WIDTH}
     height={LOGO_HEIGHT}
+    sizes="(min-width: 64rem) 244px, 220px"
     decoding="async"
     fetchPriority="high"
     draggable={false}

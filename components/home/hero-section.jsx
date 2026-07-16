@@ -28,7 +28,7 @@ function HeroSlideImage({ slide, priority, className }) {
  const { images } = slide;
 
  const sources = HERO_IMAGE_BREAKPOINTS.map(({ media, key }) => (
-  <source key={key} media={media} srcSet={images[key]} />
+  <source key={key} media={media} srcSet={images[key]} type="image/webp" />
  ));
 
  return (
@@ -39,8 +39,9 @@ function HeroSlideImage({ slide, priority, className }) {
     alt=""
     aria-hidden="true"
     className={cn("h-full w-full", className)}
+    loading={priority ? "eager" : "lazy"}
     decoding={priority ? "sync" : "async"}
-    fetchPriority={priority ? "high" : undefined}
+    fetchPriority={priority ? "high" : "low"}
    />
   </picture>
  );
