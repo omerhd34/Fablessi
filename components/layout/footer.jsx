@@ -5,7 +5,7 @@ import { FaWhatsapp, Mail, MapPin, Phone } from "@/lib/icons";
 import { flagshipStore } from "@/lib/stores";
 import { SocialIcon } from "@/components/layout/social-icon";
 import { useTranslations } from "@/contexts/locale-provider";
-import { brandFullName } from "@/lib/navigation";
+import { brandFullName } from "@/lib/brand";
 import {
  getSiteWorkingHours,
  getWhatsAppHref,

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { DynamicReactIcon } from "@/components/ui/dynamic-react-icon";
 import { useTranslations } from "@/contexts/locale-provider";
 import { CheckIcon, SupportAgent, ViewModule } from "@/lib/icons";
-import { brandFullNameUppercase } from "@/lib/navigation";
+import { brandFullNameUppercase } from "@/lib/brand";
 import {
  brandEyebrowClass,
  missionCommitmentItemClass,

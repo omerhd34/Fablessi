@@ -37,7 +37,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+ Tooltip,
+ TooltipContent,
+ TooltipProvider,
+ TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { InfoIcon } from "@/lib/icons";
 
 const emptyDimensionItem = {
@@ -450,21 +455,23 @@ export function ProductForm({
        </span>
       </label>
       {!canMarkFeatured ? (
-       <Tooltip>
-        <TooltipTrigger asChild>
-         <button
-          type="button"
-          className="inline-flex cursor-pointer items-center rounded-md p-0.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
-          aria-label="Vitrin limiti hakkında bilgi"
-         >
-          <InfoIcon className="size-4" />
-         </button>
-        </TooltipTrigger>
-        <TooltipContent side="top" sideOffset={6}>
-         Vitrin dolu ({featuredCount}/{maxFeatured}). Yeni vitrin eklemek için mevcut bir
-         vitrin işaretini kaldırın.
-        </TooltipContent>
-       </Tooltip>
+       <TooltipProvider>
+        <Tooltip>
+         <TooltipTrigger asChild>
+          <button
+           type="button"
+           className="inline-flex cursor-pointer items-center rounded-md p-0.5 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+           aria-label="Vitrin limiti hakkında bilgi"
+          >
+           <InfoIcon className="size-4" />
+          </button>
+         </TooltipTrigger>
+         <TooltipContent side="top" sideOffset={6}>
+          Vitrin dolu ({featuredCount}/{maxFeatured}). Yeni vitrin eklemek için mevcut bir
+          vitrin işaretini kaldırın.
+         </TooltipContent>
+        </Tooltip>
+       </TooltipProvider>
       ) : null}
      </div>
     </CardContent>

@@ -62,6 +62,7 @@ export function ProductCard({
           ? "(max-width: 640px) calc(100vw - 2rem), (max-width: 1280px) 50vw, 600px"
           : "(max-width: 768px) 50vw, 25vw"
        }
+       quality={60}
        className="size-full object-cover transition-transform duration-500 group-hover/card:scale-[1.03]"
        priority={priority}
       />

@@ -20,12 +20,11 @@ export function FeaturedProductsGrid({ products }) {
     itemCount={products.length}
     slidesPerView={2}
    >
-    {products.map((product, index) => (
+    {products.map((product) => (
      <HomeShowcaseSlide key={product.id}>
       <ProductCard
        product={product}
        variant="featured"
-       priority={index < 2}
        showFavoriteButton
       />
      </HomeShowcaseSlide>

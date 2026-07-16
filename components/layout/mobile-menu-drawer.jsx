@@ -43,7 +43,7 @@ import {
 } from "@/lib/layout/header-styles";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "@/contexts/locale-provider";
-import { brandName } from "@/lib/navigation";
+import { brandName } from "@/lib/brand";
 import {
  SheetClose,
  SheetContent,

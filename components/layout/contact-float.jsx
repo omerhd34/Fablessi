@@ -3,7 +3,11 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { TbArrowUp, TbBrandWhatsapp, TbPhone } from "react-icons/tb";
+import {
+ ArrowUp as TbArrowUp,
+ MessageCircle as TbBrandWhatsapp,
+ Phone as TbPhone,
+} from "lucide-react";
 import { useTranslations } from "@/contexts/locale-provider";
 import {
  contactFloatBtnClass,

@@ -3,7 +3,6 @@ import "@/app/styles/base.css";
 import { MainShell } from "@/components/layout/main-shell";
 import { SiteChrome } from "@/components/layout/site-chrome";
 import { AppToaster } from "@/components/ui/app-toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { FavoritesProvider } from "@/contexts/favorites-provider";
 import { LocaleProvider } from "@/contexts/locale-provider";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
@@ -11,7 +10,7 @@ import { getServerDictionary } from "@/lib/i18n/server";
 import { buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/lib/seo/json-ld";
 import { buildPageSeoMetadata } from "@/lib/seo/page-metadata-builders";
 import { buildSeoMetadataOutput } from "@/lib/seo/metadata-output";
-import { brandFullName } from "@/lib/navigation";
+import { brandFullName } from "@/lib/brand";
 import { siteMetadata } from "@/lib/site-metadata";
 
 const montserrat = Montserrat({
@@ -84,11 +83,9 @@ export default async function RootLayout({ children }) {
     <span className="sr-only">{brandFullName}</span>
     <LocaleProvider locale={locale} dictionary={dictionary} menuGroups={menuGroups}>
      <FavoritesProvider>
-      <TooltipProvider>
-       <MainShell>{children}</MainShell>
-       <SiteChrome />
-       <AppToaster />
-      </TooltipProvider>
+      <MainShell>{children}</MainShell>
+      <SiteChrome />
+      <AppToaster />
      </FavoritesProvider>
     </LocaleProvider>
    </body>

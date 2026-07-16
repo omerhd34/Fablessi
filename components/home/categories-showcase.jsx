@@ -33,6 +33,7 @@ function CategoryCard({ category }) {
      alt={category.label}
      fill
      sizes="(max-width: 64rem) 50vw, 480px"
+     quality={60}
      className="size-full object-cover transition-transform duration-200 ease-out active:duration-75 group-hover/card:scale-[1.03] motion-reduce:duration-150"
     />
     <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/45 via-black/5 to-transparent" />

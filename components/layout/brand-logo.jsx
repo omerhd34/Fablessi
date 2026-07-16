@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "@/contexts/locale-provider";
-import { brandFullName } from "@/lib/navigation";
+import { brandFullName } from "@/lib/brand";
 import { brandLogoImageFilterClass } from "@/lib/layout/header-styles";
 import { cn } from "@/lib/utils";
 
@@ -45,6 +45,7 @@ export function BrandLogoLink({ href = "/", size = "md", className }) {
     width={LOGO_WIDTH}
     height={LOGO_HEIGHT}
     sizes="(min-width: 64rem) 244px, 220px"
+    loading="eager"
     decoding="async"
     fetchPriority="high"
     draggable={false}

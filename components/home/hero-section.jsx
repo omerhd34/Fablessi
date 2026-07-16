@@ -1,5 +1,6 @@
 "use client";
 
+import { getImageProps } from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "@/contexts/locale-provider";
@@ -14,6 +15,7 @@ import { DESKTOP_LAYOUT_MQ } from "@/lib/layout/breakpoints";
 import { cn } from "@/lib/utils";
 
 const HERO_AUTOPLAY_MS = 12_000;
+const HERO_IMAGE_QUALITY = 60;
 
 function isHeroDesktopViewport() {
  return window.matchMedia(DESKTOP_LAYOUT_MQ).matches;
@@ -27,15 +29,34 @@ const heroNavButtonClass = cn(
 function HeroSlideImage({ slide, priority, className }) {
  const { images } = slide;
 
- const sources = HERO_IMAGE_BREAKPOINTS.map(({ media, key }) => (
-  <source key={key} media={media} srcSet={images[key]} type="image/webp" />
- ));
+ const sources = HERO_IMAGE_BREAKPOINTS.map(({ media, key, width, height }) => {
+  const { props } = getImageProps({
+   src: images[key],
+   alt: "",
+   width,
+   height,
+   sizes: "100vw",
+   quality: HERO_IMAGE_QUALITY,
+   priority,
+  });
+
+  return <source key={key} media={media} srcSet={props.srcSet} sizes={props.sizes} />;
+ });
+ const { props: mobileImageProps } = getImageProps({
+  src: images[HERO_MOBILE_IMAGE.key],
+  alt: "",
+  width: HERO_MOBILE_IMAGE.width,
+  height: HERO_MOBILE_IMAGE.height,
+  sizes: "100vw",
+  quality: HERO_IMAGE_QUALITY,
+  priority,
+ });
 
  return (
   <picture className="absolute inset-0 block h-full w-full">
    {sources}
    <img
-    src={images[HERO_MOBILE_IMAGE.key]}
+    {...mobileImageProps}
     alt=""
     aria-hidden="true"
     className={cn("h-full w-full", className)}
