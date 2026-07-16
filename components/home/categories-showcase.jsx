@@ -30,7 +30,7 @@ function CategoryCard({ category }) {
    >
     <Image
      src={category.image}
-     alt={category.label}
+     alt=""
      fill
      sizes="(max-width: 64rem) 50vw, 480px"
      quality={60}

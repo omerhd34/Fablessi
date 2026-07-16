@@ -1,7 +1,20 @@
+import { fileURLToPath } from "node:url";
+
+const modernPolyfill = fileURLToPath(new URL("./lib/modern-polyfill.js", import.meta.url));
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
  productionBrowserSourceMaps: true,
  reactCompiler: true,
+ turbopack: {
+  resolveAlias: {
+   "../build/polyfills/polyfill-module": "./lib/modern-polyfill.js",
+  },
+ },
+ webpack(config) {
+  config.resolve.alias["../build/polyfills/polyfill-module"] = modernPolyfill;
+  return config;
+ },
  experimental: {
   inlineCss: true,
   optimizePackageImports: [

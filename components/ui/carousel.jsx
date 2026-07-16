@@ -252,7 +252,7 @@ function CarouselDots({
   <div
    role="tablist"
    aria-label="Slider sayfaları"
-   className={cn("flex items-center justify-center gap-2", className)}
+   className={cn("flex items-center justify-center", className)}
    {...props}>
    {scrollSnaps.map((_, index) => (
     <button
@@ -262,13 +262,18 @@ function CarouselDots({
      aria-selected={index === selectedIndex}
      aria-label={`Sayfa ${index + 1}`}
      onClick={() => api?.scrollTo(index)}
-     className={cn(
-      "h-1.5 rounded-full transition-all duration-300 ease-out",
-      index === selectedIndex
-       ? "w-8 bg-charcoal"
-       : "w-1.5 bg-charcoal/20 hover:bg-charcoal/40"
-     )}
-    />
+     className="group inline-flex size-11 touch-manipulation items-center justify-center"
+    >
+     <span
+      aria-hidden="true"
+      className={cn(
+       "h-1.5 rounded-full transition-all duration-300 ease-out",
+       index === selectedIndex
+        ? "w-8 bg-charcoal"
+        : "w-1.5 bg-charcoal/20 group-hover:bg-charcoal/40"
+      )}
+     />
+    </button>
    ))}
   </div>
  );
