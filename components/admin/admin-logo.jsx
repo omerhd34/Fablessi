@@ -11,7 +11,7 @@ export function AdminLogo({ className, height = "h-8" }) {
   >
    <Image
     src="/brand/logo.png"
-    alt="Fablessi"
+    alt="Gardossi"
     width={1168}
     height={268}
     className={cn("w-auto brightness-0", height)}

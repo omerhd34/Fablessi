@@ -1,15 +1,15 @@
 <p align="center">
-  <img src="public/brand/fablessi-logo.png" alt="Fablessi logo" width="220" />
+  <img src="public/brand/gardossi-logo.png" alt="Gardossi logo" width="220" />
 </p>
 
-# Fablessi - Premium Bahçe Mobilyaları
+# Gardossi - Premium Bahçe Mobilyaları
 
-İnegöl merkezli **Fablessi** markasının kurumsal web sitesi ve dijital ürün kataloğu. Bahçe ve dış mekan mobilyalarını premium, minimalist bir vitrin deneyimiyle sunar; kategori grupları, ürün galerileri, iletişim ve konum bilgilerini tek çatı altında toplar.
+İnegöl merkezli **Gardossi** markasının kurumsal web sitesi ve dijital ürün kataloğu. Bahçe ve dış mekan mobilyalarını premium, minimalist bir vitrin deneyimiyle sunar; kategori grupları, ürün galerileri, iletişim ve konum bilgilerini tek çatı altında toplar.
 
-**Site:** [www.fablessi.com](https://www.fablessi.com/)
+**Site:** [www.gardossi.com](https://www.gardossi.com/)
 
 <p align="center">
-  <img src="public/slayts/1/2560x1707.jpg" alt="Fablessi bahçe mobilyası - dış mekan oturma grubu" width="32%" />
+  <img src="public/slayts/1/2560x1707.jpg" alt="Gardossi bahçe mobilyası - dış mekan oturma grubu" width="32%" />
   <img src="public/acelya-oturma/antrasit-01.jpg" alt="Açelya Oturma Grubu" width="32%" />
   <img src="public/velar-oturma/01.jpg" alt="Velar Oturma Grubu" width="32%" />
 </p>
@@ -20,7 +20,7 @@
 
 | Alan | Değer |
 |------|-------|
-| **Marka** | Fablessi |
+| **Marka** | Gardossi |
 | **Sektör** | Bahçe & dış mekan mobilyası |
 | **Konum** | İnegöl / Bursa |
 | **Site türü** | Kurumsal vitrin + ürün kataloğu |
@@ -152,7 +152,7 @@ Sitede yer alan başlıca ürün grupları:
 ## Proje Yapısı
 
 ```
-fablessi/
+gardossi/
 ├── app/
 │   ├── (routes)/               # Sayfa rotaları
 │   │   ├── (anasayfa)/         # Ana sayfa
@@ -260,7 +260,7 @@ Her ürün; slug, ad, açıklama, ölçü bilgisi (`dimensions`, `dimensionItems
 
 - Varsayılan dil **Türkçe**; desteklenen diller: `tr`, `en`
 - Arayüz metinleri `lib/i18n/dictionaries/` altındaki sözlük dosyalarından yüklenir
-- Dil tercihi `fablessi_locale` cookie'si ile saklanır; `POST /api/locale` ile güncellenir
+- Dil tercihi `gardossi_locale` cookie'si ile saklanır; `POST /api/locale` ile güncellenir
 - Sunucu bileşenleri `getServerDictionary()` ile, istemci bileşenleri `useTranslations()` hook'u ile çeviri alır
 - Navigasyon ve mega menü `lib/i18n/build-navigation.js` ve `lib/i18n/navigation-data.js` üzerinden oluşturulur
 
@@ -300,7 +300,7 @@ Yeni ürün eklerken admin panelinden görseller [Cloudinary](https://cloudinary
 
 ## Lisans
 
-Bu proje özel mülkiyettedir. Tüm hakları Fablessi markasına aittir.
+Bu proje özel mülkiyettedir. Tüm hakları Gardossi markasına aittir.
 
 ---
 
