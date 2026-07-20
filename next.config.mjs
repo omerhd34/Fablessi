@@ -39,7 +39,7 @@ const nextConfig = {
     ],
    },
    {
-    source: "/og-image.jpg",
+    source: "/og-image.png",
     headers: [
      {
       key: "X-Robots-Tag",

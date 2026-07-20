@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-export function AdminLogo({ className, height = "h-8" }) {
+export function AdminLogo({ className, height = "h-9" }) {
  return (
   <Link
    href="/admin"
@@ -10,10 +10,10 @@ export function AdminLogo({ className, height = "h-8" }) {
    aria-label="Yönetim paneli"
   >
    <Image
-    src="/brand/logo.png"
+    src="/brand/logo-gardossi.png"
     alt="Gardossi"
     width={1168}
-    height={268}
+    height={320}
     className={cn("w-auto brightness-0", height)}
     priority
    />

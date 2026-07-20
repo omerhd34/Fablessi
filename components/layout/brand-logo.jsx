@@ -7,24 +7,24 @@ import { brandFullName } from "@/lib/brand";
 import { brandLogoImageFilterClass } from "@/lib/layout/header-styles";
 import { cn } from "@/lib/utils";
 
-const LOGO_WIDTH = 244;
-const LOGO_HEIGHT = 56;
+const LOGO_WIDTH = 292;
+const LOGO_HEIGHT = 80;
 
 const logoHeightClasses = {
- xs: "h-8",
- sm: "h-9",
- md: "h-10",
- lg: "h-11",
- xl: "h-14",
+ xs: "h-9",
+ sm: "h-10",
+ md: "h-11",
+ lg: "h-12",
+ xl: "h-16",
 };
 
 export const brandLogoMobileNavWrapperClass =
- "[&_.brand-logo-image]:h-9! sm:max-lg:[&_.brand-logo-image]:h-10! lg:[&_.brand-logo-image]:h-14! xl:[&_.brand-logo-image]:h-[3.5rem]!";
+ "[&_.brand-logo-image]:h-11! sm:max-lg:[&_.brand-logo-image]:h-12! lg:[&_.brand-logo-image]:h-16! xl:[&_.brand-logo-image]:h-[4.25rem]!";
 
 export const brandLogoMobileNavHomeWrapperClass =
- "[&_.brand-logo-image]:h-9.5! sm:max-lg:[&_.brand-logo-image]:h-10.5! lg:[&_.brand-logo-image]:h-14! xl:[&_.brand-logo-image]:h-[3.75rem]!";
+ "[&_.brand-logo-image]:h-11.5! sm:max-lg:[&_.brand-logo-image]:h-12.5! lg:[&_.brand-logo-image]:h-16! xl:[&_.brand-logo-image]:h-[4.5rem]!";
 
-export const brandLogoDesktopNavWrapperClass = "[&_.brand-logo-image]:h-14!";
+export const brandLogoDesktopNavWrapperClass = "[&_.brand-logo-image]:h-16!";
 
 export function BrandLogoLink({ href = "/", size = "md", className }) {
  const { t } = useTranslations();
@@ -40,11 +40,11 @@ export function BrandLogoLink({ href = "/", size = "md", className }) {
    aria-label={`${brandFullName} - ${t("common.home")}`}
   >
    <Image
-    src="/brand/logo.png"
+    src="/brand/logo-gardossi.png"
     alt={`${brandFullName} logo`}
     width={LOGO_WIDTH}
     height={LOGO_HEIGHT}
-    sizes="(min-width: 64rem) 244px, 220px"
+    sizes="(min-width: 64rem) 292px, 260px"
     loading="eager"
     decoding="async"
     fetchPriority="high"
