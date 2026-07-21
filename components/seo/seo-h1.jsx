@@ -1,7 +1,7 @@
-import { brandFullName } from "@/lib/brand";
+import { brandName } from "@/lib/brand";
 import { cn } from "@/lib/utils";
 
-const brandSuffix = ` | ${brandFullName}`;
+const brandSuffix = ` - ${brandName}`;
 
 function splitSeoTitle(pageTitle) {
  const trimmed = pageTitle.trim();
