@@ -7,8 +7,8 @@ import { brandFullName } from "@/lib/brand";
 import { brandLogoImageFilterClass } from "@/lib/layout/header-styles";
 import { cn } from "@/lib/utils";
 
-const LOGO_WIDTH = 292;
-const LOGO_HEIGHT = 80;
+const LOGO_WIDTH = 536;
+const LOGO_HEIGHT = 152;
 
 const logoHeightClasses = {
  xs: "h-9",

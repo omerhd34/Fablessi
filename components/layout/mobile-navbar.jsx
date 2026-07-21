@@ -62,7 +62,7 @@ export function MobileNavbar({
 
  return (
   <div className={containerPremiumClass} aria-label={t("nav.mobileMenu")}>
-   <div className="flex min-h-[calc(var(--glass-mobile-btn-size)+0.875rem)] items-center justify-between gap-3 pt-3.5 md:mobile-layout:min-h-[calc(var(--glass-mobile-btn-size)+1rem)] md:mobile-layout:gap-4 md:mobile-layout:pt-4 lg:min-h-24 lg:gap-6 lg:pt-0 lg:pb-1">
+   <div className="flex min-h-[calc(var(--glass-mobile-btn-size)+0.875rem)] items-center justify-between gap-3 pt-3.5 md:mobile-layout:min-h-[calc(var(--glass-mobile-btn-size)+1rem)] md:mobile-layout:gap-4 md:mobile-layout:pt-4 lg:min-h-24 lg:gap-6 lg:pt-3.5 lg:pb-1">
     <div
      className={cn(
       "block h-fit w-fit shrink-0 self-center p-0 leading-none",
