@@ -14,17 +14,17 @@ const logoHeightClasses = {
  xs: "h-9",
  sm: "h-10",
  md: "h-11",
- lg: "h-12",
+ lg: "h-14",
  xl: "h-16",
 };
 
 export const brandLogoMobileNavWrapperClass =
- "[&_.brand-logo-image]:h-11! sm:max-lg:[&_.brand-logo-image]:h-12! lg:[&_.brand-logo-image]:h-16! xl:[&_.brand-logo-image]:h-[4.25rem]!";
+ "[&_.brand-logo-image]:h-12! sm:max-lg:[&_.brand-logo-image]:h-14! lg:[&_.brand-logo-image]:h-20! xl:[&_.brand-logo-image]:h-[5.25rem]!";
 
 export const brandLogoMobileNavHomeWrapperClass =
- "[&_.brand-logo-image]:h-11.5! sm:max-lg:[&_.brand-logo-image]:h-12.5! lg:[&_.brand-logo-image]:h-16! xl:[&_.brand-logo-image]:h-[4.5rem]!";
+ "[&_.brand-logo-image]:h-13! sm:max-lg:[&_.brand-logo-image]:h-15! lg:[&_.brand-logo-image]:h-20! xl:[&_.brand-logo-image]:h-[5.5rem]!";
 
-export const brandLogoDesktopNavWrapperClass = "[&_.brand-logo-image]:h-16!";
+export const brandLogoDesktopNavWrapperClass = "[&_.brand-logo-image]:h-20!";
 
 export function BrandLogoLink({ href = "/", size = "md", className }) {
  const { t } = useTranslations();
