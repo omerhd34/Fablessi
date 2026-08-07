@@ -22,7 +22,7 @@ export function BrandExperienceBanner() {
  const alt = brandExperienceAlt || brandExperienceTitleLines.join(" ");
 
  return (
-  <section className="header-logo-light-zone relative min-h-[360px] overflow-hidden sm:min-h-[400px] lg:min-h-[520px]">
+  <section className="header-logo-light-zone relative min-h-90 overflow-hidden sm:min-h-100 lg:min-h-130">
    <PageHeroPicture images={images} alt={alt} priority={false} />
    <div className="absolute inset-0 bg-black/45" />
    <div className="absolute inset-0 flex flex-col items-center px-5 py-8 text-center sm:px-8 sm:py-10 lg:px-8 lg:pt-[4%] lg:pb-[8%]">
@@ -39,7 +39,7 @@ export function BrandExperienceBanner() {
         "block whitespace-nowrap text-[clamp(0.72rem,2.8vw,1.38rem)] tracking-[0.16em] sm:tracking-[0.24em] md:tracking-[0.3em]"
        )}
       >
-       {brandExperienceTitleLines[0]}
+       {brandExperienceTitleLines[0]}{" "}
       </span>
       <span
        className={cn(
@@ -47,7 +47,9 @@ export function BrandExperienceBanner() {
         "flex flex-col items-center gap-2.5 leading-[1.02] sm:gap-3 md:gap-3.5 lg:block lg:gap-0 lg:whitespace-nowrap"
        )}
       >
-       <span className="max-lg:block lg:inline">{brandExperienceTitleLines[1]} </span>
+       <span className="max-lg:block lg:inline">
+        {brandExperienceTitleLines[1]}{" "}
+       </span>
        <span className="whitespace-nowrap max-lg:block lg:inline">
         {brandExperienceTitleLines[2]}
        </span>

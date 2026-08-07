@@ -26,6 +26,7 @@ export async function generateMetadata() {
 
 export default async function AnasayfaLayout({ children }) {
  const { locale } = await getServerDictionary();
+ const seo = buildPageSeoMetadata("home", locale);
  const products = await getProductsForSeo();
  const productsJsonLd = buildProductsItemListJsonLd({ products, locale });
  const siteNavigationJsonLd = buildSiteNavigationJsonLd(locale);
@@ -35,6 +36,9 @@ export default async function AnasayfaLayout({ children }) {
   <>
    <SeoPageJsonLd pageKey="home" />
    <h1 className="sr-only">{brandFullName}</h1>
+   {seo?.description ? (
+    <p className="sr-only">{seo.description}</p>
+   ) : null}
    {productsJsonLd ? (
     <script
      type="application/ld+json"
