@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import { useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function VariantImagesEditor({
  images = [],
@@ -10,29 +12,65 @@ export function VariantImagesEditor({
  uploading = false,
  uploadStatus = "",
  onSelectFile,
+ onDropFiles,
  onSetPrimary,
  onMove,
  onRemove,
 }) {
+ const [isDragging, setIsDragging] = useState(false);
+ const isDisabled = uploading;
+
+ function handleDragOver(event) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = isDisabled ? "none" : "copy";
+  if (!isDisabled) setIsDragging(true);
+ }
+
+ function handleDragLeave(event) {
+  if (event.currentTarget.contains(event.relatedTarget)) return;
+  setIsDragging(false);
+ }
+
+ function handleDrop(event) {
+  event.preventDefault();
+  setIsDragging(false);
+  if (isDisabled) return;
+  const files = Array.from(event.dataTransfer.files ?? []);
+  if (files.length) onDropFiles?.(files);
+ }
+
  return (
-  <div className="space-y-3 rounded-lg border border-dashed border-border/70 bg-muted/10 p-3">
+  <div
+   className={cn(
+    "space-y-3 rounded-lg border border-dashed bg-muted/10 p-3 transition-[border-color,box-shadow,background-color] duration-150",
+    isDragging
+     ? "border-charcoal/40 bg-muted/30 shadow-[0_0_0_3px_oklch(0.22_0.01_260/12%)]"
+     : "border-border/70"
+   )}
+   onDragEnter={handleDragOver}
+   onDragOver={handleDragOver}
+   onDragLeave={handleDragLeave}
+   onDrop={handleDrop}
+  >
    <div className="flex min-h-8 items-center gap-3 rounded-lg border border-dashed border-border/70 bg-background/80 px-3 py-2">
-     <Button
-      type="button"
-      variant="outline"
-      size="sm"
-      className="cursor-pointer shrink-0"
-      disabled={uploading}
-      onClick={onSelectFile}
-     >
-      {uploading ? "Yükleniyor…" : "Dosya seç"}
-     </Button>
-     <p className="min-w-0 truncate text-sm text-muted-foreground">
-      {uploadStatus ||
-       (images.length > 0
-        ? `${images.length} görsel eklendi.`
-        : "JPG, PNG veya WebP seçin.")}
-     </p>
+    <Button
+     type="button"
+     variant="outline"
+     size="sm"
+     className="cursor-pointer shrink-0"
+     disabled={isDisabled}
+     onClick={onSelectFile}
+    >
+     {uploading ? "Yükleniyor…" : "Dosya seç"}
+    </Button>
+    <p className="min-w-0 truncate text-sm text-muted-foreground">
+     {isDragging
+      ? "Görselleri bırakın"
+      : uploadStatus ||
+        (images.length > 0
+         ? `${images.length} görsel eklendi. Sürükleyip bırakabilirsiniz.`
+         : "JPG, PNG veya WebP seçin ya da sürükleyip bırakın.")}
+    </p>
    </div>
 
    {images.length === 0 ? (

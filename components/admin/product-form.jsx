@@ -226,48 +226,53 @@ export function ProductForm({
  }
 
  async function handleUpload(event) {
-  const file = event.target.files?.[0];
-  if (!file) return;
+  const files = Array.from(event.target.files ?? []);
+  event.target.value = "";
+  await uploadImageFiles(files);
+ }
 
-  const fileTypeError = validateImageUploadFile(file);
-  if (fileTypeError) {
-   toast.error(fileTypeError);
-   event.target.value = "";
-   return;
-  }
+ async function uploadImageFiles(files) {
+  if (!files.length || uploading) return;
 
   const folder = getUploadFolder();
 
-  setUploadStatus(`${file.name} yükleniyor…`);
-  setUploading(true);
-  try {
-   const body = new FormData();
-   body.append("file", file);
-   body.append("folder", folder);
+  for (const file of files) {
+   const fileTypeError = validateImageUploadFile(file);
+   if (fileTypeError) {
+    toast.error(fileTypeError);
+    continue;
+   }
 
-   const response = await fetch("/api/admin/upload", {
-    method: "POST",
-    body,
-   });
-   const data = await response.json();
-   if (!response.ok) throw new Error(data.error || "Yükleme başarısız.");
+   setUploadStatus(`${file.name} yükleniyor…`);
+   setUploading(true);
+   try {
+    const body = new FormData();
+    body.append("file", file);
+    body.append("folder", folder);
 
-   updateImages((images) => [
-    ...images,
-    {
-     ...emptyImage,
-     url: data.url,
-     isPrimary: images.length === 0,
-    },
-   ]);
-   setUploadStatus(`${file.name} eklendi.`);
-   toast.success("Görsel yüklendi.");
-  } catch (error) {
-   setUploadStatus("");
-   toast.error(error.message);
-  } finally {
-   setUploading(false);
-   event.target.value = "";
+    const response = await fetch("/api/admin/upload", {
+     method: "POST",
+     body,
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "Yükleme başarısız.");
+
+    updateImages((images) => [
+     ...images,
+     {
+      ...emptyImage,
+      url: data.url,
+      isPrimary: images.length === 0,
+     },
+    ]);
+    setUploadStatus(`${file.name} eklendi.`);
+    toast.success("Görsel yüklendi.");
+   } catch (error) {
+    setUploadStatus("");
+    toast.error(error.message);
+   } finally {
+    setUploading(false);
+   }
   }
  }
 
@@ -657,6 +662,7 @@ export function ProductForm({
       ref={fileInputRef}
       type="file"
       accept="image/jpeg,image/png,image/webp"
+      multiple
       onChange={handleUpload}
       disabled={uploading}
       className="sr-only"
@@ -667,6 +673,7 @@ export function ProductForm({
       uploading={uploading}
       uploadStatus={uploadStatus}
       onSelectFile={openUpload}
+      onDropFiles={(files) => void uploadImageFiles(files)}
       onSetPrimary={setPrimaryImage}
       onMove={moveImage}
       onRemove={(imageIndex) =>
