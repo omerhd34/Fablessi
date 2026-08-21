@@ -16,7 +16,17 @@ const sections = [
  {
   href: "/admin/content/mission",
   title: "Misyon & Vizyon",
-  description: "Sayfa görseli, misyon, vizyon, değerler ve taahhütler.",
+  description: "Sayfa görseli, misyon ve vizyon metinleri.",
+ },
+ {
+  href: "/admin/content/values",
+  title: "Değerlerimiz",
+  description: "Sayfa görseli ve kurumsal değerler.",
+ },
+ {
+  href: "/admin/content/commitments",
+  title: "Taahhütlerimiz",
+  description: "Sayfa görseli ve kalite taahhütleri.",
  },
  {
   href: "/admin/content/faq",
