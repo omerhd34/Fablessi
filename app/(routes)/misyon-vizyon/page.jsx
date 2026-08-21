@@ -9,7 +9,7 @@ export default function MisyonVizyonPage() {
  return (
   <>
    <SeoPageJsonLd pageKey="missionVision" />
-   <div className="bg-background">
+   <div className="flex flex-1 flex-col bg-cream">
     <MissionHero />
     <MissionPageContent />
    </div>
