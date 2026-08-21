@@ -73,7 +73,7 @@ export function Header() {
  const isProductsPage =
   pathname === "/urunler" || pathname.startsWith("/urunler/");
  const headerHidden =
-  isHome && scrolled && !searchOpen && !menuOpen && !submittedQuery;
+  scrolled && !searchOpen && !menuOpen && !submittedQuery;
 
  const clearSearch = useCallback(() => {
   setSearchQuery("");
@@ -99,12 +99,9 @@ export function Header() {
  };
 
  useLayoutEffect(() => {
-  if (!isHome) {
-   setScrolled(false);
-   return;
-  }
-
   setScrolled(false);
+
+  if (!isHome) return;
 
   const resetScroll = () => {
    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
@@ -115,8 +112,6 @@ export function Header() {
  }, [isHome, pathname]);
 
  useEffect(() => {
-  if (!isHome) return;
-
   const onScroll = () => {
    const next = window.scrollY > getHeaderHideThreshold();
    setScrolled(next);
@@ -127,8 +122,12 @@ export function Header() {
 
   const onPageShow = (event) => {
    if (!event.persisted) return;
-   window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-   setScrolled(false);
+   if (isHome) {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    setScrolled(false);
+    return;
+   }
+   onScroll();
   };
 
   onScroll();
