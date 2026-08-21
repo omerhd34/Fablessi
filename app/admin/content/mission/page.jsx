@@ -12,7 +12,7 @@ export default async function AdminMissionContentPage() {
   <div className="space-y-6">
    <AdminPageHeader
     title="Misyon & Vizyon"
-    description="Sayfa görselini, misyon, vizyon ve değerleri düzenleyin."
+    description="Sayfa görselini, misyon ve vizyon metinlerini düzenleyin."
    >
     <Button variant="outline" size="sm" className="cursor-pointer gap-1.5" asChild>
      <Link href="/admin/content">
