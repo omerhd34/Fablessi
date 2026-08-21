@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { PageHeroPicture } from "@/components/ui/page-hero-picture";
 import { SeoH1 } from "@/components/seo/seo-h1";
 import { useTranslations } from "@/contexts/locale-provider";
-import { formatSeoTitle } from "@/lib/site-metadata";
 import { resolvePageHeroImage } from "@/lib/content/page-hero-images";
 import { visualHeroTitleShadowClass } from "@/lib/layout/page-styles";
 import { cn } from "@/lib/utils";
@@ -15,11 +14,16 @@ function getSiteHeaderHeight() {
  return Math.ceil(header.getBoundingClientRect().height);
 }
 
-export function MissionHero() {
+export function MissionHero({
+ titleKey = "missionVision.pageTitle",
+ heroKey = "missionVision",
+}) {
  const { dictionary, t } = useTranslations();
- const heroAlt = t("missionVision.heroImageAlt");
+ const heroContent = dictionary[heroKey] ?? dictionary.missionVision;
+ const heroAlt = heroContent.heroImageAlt ?? t("missionVision.heroImageAlt");
+ const pageTitle = t(titleKey);
  const [headerOffset, setHeaderOffset] = useState(0);
- const heroImage = resolvePageHeroImage("missionVision", dictionary.missionVision);
+ const heroImage = resolvePageHeroImage(heroKey, heroContent);
 
  useEffect(() => {
   const update = () => setHeaderOffset(getSiteHeaderHeight());
@@ -54,14 +58,12 @@ export function MissionHero() {
      style={{ paddingTop: "var(--mission-hero-header-offset, 0px)" }}
     >
      <SeoH1
-      title={formatSeoTitle(t("missionVision.pageTitle"))}
+      title={pageTitle}
       className={cn(
        "text-2xl font-semibold tracking-tight md:text-[2rem] lg:text-[2.25rem]",
        visualHeroTitleShadowClass
       )}
-     >
-      {t("missionVision.pageTitle")}
-     </SeoH1>
+     />
     </div>
    </div>
   </section>
