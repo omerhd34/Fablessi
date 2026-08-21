@@ -15,6 +15,7 @@ import {
  MapPin,
  MailOutline,
  MissionVision,
+ ShieldCheck,
  ViewModule,
  Work,
 } from "@/lib/icons";
@@ -62,13 +63,48 @@ const mobileNavIconMap = {
  mission: MissionVision,
  faq: HelpOutline,
  contact: MailOutline,
+ policies: ShieldCheck,
 };
+
+function navItemKey(item) {
+ return item.id ?? item.href ?? item.label;
+}
+
+function isNavItemActive(item, pathname) {
+ if (!item.href) {
+  return Boolean(
+   item.children?.some((child) => isNavItemActive(child, pathname))
+  );
+ }
+
+ if (item.href === "/") {
+  return pathname === "/";
+ }
+
+ return pathname === item.href || pathname.startsWith(`${item.href}/`);
+}
 
 export function MobileMenuDrawer({ pathname, onClose }) {
  const [productsViewOpen, setProductsViewOpen] = useState(false);
+ const [submenuStack, setSubmenuStack] = useState([]);
  const { navigation, t } = useTranslations();
  const mobileNavSection = navigation.mobileNavSections[0];
  const mobileNavItems = mobileNavSection?.items ?? [];
+ const activeSubmenu = submenuStack.at(-1) ?? null;
+
+ const openSubmenu = (item) => {
+  setSubmenuStack((stack) => [...stack, item]);
+ };
+
+ const closeSubmenu = () => {
+  setSubmenuStack((stack) => stack.slice(0, -1));
+ };
+
+ const sheetTitle = productsViewOpen
+  ? t("nav.productCategories")
+  : activeSubmenu
+   ? activeSubmenu.label
+   : t("nav.mainMenuTitle", { brand: brandName });
 
  return (
   <SheetContent
@@ -83,11 +119,7 @@ export function MobileMenuDrawer({ pathname, onClose }) {
    )}
   >
    <SheetHeader className="sr-only">
-    <SheetTitle>
-     {productsViewOpen
-      ? t("nav.productCategories")
-      : t("nav.mainMenuTitle", { brand: brandName })}
-    </SheetTitle>
+    <SheetTitle>{sheetTitle}</SheetTitle>
    </SheetHeader>
 
    <div className={mobileNavSheetHeaderClass}>
@@ -127,7 +159,28 @@ export function MobileMenuDrawer({ pathname, onClose }) {
      <div className={mobileNavSheetScrollClass}>
       <MobileProductsCategoryGrid onClose={onClose} variant="drawer" />
      </div>
+
+     <div className={mobileNavSheetFooterClass}>
+      <Link
+       href="/urunler"
+       onClick={onClose}
+       className="inline-flex w-full items-center justify-center gap-1 rounded-full border border-white/18 bg-white/10 px-3 py-2.5 text-[0.8125rem] font-semibold text-white/92 shadow-[0_4px_18px_rgb(0_0_0/12%)] backdrop-blur-sm transition-[color,background-color,border-color,scale] duration-200 ease-out active:duration-75 hover:scale-[1.02] hover:border-white/28 hover:bg-white/18 hover:text-white motion-reduce:duration-150 lg:py-2"
+      >
+       {t("categories.allProducts")}
+       <HeroChevronRight className="size-3.5 shrink-0" strokeWidth={3.5} aria-hidden />
+      </Link>
+     </div>
     </div>
+   ) : activeSubmenu ? (
+    <MobileDrawerSubmenuView
+     activeSubmenu={activeSubmenu}
+     pathname={pathname}
+     onClose={onClose}
+     onBack={closeSubmenu}
+     onOpenProductsMenu={() => setProductsViewOpen(true)}
+     onOpenSubmenu={openSubmenu}
+     t={t}
+    />
    ) : (
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
      <nav
@@ -141,18 +194,19 @@ export function MobileMenuDrawer({ pathname, onClose }) {
        {mobileNavItems.map((item) =>
         item.href === "/favoriler" ? (
          <MobileDrawerFavoritesItem
-          key={item.href}
+          key={navItemKey(item)}
           pathname={pathname}
           onClose={onClose}
           t={t}
          />
         ) : (
          <MobileDrawerNavItem
-          key={item.href}
+          key={navItemKey(item)}
           item={item}
           pathname={pathname}
           onClose={onClose}
           onOpenProductsMenu={() => setProductsViewOpen(true)}
+          onOpenSubmenu={openSubmenu}
           t={t}
          />
         )
@@ -166,6 +220,72 @@ export function MobileMenuDrawer({ pathname, onClose }) {
     </div>
    )}
   </SheetContent>
+ );
+}
+
+function MobileDrawerSubmenuView({
+ activeSubmenu,
+ pathname,
+ onClose,
+ onBack,
+ onOpenProductsMenu,
+ onOpenSubmenu,
+ t,
+}) {
+ const SubmenuIcon = activeSubmenu.icon
+  ? mobileNavIconMap[activeSubmenu.icon]
+  : null;
+
+ return (
+  <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
+   <div className={cn(mobileNavProductsBackClass, "w-full shrink-0")}>
+    <button
+     type="button"
+     onClick={onBack}
+     className={mobileNavProductsBackBtnClass}
+     aria-label={t("nav.mainMenu")}
+    >
+     <span className={cn(mobileNavIconWrapClass, "lg:bg-white/12")}>
+      <ChevronLeft className={mobileNavIconClass} aria-hidden />
+     </span>
+     {SubmenuIcon ? (
+      <SubmenuIcon
+       className={cn(mobileNavIconClass, "lg:hidden")}
+       aria-hidden
+      />
+     ) : null}
+     <span>{activeSubmenu.label}</span>
+    </button>
+    <span className="min-w-0 flex-1" aria-hidden />
+    <span className={cn(mobileNavLinkTrailingClass, "hidden lg:block")} aria-hidden />
+   </div>
+
+   <nav
+    className={cn(
+     mobileNavSheetScrollClass,
+     "flex min-h-0 flex-1 flex-col lg:pt-1"
+    )}
+    aria-label={activeSubmenu.label}
+   >
+    <ul className="flex flex-col px-0 lg:gap-1">
+     {(activeSubmenu.children ?? []).map((item) => (
+      <MobileDrawerNavItem
+       key={navItemKey(item)}
+       item={item}
+       pathname={pathname}
+       onClose={onClose}
+       onOpenProductsMenu={onOpenProductsMenu}
+       onOpenSubmenu={onOpenSubmenu}
+       t={t}
+      />
+     ))}
+    </ul>
+   </nav>
+
+   <div className={mobileNavSheetFooterClass}>
+    <LocaleSwitcher variant="mobile" />
+   </div>
+  </div>
  );
 }
 
@@ -207,27 +327,40 @@ function MobileDrawerNavItem({
  pathname,
  onClose,
  onOpenProductsMenu,
+ onOpenSubmenu,
  t,
 }) {
- const active =
-  item.href === "/"
-   ? pathname === "/"
-   : pathname === item.href || pathname.startsWith(`${item.href}/`);
+ const active = isNavItemActive(item, pathname);
  const isProductsMenu = item.megaMenu === "products";
+ const hasChildren = Boolean(item.children?.length);
  const Icon = item.icon ? mobileNavIconMap[item.icon] : null;
 
- if (isProductsMenu) {
+ if (isProductsMenu || hasChildren) {
   return (
    <li className={mobileNavItemClass}>
     <button
      type="button"
-     onClick={onOpenProductsMenu}
+     onClick={() => {
+      if (isProductsMenu) {
+       onOpenProductsMenu();
+       return;
+      }
+      onOpenSubmenu(item);
+     }}
      className={cn(
       mobileNavLinkClass,
       "group",
       active && "font-semibold text-white lg:bg-white/16"
      )}
-     aria-label={t("nav.openProductCategories")}
+     aria-label={
+      isProductsMenu
+       ? t("nav.openProductCategories")
+       : item.id === "corporate"
+        ? t("nav.openCorporateMenu")
+        : t("nav.openSubmenu", { label: item.label })
+     }
+     aria-expanded={false}
+     aria-haspopup="true"
     >
      {Icon ? (
       <span className={mobileNavIconWrapClass}>
@@ -258,6 +391,7 @@ function MobileDrawerNavItem({
      "group",
      active && "font-semibold text-white lg:bg-white/16"
     )}
+    aria-current={active ? "page" : undefined}
    >
     {Icon ? (
      <span className={mobileNavIconWrapClass}>

@@ -25,7 +25,7 @@ function FooterColumn({ title, titleHref, children, className }) {
   "font-body text-[13px] font-semibold tracking-wide text-charcoal transition-colors hover:text-charcoal/80";
 
  return (
-  <div className={cn("flex flex-col gap-5", className)}>
+  <div className={cn("flex min-w-0 flex-col gap-4", className)}>
    {titleHref ? (
     <Link href={titleHref} className={titleClassName}>
      {title}
@@ -33,14 +33,14 @@ function FooterColumn({ title, titleHref, children, className }) {
    ) : (
     <h2 className={titleClassName}>{title}</h2>
    )}
-   <div className="flex flex-1 flex-col">{children}</div>
+   <div className="flex flex-col">{children}</div>
   </div>
  );
 }
 
 function FooterLinkList({ links }) {
  return (
-  <ul className="flex flex-col gap-3">
+  <ul className="flex flex-col gap-2.5">
    {links.map((item) => (
     <li key={item.href}>
      <Link
@@ -57,20 +57,16 @@ function FooterLinkList({ links }) {
 
 export function Footer() {
  const { navigation, t, locale, dictionary } = useTranslations();
- const {
-  footerExploreLinks,
-  footerCategoryLinks,
-  footerCustomerServiceLinks,
- } = navigation;
+ const { footerExploreLinks, footerCategoryLinks } = navigation;
  const whatsAppHref = getWhatsAppHref();
  const year = new Date().getFullYear();
  const workingHours = getSiteWorkingHours(locale, dictionary);
 
  return (
-  <footer className="mt-4 rounded-t-[2rem] bg-white pt-14 shadow-[0_-4px_32px_rgb(0_0_0/4%)] lg:pt-16">
+  <footer className="mt-4 rounded-t-[2rem] bg-white pt-12 shadow-[0_-4px_32px_rgb(0_0_0/4%)] lg:pt-14">
    <div className={containerPremiumClass}>
-    <div className="grid gap-y-12 gap-x-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-x-12 xl:gap-x-16">
-     <FooterColumn title={t("footer.categories")}>
+    <div className="mx-auto grid max-w-3xl gap-x-10 gap-y-10 sm:grid-cols-2 lg:max-w-4xl lg:grid-cols-3 lg:gap-x-14">
+     <FooterColumn title={t("footer.categories")} titleHref="/urunler">
       <FooterLinkList links={footerCategoryLinks} />
      </FooterColumn>
 
@@ -78,16 +74,13 @@ export function Footer() {
       <FooterLinkList links={footerExploreLinks} />
      </FooterColumn>
 
-     <FooterColumn title={t("footer.helpPolicies")}>
-      <FooterLinkList links={footerCustomerServiceLinks} />
-     </FooterColumn>
-
      <FooterColumn
       title={t("footer.getInTouch")}
       titleHref="/iletisim"
+      className="sm:col-span-2 lg:col-span-1"
      >
-      <div className="flex flex-col gap-5">
-       <div className="space-y-1.5 font-body text-[13px] leading-relaxed text-charcoal/70">
+      <div className="flex flex-col gap-4">
+       <div className="space-y-1 font-body text-[13px] leading-relaxed text-charcoal/70">
         {workingHours.map((row) => (
          <p key={row.label}>
           {row.label}: {row.hours}
@@ -95,7 +88,7 @@ export function Footer() {
         ))}
        </div>
 
-       <div className="flex flex-wrap items-center gap-5">
+       <div className="flex flex-wrap items-center gap-4">
         {sitePhoneHref ? (
          <Link
           href={sitePhoneHref}
@@ -154,7 +147,7 @@ export function Footer() {
     </div>
 
     <div
-     className="mt-20 border-t border-charcoal/8 pt-8 pb-[max(1.25rem,env(safe-area-inset-bottom))] sm:mt-14 lg:mt-16 lg:pt-10"
+     className="mt-12 border-t border-charcoal/8 pt-6 pb-[max(1.25rem,env(safe-area-inset-bottom))] lg:mt-14 lg:pt-8"
      data-nosnippet
     >
      <div className="flex min-h-(--glass-float-size) pr-[calc(1.25rem+var(--glass-float-size)+0.75rem)] max-sm:flex-col max-sm:justify-end max-sm:gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-4">

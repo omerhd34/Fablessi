@@ -66,6 +66,25 @@ const nextConfig = {
    },
   ];
  },
+ async redirects() {
+  return [
+   {
+    source: "/kvkk",
+    destination: "/politikalar",
+    permanent: true,
+   },
+   {
+    source: "/gizlilik-politikasi",
+    destination: "/politikalar",
+    permanent: true,
+   },
+   {
+    source: "/cerez-politikasi",
+    destination: "/politikalar",
+    permanent: true,
+   },
+  ];
+ },
  images: {
   deviceSizes: [320, 384, 420, 480, 560, 640, 750, 828, 1080, 1200, 1600, 1920, 2560],
   qualities: [60, 75, 92],
