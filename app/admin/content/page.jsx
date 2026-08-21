@@ -23,6 +23,11 @@ const sections = [
   title: "Sıkça Sorulan Sorular",
   description: "Sayfa görseli, kategoriler, sorular ve yanıtlar.",
  },
+ {
+  href: "/admin/content/contact",
+  title: "İletişim",
+  description: "Showroom çalışma saatleri.",
+ },
 ];
 
 export default function AdminContentPage() {
