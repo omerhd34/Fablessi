@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { MdCloudUpload, MdDeleteOutline, MdImage } from "react-icons/md";
 import { toast } from "sonner";
 import { IMAGE_UPLOAD_MAX_SIZE_LABEL, validateImageUploadFile } from "@/lib/admin/image-upload";
@@ -42,6 +42,7 @@ export function AdminImageUpload({
  className,
 }) {
  const inputRef = useRef(null);
+ const [isDragging, setIsDragging] = useState(false);
  const isDisabled = disabled || uploading;
  const hasCustomImage = Boolean(value);
  const previewSrc = value || defaultPreview;
@@ -67,6 +68,24 @@ export function AdminImageUpload({
  function handleFileChange(event) {
   void processFile(event.target.files?.[0]);
   event.target.value = "";
+ }
+
+ function handleDragOver(event) {
+  event.preventDefault();
+  event.dataTransfer.dropEffect = isDisabled ? "none" : "copy";
+  if (!isDisabled) setIsDragging(true);
+ }
+
+ function handleDragLeave(event) {
+  if (event.currentTarget.contains(event.relatedTarget)) return;
+  setIsDragging(false);
+ }
+
+ function handleDrop(event) {
+  event.preventDefault();
+  setIsDragging(false);
+  if (isDisabled) return;
+  void processFile(event.dataTransfer.files?.[0]);
  }
 
  const previewClassName = cn(
@@ -104,12 +123,20 @@ export function AdminImageUpload({
 
    <div
     className={cn(
-     "overflow-hidden rounded-xl border border-border/70 bg-card shadow-sm",
+     "overflow-hidden rounded-xl border bg-card shadow-sm transition-[border-color,box-shadow] duration-150",
+     isDragging
+      ? "border-charcoal/40 shadow-[0_0_0_3px_oklch(0.22_0.01_260/12%)]"
+      : "border-border/70",
      fullWidth ? "w-full" : "mx-auto w-full max-w-2xl",
-     stretch && "flex flex-1 flex-col"
+     stretch && "flex flex-1 flex-col",
+     !isDisabled && "cursor-pointer"
     )}
+    onDragEnter={handleDragOver}
+    onDragOver={handleDragOver}
+    onDragLeave={handleDragLeave}
+    onDrop={handleDrop}
    >
-    <div className={cn(previewClassName, "select-none")}>
+    <div className={cn(previewClassName, "select-none")} onClick={openFilePicker}>
      {showPreview ? (
       <Image
        src={previewSrc}
@@ -140,7 +167,10 @@ export function AdminImageUpload({
        className="absolute top-3 right-3 z-10 size-10 cursor-pointer border-border/70 bg-background/95 text-destructive shadow-md backdrop-blur-sm hover:bg-background hover:text-destructive"
        disabled={isDisabled}
        aria-label="Görseli kaldır"
-       onClick={() => onChange("")}
+       onClick={(event) => {
+        event.stopPropagation();
+        onChange("");
+       }}
       >
        <MdDeleteOutline className="size-5" />
       </Button>
@@ -149,6 +179,14 @@ export function AdminImageUpload({
      {uploading ? (
       <div className="absolute inset-0 flex items-center justify-center bg-background/75 backdrop-blur-[2px]">
        <AdminUploadSpinner className="size-9" />
+      </div>
+     ) : null}
+
+     {isDragging ? (
+      <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center bg-background/70 backdrop-blur-[2px]">
+       <p className="rounded-full border border-charcoal/15 bg-background px-4 py-2 text-sm font-medium text-charcoal">
+        Görseli bırakın
+       </p>
       </div>
      ) : null}
     </div>
@@ -170,11 +208,9 @@ export function AdminImageUpload({
       <MdCloudUpload className="size-4" />
       Değiştir
      </Button>
-     {!showPreview && dropzoneHint ? (
-      <p className="text-center text-xs text-muted-foreground sm:text-left">
-       {dropzoneHint}
-      </p>
-     ) : null}
+     <p className="text-center text-xs text-muted-foreground sm:text-left">
+      {dropzoneHint || "Görseli buraya sürükleyip bırakabilirsiniz."}
+     </p>
     </div>
    </div>
   </div>
