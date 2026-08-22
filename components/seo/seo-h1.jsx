@@ -1,29 +1,30 @@
 import { brandName } from "@/lib/brand";
+import { formatSeoTitle } from "@/lib/site-metadata";
 import { cn } from "@/lib/utils";
 
 const brandSuffix = ` - ${brandName}`;
 
-function splitSeoTitle(pageTitle) {
+function stripBrandSuffix(pageTitle) {
  const trimmed = pageTitle.trim();
 
  if (trimmed.endsWith(brandSuffix)) {
-  return {
-   primary: trimmed.slice(0, -brandSuffix.length),
-   suffix: brandSuffix,
-  };
+  return trimmed.slice(0, -brandSuffix.length);
  }
 
- return { primary: trimmed, suffix: null };
+ return trimmed;
 }
 
 export function SeoH1({ title, className, children, ...props }) {
- const pageTitle = title?.trim() ?? "";
- const { primary, suffix } = splitSeoTitle(pageTitle);
+ const visible =
+  typeof children === "string" ? children : stripBrandSuffix(title?.trim() ?? "");
+ const seoTitle = formatSeoTitle(visible);
 
  return (
-  <h1 className={cn(className)} {...props}>
-   {children ?? primary}
-   {suffix}
-  </h1>
+  <>
+   <h1 className="sr-only">{seoTitle}</h1>
+   <p className={cn(className)} aria-hidden="true" {...props}>
+    {visible}
+   </p>
+  </>
  );
 }
