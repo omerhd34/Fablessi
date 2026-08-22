@@ -51,7 +51,7 @@ export function ProductsCategoryCarousel({ activeSlug, className }) {
    </button>
 
    <div className="min-w-0 overflow-hidden" ref={emblaRef}>
-    <div className="flex gap-3 md:gap-4">
+    <div className="flex gap-3 p-1.5 md:gap-4">
      {carouselCategories.map((category) => {
       const active = activeSlug === category.slug;
 
@@ -61,7 +61,8 @@ export function ProductsCategoryCarousel({ activeSlug, className }) {
         href={category.href}
         className={cn(
          "group relative min-w-0 shrink-0 cursor-pointer basis-[calc((100%-4rem)/5)]",
-         active && "ring-2 ring-charcoal/20 ring-offset-2 rounded-2xl"
+         active &&
+          "rounded-2xl ring-2 ring-charcoal/55 ring-offset-2 ring-offset-cream"
         )}
        >
         <div className={cn("relative aspect-4/3 overflow-hidden rounded-2xl", productCategoryTileClass)}>
