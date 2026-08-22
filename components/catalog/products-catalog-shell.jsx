@@ -129,6 +129,8 @@ export function ProductsCatalogShell({
         product={product}
         priority={index < 2}
         variant="catalog"
+        showFavoriteButton
+        omitCategoryInLabel
        />
       ))}
      </div>
