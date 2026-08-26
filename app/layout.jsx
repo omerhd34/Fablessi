@@ -8,10 +8,9 @@ import { LocaleProvider } from "@/contexts/locale-provider";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/lib/seo/json-ld";
-import { buildPageSeoMetadata } from "@/lib/seo/page-metadata-builders";
-import { buildSeoMetadataOutput } from "@/lib/seo/metadata-output";
+import { buildPageSeoMetadata } from "@/lib/seo/pages";
 import { brandFullName } from "@/lib/brand";
-import { siteMetadata } from "@/lib/site-metadata";
+import { buildSeoMetadataOutput, siteMetadata } from "@/lib/site-metadata";
 
 const montserrat = Montserrat({
  variable: "--font-montserrat",

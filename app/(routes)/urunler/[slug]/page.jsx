@@ -9,8 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 import { buildProductSeoMetadata } from "@/lib/seo/product-description";
 import { buildProductJsonLd, buildProductWebPageJsonLd } from "@/lib/seo/json-ld";
-import { buildSeoMetadataOutput } from "@/lib/seo/metadata-output";
-import { buildSeoPageTitle } from "@/lib/site-metadata";
+import { buildSeoMetadataOutput, buildSeoPageTitle } from "@/lib/site-metadata";
 import { getPrimaryImageUrl } from "@/lib/product-utils";
 import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { buildNavigation, getProductCategoryGroupFromMenu } from "@/lib/i18n/build-navigation";

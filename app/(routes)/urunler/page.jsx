@@ -2,10 +2,9 @@ import { ProductsCatalogShell } from "@/components/catalog/products-catalog-shel
 import { buildProductsMegaMenu } from "@/lib/i18n/build-navigation";
 import { getDictionary } from "@/lib/i18n/get-dictionary";
 import { getLocale, getServerDictionary } from "@/lib/i18n/server";
-import { isUrunlerCatalogIndexable } from "@/lib/seo/google-snippets";
+import { isUrunlerCatalogIndexable, buildCatalogSeoMetadata } from "@/lib/seo/pages";
 import { buildCatalogWebPageJsonLd } from "@/lib/seo/json-ld";
-import { buildCatalogSeoMetadata } from "@/lib/seo/page-metadata-builders";
-import { buildSeoMetadataOutput } from "@/lib/seo/metadata-output";
+import { buildSeoMetadataOutput } from "@/lib/site-metadata";
 import {
  containerPremiumClass,
  pageContentOffsetClass,

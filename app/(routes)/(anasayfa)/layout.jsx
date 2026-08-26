@@ -1,14 +1,13 @@
 import { SeoPageJsonLd } from "@/components/seo/seo-page-json-ld";
 import { brandFullName } from "@/lib/brand";
 import {
- buildFeaturedSectionJsonLd,
  buildProductsItemListJsonLd,
  buildSiteNavigationJsonLd,
 } from "@/lib/seo/json-ld";
-import { buildSeoMetadataOutput } from "@/lib/seo/metadata-output";
-import { buildPageSeoMetadata } from "@/lib/seo/page-metadata-builders";
+import { buildPageSeoMetadata } from "@/lib/seo/pages";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { getProductsForSeo } from "@/lib/queries/products-seo";
+import { buildSeoMetadataOutput } from "@/lib/site-metadata";
 
 export async function generateMetadata() {
  const { locale } = await getServerDictionary();
@@ -30,7 +29,6 @@ export default async function AnasayfaLayout({ children }) {
  const products = await getProductsForSeo();
  const productsJsonLd = buildProductsItemListJsonLd({ products, locale });
  const siteNavigationJsonLd = buildSiteNavigationJsonLd(locale);
- const featuredSectionJsonLd = buildFeaturedSectionJsonLd(locale);
 
  return (
   <>
@@ -49,12 +47,6 @@ export default async function AnasayfaLayout({ children }) {
     type="application/ld+json"
     dangerouslySetInnerHTML={{ __html: JSON.stringify(siteNavigationJsonLd) }}
    />
-   {featuredSectionJsonLd ? (
-    <script
-     type="application/ld+json"
-     dangerouslySetInnerHTML={{ __html: JSON.stringify(featuredSectionJsonLd) }}
-    />
-   ) : null}
    {children}
   </>
  );
