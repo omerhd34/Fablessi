@@ -9,7 +9,6 @@ import { SeoH1 } from "@/components/seo/seo-h1";
 import { useLocale } from "@/contexts/locale-provider";
 import { getProductDisplayPrice } from "@/lib/product-utils";
 import { headingDisplayClass } from "@/lib/layout/shared-styles";
-import { formatSeoTitle } from "@/lib/site-metadata";
 import { cn } from "@/lib/utils";
 
 function compareByPrice(a, b, ascending) {
@@ -79,7 +78,8 @@ export function ProductsCatalogShell({
    <div className="space-y-6 md:space-y-8">
     <div className="text-center md:text-left">
      <SeoH1
-      title={formatSeoTitle(t("pages.products.title"))}
+      categorySlug={null}
+      title={t("pages.products.title")}
       className={cn(headingDisplayClass, "text-charcoal")}
      >
       {t("pages.products.title")}
@@ -99,9 +99,8 @@ export function ProductsCatalogShell({
   <div className="space-y-6 md:space-y-8">
    <div>
     <SeoH1
-     title={formatSeoTitle(
-      activeGroup ? activeGroup.label : t("catalog.allProductsTitle")
-     )}
+     categorySlug={categorySlug}
+     title={activeGroup ? activeGroup.label : t("catalog.allProductsTitle")}
      className={cn(headingDisplayClass, "text-charcoal")}
     >
      {activeGroup ? activeGroup.label : t("catalog.allProductsTitle")}

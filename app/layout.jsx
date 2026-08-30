@@ -9,8 +9,8 @@ import { getCategoryGroupsForMenu } from "@/lib/queries/category-groups";
 import { getServerDictionary } from "@/lib/i18n/server";
 import { buildOrganizationJsonLd, buildWebSiteJsonLd } from "@/lib/seo/json-ld";
 import { buildPageSeoMetadata } from "@/lib/seo/pages";
-import { brandFullName } from "@/lib/brand";
-import { buildSeoMetadataOutput, siteMetadata } from "@/lib/site-metadata";
+import { brandName } from "@/lib/brand";
+import { buildSiteOpenGraph, siteMetadata } from "@/lib/site-metadata";
 
 const montserrat = Montserrat({
  variable: "--font-montserrat",
@@ -30,25 +30,25 @@ export async function generateMetadata() {
  const { dictionary, locale } = await getServerDictionary();
  const seo = buildPageSeoMetadata("home", locale);
  const openGraphLocale = locale === "en" ? "en_US" : "tr_TR";
- const seoOutput = buildSeoMetadataOutput({
-  metaTitle: seo.metaTitle,
-  description: seo.description,
-  path: "/",
-  keywords: dictionary.metadata.keywords ?? siteMetadata.keywords,
-  index: true,
-  openGraph: { locale: openGraphLocale },
- });
 
  return {
   ...siteMetadata,
-  ...seoOutput,
-  openGraph: {
-   ...siteMetadata.openGraph,
-   ...seoOutput.openGraph,
+  title: {
+   default: seo.metaTitle,
+   template: `%s - ${brandName}`,
   },
+  description: seo.description,
+  keywords: dictionary.metadata.keywords ?? siteMetadata.keywords,
+  openGraph: buildSiteOpenGraph({
+   ...siteMetadata.openGraph,
+   title: seo.metaTitle,
+   description: seo.description,
+   locale: openGraphLocale,
+  }),
   twitter: {
    ...siteMetadata.twitter,
-   ...seoOutput.twitter,
+   title: seo.metaTitle,
+   description: seo.description,
   },
  };
 }
@@ -79,7 +79,6 @@ export default async function RootLayout({ children }) {
     />
    </head>
    <body className="min-h-full flex flex-col font-sans">
-    <span className="sr-only">{brandFullName}</span>
     <LocaleProvider locale={locale} dictionary={dictionary} menuGroups={menuGroups}>
      <FavoritesProvider>
       <MainShell>{children}</MainShell>

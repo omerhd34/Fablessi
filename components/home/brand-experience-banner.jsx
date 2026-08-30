@@ -22,7 +22,7 @@ export function BrandExperienceBanner() {
  const alt = brandExperienceAlt || brandExperienceTitleLines.join(" ");
 
  return (
-  <section className="header-logo-light-zone relative min-h-90 overflow-hidden sm:min-h-100 lg:min-h-130">
+  <section className="header-logo-light-zone relative min-h-90 overflow-hidden sm:min-h-100 lg:min-h-130" data-nosnippet>
    <PageHeroPicture images={images} alt={alt} priority={false} />
    <div className="absolute inset-0 bg-black/45" />
    <div className="absolute inset-0 flex flex-col items-center px-5 py-8 text-center sm:px-8 sm:py-10 lg:px-8 lg:pt-[4%] lg:pb-[8%]">

@@ -18,6 +18,7 @@ export function MissionCta({ className }) {
     missionCtaClass,
     className
    )}
+   data-nosnippet
   >
    <p className="text-[0.68rem] font-semibold tracking-[0.32em] text-white/55">
     {brandFullNameUppercase}

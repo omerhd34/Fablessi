@@ -15,7 +15,6 @@ import {
 } from "@/lib/layout/page-styles";
 import { cn } from "@/lib/utils";
 import { getFlagshipStore } from "@/lib/stores";
-import { formatSeoTitle } from "@/lib/site-metadata";
 
 function getInstagramLabel(href) {
  if (!href) return "Instagram";
@@ -45,7 +44,8 @@ export function StoreShowcase() {
   <div className="space-y-10 md:space-y-12">
    <div className="text-center">
     <SeoH1
-     title={formatSeoTitle(t("contact.title"))}
+     pageKey="contact"
+     title={t("contact.title")}
      className="text-2xl font-semibold tracking-tight text-charcoal md:text-3xl"
     >
      {t("contact.title")}

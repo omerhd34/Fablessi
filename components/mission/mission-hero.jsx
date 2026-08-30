@@ -58,6 +58,7 @@ export function MissionHero({
      style={{ paddingTop: "var(--mission-hero-header-offset, 0px)" }}
     >
      <SeoH1
+      pageKey={heroKey}
       title={pageTitle}
       className={cn(
        "text-2xl font-semibold tracking-tight md:text-[2rem] lg:text-[2.25rem]",

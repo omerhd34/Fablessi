@@ -1,5 +1,4 @@
 import { SeoPageJsonLd } from "@/components/seo/seo-page-json-ld";
-import { brandFullName } from "@/lib/brand";
 import {
  buildProductsItemListJsonLd,
  buildSiteNavigationJsonLd,
@@ -33,7 +32,7 @@ export default async function AnasayfaLayout({ children }) {
  return (
   <>
    <SeoPageJsonLd pageKey="home" />
-   <h1 className="sr-only">{brandFullName}</h1>
+   <h1 className="sr-only">{seo.metaTitle}</h1>
    {seo?.description ? (
     <p className="sr-only">{seo.description}</p>
    ) : null}

@@ -1,4 +1,8 @@
+"use client";
+
+import { useLocale } from "@/contexts/locale-provider";
 import { brandName } from "@/lib/brand";
+import { getCatalogSeoConfig, getPageSeoConfig } from "@/lib/seo/pages";
 import { formatSeoTitle } from "@/lib/site-metadata";
 import { cn } from "@/lib/utils";
 
@@ -14,10 +18,29 @@ function stripBrandSuffix(pageTitle) {
  return trimmed;
 }
 
-export function SeoH1({ title, className, children, ...props }) {
+export function SeoH1({
+ title,
+ pageKey,
+ categorySlug,
+ className,
+ children,
+ ...props
+}) {
+ const { locale } = useLocale();
+ const pageConfig = pageKey ? getPageSeoConfig(pageKey, locale) : null;
+ const catalogConfig =
+  !pageKey && categorySlug !== undefined
+   ? getCatalogSeoConfig(categorySlug, locale)
+   : null;
+ const config = pageConfig ?? catalogConfig;
  const visible =
-  typeof children === "string" ? children : stripBrandSuffix(title?.trim() ?? "");
- const seoTitle = formatSeoTitle(visible);
+  typeof children === "string"
+   ? children
+   : stripBrandSuffix(title?.trim() ?? config?.pageTitle ?? "");
+ const seoTitle =
+  config?.metaTitle?.trim() ||
+  title?.trim() ||
+  (visible ? formatSeoTitle(visible) : "");
 
  return (
   <>

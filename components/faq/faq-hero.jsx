@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { PageHeroPicture } from "@/components/ui/page-hero-picture";
 import { SeoH1 } from "@/components/seo/seo-h1";
 import { useTranslations } from "@/contexts/locale-provider";
-import { formatSeoTitle } from "@/lib/site-metadata";
 import { resolvePageHeroImages } from "@/lib/content/page-hero-images";
 import { cn } from "@/lib/utils";
 
@@ -59,7 +58,8 @@ export function FaqHero() {
      style={{ paddingTop: "var(--faq-hero-header-offset, 0px)" }}
     >
      <SeoH1
-      title={formatSeoTitle(t("faq.pageTitle"))}
+      pageKey="faq"
+      title={t("faq.pageTitle")}
       className="text-2xl font-semibold tracking-tight md:text-[2rem] lg:text-[2.25rem]"
      >
       {t("faq.pageTitle")}
