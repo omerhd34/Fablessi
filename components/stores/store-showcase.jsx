@@ -50,7 +50,10 @@ export function StoreShowcase() {
     >
      {t("contact.title")}
     </SeoH1>
-    <p className="text-muted-foreground mx-auto mt-3 max-w-2xl text-sm md:text-base">
+    <p
+     className="text-muted-foreground mx-auto mt-3 max-w-2xl text-sm md:text-base"
+     data-nosnippet
+    >
      {t("contact.seoIntro")}
     </p>
    </div>

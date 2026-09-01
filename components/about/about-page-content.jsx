@@ -20,29 +20,31 @@ export function AboutPageContent() {
   <section className="about-content pb-12 pt-10 md:pb-16 md:pt-14">
    <div className={containerPremiumClass}>
     <div className={cn("about-content__body w-full", aboutContentBodyClass)}>
-     <p className="about-content__greeting font-display text-[clamp(1.15rem,2.8vw,1.45rem)] font-semibold leading-snug tracking-tight text-charcoal">
-      {about.greeting}
-     </p>
+     <div data-nosnippet>
+      <p className="about-content__greeting font-display text-[clamp(1.15rem,2.8vw,1.45rem)] font-semibold leading-snug tracking-tight text-charcoal">
+       {about.greeting}
+      </p>
 
-     <div className="mt-8 space-y-6">
-      {about.paragraphs.map((paragraph) => (
-       <p
-        key={paragraph}
-        className="font-body text-sm leading-[1.9] text-charcoal/78 md:text-[0.95rem]"
-       >
-        {paragraph}
-       </p>
-      ))}
+      <div className="mt-8 space-y-6">
+       {about.paragraphs.map((paragraph) => (
+        <p
+         key={paragraph}
+         className="font-body text-sm leading-[1.9] text-charcoal/78 md:text-[0.95rem]"
+        >
+         {paragraph}
+        </p>
+       ))}
+      </div>
+
+      <p
+       className={cn(
+        "about-content__closing mt-10 font-display text-[clamp(1rem,2.2vw,1.2rem)] font-medium tracking-tight text-charcoal",
+        aboutContentClosingClass
+       )}
+      >
+       {about.closing}
+      </p>
      </div>
-
-     <p
-      className={cn(
-       "about-content__closing mt-10 font-display text-[clamp(1rem,2.2vw,1.2rem)] font-medium tracking-tight text-charcoal",
-       aboutContentClosingClass
-      )}
-     >
-      {about.closing}
-     </p>
 
      <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
       <Link

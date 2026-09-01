@@ -32,7 +32,9 @@ export default async function AnasayfaLayout({ children }) {
  return (
   <>
    <SeoPageJsonLd pageKey="home" />
-   <h1 className="sr-only">{seo.metaTitle}</h1>
+   <h1 className="sr-only" data-nosnippet>
+    {seo.metaTitle}
+   </h1>
    {seo?.description ? (
     <p className="sr-only">{seo.description}</p>
    ) : null}
